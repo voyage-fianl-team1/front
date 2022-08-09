@@ -4,6 +4,7 @@ import { Route, Routes } from 'react-router-dom';
 import { RootState } from '../redux/store';
 
 const Home = React.lazy(() => import('../pages/Home'));
+const New = React.lazy(() => import('../pages/New'));
 
 const App = () => {
   const user = useSelector((state: RootState) => state.user);
@@ -24,7 +25,7 @@ const App = () => {
         <Route path='/profile' element={<div>profile</div>} />
         <Route path='/map' element={<div>map</div>} />
         <Route path='/match/:id' element={<div>match detail</div>} />
-        <Route path='/new' element={<div>create match</div>} />
+        <Route path='/new' element={<New />} />
         <Route path='/rank/:id' element={<div>개인성적 디테일</div>} />
       </Routes>
     </Suspense>
