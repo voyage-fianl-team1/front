@@ -49,22 +49,20 @@ const New = (): JSX.Element => {
 
     // axios 자리
   };
-  const deleteImage = (index: any) => {
-    const imgArr = images.filter((el, id) => id !== index);
-    setImages(imgArr);
+  const deleteImage = (id: number) => {
+    setImages(images.filter((_, index) => index !== id));
   };
 
   const previewImage = () => {
-    return images.map((image, index) => (
-      <div key={index}>
+    return images.map((image, id) => (
+      <div key={id}>
         <img className='w-40 h-40 bg-black' alt='' src={image} />
-        <button type='button' onClick={deleteImage}>
+        <button type='button' onClick={() => deleteImage(id)}>
           삭제
         </button>
       </div>
     ));
   };
-
   return (
     <section className='flex flex-col justify-center bg-gray-200 w-full h-screen '>
       제목
