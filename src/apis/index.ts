@@ -1,7 +1,7 @@
 import axios from 'axios';
-import { UserLogin } from '../typings';
+import { UserLogin, UserSignUp } from '../typings';
 
-const SERVER_URL = 'http://localhost:3030';
+const SERVER_URL = 'http://52.78.157.63';
 
 const instance = axios.create({
   withCredentials: true,
@@ -18,5 +18,6 @@ instance.interceptors.request.use((req) => {
 export default instance;
 
 export const apis = {
-  login: (data: UserLogin) => instance.post('/api/login', data),
+  signIn: (data: UserLogin) => instance.post('/api/signin', data),
+  signUp: (data: UserSignUp) => instance.post('/api/signup', data),
 };

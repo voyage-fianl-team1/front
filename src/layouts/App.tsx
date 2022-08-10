@@ -2,6 +2,8 @@ import React, { Suspense } from 'react';
 import { useSelector } from 'react-redux';
 import { Route, Routes } from 'react-router-dom';
 import { RootState } from '../redux/store';
+import Login from '../pages/Login';
+import SignUp from '../pages/SignUp';
 
 const Home = React.lazy(() => import('../pages/Home'));
 
@@ -16,8 +18,8 @@ const App = () => {
     <Suspense fallback={<div>loading...</div>}>
       <Routes>
         <Route path='/' element={<Home />} />
-        <Route path='/login' element={<div>login</div>} />
-        <Route path='/signup' element={<div>signup</div>} />
+        <Route path='/login' element={<Login />} />
+        <Route path='/signup' element={<SignUp />} />
         <Route path='/search' element={<div>search</div>} />
         <Route path='/chatList' element={<div>chat list</div>} />
         <Route path='/chat/:id' element={<div>chat room</div>} />
