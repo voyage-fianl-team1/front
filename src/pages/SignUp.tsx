@@ -26,7 +26,7 @@ const SignUp = () => {
 
   return (
     <div>
-      <h1>회원가입 Page</h1>
+      <h1 className='text-3xl font-bold text-center'>회원가입 Page</h1>
       <form className='flex flex-col' onSubmit={onSubmit}>
         <input type='text' placeholder='email' {...register('email', { required: '이메일을 입력해주세요' })} />
         {errors.email && <Error>{errors.email.message}</Error>}
@@ -40,7 +40,6 @@ const SignUp = () => {
         {errors.nickname && <Error>{errors.nickname.message}</Error>}
         <button type='submit'>회원가입</button>
       </form>
-      <Link to='/login'>로그인 하러가기</Link>
     </div>
   );
 };

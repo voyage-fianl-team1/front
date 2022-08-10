@@ -15,8 +15,10 @@ const Login = () => {
   const onSubmit = handleSubmit(async (data: UserLogin) => {
     try {
       const result = await apis.signIn(data);
-      const token = result.data.split(' ')[1];
-      window.localStorage.setItem('token', token);
+      const accessToken = result.data.accessToken.split(' ')[1];
+      const refreshToken = result.data.refreshToken.split(' ')[1];
+      window.localStorage.setItem('accessToken', accessToken);
+      window.localStorage.setItem('refreshToken', refreshToken);
       alert('로그인 성공');
     } catch (e) {
       if (e instanceof AxiosError) {
@@ -39,7 +41,6 @@ const Login = () => {
         {errors.password && <Error>{errors.password.message}</Error>}
         <button type='submit'>로그인</button>
       </form>
-      <Link to='/signup'>회원가입 하러가기</Link>
     </div>
   );
 };

@@ -4,6 +4,8 @@ import { Route, Routes } from 'react-router-dom';
 import { RootState } from '../redux/store';
 import Login from '../pages/Login';
 import SignUp from '../pages/SignUp';
+import Profile from '../pages/Profile';
+import Layout from './Layout';
 
 const Home = React.lazy(() => import('../pages/Home'));
 
@@ -16,19 +18,21 @@ const App = () => {
 
   return (
     <Suspense fallback={<div>loading...</div>}>
-      <Routes>
-        <Route path='/' element={<Home />} />
-        <Route path='/login' element={<Login />} />
-        <Route path='/signup' element={<SignUp />} />
-        <Route path='/search' element={<div>search</div>} />
-        <Route path='/chatList' element={<div>chat list</div>} />
-        <Route path='/chat/:id' element={<div>chat room</div>} />
-        <Route path='/profile' element={<div>profile</div>} />
-        <Route path='/map' element={<div>map</div>} />
-        <Route path='/match/:id' element={<div>match detail</div>} />
-        <Route path='/new' element={<div>create match</div>} />
-        <Route path='/rank/:id' element={<div>개인성적 디테일</div>} />
-      </Routes>
+      <Layout>
+        <Routes>
+          <Route path='/' element={<Home />} />
+          <Route path='/login' element={<Login />} />
+          <Route path='/signup' element={<SignUp />} />
+          <Route path='/search' element={<div>search</div>} />
+          <Route path='/chatList' element={<div>chat list</div>} />
+          <Route path='/chat/:id' element={<div>chat room</div>} />
+          <Route path='/profile' element={<Profile />} />
+          <Route path='/map' element={<div>map</div>} />
+          <Route path='/match/:id' element={<div>match detail</div>} />
+          <Route path='/new' element={<div>create match</div>} />
+          <Route path='/rank/:id' element={<div>개인성적 디테일</div>} />
+        </Routes>
+      </Layout>
     </Suspense>
   );
 };
