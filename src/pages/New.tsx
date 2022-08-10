@@ -13,7 +13,7 @@ const New = (): JSX.Element => {
   const onSaveFiles = (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = e.target.files!;
     if (!files[0]) return;
-    if (images.length + files.length > 3) {
+    if (files.length > 3) {
       // eslint-disable-next-line consistent-return
       return alert('이미지는 세장까지 업로드 가능합니다.');
     }
@@ -56,7 +56,7 @@ const New = (): JSX.Element => {
   const previewImage = () => {
     return images.map((image, id) => (
       <div key={id}>
-        <img className='w-40 h-40 bg-black' alt='' src={image} />
+        <img className='h-72 w-72' alt='' src={image} />
         <button type='button' onClick={() => deleteImage(id)}>
           삭제
         </button>
@@ -67,16 +67,16 @@ const New = (): JSX.Element => {
     <section className='flex flex-col justify-center bg-gray-200 w-full h-screen '>
       제목
       <input className='mb-3 w-full' type='text' ref={title} />
-      <section className='flex h-1/2 justify-center items-center'>{previewImage()}</section>
+      <section className='flex h-1/2 justify-center items-center gap-5'>{previewImage()}</section>
       <input type='file' multiple onChange={onSaveFiles} />
-      <section className='flex flex-row gap-1'>
-        <div>
-          <div>모집마감일</div>
-          <input className='w-full' type='text' ref={matchDeadline} />
+      <section className='flex flex-row gap-1 justify-center'>
+        <div className='w-full'>
+          모집마감일
+          <input className='w-full' type='date' ref={matchDeadline} />
         </div>
-        <div>
-          <div>경기마감일</div>
-          <input className='w-full' type='text' ref={peopleDeadline} />
+        <div className='w-full'>
+          경기마감일
+          <input className='w-full' type='date' ref={peopleDeadline} />
         </div>
       </section>
       종목
