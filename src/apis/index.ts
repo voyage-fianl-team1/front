@@ -16,6 +16,33 @@ instance.interceptors.request.use((req) => {
   return req;
 });
 
+instance.interceptors.response.use(
+  (res) => {
+    return res;
+  },
+  async (error) => {
+    const originalRequest = error.config;
+    if (error.response.status === 401 && error.response.data == 'ExpiredDate') {
+      const result = await instance.put(
+        '/api/refresh',
+        {},
+        {
+          headers: {
+            Authorization: `Bearer ${window.localStorage.getItem('accessToken')}`,
+            refreshToken: `${window.localStorage.getItem('refreshToken')}`,
+          },
+        }
+      );
+      window.localStorage.setItem('accessToken', result.data.accessToken);
+      window.localStorage.setItem('refreshToken', result.data.refreshToken);
+
+      originalRequest.headers.Authorization = `Bearer ${window.localStorage.getItem('accessToken')}`;
+      return axios(originalRequest);
+    }
+    return Promise.reject(error);
+  }
+);
+
 export const apis = {
   signIn: (data: UserLogin) => instance.post('/api/signin', data),
   signUp: (data: UserSignUp) => instance.post('/api/signup', data),

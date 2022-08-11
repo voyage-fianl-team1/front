@@ -16,7 +16,7 @@ const Login = () => {
     try {
       const result = await apis.signIn(data);
       const accessToken = result.data.accessToken.split(' ')[1];
-      const refreshToken = result.data.refreshToken.split(' ')[1];
+      const refreshToken = result.data.refreshToken;
       window.localStorage.setItem('accessToken', accessToken);
       window.localStorage.setItem('refreshToken', refreshToken);
       alert('로그인 성공');
