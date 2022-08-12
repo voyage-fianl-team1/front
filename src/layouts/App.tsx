@@ -5,6 +5,7 @@ import { RootState } from '../redux/store';
 
 const Home = React.lazy(() => import('../pages/Home'));
 const New = React.lazy(() => import('../pages/New'));
+const Search = React.lazy(() => import('../pages/Search'));
 
 const App = () => {
   const user = useSelector((state: RootState) => state.user);
@@ -19,7 +20,7 @@ const App = () => {
         <Route path='/' element={<Home />} />
         <Route path='/login' element={<div>login</div>} />
         <Route path='/signup' element={<div>signup</div>} />
-        <Route path='/search' element={<div>search</div>} />
+        <Route path='/search' element={<Search />} />
         <Route path='/chatList' element={<div>chat list</div>} />
         <Route path='/chat/:id' element={<div>chat room</div>} />
         <Route path='/profile' element={<div>profile</div>} />
