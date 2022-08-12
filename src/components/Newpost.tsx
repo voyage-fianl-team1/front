@@ -1,17 +1,14 @@
+/* eslint-disable react/jsx-props-no-spreading */
 /* eslint-disable react/no-array-index-key */
 import axios from 'axios';
-import React, { FC, useRef, useState } from 'react';
-// import { useForm } from 'react-hook-form';
+import React, { FC, useState } from 'react';
+import { useForm } from 'react-hook-form';
 // eslint-disable-next-line no-undef
+
 const Newpost: FC = () => {
   const [images, setImages] = useState<string[]>([]);
   const fileList: File[] = [];
-  // const { register, getValues } = useForm<HTMLInputElement>();
-  const title = useRef<HTMLInputElement>(null);
-  const peopleDeadline = useRef<HTMLInputElement>(null);
-  const matchDeadline = useRef<HTMLInputElement>(null);
-  const subject = useRef<HTMLSelectElement>(null);
-  const content = useRef<HTMLTextAreaElement>(null);
+  const { register, getValues } = useForm();
   const onSaveFiles = (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = e.target.files!;
     if (!files[0]) return;
@@ -41,16 +38,17 @@ const Newpost: FC = () => {
     });
 
     const postData = {
-      title: title.current?.value,
-      peopleDeadline: peopleDeadline.current?.value,
-      matchDeadline: matchDeadline.current?.value,
-      subject: subject.current?.value,
-      content: content.current?.value,
+      title: getValues().title,
+      matchDeadline: getValues().matchDeadline,
+      peopleDeadline: getValues().peopleDeadline,
+      subject: getValues().subject,
+      content: getValues().content,
       lat: 37.5,
       lng: 127.4,
       address: '서울특별시 동작구',
     };
     formData.append('stringpostData', JSON.stringify(postData));
+    console.log(postData);
     console.log('성공');
     await axios.post('http://localhost:8080/api/post', formData);
   };
@@ -71,21 +69,21 @@ const Newpost: FC = () => {
   return (
     <section className='flex flex-col justify-center bg-gray-200 w-full h-screen '>
       제목
-      <input className='mb-3 w-full' type='text' ref={title} required />
+      <input className='mb-3 w-full' type='text' {...register('title', { required: true })} />
       <section className='flex h-1/2 justify-center items-center gap-5'>{previewImage()}</section>
       <input type='file' multiple onChange={onSaveFiles} required />
       <section className='flex flex-row gap-1 justify-center'>
         <div className='w-full'>
           모집마감일
-          <input className='w-full' type='date' ref={matchDeadline} required />
+          <input className='w-full' type='date' {...register('matchDeadline', { required: true })} />
         </div>
         <div className='w-full'>
           경기마감일
-          <input className='w-full' type='date' ref={peopleDeadline} required />
+          <input className='w-full' type='date' {...register('peopleDeadline', { required: true })} />
         </div>
       </section>
       종목
-      <select className='w-full text-center' ref={subject} required>
+      <select className='w-full text-center' {...register('subject', { required: true })}>
         <option value='null'>-종목을 골라주세요-</option>
         <option value='SOCCER'>축구</option>
         <option value='BASKETBALL'>농구</option>
@@ -95,7 +93,7 @@ const Newpost: FC = () => {
         <option value='TENNIS'>테니스</option>
       </select>
       내용
-      <textarea className='mb-5 w-full h-2/5' ref={content} required />
+      <textarea className='mb-5 w-full h-2/5' {...register('content', { required: true })} />
       <div className='flex items-center justify-center gap-5'>
         <button className='bg-white mb-5' type='button' onClick={onFileUpload}>
           작성하기
