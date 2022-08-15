@@ -4,25 +4,24 @@ import { Map, ZoomControl, MapMarker, MapInfoWindow } from 'react-kakao-maps-sdk
 const MapContainer = () => {
   const mapRef = useRef(null);
   const [position, setPosition] = useState({ lat: 0, lng: 0 });
+  const [address, setAddress] = useState<string>();
   const [state, setState] = useState({
     center: {
       lat: 37.6378799247,
       lng: 127.020584374,
     },
-    errMsg: 'test',
+    errMsg: '',
     isLoading: true,
   });
-  // const [address, setAddress] = useState<string>();
   useEffect(() => {
     if (navigator.geolocation) {
-      // GeoLocation을 이용해서 접속 위치를 얻어옵니다
       navigator.geolocation.getCurrentPosition(
         (positions) => {
           setState((prev) => ({
             ...prev,
             center: {
-              lat: positions.coords.latitude, // 위도
-              lng: positions.coords.longitude, // 경도
+              lat: positions.coords.latitude,
+              lng: positions.coords.longitude,
             },
             isLoading: false,
           }));
@@ -38,11 +37,29 @@ const MapContainer = () => {
     } else {
       setState((prev) => ({
         ...prev,
-        errMsg: 'geolocation을 사용할수 없어요..',
+        errMsg: '위치 정보를 받아 올 수 없습니다. 설정을 확인해 주세요.',
         isLoading: false,
       }));
     }
   }, []);
+  const getAddress = (lat: number, lng: number) => {
+    // 주소-좌표 변환 객체를 생성합니다
+    const geocoder = new window.kakao.maps.services.Geocoder();
+
+    const coord = new window.kakao.maps.LatLng(lat, lng);
+    const callback = function (result: any, status: string) {
+      if (status === window.kakao.maps.services.Status.OK) {
+        const arr = { ...result };
+        const arr1 = arr[0].address.address_name;
+        setAddress(arr1);
+      }
+    };
+    geocoder.coord2Address(coord.getLng(), coord.getLat(), callback);
+  };
+
+  useEffect(() => {
+    getAddress(position.lat, position.lng);
+  });
   return (
     <Map
       center={{ lat: state.center.lat, lng: state.center.lng }}
@@ -56,8 +73,9 @@ const MapContainer = () => {
         })
       }
     >
+      {!state.isLoading && <MapMarker position={state.center} />}
       <MapInfoWindow position={{ lat: position.lat, lng: position.lng }} removable>
-        <div>Hello World</div>
+        <div>{address}</div>
       </MapInfoWindow>
       {position && <MapMarker position={position} draggable />}
       <ZoomControl position={window.kakao.maps.ControlPosition.TOPRRIGHT} />
