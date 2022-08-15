@@ -54,6 +54,7 @@ const SearchMatch: FC = () => {
       </select>
       <section>
         {postList?.pages.map((page, index) => (
+          // eslint-disable-next-line react/no-array-index-key
           <div key={index}>{page.data.title}</div>
         ))}
       </section>
