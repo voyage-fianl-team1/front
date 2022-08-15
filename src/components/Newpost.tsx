@@ -1,13 +1,15 @@
 /* eslint-disable react/jsx-props-no-spreading */
 /* eslint-disable react/no-array-index-key */
-import axios from 'axios';
 import React, { FC, useState } from 'react';
 import { useForm } from 'react-hook-form';
+import { useNavigate } from 'react-router-dom';
+import instance from '../apis';
 // eslint-disable-next-line no-undef
 
 const Newpost: FC = () => {
   const [images, setImages] = useState<string[]>([]);
-  const fileList: File[] = [];
+  const [postId, setPostId] = useState<number>();
+  const navigate = useNavigate();
   const { register, getValues } = useForm();
   const onSaveFiles = (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = e.target.files!;
@@ -24,19 +26,9 @@ const Newpost: FC = () => {
     if (files) {
       [].forEach.call(files, readAndPreview);
     }
-    const uploadFiles = Array.prototype.slice.call(e.target.value);
-
-    uploadFiles.forEach((uploadFile) => {
-      fileList.push(uploadFile);
-    });
   };
-
   const onFileUpload = async () => {
     const formData = new FormData();
-    fileList.forEach((file) => {
-      formData.append('multipartFiles', file);
-    });
-
     const postData = {
       title: getValues().title,
       matchDeadline: getValues().matchDeadline,
@@ -47,11 +39,15 @@ const Newpost: FC = () => {
       lng: 127.4,
       address: '서울특별시 동작구',
     };
-    formData.append('stringpostData', JSON.stringify(postData));
-    console.log(postData);
-    console.log('성공');
-    await axios.post('http://localhost:8080/api/post', formData);
+    await instance.post('/api/posts', postData).then((res) => {
+      setPostId(res.data.postId);
+      console.log(res.data);
+    });
+
+    formData.append('files', new Blob(images));
+    instance.post(`/api/images/posts/${postId}`, formData);
   };
+  console.log(images);
   const deleteImage = (id: number) => {
     setImages(images.filter((_, index) => index !== id));
   };
@@ -98,7 +94,7 @@ const Newpost: FC = () => {
         <button className='bg-white mb-5' type='button' onClick={onFileUpload}>
           작성하기
         </button>
-        <button className='bg-white mb-5' type='button'>
+        <button className='bg-white mb-5' type='button' onClick={() => navigate(-1)}>
           취소
         </button>
       </div>

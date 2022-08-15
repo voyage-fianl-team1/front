@@ -53,8 +53,8 @@ const SearchMatch: FC = () => {
         <option value='deadline'>마감일순</option>
       </select>
       <section>
-        {postList?.pages.map((page) => (
-          <div>{page.data.title}</div>
+        {postList?.pages.map((page, index) => (
+          <div key={index}>{page.data.title}</div>
         ))}
       </section>
       {isFetchingNextPage ? 'loading...' : <div ref={ref} />}

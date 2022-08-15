@@ -1,19 +1,19 @@
 import axios from 'axios';
 import { UserLogin } from '../typings';
 
-const SERVER_URL = 'http://localhost:3030';
+const SERVER_URL = 'http://54.159.135.161';
 
 const instance = axios.create({
   withCredentials: true,
   baseURL: SERVER_URL,
 });
 
-instance.interceptors.request.use((req) => {
-  if (req.headers) {
-    req.headers.Authorization = `Bearer ${window.localStorage.getItem('token')}`;
-  }
-  return req;
-});
+// instance.interceptors.request.use((req) => {
+//   if (req.headers) {
+//     req.headers.Authorization = `Bearer ${window.localStorage.getItem('token')}`;
+//   }
+//   return req;
+// });
 
 export default instance;
 
