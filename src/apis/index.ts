@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { UserLogin } from '../typings';
 
-const SERVER_URL = 'http://54.159.135.161';
+const SERVER_URL = 'http://52.78.157.63';
 
 const instance = axios.create({
   withCredentials: true,
