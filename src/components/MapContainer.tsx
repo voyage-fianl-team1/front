@@ -64,7 +64,7 @@ const MapContainer = () => {
     <Map
       center={{ lat: state.center.lat, lng: state.center.lng }}
       className='w-screen h-screen'
-      level={3}
+      level={4}
       ref={mapRef}
       onClick={(_t, mouseEvent) =>
         setPosition({
@@ -73,9 +73,9 @@ const MapContainer = () => {
         })
       }
     >
-      {!state.isLoading && <MapMarker position={state.center} />}
-      <MapInfoWindow position={{ lat: position.lat, lng: position.lng }} removable>
-        <div>{address}</div>
+      {/* {!state.isLoading && <MapMarker position={state.center} />} */}
+      <MapInfoWindow position={{ lat: position.lat, lng: position.lng }}>
+        <div className='flex justify-center text-center w-full text-sm'>{address}</div>
       </MapInfoWindow>
       {position && <MapMarker position={position} draggable />}
       <ZoomControl position={window.kakao.maps.ControlPosition.TOPRRIGHT} />

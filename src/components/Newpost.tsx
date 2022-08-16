@@ -8,6 +8,7 @@ import instance from '../apis';
 
 const Newpost: FC = () => {
   const [images, setImages] = useState<string[]>([]);
+  // const [uploadFile, setUploadFile] = useState<FileList | undefined>();
   const [postId, setPostId] = useState<number>();
   const navigate = useNavigate();
   const { register, getValues } = useForm();
@@ -15,18 +16,19 @@ const Newpost: FC = () => {
     const files = e.target.files!;
     if (!files[0]) return;
     if (files.length > 3) {
-      // eslint-disable-next-line consistent-return
-      return alert('이미지는 세장까지 업로드 가능합니다.');
+      alert('이미지는 세장까지 업로드 가능합니다.');
     }
     const readAndPreview = (file: File) => {
       const reader = new FileReader();
       reader.onload = () => setImages((prev) => [...prev, reader.result as string]);
       reader.readAsDataURL(file);
+      // setUploadFile(files);
     };
     if (files) {
       [].forEach.call(files, readAndPreview);
     }
   };
+  console.log(uploadFile);
   const onFileUpload = async () => {
     const formData = new FormData();
     const postData = {
@@ -43,11 +45,9 @@ const Newpost: FC = () => {
       setPostId(res.data.postId);
       console.log(res.data);
     });
-
-    formData.append('files', new Blob(images));
+    Array.from(images).forEach((file) => formData.append('files', file));
     instance.post(`/api/images/posts/${postId}`, formData);
   };
-  console.log(images);
   const deleteImage = (id: number) => {
     setImages(images.filter((_, index) => index !== id));
   };
