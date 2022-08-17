@@ -43,15 +43,15 @@ const Newpost: FC = () => {
       setPostId(res.data.postId);
       console.log(res.data);
     });
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    //@ts-ignore
-    formData.append('files', uploadImage[0]);
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    //@ts-ignore
-    formData.append('files', uploadImage[1]);
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    //@ts-ignore
-    formData.append('files', uploadImage[2]);
+    for (let i = 0; i < 3; i++) {
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      //@ts-ignore
+      if (uploadImage[i] === '' || null) {
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        //@ts-ignore
+        formData.append('files', uploadImage[i]);
+      }
+    }
     instance.post(`/api/images/posts/${postId}`, formData);
   };
 

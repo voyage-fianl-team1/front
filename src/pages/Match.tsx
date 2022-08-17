@@ -3,12 +3,22 @@ import { useQuery } from '@tanstack/react-query';
 import instance from '../apis';
 import { useParams } from 'react-router-dom';
 import { PostDataProps } from '../typings';
+import { useNavigate } from 'react-router-dom';
 
 const Match: FC = () => {
   const getPostData = () => {
     const param = useParams();
+    const navigate = useNavigate();
     const postId = param.id;
     const res = useQuery(['postList'], () => instance.get(`/api/posts/${postId}`));
+    const deletePost = async () => {
+      try {
+        await instance.delete(`/api/post/${postId}`);
+        return navigate('-1');
+      } catch (err) {
+        console.log(err);
+      }
+    };
     if (res.isLoading) {
       return <div>Loading...</div>;
     }
@@ -44,7 +54,7 @@ const Match: FC = () => {
                 <button className='bg-white mb-5' type='button'>
                   수정하기
                 </button>
-                <button className='bg-white mb-5' type='button'>
+                <button className='bg-white mb-5' type='button' onClick={deletePost}>
                   삭제
                 </button>
               </>
