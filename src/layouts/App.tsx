@@ -5,6 +5,7 @@ import { RootState } from '../redux/store';
 import New from '../pages/New';
 import Search from '../pages/Search';
 import Map from '../pages/Map';
+import Match from '../pages/Match';
 
 const Home = React.lazy(() => import('../pages/Home'));
 
@@ -26,7 +27,7 @@ const App = () => {
         <Route path='/chat/:id' element={<div>chat room</div>} />
         <Route path='/profile' element={<div>profile</div>} />
         <Route path='/map' element={<Map />} />
-        <Route path='/match/:id' element={<div>match detail</div>} />
+        <Route path='/match/:id' element={<Match />} />
         <Route path='/new' element={<New />} />
         <Route path='/rank/:id' element={<div>개인성적 디테일</div>} />
       </Routes>
