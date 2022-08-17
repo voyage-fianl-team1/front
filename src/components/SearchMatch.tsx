@@ -1,44 +1,54 @@
 import React, { FC, useEffect, useState } from 'react';
 import { useInView } from 'react-intersection-observer';
-import { useInfiniteQuery } from '@tanstack/react-query';
-import axios from 'axios';
+import { useInfiniteQuery, useQueryClient } from '@tanstack/react-query';
+import { useNavigate } from 'react-router-dom';
+import { instance } from '../apis';
 
 const SearchMatch: FC = () => {
-  const [subject, setSubject] = useState('null');
+  const [subject, setSubject] = useState('SOCCER');
   const [sort, setSort] = useState('createAt');
   const { ref, inView } = useInView();
+  const navigate = useNavigate();
+  const queryClient = useQueryClient();
 
   const fetchPostList = async (pageParam: number) => {
-    const res = await axios.get(`http://localhost:8080/api/posts?${pageParam}=&${subject}=&${sort}`);
-    const data = res.data.content.postList;
-    const Last = res.data.last;
-    return { data, Last, nextPage: pageParam + 1 };
+    const res = await instance.get(`/api/posts?page=${pageParam}&size=20&subject=${subject}`);
+    const data = res.data.content;
+    const last = res.data.last;
+    console.log(last);
+    return { data, last, nextPage: pageParam + 1 };
   };
+
   const {
     data: postList,
     fetchNextPage,
     isFetchingNextPage,
-  } = useInfiniteQuery(['postList'], ({ pageParam = 1 }) => fetchPostList(pageParam), {
-    getNextPageParam: (lastPage) => (!lastPage.Last ? lastPage.nextPage : undefined),
+    refetch,
+  } = useInfiniteQuery(['postData'], ({ pageParam = 1 }) => fetchPostList(pageParam), {
+    getNextPageParam: (lastPage) => (!lastPage.last ? lastPage.nextPage : undefined),
+    // getNextPageParam: (lastPage) => (!lastPage.last ? lastPage.nextPage : undefined),
   });
 
   useEffect(() => {
     if (inView) fetchNextPage();
   }, [inView]);
 
+  useEffect(() => {
+    refetch();
+    queryClient.invalidateQueries(['postData']);
+  }, [sort, subject]);
+
   const subjectChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setSubject(e.target.value);
   };
-
   const sortChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setSort(e.target.value);
   };
-
   return (
-    <div>
+    <>
       <h1 className='flex justify-center'>경기목록</h1>
       <select className='w-full text-center' onChange={subjectChange} required>
-        <option value='null'>-종목을 골라주세요-</option>
+        <option value='null'>-종목-</option>
         <option value='SOCCER'>축구</option>
         <option value='BASKETBALL'>농구</option>
         <option value='BADMINTON'>배드민턴</option>
@@ -52,14 +62,25 @@ const SearchMatch: FC = () => {
         <option value='createAt'>최신순</option>
         <option value='deadline'>마감일순</option>
       </select>
-      <section>
-        {postList?.pages.map((page, index) => (
-          // eslint-disable-next-line react/no-array-index-key
-          <div key={index}>{page.data.title}</div>
-        ))}
-      </section>
-      {isFetchingNextPage ? 'loading...' : <div ref={ref} />}
-    </div>
+      <div>
+        {postList &&
+          postList.pages.map((page, index) => (
+            <div key={index}>
+              {page.data.map((post: any) => (
+                <div
+                  className='w-full h-10 mb-2 bg-slate-600 text-white'
+                  key={post.postId}
+                  onClick={() => navigate(`/match/${post.postId}`)}
+                  ref={ref}
+                >
+                  {post.title}
+                </div>
+              ))}
+            </div>
+          ))}
+        {isFetchingNextPage ? <h1>loading...</h1> : <div ref={ref} />}
+      </div>
+    </>
   );
 };
 export default SearchMatch;

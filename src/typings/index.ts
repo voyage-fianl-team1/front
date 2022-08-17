@@ -8,3 +8,13 @@ declare global {
     kakao: any;
   }
 }
+
+export interface PostDataProps {
+  title: string;
+  imageUrlList: [];
+  matchDeadline: string;
+  peopleDeadline: string;
+  subject: string;
+  content: string;
+  owner: number;
+}

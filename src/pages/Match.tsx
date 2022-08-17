@@ -1,23 +1,14 @@
 import React, { FC } from 'react';
 import { useQuery } from '@tanstack/react-query';
-import { instance } from '../apis';
+import instance from '../apis';
 import { useParams } from 'react-router-dom';
-
-interface PostDataProps {
-  title: string;
-  imageUrlList: [];
-  matchDeadline: string;
-  peopleDeadline: string;
-  subject: string;
-  content: string;
-  owner: number;
-}
+import { PostDataProps } from '../typings';
 
 const Match: FC = () => {
   const getPostData = () => {
-    const res = useQuery(['postList'], () => instance.get(`/posts/${postId}`));
     const param = useParams();
-    const postId = param.postId;
+    const postId = param.id;
+    const res = useQuery(['postList'], () => instance.get(`/api/posts/${postId}`));
     if (res.isLoading) {
       return <div>Loading...</div>;
     }
@@ -27,11 +18,12 @@ const Match: FC = () => {
         <section className='flex flex-col justify-center bg-gray-200 w-full h-screen '>
           <div className='mt-3 w-full h-10 bg-white'>{postData.title}</div>
           <section className='flex h-1/2 justify-center items-center gap-5'>
-            {postData.imageUrlList.map((image, id) => (
-              <div key={id}>
-                <img className='h-72 w-72' alt='' src={image} />
-              </div>
-            ))}
+            {/* {postData &&
+              postData.imageUrlList.map((image, id) => (
+                <div key={id}>
+                  <img className='h-72 w-72' alt='' src={image} />
+                </div>
+              ))} */}
           </section>
           <section className='flex flex-row gap-1'>
             <div className='w-full'>
