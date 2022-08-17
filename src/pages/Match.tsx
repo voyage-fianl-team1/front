@@ -1,6 +1,6 @@
 import React, { FC } from 'react';
 import { useQuery } from '@tanstack/react-query';
-import instance from '../apis';
+import { instance } from '../apis';
 import { useParams } from 'react-router-dom';
 
 interface PostDataProps {
@@ -10,6 +10,7 @@ interface PostDataProps {
   peopleDeadline: string;
   subject: string;
   content: string;
+  owner: number;
 }
 
 const Match: FC = () => {
@@ -46,12 +47,25 @@ const Match: FC = () => {
           <div className='mb-5 w-full h-10 bg-white'>{postData.subject}</div>
           <div className='mb-5 w-full h-2/5'>{postData.content}</div>
           <div className='flex items-center justify-center gap-5'>
-            <button className='bg-white mb-5' type='button'>
-              수정하기
-            </button>
-            <button className='bg-white mb-5' type='button'>
-              삭제
-            </button>
+            {postData.owner === 1 ? (
+              <>
+                <button className='bg-white mb-5' type='button'>
+                  수정하기
+                </button>
+                <button className='bg-white mb-5' type='button'>
+                  삭제
+                </button>
+              </>
+            ) : (
+              <>
+                <button className='bg-white mb-5' type='button'>
+                  참가 신청하기
+                </button>
+                <button className='bg-white mb-5' type='button'>
+                  뒤로가기
+                </button>
+              </>
+            )}
           </div>
         </section>
       );
