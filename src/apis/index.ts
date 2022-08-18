@@ -8,12 +8,12 @@ const instance = axios.create({
   baseURL: SERVER_URL,
 });
 
-// instance.interceptors.request.use((req) => {
-//   if (req.headers) {
-//     req.headers.Authorization = `Bearer ${window.localStorage.getItem('token')}`;
-//   }
-//   return req;
-// });
+instance.interceptors.request.use((req) => {
+  if (req.headers) {
+    req.headers.Authorization = `Bearer ${window.localStorage.getItem('token')}`;
+  }
+  return req;
+});
 
 export default instance;
 

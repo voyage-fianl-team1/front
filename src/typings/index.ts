@@ -3,18 +3,31 @@ export interface UserLogin {
   password: string;
 }
 
-declare global {
-  interface Window {
-    kakao: any;
-  }
+export interface UserSignUp extends UserLogin {
+  nickname: string;
+}
+
+export interface UserInfo {
+  nickname?: string;
+  deleteImage?: string;
+  file?: File;
 }
 
 export interface PostDataProps {
   title: string;
-  imageUrlList: [];
+  imgurls: [];
+  imgpaths: [];
   matchDeadline: string;
   peopleDeadline: string;
   subject: string;
   content: string;
   owner: number;
 }
+
+export interface PostEditDataProps extends PostDataProps {
+  postId: number;
+}
+
+export type ImageType = {
+  [key: string]: string;
+};

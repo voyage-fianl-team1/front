@@ -2,7 +2,7 @@ import React, { FC, useEffect, useState } from 'react';
 import { useInView } from 'react-intersection-observer';
 import { useInfiniteQuery, useQueryClient } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
-import { instance } from '../apis';
+import instance from '../apis';
 
 const SearchMatch: FC = () => {
   const [subject, setSubject] = useState('SOCCER');
