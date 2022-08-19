@@ -12,7 +12,6 @@ const Match: FC = () => {
     const navigate = useNavigate();
     const postId = param.id;
     const res = useQuery(['postList'], () => instance.get(`/api/posts/${postId}`));
-    console.log(res.data);
     const deletePost = async () => {
       try {
         await instance.delete(`/api/posts/${postId}`);
@@ -59,6 +58,7 @@ const Match: FC = () => {
                     postId: postId,
                     title: postData.title,
                     subject: postData.subject,
+                    imgurls: postData.imgurls,
                     peopleDeadline: postData.peopleDeadline,
                     matchDeadline: postData.matchDeadline,
                     content: postData.content,

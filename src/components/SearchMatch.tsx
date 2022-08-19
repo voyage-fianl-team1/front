@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import instance from '../apis';
 
 const SearchMatch: FC = () => {
-  const [subject, setSubject] = useState('SOCCER');
+  const [subject, setSubject] = useState('ALL');
   const [sort, setSort] = useState('createAt');
   const { ref, inView } = useInView();
   const navigate = useNavigate();
@@ -15,7 +15,6 @@ const SearchMatch: FC = () => {
     const res = await instance.get(`/api/posts?page=${pageParam}&size=20&subject=${subject}`);
     const data = res.data.content;
     const last = res.data.last;
-    console.log(last);
     return { data, last, nextPage: pageParam + 1 };
   };
 
@@ -24,9 +23,8 @@ const SearchMatch: FC = () => {
     fetchNextPage,
     isFetchingNextPage,
     refetch,
-  } = useInfiniteQuery(['postData'], ({ pageParam = 1 }) => fetchPostList(pageParam), {
+  } = useInfiniteQuery(['postData'], ({ pageParam = 0 }) => fetchPostList(pageParam), {
     getNextPageParam: (lastPage) => (!lastPage.last ? lastPage.nextPage : undefined),
-    // getNextPageParam: (lastPage) => (!lastPage.last ? lastPage.nextPage : undefined),
   });
 
   useEffect(() => {
@@ -48,7 +46,7 @@ const SearchMatch: FC = () => {
     <>
       <h1 className='flex justify-center'>경기목록</h1>
       <select className='w-full text-center' onChange={subjectChange} required>
-        <option value='null'>-종목-</option>
+        <option value='ALL'>-종목-</option>
         <option value='SOCCER'>축구</option>
         <option value='BASKETBALL'>농구</option>
         <option value='BADMINTON'>배드민턴</option>
@@ -68,7 +66,7 @@ const SearchMatch: FC = () => {
             <div key={index}>
               {page.data.map((post: any) => (
                 <div
-                  className='w-full h-10 mb-2 bg-slate-600 text-white'
+                  className='w-full h-20 mb-2 bg-slate-600 text-white text-5xl '
                   key={post.postId}
                   onClick={() => navigate(`/match/${post.postId}`)}
                   ref={ref}
@@ -76,9 +74,9 @@ const SearchMatch: FC = () => {
                   {post.title}
                 </div>
               ))}
+              {isFetchingNextPage ? <h1>loading...</h1> : <div ref={ref} />}
             </div>
           ))}
-        {isFetchingNextPage ? <h1>loading...</h1> : <div ref={ref} />}
       </div>
     </>
   );
