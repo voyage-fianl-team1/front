@@ -1,4 +1,4 @@
-import React, { FC, useState } from 'react';
+import React, { FC, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { instance } from '../apis';
@@ -7,6 +7,7 @@ import { PostEditDataProps, ImageType } from '../typings';
 const Newpost: FC = () => {
   const [images, setImages] = useState<string[]>([]);
   const [uploadImage, setUploadImage] = useState<File[]>([]);
+  const [imgUrl, setImageUrl] = useState([]);
   const navigate = useNavigate();
   const location = useLocation();
   const data = location.state as PostEditDataProps;
@@ -22,15 +23,18 @@ const Newpost: FC = () => {
       reader.onload = () => setImages((prev) => [...prev, reader.result as string]);
       reader.readAsDataURL(file);
       setUploadImage(Array.from(files) || []);
-      if (data) {
-        images.concat(data.imgurls);
-      }
     };
     if (files) {
       [].forEach.call(files, readAndPreview);
     }
   };
-  console.log(images);
+
+  useEffect(() => {
+    if (data) {
+      setImageUrl(data.imgurls);
+    }
+  }, []);
+
   const onDataUpload = async () => {
     const postData = {
       title: getValues().title,
@@ -51,12 +55,9 @@ const Newpost: FC = () => {
         formData.append('files', uploadImage[i]);
       }
     }
-    await instance.post(`/api/images/posts/${value}`, formData).then((res) => {
-      console.log(res);
-      navigate('/search');
-    });
+    await instance.post(`/api/images/posts/${value}`, formData);
+    navigate('/search');
   };
-
   const onEditDataUpload = async () => {
     const postData = {
       title: getValues().title,
@@ -69,16 +70,18 @@ const Newpost: FC = () => {
       address: '서울특별시 동작구',
     };
     await instance.put(`/api/posts/${data.postId}`, postData);
-    const formData = new FormData();
-    for (let i = 0; i < uploadImage.length; i++) {
-      if (uploadImage[i] !== null) {
-        formData.append('files', uploadImage[i]);
+    if (uploadImage.length > 0) {
+      const formData = new FormData();
+      for (let i = 0; i < uploadImage.length; i++) {
+        if (uploadImage[i] !== null) {
+          formData.append('files', uploadImage[i]);
+        }
       }
-    }
-    await instance.post(`/api/images/posts/${data.postId}`, formData).then((res) => {
-      console.log(res);
+      await instance.post(`/api/images/posts/${data.postId}`, formData);
+    } else {
       navigate('/search');
-    });
+    }
+    navigate('/search');
   };
 
   const deletePreviewImage = async (id: number) => {
@@ -86,11 +89,15 @@ const Newpost: FC = () => {
     setUploadImage([...uploadImage.slice(0, id), ...uploadImage.slice(id + 1)]);
   };
   const deleteImage = async (id: number) => {
+    if (data.imgurls.length > 0) {
+      setImageUrl(imgUrl.filter((_, index) => index !== id));
+    }
     await instance.delete(`/api/images/posts/${id + 1}`);
   };
+  console.log(imgUrl);
   const previewImage = () => {
     if (data) {
-      return data.imgurls?.map((image: ImageType, id) => (
+      return imgUrl.map((image: ImageType, id) => (
         <div key={id}>
           <img className='h-72 w-72' alt='' src={image['url']} />
           <button type='button' onClick={() => deleteImage(id)}>
