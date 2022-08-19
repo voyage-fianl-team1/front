@@ -11,6 +11,7 @@
 - typescript
 - eslint
 - prettier
+- react-hook-form
 
 ## 역할
 
