@@ -1,12 +1,15 @@
-import React, { FC, useEffect, useState } from 'react';
+import React, { FC, useEffect, useState, useCallback } from 'react';
 import { useForm } from 'react-hook-form';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { instance } from '../apis';
+import instance from '../apis';
 import { PostEditDataProps, ImageType } from '../typings';
+import Modal from './Modal';
+import MapContainer from './MapContainer';
 
 const Newpost: FC = () => {
   const [images, setImages] = useState<string[]>([]);
   const [uploadImage, setUploadImage] = useState<File[]>([]);
+  const [isOpenModal, setOpenModal] = useState<boolean>(false);
   const [imgUrl, setImageUrl] = useState([]);
   const navigate = useNavigate();
   const location = useLocation();
@@ -94,7 +97,6 @@ const Newpost: FC = () => {
     }
     await instance.delete(`/api/images/posts/${id + 1}`);
   };
-  console.log(imgUrl);
   const previewImage = () => {
     if (data) {
       return imgUrl.map((image: ImageType, id) => (
@@ -116,7 +118,6 @@ const Newpost: FC = () => {
       ));
     }
   };
-
   const editPreviewImage = () => {
     if (data) {
       return images.map((image, id) => (
@@ -129,6 +130,15 @@ const Newpost: FC = () => {
       ));
     }
   };
+
+  const onClickToggleModal = useCallback(() => {
+    setOpenModal(!isOpenModal);
+  }, [isOpenModal]);
+
+  const modalOut = () => {
+    setOpenModal(false);
+  };
+
   return (
     <section className='flex flex-col justify-center bg-gray-200 w-full h-screen '>
       제목
@@ -177,6 +187,20 @@ const Newpost: FC = () => {
         <option value='BOWLING'>볼링</option>
         <option value='TENNIS'>테니스</option>
       </select>
+      {isOpenModal && (
+        <Modal onClickToggleModal={onClickToggleModal}>
+          <button className='ml-auto' onClick={modalOut}>
+            취소
+          </button>
+          <MapContainer />
+        </Modal>
+      )}
+      <section className='flex w-full bg-white mt-3 justify-between'>
+        <div></div>
+        <button className='w-20 h-8 bg-black text-white cursor-pointer' onClick={onClickToggleModal}>
+          주소
+        </button>
+      </section>
       내용
       <textarea
         className='mb-5 w-full h-2/5'
