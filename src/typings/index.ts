@@ -12,3 +12,22 @@ export interface UserInfo {
   deleteImage?: string;
   file?: File;
 }
+
+export interface PostDataProps {
+  title: string;
+  imgurls: [];
+  imgpaths: [];
+  matchDeadline: string;
+  peopleDeadline: string;
+  subject: string;
+  content: string;
+  owner: number;
+}
+
+export interface PostEditDataProps extends PostDataProps {
+  postId: number;
+}
+
+export type ImageType = {
+  [key: string]: string;
+};
