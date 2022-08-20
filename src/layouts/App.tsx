@@ -6,6 +6,7 @@ import Login from '../pages/Login';
 import SignUp from '../pages/SignUp';
 import Profile from '../pages/Profile';
 import Layout from './Layout';
+import ChatListPage from '../pages/ChatListPage';
 
 const Home = React.lazy(() => import('../pages/Home'));
 
@@ -24,7 +25,7 @@ const App = () => {
           <Route path='/login' element={<Login />} />
           <Route path='/signup' element={<SignUp />} />
           <Route path='/search' element={<div>search</div>} />
-          <Route path='/chatList' element={<div>chat list</div>} />
+          <Route path='/chatList' element={<ChatListPage />} />
           <Route path='/chat/:id' element={<div>chat room</div>} />
           <Route path='/profile' element={<Profile />} />
           <Route path='/map' element={<div>map</div>} />
