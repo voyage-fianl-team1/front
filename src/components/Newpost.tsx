@@ -3,7 +3,7 @@ import { useForm } from 'react-hook-form';
 import { useSelector } from 'react-redux';
 import { RootState } from '../redux/store';
 import { useNavigate, useLocation } from 'react-router-dom';
-import instance from '../apis';
+import { instance } from '../apis';
 import { PostEditDataProps, ImageType } from '../typings';
 import Modal from './Modal';
 import MapContainer from './MapContainer';
@@ -14,6 +14,7 @@ const Newpost: FC = () => {
   const [isOpenModal, setOpenModal] = useState<boolean>(false);
   const [imgUrl, setImageUrl] = useState([]);
   const address = useSelector((state: RootState) => state.address);
+  console.log(address.address, address.lat, address.lng);
   const navigate = useNavigate();
   const location = useLocation();
   const data = location.state as PostEditDataProps;
@@ -48,9 +49,9 @@ const Newpost: FC = () => {
       peopleDeadline: getValues().peopleDeadline,
       subject: getValues().subject,
       content: getValues().content,
-      lat: 37.5,
-      lng: 127.4,
-      address: '서울특별시 동작구',
+      lat: address.lat,
+      lng: address.lng,
+      address: address.address,
     };
     const value = await instance.post('/api/posts', postData).then((res) => {
       return res.data.postId;
@@ -71,9 +72,9 @@ const Newpost: FC = () => {
       peopleDeadline: getValues().peopleDeadline,
       subject: getValues().subject,
       content: getValues().content,
-      lat: 37.5,
-      lng: 127.4,
-      address: '서울특별시 동작구',
+      lat: address.lat,
+      lng: address.lng,
+      address: address.address,
     };
     await instance.put(`/api/posts/${data.postId}`, postData);
     if (uploadImage.length > 0) {
@@ -199,7 +200,7 @@ const Newpost: FC = () => {
         </Modal>
       )}
       <section className='flex w-full bg-white mt-3 justify-between'>
-        <div>{address.address}</div>
+        <span>{data ? data.address : address.address}</span>
         <button className='w-20 h-8 bg-black text-white cursor-pointer' onClick={onClickToggleModal}>
           주소
         </button>

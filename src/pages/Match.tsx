@@ -48,6 +48,9 @@ const Match: FC = () => {
           </section>
           종목
           <div className='mb-5 w-full h-10 bg-white'>{postData.subject}</div>
+          <section className='flex w-full bg-white mt-3 justify-between'>
+            <span>{postData.address}</span>
+          </section>
           <div className='mb-5 w-full h-2/5'>{postData.content}</div>
           <div className='flex items-center justify-center gap-5'>
             {postData.owner === 1 ? (
@@ -58,6 +61,9 @@ const Match: FC = () => {
                     postId: postId,
                     title: postData.title,
                     subject: postData.subject,
+                    address: postData.address,
+                    lat: postData.lat,
+                    lng: postData.lng,
                     imgurls: postData.imgurls,
                     peopleDeadline: postData.peopleDeadline,
                     matchDeadline: postData.matchDeadline,
