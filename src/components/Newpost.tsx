@@ -1,5 +1,7 @@
 import React, { FC, useEffect, useState, useCallback } from 'react';
 import { useForm } from 'react-hook-form';
+import { useSelector } from 'react-redux';
+import { RootState } from '../redux/store';
 import { useNavigate, useLocation } from 'react-router-dom';
 import instance from '../apis';
 import { PostEditDataProps, ImageType } from '../typings';
@@ -11,6 +13,7 @@ const Newpost: FC = () => {
   const [uploadImage, setUploadImage] = useState<File[]>([]);
   const [isOpenModal, setOpenModal] = useState<boolean>(false);
   const [imgUrl, setImageUrl] = useState([]);
+  const address = useSelector((state: RootState) => state.address);
   const navigate = useNavigate();
   const location = useLocation();
   const data = location.state as PostEditDataProps;
@@ -196,7 +199,7 @@ const Newpost: FC = () => {
         </Modal>
       )}
       <section className='flex w-full bg-white mt-3 justify-between'>
-        <div></div>
+        <div>{address.address}</div>
         <button className='w-20 h-8 bg-black text-white cursor-pointer' onClick={onClickToggleModal}>
           주소
         </button>

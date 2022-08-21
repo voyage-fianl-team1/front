@@ -8,7 +8,7 @@ interface ModalDefaultType {
 function Modal({ onClickToggleModal, children }: PropsWithChildren<ModalDefaultType>) {
   return (
     <ModalContainer>
-      <DialogBox className='w h-1/2'>{children}</DialogBox>
+      <DialogBox className=' w-11/12 h-2/3'>{children}</DialogBox>
       <Backdrop
         onClick={(e: React.MouseEvent) => {
           e.preventDefault();
