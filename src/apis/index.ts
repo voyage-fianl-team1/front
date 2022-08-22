@@ -47,13 +47,8 @@ export const apis = {
   signIn: (data: UserLogin) => instance.post('/api/signin', data),
   signUp: (data: UserSignUp) => instance.post('/api/signup', data),
   updateUser: (data: UserInfo) => {
-    const formData = new FormData();
-    const key: UserInfo = {
-      deleteImage: data.deleteImage || '-1',
+    return instance.put('/api/users', {
       nickname: data.nickname,
-    };
-    formData.append('key', new Blob([JSON.stringify(key)], { type: 'application/json' }));
-    data.file && formData.append('file', data.file);
-    return instance.put('/api/users', formData);
+    });
   },
 };

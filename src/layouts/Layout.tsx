@@ -1,20 +1,29 @@
-import React, { FC } from 'react';
-import { Link } from 'react-router-dom';
+import React, { FC, useCallback, useMemo, useState } from 'react';
+import { Link, useLocation, useNavigate, useParams } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { RootState } from '../redux/store';
+import { toggleSideMenuShow } from '../redux/features/commonSlice';
+import { IoMdClose } from 'react-icons/io';
+import SideMenu from '../components/SideMenu';
+import PageTitle from '../components/PageTitle';
 
 interface Props {
   children: JSX.Element;
 }
 
 const Layout: FC<Props> = ({ children }) => {
+  const location = useLocation();
+
+  const navShow = useMemo(() => {
+    const path = location.pathname;
+    return !(path === '/');
+  }, [location.pathname]);
+
   return (
-    <div>
-      {children}
-      <footer className='flex justify-around py-4'>
-        <Link to='/login'>로그인 page</Link>
-        <Link to='/signup'>회원가입 page</Link>
-        <Link to='/chatList'>채팅 목록</Link>
-        <Link to='/profile'>프로필 page</Link>
-      </footer>
+    <div className='p-3 max-w-[1000px] m-auto relative overflow-hidden'>
+      {navShow && <PageTitle />}
+      <SideMenu />
+      <div>{children}</div>
     </div>
   );
 };

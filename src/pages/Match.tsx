@@ -1,6 +1,6 @@
 import React, { FC } from 'react';
 import { useQuery } from '@tanstack/react-query';
-import instance from '../apis';
+import { instance } from '../apis';
 import { useParams } from 'react-router-dom';
 import { PostDataProps, ImageType } from '../typings';
 import { useNavigate } from 'react-router-dom';
