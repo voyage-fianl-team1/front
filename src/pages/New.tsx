@@ -8,13 +8,12 @@ import { PostEditDataProps, ImageType } from '../typings';
 import Modal from '../components/Modal';
 import MapContainer from '../components/MapContainer';
 
-const New: FC = () => {
+const Newpost: FC = () => {
   const [images, setImages] = useState<string[]>([]);
   const [uploadImage, setUploadImage] = useState<File[]>([]);
   const [isOpenModal, setOpenModal] = useState<boolean>(false);
   const [imgUrl, setImageUrl] = useState([]);
   const address = useSelector((state: RootState) => state.address);
-  console.log(address.address, address.lat, address.lng);
   const navigate = useNavigate();
   const location = useLocation();
   const data = location.state as PostEditDataProps;
@@ -46,7 +45,6 @@ const New: FC = () => {
     const postData = {
       title: getValues().title,
       matchDeadline: getValues().matchDeadline,
-      peopleDeadline: getValues().peopleDeadline,
       subject: getValues().subject,
       content: getValues().content,
       lat: address.lat,
@@ -69,7 +67,6 @@ const New: FC = () => {
     const postData = {
       title: getValues().title,
       matchDeadline: getValues().matchDeadline,
-      peopleDeadline: getValues().peopleDeadline,
       subject: getValues().subject,
       content: getValues().content,
       lat: address.lat,
@@ -95,11 +92,15 @@ const New: FC = () => {
     setImages(images.filter((_, index) => index !== id));
     setUploadImage([...uploadImage.slice(0, id), ...uploadImage.slice(id + 1)]);
   };
+
   const deleteImage = async (id: number) => {
+    const imgpaths = data.imgpaths.pop();
+    if (imgpaths !== undefined) {
+      await instance.delete(`/api/images/posts/${imgpaths['path']}`);
+    }
     if (data.imgurls.length > 0) {
       setImageUrl(imgUrl.filter((_, index) => index !== id));
     }
-    await instance.delete(`/api/images/posts/${id + 1}`);
   };
   const previewImage = () => {
     if (data) {
@@ -157,7 +158,7 @@ const New: FC = () => {
         {editPreviewImage()}
       </section>
       <input type='file' multiple onChange={onSaveFiles} required />
-      <section className='flex flex-row gap-1 justify-center'>
+      <section className='flex justify-center'>
         <div className='w-full'>
           모집마감일
           <input
@@ -165,15 +166,6 @@ const New: FC = () => {
             type='date'
             {...register('matchDeadline', { required: true })}
             defaultValue={data && data.matchDeadline}
-          />
-        </div>
-        <div className='w-full'>
-          경기마감일
-          <input
-            className='w-full'
-            type='date'
-            {...register('peopleDeadline', { required: true })}
-            defaultValue={data && data.peopleDeadline}
           />
         </div>
       </section>
@@ -229,4 +221,4 @@ const New: FC = () => {
   );
 };
 
-export default New;
+export default Newpost;
