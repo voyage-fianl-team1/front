@@ -1,6 +1,6 @@
 import React, { useCallback } from 'react';
 import { useForm } from 'react-hook-form';
-import { apis } from '../apis';
+import { apis, instance } from '../apis';
 import { Link } from 'react-router-dom';
 
 interface UpdateUser {
@@ -20,6 +20,8 @@ const Profile = () => {
     const result = await apis.updateUser(body);
     console.log(result);
   }, []);
+
+  instance.get('api/users').then(console.log);
 
   return (
     <div className='flex flex-col items-center'>

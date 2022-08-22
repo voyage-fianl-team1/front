@@ -78,7 +78,7 @@ const MapContainer = () => {
         <div className='flex justify-center text-center w-full text-sm'>{address}</div>
       </MapInfoWindow>
       {position && <MapMarker position={position} draggable />}
-      <ZoomControl position={window.kakao.maps.ControlPosition.TOPRRIGHT} />
+      <ZoomControl position={window.kakao.maps.ControlPosition.TOPRIGHT} />
     </Map>
   );
 };
