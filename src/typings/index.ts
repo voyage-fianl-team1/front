@@ -31,6 +31,10 @@ export interface PostEditDataProps extends PostDataProps {
   postId: number;
 }
 
+export interface JoinDataProps {
+  userList: [];
+}
+
 export type ImageType = {
   [key: string]: string;
 };
@@ -39,16 +43,4 @@ declare global {
   interface Window {
     kakao: any;
   }
-}
-
-export interface PropsType {
-  searchKeyword?: string;
-}
-
-export interface PlaceType {
-  place_name: string;
-  road_address_name: string;
-  address_name: string;
-  phone: string;
-  place_url: string;
 }

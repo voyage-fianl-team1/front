@@ -1,17 +1,25 @@
 import React, { FC } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import instance from '../apis';
-import { useParams } from 'react-router-dom';
-import { PostDataProps, ImageType } from '../typings';
+import { useParams, Link } from 'react-router-dom';
+import { PostDataProps, JoinDataProps, ImageType } from '../typings';
 import { useNavigate } from 'react-router-dom';
-import { Link } from 'react-router-dom';
 
 const Match: FC = () => {
+  const res = useQuery(['postList'], () => instance.get(`/api/posts/${postId}`));
+  const join = useQuery(['joinList'], () => instance.get(`/api/posts/${postId}/request`));
+  const param = useParams();
+  const postId = param.id;
   const getPostData = () => {
-    const param = useParams();
     const navigate = useNavigate();
-    const postId = param.id;
-    const res = useQuery(['postList'], () => instance.get(`/api/posts/${postId}`));
+    const joinTheGame = async () => {
+      try {
+        await instance.post(`/api/posts/${postId}/request`);
+        alert('참가 신청이 완료되었습니다.');
+      } catch (err) {
+        alert('참가 신청은 중복으로 할 수 없습니다.');
+      }
+    };
     const deletePost = async () => {
       try {
         await instance.delete(`/api/posts/${postId}`);
@@ -52,6 +60,7 @@ const Match: FC = () => {
             <span>{postData.address}</span>
           </section>
           <div className='mb-5 w-full h-2/5'>{postData.content}</div>
+          {postData.owner === 1 ? getJoinData() : null}
           <div className='flex items-center justify-center gap-5'>
             {postData.owner === 1 ? (
               <>
@@ -80,7 +89,7 @@ const Match: FC = () => {
               </>
             ) : (
               <>
-                <button className='bg-white mb-5' type='button'>
+                <button className='bg-white mb-5' type='button' onClick={joinTheGame}>
                   참가 신청하기
                 </button>
                 <button className='bg-white mb-5' type='button' onClick={() => navigate(-1)}>
@@ -93,6 +102,43 @@ const Match: FC = () => {
       );
     }
   };
+
+  const getJoinData = () => {
+    if (join.isLoading) {
+      return;
+    }
+    if (join.data) {
+      const joinData: JoinDataProps = join.data.data;
+      return (
+        <section className='flex h-24 justify-center items-center'>
+          {joinData &&
+            joinData.userList.map((value: ImageType, id: number) => (
+              <>
+                <div key={id} className='flex'>
+                  {value.nickname}
+                  {value.status}
+                </div>
+                <div className='flex gap-2'>
+                  <button
+                    type='button'
+                    onClick={async () => await instance.put(`/api/requests/${value.requestId}`, { status: 'ACCEPT' })}
+                  >
+                    승인
+                  </button>
+                  <button
+                    type='button'
+                    onClick={async () => await instance.put(`/api/requests/${value.requestId}`, { status: 'REJECT' })}
+                  >
+                    거절
+                  </button>
+                </div>
+              </>
+            ))}
+        </section>
+      );
+    }
+  };
+
   return <div>{getPostData()}</div>;
 };
 
