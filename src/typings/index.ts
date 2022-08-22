@@ -44,3 +44,4 @@ declare global {
     kakao: any;
   }
 }
+

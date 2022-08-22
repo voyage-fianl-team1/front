@@ -12,11 +12,14 @@
 - eslint
 - prettier
 - react-hook-form
+<<<<<<< HEAD
 - react-icons
 - react-kakao-maps-sdk
 - react-intersection-observer
 - sockjs-client
 - @stomp/stompjs
+=======
+>>>>>>> develop
 
 ## 역할
 
