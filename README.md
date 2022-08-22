@@ -11,6 +11,12 @@
 - typescript
 - eslint
 - prettier
+- react-hook-form
+- react-icons
+- react-kakao-maps-sdk
+- react-intersection-observer
+- sockjs-client
+- @stomp/stompjs
 
 ## 역할
 

@@ -1,141 +1,83 @@
-import React, { FC } from 'react';
-import { useQuery } from '@tanstack/react-query';
-import instance from '../apis';
-import { useParams, Link } from 'react-router-dom';
-import { PostDataProps, JoinDataProps, ImageType } from '../typings';
+import React, { FC, useEffect, useState } from 'react';
+import { useInView } from 'react-intersection-observer';
+import { useInfiniteQuery, useQueryClient } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
+import { instance } from '../apis';
 
-const Match: FC = () => {
-  const param = useParams();
-  const postId = param.id;
-  const res = useQuery(['postList'], () => instance.get(`/api/posts/${postId}`));
-  const join = useQuery(['joinList'], () => instance.get(`/api/posts/${postId}/request`));
-  const getPostData = () => {
-    const navigate = useNavigate();
-    const joinTheGame = async () => {
-      try {
-        await instance.post(`/api/posts/${postId}/request`);
-        alert('참가 신청이 완료되었습니다.');
-      } catch (err) {
-        alert('참가 신청은 중복으로 할 수 없습니다.');
-      }
-    };
-    const deletePost = async () => {
-      try {
-        await instance.delete(`/api/posts/${postId}`);
-        navigate(-1);
-      } catch (err) {
-        console.log(err);
-      }
-    };
-    if (res.isLoading) {
-      return <div>Loading...</div>;
-    }
-    if (res.data) {
-      const postData: PostDataProps = res.data.data;
-      return (
-        <section className='flex flex-col justify-center bg-gray-200 w-full h-screen '>
-          <div className='mt-3 w-full h-10 bg-white'>{postData.title}</div>
-          <section className='flex h-1/2 justify-center items-center gap-5'>
-            {postData &&
-              postData.imgurls.map((image: ImageType, id) => (
-                <div key={id}>
-                  <img className='h-72 w-72' alt='' src={image['url']} />
+const SearchMatch: FC = () => {
+  const [subject, setSubject] = useState('ALL');
+  const [sort, setSort] = useState('createAt');
+  const { ref, inView } = useInView();
+  const navigate = useNavigate();
+  const queryClient = useQueryClient();
+
+  const fetchPostList = async (pageParam: number) => {
+    const res = await instance.get(`/api/posts?page=${pageParam}&size=20&subject=${subject}`);
+    const data = res.data.content;
+    const last = res.data.last;
+    return { data, last, nextPage: pageParam + 1 };
+  };
+
+  const {
+    data: postList,
+    fetchNextPage,
+    isFetchingNextPage,
+    refetch,
+  } = useInfiniteQuery(['postData'], ({ pageParam = 0 }) => fetchPostList(pageParam), {
+    getNextPageParam: (lastPage) => (!lastPage.last ? lastPage.nextPage : undefined),
+  });
+
+  useEffect(() => {
+    if (inView) fetchNextPage();
+  }, [inView]);
+
+  useEffect(() => {
+    refetch();
+    queryClient.invalidateQueries(['postData']);
+  }, [sort, subject]);
+
+  const subjectChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setSubject(e.target.value);
+  };
+  const sortChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setSort(e.target.value);
+  };
+  return (
+    <>
+      <h1 className='flex justify-center'>경기목록</h1>
+      <select className='w-full text-center' onChange={subjectChange} required>
+        <option value='ALL'>-종목-</option>
+        <option value='SOCCER'>축구</option>
+        <option value='BASKETBALL'>농구</option>
+        <option value='BADMINTON'>배드민턴</option>
+        <option value='BILLIARDS'>당구</option>
+        <option value='BOWLING'>볼링</option>
+        <option value='TENNIS'>테니스</option>
+      </select>
+      <select className='w-full text-center' onChange={sortChange} required>
+        <option value='sort'>-정렬-</option>
+        <option value='viewCount'>조회수순</option>
+        <option value='createAt'>최신순</option>
+      </select>
+      <div>
+        {postList &&
+          postList.pages.map((page, index) => (
+            <div key={index}>
+              {page.data.map((post: any) => (
+                <div
+                  className='w-full h-20 mb-2 bg-slate-600 text-white text-5xl '
+                  key={post.postId}
+                  onClick={() => navigate(`/match/${post.postId}`)}
+                  ref={ref}
+                >
+                  {post.title}
                 </div>
               ))}
-          </section>
-          <section className='flex flex-row gap-1'>
-            <div className='w-full'>
-              모집마감일
-              <div className='w-full h-7 bg-white'>{postData.matchDeadline}</div>
+              {isFetchingNextPage ? <h1>loading...</h1> : <div ref={ref} />}
             </div>
-          </section>
-          종목
-          <div className='mb-5 w-full h-10 bg-white'>{postData.subject}</div>
-          <section className='flex w-full bg-white mt-3 justify-between'>
-            <span>{postData.address}</span>
-          </section>
-          <div className='mb-5 w-full h-2/5'>{postData.content}</div>
-          {postData.owner === 1 ? getJoinData() : null}
-          <div className='flex items-center justify-center gap-5'>
-            {postData.owner === 1 ? (
-              <>
-                <Link
-                  to={`/new/${postId}/edit`}
-                  state={{
-                    postId: postId,
-                    title: postData.title,
-                    subject: postData.subject,
-                    address: postData.address,
-                    lat: postData.lat,
-                    lng: postData.lng,
-                    imgurls: postData.imgurls,
-                    imgpaths: postData.imgpaths,
-                    matchDeadline: postData.matchDeadline,
-                    content: postData.content,
-                  }}
-                >
-                  <button className='bg-white mb-5' type='button'>
-                    수정하기
-                  </button>
-                </Link>
-                <button className='bg-white mb-5' type='button' onClick={deletePost}>
-                  삭제
-                </button>
-              </>
-            ) : (
-              <>
-                <button className='bg-white mb-5' type='button' onClick={joinTheGame}>
-                  참가 신청하기
-                </button>
-                <button className='bg-white mb-5' type='button' onClick={() => navigate(-1)}>
-                  뒤로가기
-                </button>
-              </>
-            )}
-          </div>
-        </section>
-      );
-    }
-  };
-
-  const getJoinData = () => {
-    if (join.isLoading) {
-      return;
-    }
-    if (join.data) {
-      const joinData: JoinDataProps = join.data.data;
-      return (
-        <section className='flex h-24 justify-center items-center'>
-          {joinData &&
-            joinData.userList.map((value: ImageType, id: number) => (
-              <>
-                <div key={id} className='flex'>
-                  {value.nickname}
-                  {value.status}
-                </div>
-                <div className='flex gap-2'>
-                  <button
-                    type='button'
-                    onClick={async () => await instance.put(`/api/requests/${value.requestId}`, { status: 'ACCEPT' })}
-                  >
-                    승인
-                  </button>
-                  <button
-                    type='button'
-                    onClick={async () => await instance.put(`/api/requests/${value.requestId}`, { status: 'REJECT' })}
-                  >
-                    거절
-                  </button>
-                </div>
-              </>
-            ))}
-        </section>
-      );
-    }
-  };
-
-  return <div>{getPostData()}</div>;
+          ))}
+      </div>
+    </>
+  );
 };
-
-export default Match;
+export default SearchMatch;

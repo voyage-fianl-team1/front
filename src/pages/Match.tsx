@@ -1,15 +1,15 @@
 import React, { FC } from 'react';
 import { useQuery } from '@tanstack/react-query';
-import instance from '../apis';
+import { instance } from '../apis';
 import { useParams, Link } from 'react-router-dom';
 import { PostDataProps, JoinDataProps, ImageType } from '../typings';
 import { useNavigate } from 'react-router-dom';
 
 const Match: FC = () => {
-  const res = useQuery(['postList'], () => instance.get(`/api/posts/${postId}`));
-  const join = useQuery(['joinList'], () => instance.get(`/api/posts/${postId}/request`));
   const param = useParams();
   const postId = param.id;
+  const res = useQuery(['postList'], () => instance.get(`/api/posts/${postId}`));
+  const join = useQuery(['joinList'], () => instance.get(`/api/posts/${postId}/request`));
   const getPostData = () => {
     const navigate = useNavigate();
     const joinTheGame = async () => {
@@ -33,6 +33,7 @@ const Match: FC = () => {
     }
     if (res.data) {
       const postData: PostDataProps = res.data.data;
+      console.log(postData);
       return (
         <section className='flex flex-col justify-center bg-gray-200 w-full h-screen '>
           <div className='mt-3 w-full h-10 bg-white'>{postData.title}</div>
@@ -48,10 +49,6 @@ const Match: FC = () => {
             <div className='w-full'>
               모집마감일
               <div className='w-full h-7 bg-white'>{postData.matchDeadline}</div>
-            </div>
-            <div className='w-full'>
-              경기마감일
-              <div className='w-full h-7 bg-white'>{postData.peopleDeadline}</div>
             </div>
           </section>
           종목
@@ -74,7 +71,7 @@ const Match: FC = () => {
                     lat: postData.lat,
                     lng: postData.lng,
                     imgurls: postData.imgurls,
-                    peopleDeadline: postData.peopleDeadline,
+                    imgpaths: postData.imgpaths,
                     matchDeadline: postData.matchDeadline,
                     content: postData.content,
                   }}

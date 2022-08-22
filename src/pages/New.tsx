@@ -3,7 +3,7 @@ import { useForm } from 'react-hook-form';
 import { useSelector } from 'react-redux';
 import { RootState } from '../redux/store';
 import { useNavigate, useLocation } from 'react-router-dom';
-import instance from '../apis';
+import { instance } from '../apis';
 import { PostEditDataProps, ImageType } from '../typings';
 import Modal from '../components/Modal';
 import MapContainer from '../components/MapContainer';
