@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React, { FC, useEffect } from 'react';
 import SearchBar from '../components/SearchBar';
 import SlideBanner from '../components/SlideBanner';
 import SubTitle from '../components/SubTitle';
@@ -9,6 +9,7 @@ import LatestMatchList from '../components/LatestMatchList';
 import SelectCategory from '../components/SelectCategory';
 import UserRankingList from '../components/UserRankingList';
 import WriteFloatingButton from '../components/WriteFloatingButton';
+import { apis } from '../apis';
 
 const Home: FC = () => {
   return (

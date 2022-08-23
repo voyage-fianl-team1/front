@@ -1,7 +1,9 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { apis, instance } from '../apis';
 import { Link } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { RootState } from '../redux/store';
 
 interface UpdateUser {
   nickname: string;
@@ -10,25 +12,33 @@ interface UpdateUser {
 }
 
 const Profile = () => {
-  const { register, getValues } = useForm<UpdateUser>();
+  const { nickname, profileImgUrl } = useSelector((state: RootState) => state.user);
+  const { register, getValues, setValue } = useForm<UpdateUser>();
+
+  useEffect(() => {
+    if (nickname) {
+      setValue('nickname', nickname);
+    }
+  }, [nickname, profileImgUrl]);
 
   const handleChangeUser = useCallback(async () => {
-    const body = {
-      nickname: getValues().nickname,
-      file: getValues().fileList[0],
-    };
-    const result = await apis.updateUser(body);
-    console.log(result);
+    try {
+      const nicknameResult = await apis.updateUser(getValues().nickname);
+      const profileImageResult = await apis.updateUserProfileImage(getValues().fileList[0]);
+      console.log(nicknameResult);
+      console.log(profileImageResult);
+    } catch (e) {
+      console.error(e);
+    }
   }, []);
-
-  instance.get('api/users').then(console.log);
 
   return (
     <div className='flex flex-col items-center'>
       <h1 className='text-3xl font-bold'>Profile page</h1>
+      <img src={profileImgUrl || '/assets/images/avatar.svg'} alt='profileImgUrl' />
       <input type='text' placeholder='nickname' {...register('nickname')} />
       <input type='file' {...register('fileList')} />
-      <button onClick={handleChangeUser}>닉네임 변경하기</button>
+      <button onClick={handleChangeUser}>변경하기</button>
     </div>
   );
 };
