@@ -25,7 +25,6 @@ const userSlice = createSlice({
   initialState,
   reducers: {
     login: (state, action: PayloadAction<UserState>) => {
-      console.log(action);
       state.isLogin = true;
       state.id = action.payload.id;
       state.draw = action.payload.draw;
@@ -35,7 +34,7 @@ const userSlice = createSlice({
       state.win = action.payload.win;
     },
     logout: (state) => {
-      state = initialState;
+      return initialState;
     },
   },
 });
