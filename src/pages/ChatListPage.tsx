@@ -2,6 +2,8 @@ import React, { useEffect } from 'react';
 import SockJS from 'sockjs-client';
 import { Stomp } from '@stomp/stompjs';
 import { StompSubscription } from '@stomp/stompjs/src/stomp-subscription';
+import ChatSearchBar from '../components/ChatSearchBar';
+import ChatRoomItem from '../components/ChatRoomItem';
 
 const socketServerURL = 'http://52.78.157.63/ws-stomp';
 const ChatListPage = () => {
@@ -32,7 +34,16 @@ const ChatListPage = () => {
     };
   }, []);
 
-  return <div>chatlist</div>;
+  return (
+    <div>
+      <ChatSearchBar />
+      <ul className='mt-8 flex flex-col gap-5'>
+        <ChatRoomItem id={1} />
+        <ChatRoomItem id={2} />
+        <ChatRoomItem id={3} />
+      </ul>
+    </div>
+  );
 };
 
 export default ChatListPage;
