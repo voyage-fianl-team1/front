@@ -23,7 +23,7 @@ const ChatForm = () => {
 
   return (
     <form
-      className={`fixed bottom-10 w-[90%] left-0 right-0 m-auto border-[1px] border-[#C5C6CA] rounded-full flex items-center py-2 px-5 bg-white z-100 ${
+      className={`fixed bottom-10 w-[90%] max-w-[1000px] left-0 right-0 m-auto border-[1px] border-[#C5C6CA] rounded-full flex items-center py-2 px-5 bg-white z-100 ${
         isFocus ? 'border-[#6367CC]' : ''
       }`}
       onSubmit={handleSubmit}
