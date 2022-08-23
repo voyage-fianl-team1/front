@@ -12,6 +12,7 @@ const titleTable: ITitleTable = {
   '/search': '경기목록',
   '/chatList': '채팅목록',
   '/map': '지도',
+  '/new': '모집글 작성',
 };
 
 const PageTitle = () => {

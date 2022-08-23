@@ -5,6 +5,7 @@ export interface UserLogin {
 
 export interface UserSignUp extends UserLogin {
   nickname: string;
+  passwordCheck?: string;
 }
 
 export interface UserInfo {

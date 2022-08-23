@@ -25,9 +25,14 @@ const App = () => {
 
   useEffect(() => {
     const autoLogin = async () => {
-      const userInfo = await apis.getUser().then((res) => res.data);
-      const { id, draw, lose, win, nickname, profileImgUrl } = userInfo;
-      dispatch(login({ isLogin: true, id, draw, lose, win, nickname, profileImgUrl }));
+      try {
+        const userInfo = await apis.getUser().then((res) => res.data);
+        const { id, draw, lose, win, nickname, profileImgUrl } = userInfo;
+        dispatch(login({ isLogin: true, id, draw, lose, win, nickname, profileImgUrl }));
+        console.log('자동로그인 되었습니다');
+      } catch (e) {
+        console.error('자동로그인 실패');
+      }
     };
     autoLogin();
   }, []);
