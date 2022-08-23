@@ -67,7 +67,7 @@ const SideMenu = () => {
           <img src='/assets/images/menu/arrow.svg' alt='arrow-icon' />
         </li>
       </ul>
-      <div className='px-8 absolute bottom-5 left-0 right-0'>
+      <div className='px-8 fixed bottom-5 left-0 right-0 max-w-[1000px] m-auto'>
         <button className='menu-button' onClick={handleLogOut}>
           로그아웃
         </button>
