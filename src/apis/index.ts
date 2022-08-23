@@ -57,4 +57,5 @@ export const apis = {
     return instance.put('/api/images/users', formData);
   },
   getUser: () => instance.get('/api/users'),
+  getChatRooms: () => instance.get(`/api/users/rooms?lastActive=${Date.now()}`).then((res) => res.data),
 };

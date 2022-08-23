@@ -1,7 +1,11 @@
-import React, { FormEvent, useCallback, useState } from 'react';
+import React, { FC, FormEvent, useCallback, useState } from 'react';
 import { useInput } from '../hooks/useInput';
 
-const ChatForm = () => {
+interface Props {
+  onSubmit: (message: string) => void;
+}
+
+const ChatForm: FC<Props> = ({ onSubmit }) => {
   const [isFocus, setIsFocus] = useState(false);
   const { value, handler, reset } = useInput('');
   const handleFocus = useCallback(() => {
@@ -15,7 +19,7 @@ const ChatForm = () => {
   const handleSubmit = useCallback(
     (e: FormEvent<HTMLFormElement>) => {
       e.preventDefault();
-      console.log(value);
+      onSubmit(value);
       reset();
     },
     [value]

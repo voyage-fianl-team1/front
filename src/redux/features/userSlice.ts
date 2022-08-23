@@ -2,6 +2,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 interface UserState {
   isLogin: boolean;
+  id: number | undefined;
   draw: number | undefined;
   lose: number | undefined;
   nickname: string | undefined;
@@ -11,6 +12,7 @@ interface UserState {
 
 const initialState: UserState = {
   isLogin: false,
+  id: undefined,
   draw: undefined,
   lose: undefined,
   nickname: undefined,
@@ -25,6 +27,7 @@ const userSlice = createSlice({
     login: (state, action: PayloadAction<UserState>) => {
       console.log(action);
       state.isLogin = true;
+      state.id = action.payload.id;
       state.draw = action.payload.draw;
       state.lose = action.payload.lose;
       state.nickname = action.payload.nickname;

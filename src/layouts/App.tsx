@@ -25,8 +25,8 @@ const App = () => {
   useEffect(() => {
     const autoLogin = async () => {
       const userInfo = await apis.getUser().then((res) => res.data);
-      const { draw, lose, win, nickname, profileImgUrl } = userInfo;
-      dispatch(login({ isLogin: true, draw, lose, win, nickname, profileImgUrl }));
+      const { id, draw, lose, win, nickname, profileImgUrl } = userInfo;
+      dispatch(login({ isLogin: true, id, draw, lose, win, nickname, profileImgUrl }));
     };
     autoLogin();
   }, []);

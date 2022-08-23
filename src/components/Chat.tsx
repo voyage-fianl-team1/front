@@ -25,7 +25,7 @@ const Chat: FC<Props> = ({ direction, bg, children, profilePath, username }) => 
         <img src='/assets/images/avatar.svg' alt='profile-default' className='' />
       ) : null}
       <div>
-        {username && <h2 className='ml-1 text-sm'>{username}</h2>}
+        {direction === 'left' && <h2 className='ml-1 text-sm'>{username}</h2>}
         <div className={`${bgColorAndBorder} py-2 px-3 rounded-full`}>{children}</div>
       </div>
     </li>
