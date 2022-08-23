@@ -17,6 +17,9 @@ export interface PostDataProps {
   title: string;
   imgurls: [];
   imgpaths: [];
+  address: string;
+  lat: number;
+  lng: number;
   matchDeadline: string;
   peopleDeadline: string;
   subject: string;
@@ -28,6 +31,16 @@ export interface PostEditDataProps extends PostDataProps {
   postId: number;
 }
 
+export interface JoinDataProps {
+  userList: [];
+}
+
 export type ImageType = {
   [key: string]: string;
 };
+
+declare global {
+  interface Window {
+    kakao: any;
+  }
+}

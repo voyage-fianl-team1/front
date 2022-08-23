@@ -1,14 +1,18 @@
-import React, { useRef, useState, useEffect } from 'react';
+import React, { useRef, useState, useEffect, useCallback } from 'react';
 import { Map, ZoomControl, MapMarker, MapInfoWindow } from 'react-kakao-maps-sdk';
+import addressAction from '../redux/features/addressSlice';
+import { useDispatch } from 'react-redux';
+import { AppDispatch } from '../redux/store';
 
 const MapContainer = () => {
   const mapRef = useRef(null);
+  const dispatch = useDispatch<AppDispatch>();
   const [position, setPosition] = useState({ lat: 0, lng: 0 });
   const [address, setAddress] = useState<string>();
   const [state, setState] = useState({
     center: {
-      lat: 37.6378799247,
-      lng: 127.020584374,
+      lat: position.lat,
+      lng: position.lng,
     },
     errMsg: '',
     isLoading: true,
@@ -42,10 +46,14 @@ const MapContainer = () => {
       }));
     }
   }, []);
-  const getAddress = (lat: number, lng: number) => {
-    // 주소-좌표 변환 객체를 생성합니다
-    const geocoder = new window.kakao.maps.services.Geocoder();
 
+  const sendAddress = () => {
+    dispatch(addressAction.actions.addressAction({ address: address, lat: position.lat, lng: position.lng }));
+  };
+
+  const getAddress = (lat: number, lng: number) => {
+    // 주소-좌표 변환 객체를 생성
+    const geocoder = new window.kakao.maps.services.Geocoder();
     const coord = new window.kakao.maps.LatLng(lat, lng);
     const callback = function (result: any, status: string) {
       if (status === window.kakao.maps.services.Status.OK) {
@@ -60,10 +68,15 @@ const MapContainer = () => {
   useEffect(() => {
     getAddress(position.lat, position.lng);
   });
+
   return (
     <Map
       center={{ lat: state.center.lat, lng: state.center.lng }}
-      className='w-screen h-screen'
+      style={{
+        position: 'relative',
+        width: '100%',
+        height: '80rem',
+      }}
       level={4}
       ref={mapRef}
       onClick={(_t, mouseEvent) =>
@@ -73,12 +86,16 @@ const MapContainer = () => {
         })
       }
     >
-      {/* {!state.isLoading && <MapMarker position={state.center} />} */}
-      <MapInfoWindow position={{ lat: position.lat, lng: position.lng }}>
-        <div className='flex justify-center text-center w-full text-sm'>{address}</div>
-      </MapInfoWindow>
+      {/* 현위치 마커찍기
+      {!state.isLoading && <MapMarker position={state.center} />} */}
       {position && <MapMarker position={position} draggable />}
-      <ZoomControl position={window.kakao.maps.ControlPosition.TOPRIGHT} />
+      <ZoomControl position={window.kakao.maps.ControlPosition.TOPRRIGHT} />
+      <span className='flex flex-row items-center gap-5 mt-3'>
+        <div>{address}</div>
+        <button type='button' onClick={sendAddress}>
+          선택
+        </button>
+      </span>
     </Map>
   );
 };
