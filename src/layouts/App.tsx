@@ -12,6 +12,7 @@ import SignUp from '../pages/SignUp';
 import Profile from '../pages/Profile';
 import Layout from './Layout';
 import ChatListPage from '../pages/ChatListPage';
+import ChatDetail from '../pages/ChatDetail';
 
 const Home = React.lazy(() => import('../pages/Home'));
 
@@ -31,7 +32,7 @@ const App = () => {
           <Route path='/signup' element={<SignUp />} />
           <Route path='/chatList' element={<ChatListPage />} />
           <Route path='/search' element={<Search />} />
-          <Route path='/chat/:id' element={<div>chat room</div>} />
+          <Route path='/chat/:id' element={<ChatDetail />} />
           <Route path='/profile' element={<Profile />} />
           <Route path='/map' element={<Map />} />
           <Route path='/match/:id' element={<Match />} />
@@ -44,3 +45,10 @@ const App = () => {
 };
 
 export default App;
+
+/**
+ * 백엔드 -> 쿼리시간 단축
+ * 피드백 바탕으로 무슨피드백? 받았는지 정리
+ *
+ * 프론트 -> 반응형, 적응형 UI
+ */
