@@ -6,7 +6,7 @@ import { instance } from '../apis';
 
 const SearchMatch: FC = () => {
   const [subject, setSubject] = useState('ALL');
-  const [sort, setSort] = useState('createAt');
+  const [sort, setSort] = useState('default');
   const { ref, inView } = useInView();
   const navigate = useNavigate();
   const queryClient = useQueryClient();
@@ -15,7 +15,6 @@ const SearchMatch: FC = () => {
     const res = await instance.get(`/api/posts?page=${pageParam}&size=20&subject=${subject}&sort=${sort}`);
     const data = res.data.content;
     const last = res.data.last;
-    console.log(data);
     return { data, last, nextPage: pageParam + 1 };
   };
 
@@ -37,10 +36,10 @@ const SearchMatch: FC = () => {
     queryClient.invalidateQueries(['postData']);
   }, [sort, subject]);
 
-  const subjectChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+  const handleSubject = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setSubject(e.target.value);
   };
-  const sortChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+  const handleSort = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setSort(e.target.value);
   };
   return (
@@ -48,7 +47,7 @@ const SearchMatch: FC = () => {
       <span className='flex flex-row items-center gap-4'>
         <select
           className='block p-2 w-20 text-sm text-black bg-white rounded-2xl border border-#9A9B9F'
-          onChange={subjectChange}
+          onChange={handleSubject}
           required
         >
           <option value='ALL'>전체</option>
@@ -61,10 +60,10 @@ const SearchMatch: FC = () => {
         </select>
         <select
           className='block p-2 w-20 text-sm text-black bg-white rounded-2xl border border-#9A9B9F'
-          onChange={sortChange}
+          onChange={handleSort}
           required
         >
-          <option value='sort'>정렬</option>
+          <option value='default'>정렬</option>
           <option value='viewCount'>조회수순</option>
           <option value='createAt'>최신순</option>
         </select>
@@ -81,7 +80,11 @@ const SearchMatch: FC = () => {
                   ref={ref}
                 >
                   <div className='flex flex-row'>
-                    <div className='box-border rounded-lg bg-#F4F5F5 w-20 h-20 border boder-#DCDDE0 bg-#F4F5F5'></div>
+                    <img
+                      src={post.imgUrl}
+                      alt='searchImg'
+                      className='box-border rounded-lg bg-#F4F5F5 w-20 h-20 border boder-#DCDDE0 bg-#F4F5F5'
+                    ></img>
                     <span className='flex flex-col justify-center ml-5 gap-0.5'>
                       <div className='text-xl'>{post.title}</div>
                       <div className='text-sm text-gray-400'>주소</div>

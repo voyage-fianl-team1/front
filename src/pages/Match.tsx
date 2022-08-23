@@ -12,7 +12,7 @@ const Match: FC = () => {
   const join = useQuery(['joinList'], () => instance.get(`/api/posts/${postId}/request`));
   const getPostData = () => {
     const navigate = useNavigate();
-    const joinTheGame = async () => {
+    const handleJoinTheGame = async () => {
       try {
         await instance.post(`/api/posts/${postId}/request`);
         alert('참가 신청이 완료되었습니다.');
@@ -20,7 +20,7 @@ const Match: FC = () => {
         alert('참가 신청은 중복으로 할 수 없습니다.');
       }
     };
-    const deletePost = async () => {
+    const handleDeletePost = async () => {
       try {
         await instance.delete(`/api/posts/${postId}`);
         navigate(-1);
@@ -33,7 +33,6 @@ const Match: FC = () => {
     }
     if (res.data) {
       const postData: PostDataProps = res.data.data;
-      console.log(postData);
       return (
         <section className='flex flex-col justify-center bg-gray-200 w-full h-screen '>
           <div className='mt-3 w-full h-10 bg-white'>{postData.title}</div>
@@ -80,13 +79,13 @@ const Match: FC = () => {
                     수정하기
                   </button>
                 </Link>
-                <button className='bg-white mb-5' type='button' onClick={deletePost}>
+                <button className='bg-white mb-5' type='button' onClick={handleDeletePost}>
                   삭제
                 </button>
               </>
             ) : (
               <>
-                <button className='bg-white mb-5' type='button' onClick={joinTheGame}>
+                <button className='bg-white mb-5' type='button' onClick={handleJoinTheGame}>
                   참가 신청하기
                 </button>
                 <button className='bg-white mb-5' type='button' onClick={() => navigate(-1)}>

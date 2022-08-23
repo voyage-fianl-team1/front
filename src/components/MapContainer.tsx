@@ -47,7 +47,7 @@ const MapContainer = () => {
     }
   }, []);
 
-  const sendAddress = () => {
+  const handleSendAddress = () => {
     dispatch(addressAction.actions.addressAction({ address: address, lat: position.lat, lng: position.lng }));
   };
 
@@ -92,7 +92,7 @@ const MapContainer = () => {
       <ZoomControl position={window.kakao.maps.ControlPosition.TOPRRIGHT} />
       <span className='flex flex-row items-center gap-5 mt-3'>
         <div>{address}</div>
-        <button type='button' onClick={sendAddress}>
+        <button type='button' onClick={handleSendAddress}>
           선택
         </button>
       </span>
