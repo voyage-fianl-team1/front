@@ -36,7 +36,7 @@ const PageTitle = () => {
   }, [location.pathname]);
 
   return (
-    <nav className='flex gap-3 items-center py-4'>
+    <nav className='flex gap-3 items-center py-4 bg-white sticky top-0 z-[999] px-4 max-w-[1000px] m-auto'>
       <img src='/assets/images/back.svg' alt='back-button' onClick={handleRouteBack} className='cursor-pointer' />
       <h1 className='text-lg font-bold'>{title}</h1>
     </nav>

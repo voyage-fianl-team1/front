@@ -19,11 +19,13 @@ const Layout: FC<Props> = ({ children }) => {
   }, [location.pathname]);
 
   return (
-    <div className='p-3 max-w-[1000px] m-auto relative overflow-hidden'>
+    <>
       {navShow && <PageTitle />}
-      <SideMenu />
-      <div>{children}</div>
-    </div>
+      <div className='p-3 max-w-[1000px] m-auto relative overflow-hidden'>
+        <SideMenu />
+        <div>{children}</div>
+      </div>
+    </>
   );
 };
 

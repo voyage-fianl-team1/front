@@ -15,6 +15,7 @@ import ChatListPage from '../pages/ChatListPage';
 import ChatDetail from '../pages/ChatDetail';
 import { apis } from '../apis';
 import { login } from '../redux/features/userSlice';
+import PageTitle from '../components/PageTitle';
 
 const Home = React.lazy(() => import('../pages/Home'));
 

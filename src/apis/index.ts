@@ -58,4 +58,10 @@ export const apis = {
   },
   getUser: () => instance.get('/api/users'),
   getChatRooms: () => instance.get(`/api/users/rooms?lastActive=${Date.now()}`).then((res) => res.data),
+  getChatHistory: (roomId: number | string, firstChat?: number | undefined) => {
+    if (!firstChat) {
+      return instance.get(`/api/rooms/${roomId}/chats?limit=20`).then((res) => res.data);
+    }
+    return instance.get(`/api/rooms/${roomId}/chats?lastChat=${firstChat}&limit=20`).then((res) => res.data);
+  },
 };
