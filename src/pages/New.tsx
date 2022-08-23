@@ -94,7 +94,7 @@ const Newpost: FC = () => {
   };
 
   const deleteImage = async (id: number) => {
-    const imgpaths = data.imgpaths.pop();
+    const imgpaths = data.imgpaths[id];
     if (imgpaths !== undefined) {
       await instance.delete(`/api/images/posts/${imgpaths['path']}`);
     }
