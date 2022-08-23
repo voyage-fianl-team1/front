@@ -12,6 +12,7 @@ import SignUp from '../pages/SignUp';
 import Profile from '../pages/Profile';
 import Layout from './Layout';
 import ChatListPage from '../pages/ChatListPage';
+import Keyword from '../pages/keyword';
 
 const Home = React.lazy(() => import('../pages/Home'));
 
@@ -36,6 +37,7 @@ const App = () => {
           <Route path='/map' element={<Map />} />
           <Route path='/match/:id' element={<Match />} />
           <Route path='/new' element={<New />} />
+          <Route path='/keword' element={<Keyword />} />
           <Route path='/rank/:id' element={<div>개인성적 디테일</div>} />
         </Routes>
       </Layout>

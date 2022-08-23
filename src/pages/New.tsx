@@ -183,14 +183,16 @@ const Newpost: FC = () => {
         <option value='BOWLING'>볼링</option>
         <option value='TENNIS'>테니스</option>
       </select>
-      {isOpenModal && (
-        <Modal onClickToggleModal={handleToggleModal}>
-          <button className='ml-auto' onClick={modalOut}>
-            취소
-          </button>
-          <MapContainer />
-        </Modal>
-      )}
+      <section>
+        {isOpenModal && (
+          <Modal onClickToggleModal={handleToggleModal}>
+            <button className='ml-auto' onClick={modalOut}>
+              취소
+            </button>
+            <MapContainer />
+          </Modal>
+        )}
+      </section>
       <section className='flex w-full bg-white mt-3 justify-between'>
         <span>{data ? data.address : address.address}</span>
         <button className='w-20 h-8 bg-black text-white cursor-pointer' onClick={handleToggleModal}>

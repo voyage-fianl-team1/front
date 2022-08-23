@@ -1,6 +1,12 @@
 import React, { useCallback, useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { AppDispatch } from '../redux/store';
+import { useNavigate } from 'react-router-dom';
+import keywordSlice from '../redux/features/keywordSlice';
 
 const SearchBar = () => {
+  const dispatch = useDispatch<AppDispatch>();
+  const navigate = useNavigate();
   const [isFocus, setIsFocus] = useState(false);
   const handleFocus = useCallback(() => {
     setIsFocus(true);
@@ -10,6 +16,14 @@ const SearchBar = () => {
     setIsFocus(false);
   }, []);
 
+  const handleKeyword = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter') {
+      const keyword = e.target.value;
+      console.log(keyword);
+      dispatch(keywordSlice.actions.keywordAction({ keyword: keyword }));
+      navigate(`/keword`);
+    }
+  };
   return (
     <div
       className={`flex border-[1px] border-matchgi-gray h-[44px] rounded-[12px] items-center p-[5px] ${
@@ -23,6 +37,7 @@ const SearchBar = () => {
         className='flex-1 outline-0'
         onFocus={handleFocus}
         onBlur={handleFocusOut}
+        onKeyPress={handleKeyword}
       />
     </div>
   );

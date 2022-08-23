@@ -64,7 +64,7 @@ const SearchMatch: FC = () => {
           required
         >
           <option value='default'>정렬</option>
-          <option value='viewCount'>조회수순</option>
+          <option value='viewcount'>조회수순</option>
           <option value='createAt'>최신순</option>
         </select>
       </span>

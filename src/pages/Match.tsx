@@ -8,8 +8,8 @@ import { useNavigate } from 'react-router-dom';
 const Match: FC = () => {
   const param = useParams();
   const postId = param.id;
-  const res = useQuery(['postList'], () => instance.get(`/api/posts/${postId}`));
-  const join = useQuery(['joinList'], () => instance.get(`/api/posts/${postId}/request`));
+  const res = useQuery(['postList'], async () => await instance.get(`/api/posts/${postId}`));
+  const join = useQuery(['joinList'], async () => await instance.get(`/api/posts/${postId}/request`));
   const getPostData = () => {
     const navigate = useNavigate();
     const handleJoinTheGame = async () => {
@@ -28,13 +28,25 @@ const Match: FC = () => {
         console.log(err);
       }
     };
+    const handleStatusChange = async () => {
+      instance.put(`/api/posts/matchstatus/${postId}`);
+      window.location.reload();
+    };
+
     if (res.isLoading) {
       return <div>Loading...</div>;
     }
     if (res.data) {
       const postData: PostDataProps = res.data.data;
+      console.log(postData);
       return (
         <section className='flex flex-col justify-center bg-gray-200 w-full h-screen '>
+          <div className='flex mt-3 w-full h-10 bg-white justify-between'>
+            {postData.title}
+            <button type='button' className='bg-black text-white' onClick={handleStatusChange}>
+              {postData.owner === 1 && postData.matchStatus === 'ONGOING' ? '완료하기' : '되돌리기'}
+            </button>
+          </div>
           <div className='mt-3 w-full h-10 bg-white'>{postData.title}</div>
           <section className='flex h-1/2 justify-center items-center gap-5'>
             {postData &&
@@ -103,7 +115,7 @@ const Match: FC = () => {
     if (join.isLoading) {
       return;
     }
-    if (join.data) {
+    if (join.data && res.data?.data.matchStatus === 'ONGOING') {
       const joinData: JoinDataProps = join.data.data;
       return (
         <section className='flex h-24 justify-center items-center'>
@@ -126,6 +138,42 @@ const Match: FC = () => {
                     onClick={async () => await instance.put(`/api/requests/${value.requestId}`, { status: 'REJECT' })}
                   >
                     거절
+                  </button>
+                </div>
+              </>
+            ))}
+        </section>
+      );
+    }
+    if (join.data && res.data?.data.matchStatus === 'MATCHEND') {
+      const joinData: JoinDataProps = join.data.data;
+      return (
+        <section className='flex h-24 justify-center items-center'>
+          {joinData &&
+            joinData.userList.map((value: ImageType, id: number) => (
+              <>
+                <div key={id} className='flex'>
+                  {value.nickname}
+                  {value.status}
+                </div>
+                <div className='flex gap-2'>
+                  <button
+                    type='button'
+                    onClick={async () => await instance.put(`/api/requests/${value.requestId}`, { status: 'WIN' })}
+                  >
+                    승
+                  </button>
+                  <button
+                    type='button'
+                    onClick={async () => await instance.put(`/api/requests/${value.requestId}`, { status: 'DRAW' })}
+                  >
+                    무
+                  </button>
+                  <button
+                    type='button'
+                    onClick={async () => await instance.put(`/api/requests/${value.requestId}`, { status: 'LOSE' })}
+                  >
+                    패
                   </button>
                 </div>
               </>
