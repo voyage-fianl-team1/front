@@ -34,7 +34,7 @@ const userSlice = createSlice({
       state.win = action.payload.win;
     },
     logout: (state) => {
-      state = initialState;
+      return initialState;
     },
   },
 });

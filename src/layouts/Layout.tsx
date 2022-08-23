@@ -1,9 +1,6 @@
-import React, { FC, useCallback, useMemo, useState } from 'react';
-import { Link, useLocation, useNavigate, useParams } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
-import { RootState } from '../redux/store';
-import { toggleSideMenuShow } from '../redux/features/commonSlice';
-import { IoMdClose } from 'react-icons/io';
+import React, { FC, useMemo } from 'react';
+import { useLocation } from 'react-router-dom';
+
 import SideMenu from '../components/SideMenu';
 import PageTitle from '../components/PageTitle';
 interface Props {
