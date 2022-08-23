@@ -1,4 +1,6 @@
 import React, { FC, useMemo } from 'react';
+import dayjs from 'dayjs';
+import { getFromNow } from '../util/converDate';
 
 interface Props {
   direction: 'right' | 'left';
@@ -6,9 +8,10 @@ interface Props {
   children: string | JSX.Element;
   profilePath?: string;
   username?: string;
+  createdAt: Date;
 }
 
-const Chat: FC<Props> = ({ direction, bg, children, profilePath, username }) => {
+const Chat: FC<Props> = ({ direction, bg, children, profilePath, username, createdAt }) => {
   const bgColorAndBorder = useMemo(() => {
     return bg === 'gray' ? 'bg-[#F4F5F5]' : 'bg-[white] border-[1px] border-matchgi-gray';
   }, [bg]);
@@ -26,7 +29,20 @@ const Chat: FC<Props> = ({ direction, bg, children, profilePath, username }) => 
       ) : null}
       <div>
         {direction === 'left' && <h2 className='ml-1 text-sm'>{username}</h2>}
-        <div className={`${bgColorAndBorder} py-2 px-3 rounded-full`}>{children}</div>
+        <div className='flex'>
+          <div
+            className={`${bgColorAndBorder} py-2 px-3 rounded-full ${direction === 'right' ? 'order-2' : 'order-1'}`}
+          >
+            {children}
+          </div>
+          <div
+            className={`text-matchgi-gray  text-[11px] self-end ${
+              direction === 'right' ? 'order-0 mr-2' : 'order-2 ml-2'
+            } `}
+          >
+            {getFromNow(createdAt)}
+          </div>
+        </div>
       </div>
     </li>
   );

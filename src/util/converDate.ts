@@ -7,6 +7,6 @@ dayjs.locale('ko');
 
 const now = dayjs().format('YYYY-MM-DD HH:mm');
 
-export function getFromNow(date: string) {
+export function getFromNow(date: string | Date) {
   return dayjs(date).fromNow();
 }

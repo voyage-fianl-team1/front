@@ -8,6 +8,7 @@ import { useSelector } from 'react-redux';
 import { RootState } from '../redux/store';
 import { useQuery } from '@tanstack/react-query';
 import { apis } from '../apis';
+import dayjs from 'dayjs';
 
 const ChatDetail = () => {
   const location = useLocation();
@@ -24,7 +25,7 @@ const ChatDetail = () => {
       const reversed = [...content].reverse();
       setChats((prev) => [...reversed, ...prev]);
       setFirstChatRef(reversed[0]);
-      window.scrollBy(0, 300);
+      window.scrollBy(0, 10);
     },
   });
 
@@ -58,19 +59,26 @@ const ChatDetail = () => {
 
   return (
     <div>
-      <ChatTimeLine>어제 21:40</ChatTimeLine>
       <ul className='mb-[10rem]'>
-        {chats.map((c) => (
-          <Chat
-            key={c.chatId}
-            direction={c.userId === userId ? 'right' : 'left'}
-            bg={c.userId === userId ? 'gray' : 'white'}
-            username={c.nickname}
-            profilePath={c.profileImgUrl}
-          >
-            {c.message}
-          </Chat>
-        ))}
+        {chats.map((c, idx) => {
+          if (idx >= 0 && idx < chats.length) {
+            if (chats[idx - 1] && chats[idx] && dayjs(chats[idx]['createdAt']).diff(chats[idx - 1]['createdAt'], 'd')) {
+              return <ChatTimeLine>{dayjs(chats[idx]['createdAt']).format('YYYY-MM-DD (ddd)')}</ChatTimeLine>;
+            }
+          }
+          return (
+            <Chat
+              key={c.chatId}
+              direction={c.userId === userId ? 'right' : 'left'}
+              bg={c.userId === userId ? 'gray' : 'white'}
+              username={c.nickname}
+              profilePath={c.profileImgUrl}
+              createdAt={c.createdAt}
+            >
+              {c.message}
+            </Chat>
+          );
+        })}
       </ul>
       <ChatForm onSubmit={handleSendMessage} />
     </div>

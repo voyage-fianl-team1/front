@@ -4,6 +4,7 @@ import { apis } from '../apis';
 import styled from 'styled-components';
 import { UserSignUp } from '../typings';
 import { AxiosError } from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 const SignUp = () => {
   const {
@@ -11,11 +12,14 @@ const SignUp = () => {
     handleSubmit,
     formState: { errors },
   } = useForm<UserSignUp>();
+  const navigate = useNavigate();
+
   const onSubmit = handleSubmit(async (data: UserSignUp) => {
     try {
       const result = await apis.signUp(data);
       alert(result.data);
       console.log(result);
+      navigate('/login');
     } catch (e) {
       if (e instanceof AxiosError) {
         alert(e.response?.data);
