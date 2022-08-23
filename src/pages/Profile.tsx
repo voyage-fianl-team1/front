@@ -1,7 +1,6 @@
 import React, { useCallback, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
-import { apis, instance } from '../apis';
-import { Link } from 'react-router-dom';
+import { apis } from '../apis';
 import { useSelector } from 'react-redux';
 import { RootState } from '../redux/store';
 

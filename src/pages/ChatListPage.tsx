@@ -1,7 +1,4 @@
-import React, { useEffect } from 'react';
-import SockJS from 'sockjs-client';
-import { Stomp } from '@stomp/stompjs';
-import { StompSubscription } from '@stomp/stompjs/src/stomp-subscription';
+import React from 'react';
 import ChatSearchBar from '../components/ChatSearchBar';
 import ChatRoomItem from '../components/ChatRoomItem';
 import { useQuery } from '@tanstack/react-query';

@@ -6,16 +6,20 @@ import { Chat } from '../typings';
 
 const socketServerURL = 'http://52.78.157.63/ws-stomp';
 
-export function useSocket(roomId: number | string) {
+export function useSocket(roomId: number | string, callback?: (body: any) => void) {
   const socketRef = useRef<WebSocket | null>(null);
   const stompClientRef = useRef<CompatClient | null>(null);
   const subscriptionRef = useRef<StompSubscription | null | undefined>(null);
   const accessToken = window.localStorage.getItem('accessToken');
   const [chats, setChats] = useState<Chat[]>([]);
+  const firstChatRef = useRef<Chat | undefined>(undefined);
 
   useEffect(() => {
     socketRef.current = new SockJS(socketServerURL);
     stompClientRef.current = Stomp.over(socketRef.current);
+    stompClientRef.current.debug = () => {
+      return;
+    };
 
     if (!socketRef || !stompClientRef) return;
 
@@ -23,6 +27,7 @@ export function useSocket(roomId: number | string) {
       subscriptionRef.current = stompClientRef?.current?.subscribe(`/room/${roomId}`, (message) => {
         const body = JSON.parse(message.body);
         setChats((prev) => [...prev, body.body]);
+        callback && callback(body);
       });
     });
 
@@ -30,6 +35,10 @@ export function useSocket(roomId: number | string) {
       subscriptionRef.current?.unsubscribe();
       stompClientRef.current?.disconnect();
     };
+  }, []);
+
+  const setFirstChatRef = useCallback((chat: Chat) => {
+    firstChatRef.current = chat;
   }, []);
 
   const send = useCallback((message: string) => {
@@ -50,5 +59,5 @@ export function useSocket(roomId: number | string) {
     stompClientRef.current?.disconnect();
   }, []);
 
-  return { chats, send, unsubscribe };
+  return { chats, setChats, firstChatRef, send, unsubscribe, setFirstChatRef };
 }

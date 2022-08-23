@@ -4,7 +4,7 @@ import { apis } from '../apis';
 import styled from 'styled-components';
 import { UserLogin } from '../typings';
 import { AxiosError } from 'axios';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { login } from '../redux/features/userSlice';
 
