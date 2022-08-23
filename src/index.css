@@ -132,3 +132,24 @@ select{
         transform: rotate(360deg);
     }
 }
+
+/* 로그인 페이지 */
+
+.login-input{
+    background: #F4F5F5;
+    border-radius: 8px;
+    @apply py-2 px-4 mt-3 h-[44px];
+}
+
+.login-button{
+    background: #14308B;
+    border-radius: 8px;
+    color:white;
+    @apply py-2 px-4 mt-3 h-[44px];
+}
+
+.signup-input{
+    background: white;
+    border-radius: 8px;
+    @apply py-2 px-4 h-[44px] border-[1px] border-[#DCDDE0];
+}
