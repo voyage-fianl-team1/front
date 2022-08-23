@@ -62,10 +62,48 @@ const ChatDetail = () => {
       <ul className='mb-[10rem]'>
         {chats.map((c, idx) => {
           if (idx >= 0 && idx < chats.length) {
-            if (chats[idx - 1] && chats[idx] && dayjs(chats[idx]['createdAt']).diff(chats[idx - 1]['createdAt'], 'd')) {
-              return <ChatTimeLine>{dayjs(chats[idx]['createdAt']).format('YYYY-MM-DD (ddd)')}</ChatTimeLine>;
+            // 첫 채팅일때
+            if (idx === 0) {
+              return (
+                <React.Fragment key={c.chatId}>
+                  <ChatTimeLine>{dayjs(chats[idx]['createdAt']).format('YYYY-MM-DD (ddd)')}</ChatTimeLine>
+                  <Chat
+                    direction={c.userId === userId ? 'right' : 'left'}
+                    bg={c.userId === userId ? 'gray' : 'white'}
+                    username={c.nickname}
+                    profilePath={c.profileImgUrl}
+                    createdAt={c.createdAt}
+                  >
+                    {c.message}
+                  </Chat>
+                </React.Fragment>
+              );
+            }
+            // 채팅사이 날짜가 다를떄
+            if (
+              chats[idx - 1] &&
+              chats[idx] &&
+              dayjs(chats[idx - 1]['createdAt']).format('YYYY-MM-DD') !==
+                dayjs(chats[idx]['createdAt']).format('YYYY-MM-DD')
+            ) {
+              return (
+                <React.Fragment key={c.chatId}>
+                  <ChatTimeLine>{dayjs(chats[idx]['createdAt']).format('YYYY-MM-DD (ddd)')}</ChatTimeLine>
+                  <Chat
+                    direction={c.userId === userId ? 'right' : 'left'}
+                    bg={c.userId === userId ? 'gray' : 'white'}
+                    username={c.nickname}
+                    profilePath={c.profileImgUrl}
+                    createdAt={c.createdAt}
+                  >
+                    {c.message}
+                  </Chat>
+                </React.Fragment>
+              );
             }
           }
+
+          // 같은 날짜의 채팅은 내용만
           return (
             <Chat
               key={c.chatId}
