@@ -6,7 +6,6 @@ import { toggleSideMenuShow } from '../redux/features/commonSlice';
 import { IoMdClose } from 'react-icons/io';
 import SideMenu from '../components/SideMenu';
 import PageTitle from '../components/PageTitle';
-
 interface Props {
   children: JSX.Element;
 }
