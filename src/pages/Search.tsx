@@ -1,14 +1,19 @@
-import React, { FC, useEffect, useState } from 'react';
+import React, { FC, useEffect, useState, useCallback } from 'react';
 import { useInView } from 'react-intersection-observer';
 import { useInfiniteQuery, useQueryClient } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
 import { instance } from '../apis';
+import SelectSubject from '../components/SelectSubjecet';
+import { useDispatch } from 'react-redux';
+import { toggleSelectShow } from '../redux/features/selectSlice';
+import { RiArrowDownSLine } from 'react-icons/ri';
 
 const SearchMatch: FC = () => {
   const [subject, setSubject] = useState('ALL');
   const [sort, setSort] = useState('default');
   const { ref, inView } = useInView();
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const queryClient = useQueryClient();
 
   const fetchPostList = async (pageParam: number) => {
@@ -36,37 +41,25 @@ const SearchMatch: FC = () => {
     queryClient.invalidateQueries(['postData']);
   }, [sort, subject]);
 
-  const handleSubject = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    setSubject(e.target.value);
-  };
-  const handleSort = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    setSort(e.target.value);
-  };
+  const handleToggleSelect = useCallback(() => {
+    dispatch(toggleSelectShow());
+  }, []);
+
   return (
-    <>
-      <span className='flex flex-row items-center gap-4'>
-        <select
-          className='block p-2 w-20 text-sm text-black bg-white rounded-2xl border border-#9A9B9F'
-          onChange={handleSubject}
-          required
-        >
-          <option value='ALL'>전체</option>
-          <option value='SOCCER'>축구</option>
-          <option value='BASKETBALL'>농구</option>
-          <option value='BADMINTON'>배드민턴</option>
-          <option value='BILLIARDS'>당구</option>
-          <option value='BOWLING'>볼링</option>
-          <option value='TENNIS'>테니스</option>
-        </select>
-        <select
-          className='block p-2 w-20 text-sm text-black bg-white rounded-2xl border border-#9A9B9F'
-          onChange={handleSort}
-          required
-        >
-          <option value='default'>정렬</option>
-          <option value='viewcount'>조회수순</option>
-          <option value='createAt'>최신순</option>
-        </select>
+    <section className=''>
+      <span className='flex items-center mt-[16px] mb-[30px]'>
+        <div className='flex items-center box-border py-0 px-3 absolute left-5 top-24.5 w-[75px] h-[30px] text-sm text-black bg-white rounded-full border border-matchgi-gray gap-[16px]'>
+          <span className='flex flex-row items-center' onClick={handleToggleSelect}>
+            전체
+            <RiArrowDownSLine className='absolute right-2' />
+          </span>
+        </div>
+        <div className='flex items-center box-border py-0 px-3 absolute left-28 top-24.5 w-[75px] h-[30px] text-sm text-black bg-white rounded-full border border-matchgi-gray gap-[16px]'>
+          <span className='flex flex-row items-center'>
+            정렬
+            <RiArrowDownSLine className='absolute right-2' />
+          </span>
+        </div>
       </span>
       <div>
         {postList &&
@@ -74,21 +67,23 @@ const SearchMatch: FC = () => {
             <div key={index}>
               {page.data.map((post: any) => (
                 <div
-                  className='w-full h-20 mt-4 bg-white'
+                  className='w-full h-20 bg-white p-2'
                   key={post.postId}
                   onClick={() => navigate(`/match/${post.postId}`)}
                   ref={ref}
                 >
-                  <div className='flex flex-row'>
+                  <div className='flex flex-row mb-[28px] items-center'>
                     <img
                       src={post.imgUrl}
-                      alt='searchImg'
-                      className='box-border rounded-lg bg-#F4F5F5 w-20 h-20 border boder-#DCDDE0 bg-#F4F5F5'
+                      alt='NOIMG'
+                      className='box-border rounded-lg bg-matchgi-lightgray w-16 h-16 border boder-#DCDDE0'
                     ></img>
-                    <span className='flex flex-col justify-center ml-5 gap-0.5'>
-                      <div className='text-xl'>{post.title}</div>
-                      <div className='text-sm text-gray-400'>주소</div>
-                      <div className='text-xs rounded-lg bg-gray-200 p-1.5'>{post.subject}</div>
+                    <span className='flex flex-col justify-center ml-4 gap-[1px]'>
+                      <div className='text-[16px] font-normal leading-normal text-matchgi-black'>{post.title}</div>
+                      <div className='text-xs text-matchgi-gray leading-normal'>주소</div>
+                      <div className='text-xs item-start rounded-lg w-full h-[18px] bg-matchgi-lightgray'>
+                        {post.subject}
+                      </div>
                     </span>
                   </div>
                 </div>
@@ -97,7 +92,8 @@ const SearchMatch: FC = () => {
             </div>
           ))}
       </div>
-    </>
+      <SelectSubject />
+    </section>
   );
 };
 export default SearchMatch;

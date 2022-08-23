@@ -1,6 +1,6 @@
 import React, { useRef, useState, useEffect } from 'react';
 import { Map, ZoomControl, MapMarker, CustomOverlayMap } from 'react-kakao-maps-sdk';
-import addressAction from '../redux/features/addressSlice';
+import { addressAction } from '../redux/features/addressSlice';
 import { MatchData, MatchDataProps } from '../typings';
 import { useQuery } from '@tanstack/react-query';
 import { instance } from '../apis';
@@ -58,7 +58,7 @@ const MapContainer = () => {
   }, []);
 
   const handleSendAddress = () => {
-    dispatch(addressAction.actions.addressAction({ address: address, lat: position.lat, lng: position.lng }));
+    dispatch(addressAction({ address: address, lat: position.lat, lng: position.lng }));
   };
 
   const getAddress = (lat: number, lng: number) => {

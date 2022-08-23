@@ -19,3 +19,5 @@ const keywordSlice = createSlice({
 });
 
 export default keywordSlice;
+
+export const { keywordAction } = keywordSlice.actions;

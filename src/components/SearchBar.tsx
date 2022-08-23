@@ -2,7 +2,7 @@ import React, { useCallback, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { AppDispatch } from '../redux/store';
 import { useNavigate } from 'react-router-dom';
-import keywordSlice from '../redux/features/keywordSlice';
+import { keywordAction } from '../redux/features/keywordSlice';
 
 const SearchBar = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -20,7 +20,7 @@ const SearchBar = () => {
     if (e.key === 'Enter') {
       const keyword = e.target.value;
       console.log(keyword);
-      dispatch(keywordSlice.actions.keywordAction({ keyword: keyword }));
+      dispatch(keywordAction({ keyword: keyword }));
       navigate(`/keword`);
     }
   };
