@@ -11,10 +11,15 @@ const ChatDetail = () => {
           안녕하세요
         </Chat>
         <ChatTimeLine>어제 21:40</ChatTimeLine>
-        <Chat direction='left' bg='white'>
+        <Chat
+          direction='left'
+          bg='white'
+          profilePath={'https://ichef.bbci.co.uk/news/640/cpsprodpb/D42F/production/_116391345_tes1.png'}
+          username='엘런이'
+        >
           네, 반가워요
         </Chat>
-        <Chat direction='left' bg='white'>
+        <Chat direction='left' bg='white' username='엘런이'>
           저리가줄레요?
         </Chat>
         <Chat direction='right' bg='gray'>

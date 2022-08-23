@@ -1,5 +1,5 @@
-import React, { Suspense } from 'react';
-import { useSelector } from 'react-redux';
+import React, { Suspense, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { Route, Routes } from 'react-router-dom';
 import { RootState } from '../redux/store';
 
@@ -13,15 +13,23 @@ import Profile from '../pages/Profile';
 import Layout from './Layout';
 import ChatListPage from '../pages/ChatListPage';
 import ChatDetail from '../pages/ChatDetail';
+import { apis } from '../apis';
+import { login } from '../redux/features/userSlice';
 
 const Home = React.lazy(() => import('../pages/Home'));
 
 const App = () => {
   const user = useSelector((state: RootState) => state.user);
+  const dispatch = useDispatch();
 
-  if (user.isLogin) {
-    return <div>로그인 해주세요</div>;
-  }
+  useEffect(() => {
+    const autoLogin = async () => {
+      const userInfo = await apis.getUser().then((res) => res.data);
+      const { draw, lose, win, nickname, profileImgUrl } = userInfo;
+      dispatch(login({ isLogin: true, draw, lose, win, nickname, profileImgUrl }));
+    };
+    autoLogin();
+  }, []);
 
   return (
     <Suspense fallback={<div>loading...</div>}>

@@ -4,9 +4,14 @@ import { apis } from '../apis';
 import styled from 'styled-components';
 import { UserLogin } from '../typings';
 import { AxiosError } from 'axios';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { login } from '../redux/features/userSlice';
 
 const Login = () => {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+
   const {
     register,
     handleSubmit,
@@ -19,7 +24,11 @@ const Login = () => {
       const refreshToken = result.data.refreshToken;
       window.localStorage.setItem('accessToken', accessToken);
       window.localStorage.setItem('refreshToken', refreshToken);
+      const userInfo = await apis.getUser().then((res) => res.data);
+      const { draw, lose, win, nickname, profileImgUrl } = userInfo;
+      dispatch(login({ isLogin: true, draw, lose, win, nickname, profileImgUrl }));
       alert('로그인 성공');
+      navigate('/');
     } catch (e) {
       if (e instanceof AxiosError) {
         alert(e.response?.data);
