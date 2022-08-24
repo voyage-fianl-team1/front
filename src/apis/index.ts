@@ -1,8 +1,7 @@
 import axios from 'axios';
 import { UserInfo, UserLogin, UserSignUp } from '../typings';
 
-const SERVER_URL = 'http://3.37.86.4';
-// const SERVER_URL = 'http://52.78.157.63';
+const SERVER_URL = 'http://52.78.157.63';
 
 export const instance = axios.create({
   withCredentials: true,
@@ -65,4 +64,7 @@ export const apis = {
     }
     return instance.get(`/api/rooms/${roomId}/chats?lastChat=${firstChat}&limit=20`).then((res) => res.data);
   },
+  getMatchItem: () => instance.get('/api/posts?page=0&size=10&subject=ALL&sort=default'),
+  getSearchList: (pageParam: number, keyword: string) =>
+    instance.get(`/api/posts/search?page=${pageParam}&size=20&search=${keyword}`),
 };

@@ -1,15 +1,12 @@
 import React from 'react';
-import { instance } from '../apis';
+import { apis } from '../apis';
 import { useQuery } from '@tanstack/react-query';
 import { RecentMatch } from '../typings';
 import { useNavigate } from 'react-router-dom';
 
 const MatchItem = () => {
   const navigate = useNavigate();
-  const res = useQuery(
-    ['recentMatchList'],
-    async () => await instance.get('/api/posts?page=0&size=10&subject=ALL&sort=default')
-  );
+  const res = useQuery(['recentMatchList'], async () => await apis.getMatchItem());
 
   const recentList = res?.data?.data.content;
 

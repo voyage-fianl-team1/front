@@ -9,15 +9,16 @@ import Modal from '../components/Modal';
 import MapContainer from '../components/MapContainer';
 
 const Newpost: FC = () => {
+  const location = useLocation();
+  const navigate = useNavigate();
   const [images, setImages] = useState<string[]>([]);
   const [uploadImage, setUploadImage] = useState<File[]>([]);
   const [isOpenModal, setOpenModal] = useState<boolean>(false);
   const [imgUrl, setImageUrl] = useState([]);
   const address = useSelector((state: RootState) => state.address);
-  const navigate = useNavigate();
-  const location = useLocation();
-  const data = location.state as PostEditDataProps;
   const { register, getValues } = useForm({});
+  const data = location.state as PostEditDataProps;
+
   const onSaveFiles = (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = e.target.files!;
     if (!files[0]) return;
@@ -34,12 +35,6 @@ const Newpost: FC = () => {
       [].forEach.call(files, readAndPreview);
     }
   };
-
-  useEffect(() => {
-    if (data) {
-      setImageUrl(data.imgurls);
-    }
-  }, []);
 
   const handleDataUpload = async () => {
     const postData = {
@@ -63,6 +58,13 @@ const Newpost: FC = () => {
     await instance.post(`/api/images/posts/${value}`, formData);
     navigate('/search');
   };
+
+  useEffect(() => {
+    if (data) {
+      setImageUrl(data.imgurls);
+    }
+  }, []);
+
   const handleEditUpload = async () => {
     const postData = {
       title: getValues().title,
@@ -82,8 +84,6 @@ const Newpost: FC = () => {
         }
       }
       await instance.post(`/api/images/posts/${data.postId}`, formData);
-    } else {
-      navigate('/search');
     }
     navigate('/search');
   };
@@ -102,6 +102,7 @@ const Newpost: FC = () => {
       setImageUrl(imgUrl.filter((_, index) => index !== id));
     }
   };
+
   const previewImage = () => {
     if (data) {
       return imgUrl.map((image: ImageType, id) => (
@@ -140,9 +141,9 @@ const Newpost: FC = () => {
     setOpenModal(!isOpenModal);
   }, [isOpenModal]);
 
-  const modalOut = () => {
+  const handleModalOut = useCallback(() => {
     setOpenModal(false);
-  };
+  }, []);
 
   return (
     <section className='flex flex-col justify-center bg-gray-200 w-full h-screen '>
@@ -187,7 +188,7 @@ const Newpost: FC = () => {
       <section>
         {isOpenModal && (
           <Modal onClickToggleModal={handleToggleModal}>
-            <button className='ml-auto' onClick={modalOut}>
+            <button className='ml-auto' onClick={handleModalOut}>
               취소
             </button>
             <MapContainer />

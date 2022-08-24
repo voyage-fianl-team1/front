@@ -1,18 +1,18 @@
 import React, { FC, useEffect, useCallback } from 'react';
 import { useInView } from 'react-intersection-observer';
-import { useInfiniteQuery, useQueryClient } from '@tanstack/react-query';
+import { useInfiniteQuery } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
 import { instance } from '../apis';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../redux/store';
 import { toggleSortShow, toggleSelectShow } from '../redux/features/sortSlice';
 import { RiArrowDownSLine } from 'react-icons/ri';
+import LoadingSpinner from '../components/loadingSpinner';
 
 const SearchMatch: FC = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { ref, inView } = useInView();
-  const queryClient = useQueryClient();
   const sort = useSelector((state: RootState) => state.search.sort);
   const subject = useSelector((state: RootState) => state.search.subject);
   const fetchPostList = async (pageParam: number) => {
@@ -26,7 +26,6 @@ const SearchMatch: FC = () => {
     data: postList,
     fetchNextPage,
     isFetchingNextPage,
-    refetch,
   } = useInfiniteQuery(['postData', sort, subject], ({ pageParam = 0 }) => fetchPostList(pageParam), {
     getNextPageParam: (lastPage) => (!lastPage.last ? lastPage.nextPage : undefined),
   });
@@ -34,11 +33,6 @@ const SearchMatch: FC = () => {
   useEffect(() => {
     if (inView) fetchNextPage();
   }, [inView]);
-
-  useEffect(() => {
-    refetch();
-    queryClient.invalidateQueries(['postData']);
-  }, [sort, subject]);
 
   const handleToggleSelect = useCallback(() => {
     dispatch(toggleSelectShow());
@@ -91,7 +85,7 @@ const SearchMatch: FC = () => {
                   </div>
                 </div>
               ))}
-              {isFetchingNextPage ? <h1>loading...</h1> : <div ref={ref} />}
+              {isFetchingNextPage ? <LoadingSpinner /> : <div ref={ref} />}
             </div>
           ))}
       </div>

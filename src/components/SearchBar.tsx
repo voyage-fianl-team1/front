@@ -1,13 +1,13 @@
 import React, { useCallback, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { AppDispatch } from '../redux/store';
 import { useNavigate } from 'react-router-dom';
 import { keywordAction } from '../redux/features/keywordSlice';
 
 const SearchBar = () => {
-  const dispatch = useDispatch<AppDispatch>();
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const [isFocus, setIsFocus] = useState(false);
+
   const handleFocus = useCallback(() => {
     setIsFocus(true);
   }, []);
@@ -19,7 +19,6 @@ const SearchBar = () => {
   const handleKeyword = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter') {
       const keyword = e.target.value;
-      console.log(keyword);
       dispatch(keywordAction({ keyword: keyword }));
       navigate(`/keword`);
     }
