@@ -1,14 +1,21 @@
-import React, { useRef, useState, useEffect, useCallback } from 'react';
-import { Map, ZoomControl, MapMarker, MapInfoWindow } from 'react-kakao-maps-sdk';
-import addressAction from '../redux/features/addressSlice';
+import React, { useRef, useState, useEffect } from 'react';
+import { Map, ZoomControl, MapMarker, CustomOverlayMap } from 'react-kakao-maps-sdk';
+import { addressAction } from '../redux/features/addressSlice';
+import { MatchData, MatchDataProps } from '../typings';
+import { useQuery } from '@tanstack/react-query';
+import { instance } from '../apis';
+import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { AppDispatch } from '../redux/store';
 
 const MapContainer = () => {
   const mapRef = useRef(null);
   const dispatch = useDispatch<AppDispatch>();
+  const navigate = useNavigate();
+  const res = useQuery(['matchList'], async () => await instance.get(`/api/posts/gps`));
   const [position, setPosition] = useState({ lat: 0, lng: 0 });
   const [address, setAddress] = useState<string>();
+  const [isOpen, setIsOpen] = useState(false);
   const [state, setState] = useState({
     center: {
       lat: position.lat,
@@ -16,6 +23,9 @@ const MapContainer = () => {
     },
     errMsg: '',
     isLoading: true,
+  });
+  useEffect(() => {
+    getAddress(position.lat, position.lng);
   });
   useEffect(() => {
     if (navigator.geolocation) {
@@ -47,12 +57,11 @@ const MapContainer = () => {
     }
   }, []);
 
-  const sendAddress = () => {
-    dispatch(addressAction.actions.addressAction({ address: address, lat: position.lat, lng: position.lng }));
+  const handleSendAddress = () => {
+    dispatch(addressAction({ address: address, lat: position.lat, lng: position.lng }));
   };
 
   const getAddress = (lat: number, lng: number) => {
-    // 주소-좌표 변환 객체를 생성
     const geocoder = new window.kakao.maps.services.Geocoder();
     const coord = new window.kakao.maps.LatLng(lat, lng);
     const callback = function (result: any, status: string) {
@@ -64,19 +73,43 @@ const MapContainer = () => {
     };
     geocoder.coord2Address(coord.getLng(), coord.getLat(), callback);
   };
-
-  useEffect(() => {
-    getAddress(position.lat, position.lng);
-  });
+  const MatchMarker = () => {
+    if (res.data) {
+      const matchData: MatchData = res.data.data;
+      return (
+        <>
+          {matchData.postList.map((v: MatchDataProps, i) => {
+            <MapMarker
+              key={i}
+              // key={`${vtitle}-${position.latlng}`}
+              position={{ lat: v.lat, lng: v.lng }}
+              clickable
+              onClick={() => setIsOpen(true)}
+            />;
+          })}
+          ;
+          {isOpen &&
+            matchData.postList.map((v: MatchDataProps, i) => {
+              <section className='w-48 h-48 bg-white' key={i}>
+                <button onClick={() => setIsOpen(false)}>닫기</button>
+                <img src={v.imgurls} alt='' className='w-full h-2/3 bg-slate-400'></img>
+                <span className='flex flex-col p-0.5'>
+                  <div className='text-sm'>{v.title}</div>
+                  <div className='text-sm'>{v.subject}</div>
+                  <div className='text-sm'>{v.address}</div>
+                  <button onClick={() => navigate(`/match/${v.postId}`)}></button>
+                </span>
+              </section>;
+            })}
+        </>
+      );
+    }
+  };
 
   return (
     <Map
       center={{ lat: state.center.lat, lng: state.center.lng }}
-      style={{
-        position: 'relative',
-        width: '100%',
-        height: '80rem',
-      }}
+      className='relative w-full h-screen'
       level={4}
       ref={mapRef}
       onClick={(_t, mouseEvent) =>
@@ -86,16 +119,19 @@ const MapContainer = () => {
         })
       }
     >
-      {/* 현위치 마커찍기
-      {!state.isLoading && <MapMarker position={state.center} />} */}
-      {position && <MapMarker position={position} draggable />}
       <ZoomControl position={window.kakao.maps.ControlPosition.TOPRRIGHT} />
-      <span className='flex flex-row items-center gap-5 mt-3'>
-        <div>{address}</div>
-        <button type='button' onClick={sendAddress}>
-          선택
-        </button>
-      </span>
+      {window.location.pathname === '/map' ? (
+        <CustomOverlayMap position={{ lat: position.lat, lng: position.lng }} xAnchor={0.5} yAnchor={1}>
+          {MatchMarker()}
+        </CustomOverlayMap>
+      ) : (
+        <span className='flex flex-row items-center gap-5 mt-3'>
+          <div>{address}</div>
+          <button type='button' onClick={handleSendAddress}>
+            선택
+          </button>
+        </span>
+      )}
     </Map>
   );
 };
