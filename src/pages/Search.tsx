@@ -27,7 +27,7 @@ const SearchMatch: FC = () => {
     fetchNextPage,
     isFetchingNextPage,
     refetch,
-  } = useInfiniteQuery(['postData'], ({ pageParam = 0 }) => fetchPostList(pageParam), {
+  } = useInfiniteQuery(['postData', sort, subject], ({ pageParam = 0 }) => fetchPostList(pageParam), {
     getNextPageParam: (lastPage) => (!lastPage.last ? lastPage.nextPage : undefined),
   });
 
