@@ -3,6 +3,9 @@ import { useLocation } from 'react-router-dom';
 
 import SideMenu from '../components/SideMenu';
 import PageTitle from '../components/PageTitle';
+import SelectSubject from '../components/SelectSubject';
+import SelectSort from '../components/SelectSort';
+
 interface Props {
   children: JSX.Element;
 }
@@ -20,6 +23,8 @@ const Layout: FC<Props> = ({ children }) => {
       {navShow && <PageTitle />}
       <div className='p-3 max-w-[1000px] m-auto relative overflow-hidden'>
         <SideMenu />
+        <SelectSubject />
+        <SelectSort />
         <div>{children}</div>
       </div>
     </>

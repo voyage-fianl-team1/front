@@ -22,10 +22,24 @@ export interface PostDataProps {
   lat: number;
   lng: number;
   matchDeadline: string;
-  peopleDeadline: string;
+  matchStatus: string;
   subject: string;
   content: string;
   owner: number;
+}
+
+export interface MatchData {
+  postList: [];
+}
+
+export interface MatchDataProps {
+  postId: number;
+  imgurls: string;
+  title: string;
+  subject: string;
+  address: string;
+  lat: number;
+  lng: number;
 }
 
 export interface PostEditDataProps extends PostDataProps {
