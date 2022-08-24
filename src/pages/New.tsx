@@ -3,7 +3,7 @@ import { useForm } from 'react-hook-form';
 import { useSelector } from 'react-redux';
 import { RootState } from '../redux/store';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { instance } from '../apis';
+import { apis } from '../apis';
 import { PostEditDataProps, ImageType } from '../typings';
 import Modal from '../components/Modal';
 import MapContainer from '../components/MapContainer';
@@ -46,16 +46,14 @@ const Newpost: FC = () => {
       lng: address.lng,
       address: address.address,
     };
-    const value = await instance.post('/api/posts', postData).then((res) => {
-      return res.data.postId;
-    });
+    const value = await apis.postUpload(postData);
     const formData = new FormData();
     for (let i = 0; i < uploadImage.length; i++) {
       if (uploadImage[i] !== null) {
         formData.append('files', uploadImage[i]);
       }
     }
-    await instance.post(`/api/images/posts/${value}`, formData);
+    await apis.uploadImage(value, formData);
     navigate('/search');
   };
 
@@ -75,7 +73,8 @@ const Newpost: FC = () => {
       lng: address.lng,
       address: address.address,
     };
-    await instance.put(`/api/posts/${data.postId}`, postData);
+    await apis.updatePost(data.postId, postData);
+
     if (uploadImage.length > 0) {
       const formData = new FormData();
       for (let i = 0; i < uploadImage.length; i++) {
@@ -83,7 +82,9 @@ const Newpost: FC = () => {
           formData.append('files', uploadImage[i]);
         }
       }
-      await instance.post(`/api/images/posts/${data.postId}`, formData);
+      await apis.uploadImage(data.postId, formData);
+    } else {
+      navigate('/search');
     }
     navigate('/search');
   };
@@ -96,7 +97,7 @@ const Newpost: FC = () => {
   const handledeleteImage = async (id: number) => {
     const imgpaths = data.imgpaths[id];
     if (imgpaths !== undefined) {
-      await instance.delete(`/api/images/posts/${imgpaths['path']}`);
+      await apis.deleteImage(imgpaths['path']);
     }
     if (data.imgurls.length > 0) {
       setImageUrl(imgUrl.filter((_, index) => index !== id));

@@ -88,3 +88,17 @@ export interface RecentMatch {
   address?: string;
   postId: number;
 }
+
+export interface TotalStatus {
+  [key: string]: string;
+}
+
+export interface PostUpload {
+  title: string;
+  matchDeadline: string;
+  subject: string;
+  content: string;
+  lat: number;
+  lng: number;
+  address?: string;
+}

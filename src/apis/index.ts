@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { UserInfo, UserLogin, UserSignUp } from '../typings';
+import { PostUpload, TotalStatus, UserInfo, UserLogin, UserSignUp } from '../typings';
 
 const SERVER_URL = 'http://52.78.157.63';
 
@@ -68,4 +68,22 @@ export const apis = {
   getSearchList: (pageParam: number, keyword: string) =>
     instance.get(`/api/posts/search?page=${pageParam}&size=20&search=${keyword}`),
   setLastActive: (roomId: number) => instance.put(`/api/room/${roomId}/lastActive`),
+  getPostList: (postId: number) => instance.get(`/api/posts/${postId}`),
+  getMainPostList: (pageParam: number, subject?: string, sort?: string) =>
+    instance.get(`/api/posts?page=${pageParam}&size=20&subject=${subject}&sort=${sort}`),
+  getJoinList: (postId: number) => instance.get(`/api/posts/${postId}/request`),
+  postJoinGame: (postId: number) => instance.post(`/api/posts/${postId}/request`),
+  deletePost: (postId: number) => instance.delete(`/api/posts/${postId}`),
+  deleteImage: (imgPath: string) => instance.delete(`/api/images/posts/${imgPath}`),
+  updateMatchStatus: (postId: number) => instance.put(`/api/posts/matchstatus/${postId}`),
+  updateTotalStatus: (requestId: string, data: TotalStatus) => instance.put(`/api/requests/${requestId}`, data),
+  postUpload: (data: PostUpload) =>
+    instance.post('/api/posts', data).then((res) => {
+      return res.data.postId;
+    }),
+  updatePost: (postId: number, data: PostUpload) =>
+    instance.put(`/api/posts/${postId}`, data).then((res) => {
+      return res.data.postId;
+    }),
+  uploadImage: (postId: number, data: FormData) => instance.post(`/api/images/posts/${postId}`, data),
 };

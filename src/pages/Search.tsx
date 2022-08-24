@@ -2,7 +2,7 @@ import React, { FC, useEffect, useCallback } from 'react';
 import { useInView } from 'react-intersection-observer';
 import { useInfiniteQuery } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
-import { instance } from '../apis';
+import { apis } from '../apis';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../redux/store';
 import { toggleSortShow, toggleSelectShow } from '../redux/features/sortSlice';
@@ -16,7 +16,7 @@ const SearchMatch: FC = () => {
   const sort = useSelector((state: RootState) => state.search.sort);
   const subject = useSelector((state: RootState) => state.search.subject);
   const fetchPostList = async (pageParam: number) => {
-    const res = await instance.get(`/api/posts?page=${pageParam}&size=20&subject=${subject}&sort=${sort}`);
+    const res = await apis.getMainPostList(pageParam, subject, sort);
     const data = res.data.content;
     const last = res.data.last;
     return { data, last, nextPage: pageParam + 1 };
