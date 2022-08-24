@@ -5,6 +5,7 @@ export interface UserLogin {
 
 export interface UserSignUp extends UserLogin {
   nickname: string;
+  passwordCheck?: string;
 }
 
 export interface UserInfo {
@@ -52,6 +53,27 @@ export interface JoinDataProps {
 export type ImageType = {
   [key: string]: string;
 };
+
+export interface ChatRoom {
+  chatId: number | null;
+  createdAt: string | null;
+  imgUrl: string | null;
+  message: string | null;
+  nickname: string | null;
+  postId: number;
+  roomId: number;
+  title: string;
+  unreadMessageCount: number | null;
+}
+
+export interface Chat {
+  chatId: number;
+  createdAt: Date;
+  message: string;
+  nickname: string;
+  profileImgUrl: string | undefined;
+  userId: number;
+}
 
 declare global {
   interface Window {

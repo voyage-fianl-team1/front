@@ -46,9 +46,22 @@ instance.interceptors.response.use(
 export const apis = {
   signIn: (data: UserLogin) => instance.post('/api/signin', data),
   signUp: (data: UserSignUp) => instance.post('/api/signup', data),
-  updateUser: (data: UserInfo) => {
+  updateUser: (nickname: string) => {
     return instance.put('/api/users', {
-      nickname: data.nickname,
+      nickname,
     });
+  },
+  updateUserProfileImage: (file: File) => {
+    const formData = new FormData();
+    formData.append('file', file);
+    return instance.put('/api/images/users', formData);
+  },
+  getUser: () => instance.get('/api/users'),
+  getChatRooms: () => instance.get(`/api/users/rooms?lastActive=${Date.now()}`).then((res) => res.data),
+  getChatHistory: (roomId: number | string, firstChat?: number | undefined) => {
+    if (!firstChat) {
+      return instance.get(`/api/rooms/${roomId}/chats?limit=20`).then((res) => res.data);
+    }
+    return instance.get(`/api/rooms/${roomId}/chats?lastChat=${firstChat}&limit=20`).then((res) => res.data);
   },
 };

@@ -4,11 +4,13 @@ import { toggleSideMenuShow } from '../redux/features/commonSlice';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../redux/store';
+import { logout } from '../redux/features/userSlice';
 
 const SideMenu = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const sideMenuShow = useSelector((state: RootState) => state.common.sideMenuShow);
+  const { isLogin } = useSelector((state: RootState) => state.user);
 
   const handleRoute = useCallback((path: string) => {
     dispatch(toggleSideMenuShow());
@@ -23,6 +25,10 @@ const SideMenu = () => {
     window.localStorage.removeItem('accessToken');
     window.localStorage.removeItem('refreshToken');
     //TODO: 리덕스 데이터도 지우고, 로그아웃처리하기
+    dispatch(logout());
+    dispatch(toggleSideMenuShow());
+    alert('로그아웃 되었습니다');
+    navigate('/');
   }, []);
 
   const handleSignOut = useCallback(() => {
@@ -30,6 +36,16 @@ const SideMenu = () => {
       //TODO: 탈퇴시키기
       alert('정상적으로 탈퇴되었습니다 감사합니다');
     }
+  }, []);
+
+  const handleRouteToLogin = useCallback(() => {
+    navigate('/login');
+    dispatch(toggleSideMenuShow());
+  }, []);
+
+  const handleRouteSignUp = useCallback(() => {
+    navigate('/signup');
+    dispatch(toggleSideMenuShow());
   }, []);
 
   return (
@@ -67,13 +83,25 @@ const SideMenu = () => {
           <img src='/assets/images/menu/arrow.svg' alt='arrow-icon' />
         </li>
       </ul>
-      <div className='px-8 absolute bottom-5 left-0 right-0'>
-        <button className='menu-button' onClick={handleLogOut}>
-          로그아웃
-        </button>
-        <button className='menu-button' onClick={handleSignOut}>
-          탈퇴하기
-        </button>
+      <div className='px-8 fixed bottom-5 left-0 right-0 max-w-[1000px] m-auto'>
+        {isLogin ? (
+          <button className='menu-button' onClick={handleLogOut}>
+            로그아웃
+          </button>
+        ) : (
+          <button className='menu-button' onClick={handleRouteToLogin}>
+            로그인
+          </button>
+        )}
+        {isLogin ? (
+          <button className='menu-button' onClick={handleSignOut}>
+            탈퇴하기
+          </button>
+        ) : (
+          <button className='menu-button' onClick={handleRouteSignUp}>
+            회원가입
+          </button>
+        )}
       </div>
     </aside>
   );
