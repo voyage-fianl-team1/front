@@ -50,7 +50,7 @@ const CategoryList = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   return (
-    <div className='grid grid-cols-4 gap-4 justify-center cursor-pointer'>
+    <div className='grid grid-cols-4 gap-4 justify-center'>
       {categories.map((c, idx) => (
         <div
           key={idx}

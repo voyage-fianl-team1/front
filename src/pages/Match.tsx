@@ -1,6 +1,6 @@
 import React, { FC } from 'react';
 import { useQuery } from '@tanstack/react-query';
-import { instance, apis } from '../apis';
+import { instance } from '../apis';
 import { useParams, Link } from 'react-router-dom';
 import { PostDataProps, JoinDataProps, ImageType } from '../typings';
 import { useNavigate } from 'react-router-dom';
@@ -32,11 +32,13 @@ const Match: FC = () => {
       instance.put(`/api/posts/matchstatus/${postId}`);
       window.location.reload();
     };
+
     if (res.isLoading) {
       return <div>Loading...</div>;
     }
     if (res.data) {
       const postData: PostDataProps = res.data.data;
+      console.log(postData);
       return (
         <section className='flex flex-col justify-center bg-gray-200 w-full h-screen '>
           <div className='flex mt-3 w-full h-10 bg-white justify-between'>

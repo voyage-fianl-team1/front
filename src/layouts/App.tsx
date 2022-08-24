@@ -1,4 +1,4 @@
-import React, { Suspense, useEffect, useState } from 'react';
+import React, { Suspense, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Route, Routes } from 'react-router-dom';
 import { RootState } from '../redux/store';
@@ -16,7 +16,6 @@ import Keyword from '../pages/keyword';
 import ChatDetail from '../pages/ChatDetail';
 import { apis } from '../apis';
 import { login } from '../redux/features/userSlice';
-import { positionAction } from '../redux/features/postionSlice';
 import LoadingSpinner from '../components/loadingSpinner';
 
 const Home = React.lazy(() => import('../pages/Home'));
@@ -37,25 +36,6 @@ const App = () => {
       }
     };
     autoLogin();
-  }, []);
-
-  useEffect(() => {
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(
-        (positions) => {
-          dispatch(
-            positionAction({ lat: positions.coords.latitude, lng: positions.coords.longitude, isLoading: true })
-          );
-        },
-        (err) => {
-          dispatch(positionAction({ lat: 0, lng: 0, isLoading: false }));
-          alert(err);
-        }
-      );
-    } else {
-      dispatch(positionAction({ lat: 0, lng: 0, isLoading: false }));
-      alert('현재 위치를 받아올 수 없습니다.');
-    }
   }, []);
 
   if (user.isLogin) {

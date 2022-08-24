@@ -34,7 +34,7 @@ export interface MatchData {
 
 export interface MatchDataProps {
   postId: number;
-  imgUrl: string;
+  imgurls: string;
   title: string;
   subject: string;
   address: string;
@@ -79,12 +79,4 @@ declare global {
   interface Window {
     kakao: any;
   }
-}
-
-export interface RecentMatch {
-  title: string;
-  subject: string;
-  content?: string;
-  address?: string;
-  postId: number;
 }

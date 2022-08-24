@@ -182,7 +182,6 @@ const Newpost: FC = () => {
         <option value='BILLIARDS'>당구</option>
         <option value='BOWLING'>볼링</option>
         <option value='TENNIS'>테니스</option>
-        <option value='ETC'>기타</option>
       </select>
       <section>
         {isOpenModal && (
