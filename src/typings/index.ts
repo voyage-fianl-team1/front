@@ -34,7 +34,7 @@ export interface MatchData {
 
 export interface MatchDataProps {
   postId: number;
-  imgurls: string;
+  imgUrl: string;
   title: string;
   subject: string;
   address: string;

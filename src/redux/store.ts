@@ -5,6 +5,8 @@ import commonSlice from './features/commonSlice';
 import keywordSlice from './features/keywordSlice';
 import sortSlice from './features/sortSlice';
 import searchSlice from './features/searchSlice';
+import overlaySlice from './features/overlaySlice';
+import positionSlice from './features/postionSlice';
 
 export const store = configureStore({
   reducer: {
@@ -14,6 +16,8 @@ export const store = configureStore({
     keyword: keywordSlice.reducer,
     sort: sortSlice.reducer,
     search: searchSlice.reducer,
+    overlay: overlaySlice.reducer,
+    position: positionSlice.reducer,
   },
 });
 
