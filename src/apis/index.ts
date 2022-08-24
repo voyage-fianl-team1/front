@@ -64,4 +64,5 @@ export const apis = {
     }
     return instance.get(`/api/rooms/${roomId}/chats?lastChat=${firstChat}&limit=20`).then((res) => res.data);
   },
+  setLastActive: (roomId: number) => instance.put(`/api/room/${roomId}/lastActive`),
 };
