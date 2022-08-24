@@ -67,4 +67,5 @@ export const apis = {
   getMatchItem: () => instance.get('/api/posts?page=0&size=10&subject=ALL&sort=default'),
   getSearchList: (pageParam: number, keyword: string) =>
     instance.get(`/api/posts/search?page=${pageParam}&size=20&search=${keyword}`),
+  setLastActive: (roomId: number) => instance.put(`/api/room/${roomId}/lastActive`),
 };
