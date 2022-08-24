@@ -12,6 +12,7 @@ import SignUp from '../pages/SignUp';
 import Profile from '../pages/Profile';
 import Layout from './Layout';
 import ChatListPage from '../pages/ChatListPage';
+import Keyword from '../pages/keyword';
 import ChatDetail from '../pages/ChatDetail';
 import { apis } from '../apis';
 import { login } from '../redux/features/userSlice';
@@ -50,6 +51,7 @@ const App = () => {
             <Route path='/map' element={<Map />} />
             <Route path='/match/:id' element={<Match />} />
             <Route path='/new' element={<New />} />
+            <Route path='/keword' element={<Keyword />} />
             <Route path='/rank/:id' element={<div>개인성적 디테일</div>} />
           </Routes>
         </Layout>
@@ -72,7 +74,6 @@ const App = () => {
 };
 
 export default App;
-
 /**
  * 백엔드 -> 쿼리시간 단축
  * 피드백 바탕으로 무슨피드백? 받았는지 정리

@@ -57,6 +57,13 @@ const ChatDetail = () => {
     }, 500);
   }, []);
 
+  // 마지막 채팅 읽은시간 set
+  useEffect(() => {
+    return () => {
+      apis.setLastActive(parseInt(roomId)).then(console.log);
+    };
+  }, []);
+
   return (
     <div>
       <ul className='mb-[10rem]'>

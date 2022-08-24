@@ -9,8 +9,11 @@ import LatestMatchList from '../components/LatestMatchList';
 import SelectCategory from '../components/SelectCategory';
 import UserRankingList from '../components/UserRankingList';
 import WriteFloatingButton from '../components/WriteFloatingButton';
+import { useSelector } from 'react-redux';
+import { RootState } from '../redux/store';
 
 const Home: FC = () => {
+  const sideMenuShow = useSelector((state: RootState) => state.common.sideMenuShow);
   return (
     <main>
       <Header />
@@ -22,7 +25,7 @@ const Home: FC = () => {
       <LatestMatchList />
       <SubTitle rightMenu={<SelectCategory />}>개인 랭킹</SubTitle>
       <UserRankingList />
-      <WriteFloatingButton />
+      {!sideMenuShow && <WriteFloatingButton />}
     </main>
   );
 };
