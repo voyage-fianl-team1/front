@@ -80,3 +80,11 @@ declare global {
     kakao: any;
   }
 }
+
+export interface RecentMatch {
+  title: string;
+  subject: string;
+  content?: string;
+  address?: string;
+  postId: number;
+}
