@@ -3,7 +3,8 @@ import userSlice from './features/userSlice';
 import addressSlice from './features/addressSlice';
 import commonSlice from './features/commonSlice';
 import keywordSlice from './features/keywordSlice';
-import selectSlice from './features/selectSlice';
+import sortSlice from './features/sortSlice';
+import searchSlice from './features/searchSlice';
 
 export const store = configureStore({
   reducer: {
@@ -11,7 +12,8 @@ export const store = configureStore({
     address: addressSlice.reducer,
     common: commonSlice.reducer,
     keyword: keywordSlice.reducer,
-    select: selectSlice.reducer,
+    sort: sortSlice.reducer,
+    search: searchSlice.reducer,
   },
 });
 

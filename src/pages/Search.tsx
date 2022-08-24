@@ -1,20 +1,22 @@
-import React, { FC, useEffect, useState, useCallback } from 'react';
+import React, { FC, useEffect, useCallback } from 'react';
 import { useInView } from 'react-intersection-observer';
 import { useInfiniteQuery, useQueryClient } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
 import { instance } from '../apis';
-import SelectSubject from '../components/SelectSubjecet';
-import { useDispatch } from 'react-redux';
-import { toggleSelectShow } from '../redux/features/selectSlice';
+import { useDispatch, useSelector } from 'react-redux';
+import { RootState } from '../redux/store';
+import SelectSort from '../components/SelectSort';
+import SelectSubject from '../components/SelectSubject';
+import { toggleSortShow, toggleSelectShow } from '../redux/features/sortSlice';
 import { RiArrowDownSLine } from 'react-icons/ri';
 
 const SearchMatch: FC = () => {
-  const [subject, setSubject] = useState('ALL');
-  const [sort, setSort] = useState('default');
-  const { ref, inView } = useInView();
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const { ref, inView } = useInView();
   const queryClient = useQueryClient();
+  const sort = useSelector((state: RootState) => state.search.sort);
+  const subject = useSelector((state: RootState) => state.search.subject);
 
   const fetchPostList = async (pageParam: number) => {
     const res = await instance.get(`/api/posts?page=${pageParam}&size=20&subject=${subject}&sort=${sort}`);
@@ -45,20 +47,24 @@ const SearchMatch: FC = () => {
     dispatch(toggleSelectShow());
   }, []);
 
+  const handleToggleSort = useCallback(() => {
+    dispatch(toggleSortShow());
+  }, []);
+
   return (
     <section className=''>
       <span className='flex items-center mt-[16px] mb-[30px]'>
         <div className='flex items-center box-border py-0 px-3 absolute left-5 top-24.5 w-[75px] h-[30px] text-sm text-black bg-white rounded-full border border-matchgi-gray gap-[16px]'>
-          <span className='flex flex-row items-center' onClick={handleToggleSelect}>
-            전체
+          <button className='flex flex-row items-center cursor-pointer' onClick={handleToggleSelect}>
+            종목
             <RiArrowDownSLine className='absolute right-2' />
-          </span>
+          </button>
         </div>
         <div className='flex items-center box-border py-0 px-3 absolute left-28 top-24.5 w-[75px] h-[30px] text-sm text-black bg-white rounded-full border border-matchgi-gray gap-[16px]'>
-          <span className='flex flex-row items-center'>
+          <button className='flex flex-row items-center cursor-pointer' onClick={handleToggleSort}>
             정렬
             <RiArrowDownSLine className='absolute right-2' />
-          </span>
+          </button>
         </div>
       </span>
       <div>
@@ -93,6 +99,7 @@ const SearchMatch: FC = () => {
           ))}
       </div>
       <SelectSubject />
+      <SelectSort />
     </section>
   );
 };
