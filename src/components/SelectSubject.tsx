@@ -23,7 +23,7 @@ const SelectSubject = () => {
   };
   return (
     <section
-      className={`absolute bottom-0 left-0 right-0 w-[100%] transition-all z-50 ${
+      className={`fixed bottom-0 left-0 right-0 w-[100%] max-w-[1000px] m-auto transition-all z-50 ${
         selectShow ? '' : 'translate-y-full'
       }`}
     >

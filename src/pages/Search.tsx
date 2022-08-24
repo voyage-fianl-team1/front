@@ -5,8 +5,6 @@ import { useNavigate } from 'react-router-dom';
 import { instance } from '../apis';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../redux/store';
-import SelectSort from '../components/SelectSort';
-import SelectSubject from '../components/SelectSubject';
 import { toggleSortShow, toggleSelectShow } from '../redux/features/sortSlice';
 import { RiArrowDownSLine } from 'react-icons/ri';
 
@@ -17,7 +15,7 @@ const SearchMatch: FC = () => {
   const queryClient = useQueryClient();
   const sort = useSelector((state: RootState) => state.search.sort);
   const subject = useSelector((state: RootState) => state.search.subject);
-
+  console.log(subject);
   const fetchPostList = async (pageParam: number) => {
     const res = await instance.get(`/api/posts?page=${pageParam}&size=20&subject=${subject}&sort=${sort}`);
     const data = res.data.content;
@@ -98,8 +96,6 @@ const SearchMatch: FC = () => {
             </div>
           ))}
       </div>
-      <SelectSubject />
-      <SelectSort />
     </section>
   );
 };

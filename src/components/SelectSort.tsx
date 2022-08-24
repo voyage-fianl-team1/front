@@ -25,7 +25,9 @@ const SelectSort = () => {
 
   return (
     <section
-      className={`absolute bottom-0 left-0 right-0 w-[100%] transition-all z-50 ${sortShow ? '' : 'translate-y-full'}`}
+      className={`fixed bottom-0 left-0 right-0 w-[100%] max-w-[1000px] m-auto transition-all z-50 ${
+        sortShow ? '' : 'translate-y-full'
+      }`}
     >
       <section className='flex flex-col justify-center items-center py-[12px] px-[62px] w-[100%] h-96 rounded-t-[20px] bg-white border'>
         <div className='mb-48 flex items-center'>
