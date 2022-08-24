@@ -6,11 +6,11 @@ import { instance } from '../apis';
 import { useNavigate } from 'react-router-dom';
 import { overlayAction, OverlayState } from '../redux/features/overlaySlice';
 import { useDispatch, useSelector } from 'react-redux';
-import { AppDispatch, RootState } from '../redux/store';
+import { RootState } from '../redux/store';
 
 const MapContainer = () => {
   const mapRef = useRef(null);
-  const dispatch = useDispatch<AppDispatch>();
+  const dispatch = useDispatch();
   const overlay = useSelector((state: RootState) => state.overlay);
   const nowPosition = useSelector((state: RootState) => state.position);
   const navigate = useNavigate();
@@ -116,12 +116,15 @@ const MapContainer = () => {
           {CustomOverlay()}
         </CustomOverlayMap>
       ) : (
-        <span className='flex flex-row items-center gap-5 mt-3'>
-          <div>{address}</div>
-          <button type='button' onClick={handleSendAddress}>
-            선택
-          </button>
-        </span>
+        <>
+          <MapMarker position={{ lat: position.lat, lng: position.lng }} />
+          <span className='flex flex-row items-center gap-5 mt-3'>
+            <div>{address}</div>
+            <button type='button' onClick={handleSendAddress}>
+              선택
+            </button>
+          </span>
+        </>
       )}
     </Map>
   );

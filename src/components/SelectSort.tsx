@@ -25,7 +25,7 @@ const SelectSort = () => {
 
   return (
     <section
-      className={`fixed bottom-0 left-0 right-0 w-[100%] max-w-[1000px] m-auto transition-all z-50 ${
+      className={`fixed bottom-0 left-0 right-0 w-[100%] max-w-[1000px] m-autotransition-all z-50 ${
         sortShow ? '' : 'translate-y-full'
       }`}
     >
