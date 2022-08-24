@@ -15,7 +15,6 @@ const SearchMatch: FC = () => {
   const queryClient = useQueryClient();
   const sort = useSelector((state: RootState) => state.search.sort);
   const subject = useSelector((state: RootState) => state.search.subject);
-  console.log(subject);
   const fetchPostList = async (pageParam: number) => {
     const res = await instance.get(`/api/posts?page=${pageParam}&size=20&subject=${subject}&sort=${sort}`);
     const data = res.data.content;
