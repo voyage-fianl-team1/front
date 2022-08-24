@@ -44,8 +44,6 @@ const App = () => {
         <Layout>
           <Routes>
             <Route path='/' element={<Home />} />
-            <Route path='/login' element={<Login />} />
-            <Route path='/signup' element={<SignUp />} />
             <Route path='/chatList' element={<ChatListPage />} />
             <Route path='/search' element={<Search />} />
             <Route path='/chat/:id' element={<ChatDetail />} />
@@ -55,16 +53,27 @@ const App = () => {
             <Route path='/new' element={<New />} />
             <Route path='/keword' element={<Keyword />} />
             <Route path='/rank/:id' element={<div>개인성적 디테일</div>} />
-            <Route path='*' element={<div>로그인이 필요한 서비스 입니다</div>} />
           </Routes>
         </Layout>
       </Suspense>
     );
   }
+
+  return (
+    <Suspense fallback={<LoadingSpinner />}>
+      <Layout>
+        <Routes>
+          <Route path='/' element={<Home />} />
+          <Route path='/login' element={<Login />} />
+          <Route path='/signup' element={<SignUp />} />
+          <Route path='*' element={<div>로그인이 필요한 서비스 입니다</div>} />
+        </Routes>
+      </Layout>
+    </Suspense>
+  );
 };
 
 export default App;
-
 /**
  * 백엔드 -> 쿼리시간 단축
  * 피드백 바탕으로 무슨피드백? 받았는지 정리
