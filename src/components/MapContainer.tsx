@@ -114,6 +114,11 @@ const MapContainer = () => {
             <div className='text-sm'>{overlay.subject}</div>
             <div className='text-sm'>{overlay.address}</div>
             <button onClick={() => navigate(`/match/${overlay.postId}`)}>go</button>
+            <span className='flex flex-row justify-center'>
+              <div className='w-16 overflow-hidden inline-block'>
+                <div className='h-11 w-11 bg-white -rotate-45 transform origin-top-left'></div>
+              </div>
+            </span>
           </span>
         </section>
       );
