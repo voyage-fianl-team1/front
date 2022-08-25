@@ -1,21 +1,24 @@
 import React, { FC, useEffect, useState, useCallback } from 'react';
 import { useForm } from 'react-hook-form';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../redux/store';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { instance } from '../apis';
+import { apis } from '../apis';
 import { PostEditDataProps, ImageType } from '../typings';
+import { addressClear } from '../redux/features/addressSlice';
+import { toggleClear, toggleModalShow } from '../redux/features/sortSlice';
 import Modal from '../components/Modal';
 import MapContainer from '../components/MapContainer';
 
 const Newpost: FC = () => {
   const location = useLocation();
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const [images, setImages] = useState<string[]>([]);
   const [uploadImage, setUploadImage] = useState<File[]>([]);
-  const [isOpenModal, setOpenModal] = useState<boolean>(false);
   const [imgUrl, setImageUrl] = useState([]);
   const address = useSelector((state: RootState) => state.address);
+  const modalShow = useSelector((state: RootState) => state.sort.modalShow);
   const { register, getValues } = useForm({});
   const data = location.state as PostEditDataProps;
 
@@ -46,23 +49,25 @@ const Newpost: FC = () => {
       lng: address.lng,
       address: address.address,
     };
-    const value = await instance.post('/api/posts', postData).then((res) => {
-      return res.data.postId;
-    });
+    const value = await apis.postUpload(postData);
     const formData = new FormData();
     for (let i = 0; i < uploadImage.length; i++) {
       if (uploadImage[i] !== null) {
         formData.append('files', uploadImage[i]);
       }
     }
-    await instance.post(`/api/images/posts/${value}`, formData);
+    await apis.uploadImage(value, formData);
     navigate('/search');
   };
 
   useEffect(() => {
+    dispatch(toggleClear());
     if (data) {
       setImageUrl(data.imgurls);
     }
+    return () => {
+      dispatch(addressClear());
+    };
   }, []);
 
   const handleEditUpload = async () => {
@@ -75,7 +80,8 @@ const Newpost: FC = () => {
       lng: address.lng,
       address: address.address,
     };
-    await instance.put(`/api/posts/${data.postId}`, postData);
+    await apis.updatePost(data.postId, postData);
+
     if (uploadImage.length > 0) {
       const formData = new FormData();
       for (let i = 0; i < uploadImage.length; i++) {
@@ -83,7 +89,9 @@ const Newpost: FC = () => {
           formData.append('files', uploadImage[i]);
         }
       }
-      await instance.post(`/api/images/posts/${data.postId}`, formData);
+      await apis.uploadImage(data.postId, formData);
+    } else {
+      navigate('/search');
     }
     navigate('/search');
   };
@@ -96,12 +104,16 @@ const Newpost: FC = () => {
   const handledeleteImage = async (id: number) => {
     const imgpaths = data.imgpaths[id];
     if (imgpaths !== undefined) {
-      await instance.delete(`/api/images/posts/${imgpaths['path']}`);
+      await apis.deleteImage(imgpaths['path']);
     }
     if (data.imgurls.length > 0) {
       setImageUrl(imgUrl.filter((_, index) => index !== id));
     }
   };
+
+  const handleToggleModal = useCallback(() => {
+    dispatch(toggleModalShow());
+  }, [modalShow]);
 
   const previewImage = () => {
     if (data) {
@@ -136,14 +148,6 @@ const Newpost: FC = () => {
       ));
     }
   };
-
-  const handleToggleModal = useCallback(() => {
-    setOpenModal(!isOpenModal);
-  }, [isOpenModal]);
-
-  const handleModalOut = useCallback(() => {
-    setOpenModal(false);
-  }, []);
 
   return (
     <section className='flex flex-col justify-center bg-gray-200 w-full h-screen '>
@@ -186,9 +190,9 @@ const Newpost: FC = () => {
         <option value='ETC'>기타</option>
       </select>
       <section>
-        {isOpenModal && (
+        {modalShow && (
           <Modal onClickToggleModal={handleToggleModal}>
-            <button className='ml-auto' onClick={handleModalOut}>
+            <button className='ml-auto' onClick={handleToggleModal}>
               취소
             </button>
             <MapContainer />

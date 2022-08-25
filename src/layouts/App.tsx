@@ -50,7 +50,6 @@ const App = () => {
         },
         (err) => {
           dispatch(positionAction({ lat: 0, lng: 0, isLoading: false }));
-          alert(err);
         }
       );
     } else {
@@ -72,6 +71,7 @@ const App = () => {
             <Route path='/map' element={<Map />} />
             <Route path='/match/:id' element={<Match />} />
             <Route path='/new' element={<New />} />
+            <Route path='/new/:id/edit' element={<New />} />
             <Route path='/keword' element={<Keyword />} />
             <Route path='/matchHistory/:id/subject/:subject' element={<MatchHistory />} />
           </Routes>
