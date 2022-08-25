@@ -47,7 +47,6 @@ const Match: FC = () => {
               {postData.owner === 1 && postData.matchStatus === 'ONGOING' ? '완료하기' : '되돌리기'}
             </button>
           </div>
-          <div className='mt-3 w-full h-10 bg-white'>{postData.title}</div>
           <section className='flex h-1/2 justify-center items-center gap-5'>
             {postData &&
               postData.imgurls.map((image: ImageType, id) => (
