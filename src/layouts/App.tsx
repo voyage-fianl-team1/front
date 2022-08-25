@@ -18,6 +18,7 @@ import { apis } from '../apis';
 import { login } from '../redux/features/userSlice';
 import { positionAction } from '../redux/features/postionSlice';
 import LoadingSpinner from '../components/loadingSpinner';
+import MatchHistory from '../pages/MatchHistory';
 
 const Home = React.lazy(() => import('../pages/Home'));
 
@@ -72,7 +73,7 @@ const App = () => {
             <Route path='/match/:id' element={<Match />} />
             <Route path='/new' element={<New />} />
             <Route path='/keword' element={<Keyword />} />
-            <Route path='/rank/:id' element={<div>개인성적 디테일</div>} />
+            <Route path='/matchHistory/:id/subject/:subject' element={<MatchHistory />} />
           </Routes>
         </Layout>
       </Suspense>

@@ -68,4 +68,8 @@ export const apis = {
   getSearchList: (pageParam: number, keyword: string) =>
     instance.get(`/api/posts/search?page=${pageParam}&size=20&search=${keyword}`),
   setLastActive: (roomId: number) => instance.put(`/api/room/${roomId}/lastActive`),
+  getUserRequests: () => instance.get('/api/users/requests').then((res) => res.data.mymatchList),
+  getUserPosts: () => instance.get('/api/users/posts').then((res) => res.data.mypostList),
+  getUserHistory: (userId: number, subject: string) =>
+    instance.get(`/api/users/${userId}/ranking?subject=${subject}`).then((res) => res.data),
 };

@@ -32,6 +32,12 @@ const PageTitle = () => {
       return `${roomId} 채팅방`;
     }
 
+    // 유저 전적도 분기처리
+    if (/\/matchHistory\/.+/g.test(location.pathname)) {
+      const roomId = location.pathname.split('/')[2];
+      return `${roomId} 의 전적`;
+    }
+
     // 나머지는 key, value 로 처리
     return titleTable[location.pathname];
   }, [location.pathname]);

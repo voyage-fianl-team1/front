@@ -88,3 +88,22 @@ export interface RecentMatch {
   address?: string;
   postId: number;
 }
+
+export interface UserRequest {
+  id: number;
+  matchStatus: string;
+  subject: string;
+  title: string;
+}
+
+export interface UserPostType {
+  id: number;
+  subject: string;
+  title: string;
+}
+
+export interface MatchHistoryType {
+  matchDeadline: string; // 경기한 날
+  subject: string;
+  status: string;
+}
