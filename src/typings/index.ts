@@ -106,7 +106,8 @@ export interface MatchHistoryType {
   matchDeadline: string; // 경기한 날
   subject: string;
   status: string;
- 
+}
+
 export interface TotalStatus {
   [key: string]: string;
 }
