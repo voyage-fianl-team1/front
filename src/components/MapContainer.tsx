@@ -9,6 +9,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../redux/store';
 import { toggleModalShow } from '../redux/features/sortSlice';
 import { ImageType } from '../typings';
+import { IoMdClose } from 'react-icons/io';
 
 const MapContainer = () => {
   const mapRef = useRef(null);
@@ -101,10 +102,12 @@ const MapContainer = () => {
   const CustomOverlay = () => {
     if (isOpen) {
       return (
-        <section className='w-56 h-56 bg-white'>
-          <button className='text-sm' onClick={() => setIsOpen(false)}>
-            닫기
-          </button>
+        <section className='w-56 h-56 bg-white rounded-xl border border-matchgi-lightgray'>
+          <div className='text-right mr-1'>
+            <button className='text-sm' onClick={() => setIsOpen(false)}>
+              <IoMdClose />
+            </button>
+          </div>
           <img src={overlay.imgUrl} alt='' className='w-full h-3/5 bg-slate-400'></img>
           <span className='flex flex-col'>
             <div className='text-sm'>{overlay.title}</div>
