@@ -4,7 +4,7 @@ import { addressAction } from '../redux/features/addressSlice';
 import { useQuery } from '@tanstack/react-query';
 import { apis } from '../apis';
 import { useNavigate } from 'react-router-dom';
-import { overlayAction, OverlayState } from '../redux/features/overlaySlice';
+import { overlayAction, overlayClear, OverlayState } from '../redux/features/overlaySlice';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../redux/store';
 import { toggleModalShow } from '../redux/features/sortSlice';
@@ -17,7 +17,6 @@ const MapContainer = () => {
   const nowPosition = useSelector((state: RootState) => state.persistReducered.position);
   const navigate = useNavigate();
   const res = useQuery(['matchList'], async () => await apis.getAroundGame(nowPosition.lat, nowPosition.lng));
-  console.log(res.data);
   const [position, setPosition] = useState({ lat: 0, lng: 0 });
   const [address, setAddress] = useState<string>();
   const [isOpen, setIsOpen] = useState(false);
@@ -26,7 +25,10 @@ const MapContainer = () => {
     if (window.location.pathname !== '/map') {
       getAddress(position.lat, position.lng);
     }
-  });
+    return () => {
+      dispatch(overlayClear());
+    };
+  }, []);
 
   const getAddress = (lat: number, lng: number) => {
     const geocoder = new window.kakao.maps.services.Geocoder();
@@ -114,7 +116,6 @@ const MapContainer = () => {
       );
     }
   };
-
   return (
     <Map
       center={{ lat: nowPosition.lat, lng: nowPosition.lng }}
