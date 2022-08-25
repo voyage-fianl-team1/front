@@ -3,11 +3,13 @@ import { createSlice } from '@reduxjs/toolkit';
 interface sortState {
   sortShow: boolean;
   selectShow: boolean;
+  modalShow: boolean;
 }
 
 const initialState: sortState = {
   sortShow: false,
   selectShow: false,
+  modalShow: false,
 };
 
 const sortSlice = createSlice({
@@ -20,9 +22,13 @@ const sortSlice = createSlice({
     toggleSelectShow: (state) => {
       state.selectShow = !state.selectShow;
     },
+    toggleModalShow: (state) => {
+      state.modalShow = !state.modalShow;
+    },
+    toggleClear: () => initialState,
   },
 });
 
 export default sortSlice;
 
-export const { toggleSortShow, toggleSelectShow } = sortSlice.actions;
+export const { toggleSortShow, toggleSelectShow, toggleModalShow, toggleClear } = sortSlice.actions;

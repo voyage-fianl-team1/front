@@ -3,21 +3,21 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 interface UserState {
   isLogin: boolean;
   id: number | undefined;
-  draw: number | undefined;
-  lose: number | undefined;
+  draw: number;
+  lose: number;
   nickname: string | undefined;
   profileImgUrl: string | undefined;
-  win: number | undefined;
+  win: number;
 }
 
 const initialState: UserState = {
   isLogin: false,
   id: undefined,
-  draw: undefined,
-  lose: undefined,
+  draw: 0,
+  lose: 0,
   nickname: undefined,
   profileImgUrl: undefined,
-  win: undefined,
+  win: 0,
 };
 
 const userSlice = createSlice({
