@@ -21,9 +21,10 @@ const addressSlice = createSlice({
       state.lat = action.payload.lat;
       state.lng = action.payload.lng;
     },
+    addressClear: () => initialState,
   },
 });
 
 export default addressSlice;
 
-export const { addressAction } = addressSlice.actions;
+export const { addressAction, addressClear } = addressSlice.actions;

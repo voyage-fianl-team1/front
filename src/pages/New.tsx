@@ -1,16 +1,18 @@
 import React, { FC, useEffect, useState, useCallback } from 'react';
 import { useForm } from 'react-hook-form';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../redux/store';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { apis } from '../apis';
 import { PostEditDataProps, ImageType } from '../typings';
+import { addressClear } from '../redux/features/addressSlice';
 import Modal from '../components/Modal';
 import MapContainer from '../components/MapContainer';
 
 const Newpost: FC = () => {
   const location = useLocation();
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const [images, setImages] = useState<string[]>([]);
   const [uploadImage, setUploadImage] = useState<File[]>([]);
   const [isOpenModal, setOpenModal] = useState<boolean>(false);
@@ -61,6 +63,9 @@ const Newpost: FC = () => {
     if (data) {
       setImageUrl(data.imgurls);
     }
+    return () => {
+      dispatch(addressClear());
+    };
   }, []);
 
   const handleEditUpload = async () => {
