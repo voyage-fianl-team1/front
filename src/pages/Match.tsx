@@ -11,8 +11,8 @@ const Match: FC = () => {
   const postId = Number(param.id);
   const res = useQuery(['postList'], async () => await apis.getPostList(postId));
   const join = useQuery(['joinList'], async () => await apis.getJoinList(postId));
+  const navigate = useNavigate();
   const getPostData = () => {
-    const navigate = useNavigate();
     const handleJoinTheGame = async () => {
       try {
         await apis.postJoinGame(postId);
@@ -29,11 +29,27 @@ const Match: FC = () => {
         alert('게시글 삭제에 실패했습니다.');
       }
     };
-    const handleStatusChange = async () => {
-      apis.updateMatchStatus(postId);
-      window.location.reload();
+    const CompleteBtn = () => {
+      const handleStatusChange = async () => {
+        apis.updateMatchStatus(postId);
+      };
+      const postData: PostDataProps = res?.data?.data;
+      if (postData.owner === 1 && postData.matchStatus === 'ONGOING') {
+        return (
+          <button type='button' className='bg-black text-white' onClick={handleStatusChange}>
+            완료하기
+          </button>
+        );
+      } else if (postData.owner === 1 && postData.matchStatus === 'MATCHEND') {
+        return (
+          <button type='button' className='bg-black text-white' onClick={handleStatusChange}>
+            되돌리기
+          </button>
+        );
+      } else if (postData.owner === -1) {
+        return;
+      }
     };
-
     if (res.isLoading) {
       return <LoadingSpinner />;
     }
@@ -43,9 +59,7 @@ const Match: FC = () => {
         <section className='flex flex-col justify-center bg-gray-200 w-full h-screen '>
           <div className='flex mt-3 w-full h-10 bg-white justify-between'>
             {postData.title}
-            <button type='button' className='bg-black text-white' onClick={handleStatusChange}>
-              {postData.owner === 1 && postData.matchStatus === 'ONGOING' ? '완료하기' : '되돌리기'}
-            </button>
+            {CompleteBtn()}
           </div>
           <section className='flex h-1/2 justify-center items-center gap-5'>
             {postData &&
@@ -56,16 +70,12 @@ const Match: FC = () => {
               ))}
           </section>
           <section className='flex flex-row gap-1'>
-            <div className='w-full'>
-              모집마감일
-              <div className='w-full h-7 bg-white'>{postData.matchDeadline}</div>
-            </div>
+            <div className='w-full h-7 bg-white mt-3'> 모집마감일 : {postData.matchDeadline}</div>
           </section>
-          종목
-          <div className='mb-5 w-full h-10 bg-white'>{postData.subject}</div>
-          <section className='flex w-full bg-white mt-3 justify-between'>
-            <span>{postData.address}</span>
+          <section className='flex flex-row gap-1'>
+            <div className='w-full h-7 bg-white mt-3'> 종목 : {postData.subject}</div>
           </section>
+          <section className='flex w-full bg-white mt-3'>주소 : {postData.address}</section>
           <div className='mb-5 w-full h-2/5'>{postData.content}</div>
           {postData.owner === 1 ? getJoinData() : null}
           <div className='flex items-center justify-center gap-5'>

@@ -19,17 +19,17 @@ const MapContainer = () => {
   const navigate = useNavigate();
   const res = useQuery(['matchList'], async () => await apis.getAroundGame(nowPosition.lat, nowPosition.lng));
   const [position, setPosition] = useState({ lat: 0, lng: 0 });
+  console.log(position);
   const [address, setAddress] = useState<string>();
   const [isOpen, setIsOpen] = useState(false);
-  //useMutation
   useEffect(() => {
-    if (window.location.pathname !== '/map') {
+    if (window.location.pathname == '/new') {
       getAddress(position.lat, position.lng);
     }
     return () => {
       dispatch(overlayClear());
     };
-  }, []);
+  }, [position]);
 
   const getAddress = (lat: number, lng: number) => {
     const geocoder = new window.kakao.maps.services.Geocoder();
@@ -43,7 +43,6 @@ const MapContainer = () => {
     };
     geocoder.coord2Address(coord.getLng(), coord.getLat(), callback);
   };
-  //맵을 마운트대 리덕스가 초기값면 다시 지오로케이션으로 가져오고 그 아니면 그냥 하기
   const handleSendAddress = () => {
     dispatch(addressAction({ address: address, lat: position.lat, lng: position.lng }));
     dispatch(toggleModalShow());
