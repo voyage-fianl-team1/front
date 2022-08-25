@@ -1,43 +1,29 @@
-import React, { useCallback, useEffect } from 'react';
-import { useForm } from 'react-hook-form';
-import { apis } from '../apis';
+import React from 'react';
+import UserInfo from '../components/UserInfo';
+import UserRankInfo from '../components/UserRankInfo';
+import UserMatches from '../components/UserMatches';
+import UserPost from '../components/UserPost';
+import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { RootState } from '../redux/store';
 
-interface UpdateUser {
-  nickname: string;
-  deleteImage: string;
-  fileList: FileList;
-}
-
 const Profile = () => {
-  const { nickname, profileImgUrl } = useSelector((state: RootState) => state.user);
-  const { register, getValues, setValue } = useForm<UpdateUser>();
-
-  useEffect(() => {
-    if (nickname) {
-      setValue('nickname', nickname);
-    }
-  }, [nickname, profileImgUrl]);
-
-  const handleChangeUser = useCallback(async () => {
-    try {
-      const nicknameResult = await apis.updateUser(getValues().nickname);
-      const profileImageResult = await apis.updateUserProfileImage(getValues().fileList[0]);
-      console.log(nicknameResult);
-      console.log(profileImageResult);
-    } catch (e) {
-      console.error(e);
-    }
-  }, []);
-
+  const { id } = useSelector((state: RootState) => state.user);
   return (
     <div className='flex flex-col items-center'>
-      <h1 className='text-3xl font-bold'>Profile page</h1>
-      <img src={profileImgUrl || '/assets/images/avatar.svg'} alt='profileImgUrl' />
-      <input type='text' placeholder='nickname' {...register('nickname')} />
-      <input type='file' {...register('fileList')} />
-      <button onClick={handleChangeUser}>변경하기</button>
+      <UserInfo />
+      <div className='divider' />
+      <div className='flex w-[100%] justify-between'>
+        <h1 className='font-bold mb-4 text-xl'>개인성적</h1>
+        <Link to={`/matchHistory/${id}/subject/ALL`}>
+          <button>더보기 +</button>
+        </Link>
+      </div>
+      <UserRankInfo />
+      <h1 className='text-xl font-bold text-start w-[100%] mt-4'>내가 신청한 경기</h1>
+      <UserMatches />
+      <h1 className='text-xl font-bold text-start w-[100%] mt-4'>내가 작성한 게시글</h1>
+      <UserPost />
     </div>
   );
 };

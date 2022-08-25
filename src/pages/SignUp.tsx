@@ -78,7 +78,7 @@ const SignUp = () => {
           {...register('passwordCheck', { required: '비밀번호 확인해주세요' })}
         />
         {errors.passwordCheck && <Error>{errors.passwordCheck.message}</Error>}
-        <div className='fixed bottom-20 left-0 right-0 px-5 max-w-[1000px] m-auto'>
+        <div className='max-w-[1000px] m-auto w-[100%] mt-10'>
           <button className='login-button w-[100%]' type='submit'>
             회원가입
           </button>
