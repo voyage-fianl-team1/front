@@ -86,4 +86,5 @@ export const apis = {
       return res.data.postId;
     }),
   uploadImage: (postId: number, data: FormData) => instance.post(`/api/images/posts/${postId}`, data),
+  getAroundGame: (lat: number, lng: number) => instance.get(`/api/posts/gps?lat=${lat}&lng=${lng}`),
 };
