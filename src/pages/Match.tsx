@@ -1,22 +1,16 @@
-import React, { FC, useEffect } from 'react';
+import React, { FC } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { apis } from '../apis';
 import { useParams, Link } from 'react-router-dom';
 import { PostDataProps, JoinDataProps, ImageType } from '../typings';
 import { useNavigate } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
-import { toggleClear } from '../redux/features/sortSlice';
 import LoadingSpinner from '../components/loadingSpinner';
 
 const Match: FC = () => {
   const param = useParams();
   const postId = Number(param.id);
-  const dispatch = useDispatch();
   const res = useQuery(['postList'], async () => await apis.getPostList(postId));
   const join = useQuery(['joinList'], async () => await apis.getJoinList(postId));
-  useEffect(() => {
-    dispatch(toggleClear());
-  }, []);
   const getPostData = () => {
     const navigate = useNavigate();
     const handleJoinTheGame = async () => {

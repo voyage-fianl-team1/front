@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import { apis } from '../apis';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../redux/store';
-import { toggleSortShow, toggleSelectShow } from '../redux/features/sortSlice';
+import { toggleSortShow, toggleSelectShow, toggleClear } from '../redux/features/sortSlice';
 import { RiArrowDownSLine } from 'react-icons/ri';
 import LoadingSpinner from '../components/loadingSpinner';
 
@@ -40,6 +40,12 @@ const SearchMatch: FC = () => {
 
   const handleToggleSort = useCallback(() => {
     dispatch(toggleSortShow());
+  }, []);
+
+  useEffect(() => {
+    return () => {
+      dispatch(toggleClear());
+    };
   }, []);
 
   return (
