@@ -6,6 +6,7 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import { apis } from '../apis';
 import { PostEditDataProps, ImageType } from '../typings';
 import { addressClear } from '../redux/features/addressSlice';
+import { toggleClear, toggleModalShow } from '../redux/features/sortSlice';
 import Modal from '../components/Modal';
 import MapContainer from '../components/MapContainer';
 
@@ -15,9 +16,9 @@ const Newpost: FC = () => {
   const dispatch = useDispatch();
   const [images, setImages] = useState<string[]>([]);
   const [uploadImage, setUploadImage] = useState<File[]>([]);
-  const [isOpenModal, setOpenModal] = useState<boolean>(false);
   const [imgUrl, setImageUrl] = useState([]);
   const address = useSelector((state: RootState) => state.address);
+  const modalShow = useSelector((state: RootState) => state.sort.modalShow);
   const { register, getValues } = useForm({});
   const data = location.state as PostEditDataProps;
 
@@ -60,6 +61,7 @@ const Newpost: FC = () => {
   };
 
   useEffect(() => {
+    dispatch(toggleClear());
     if (data) {
       setImageUrl(data.imgurls);
     }
@@ -109,6 +111,10 @@ const Newpost: FC = () => {
     }
   };
 
+  const handleToggleModal = useCallback(() => {
+    dispatch(toggleModalShow());
+  }, [modalShow]);
+
   const previewImage = () => {
     if (data) {
       return imgUrl.map((image: ImageType, id) => (
@@ -142,14 +148,6 @@ const Newpost: FC = () => {
       ));
     }
   };
-
-  const handleToggleModal = useCallback(() => {
-    setOpenModal(!isOpenModal);
-  }, [isOpenModal]);
-
-  const handleModalOut = useCallback(() => {
-    setOpenModal(false);
-  }, []);
 
   return (
     <section className='flex flex-col justify-center bg-gray-200 w-full h-screen '>
@@ -192,9 +190,9 @@ const Newpost: FC = () => {
         <option value='ETC'>기타</option>
       </select>
       <section>
-        {isOpenModal && (
+        {modalShow && (
           <Modal onClickToggleModal={handleToggleModal}>
-            <button className='ml-auto' onClick={handleModalOut}>
+            <button className='ml-auto' onClick={handleToggleModal}>
               취소
             </button>
             <MapContainer />

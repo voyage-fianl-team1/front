@@ -7,6 +7,7 @@ import { useNavigate } from 'react-router-dom';
 import { overlayAction, OverlayState } from '../redux/features/overlaySlice';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../redux/store';
+import { toggleModalShow } from '../redux/features/sortSlice';
 
 const MapContainer = () => {
   const mapRef = useRef(null);
@@ -41,6 +42,7 @@ const MapContainer = () => {
 
   const handleSendAddress = () => {
     dispatch(addressAction({ address: address, lat: position.lat, lng: position.lng }));
+    dispatch(toggleModalShow());
   };
 
   const MatchMarker = () => {
