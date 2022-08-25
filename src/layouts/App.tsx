@@ -49,7 +49,6 @@ const App = () => {
         },
         (err) => {
           dispatch(positionAction({ lat: 0, lng: 0, isLoading: false }));
-          alert('위치 정보를 받아올 수 없습니다.');
         }
       );
     } else {
