@@ -1,20 +1,21 @@
 import React, { FC } from 'react';
 import { useQuery } from '@tanstack/react-query';
-import { instance, apis } from '../apis';
+import { apis } from '../apis';
 import { useParams, Link } from 'react-router-dom';
 import { PostDataProps, JoinDataProps, ImageType } from '../typings';
 import { useNavigate } from 'react-router-dom';
+import LoadingSpinner from '../components/loadingSpinner';
 
 const Match: FC = () => {
   const param = useParams();
-  const postId = param.id;
-  const res = useQuery(['postList'], async () => await instance.get(`/api/posts/${postId}`));
-  const join = useQuery(['joinList'], async () => await instance.get(`/api/posts/${postId}/request`));
+  const postId = Number(param.id);
+  const res = useQuery(['postList'], async () => await apis.getPostList(postId));
+  const join = useQuery(['joinList'], async () => await apis.getJoinList(postId));
   const getPostData = () => {
     const navigate = useNavigate();
     const handleJoinTheGame = async () => {
       try {
-        await instance.post(`/api/posts/${postId}/request`);
+        await apis.postJoinGame(postId);
         alert('참가 신청이 완료되었습니다.');
       } catch (err) {
         alert('참가 신청은 중복으로 할 수 없습니다.');
@@ -22,18 +23,19 @@ const Match: FC = () => {
     };
     const handleDeletePost = async () => {
       try {
-        await instance.delete(`/api/posts/${postId}`);
+        await apis.deletePost(postId);
         navigate(-1);
       } catch (err) {
-        console.log(err);
+        alert('게시글 삭제에 실패했습니다.');
       }
     };
     const handleStatusChange = async () => {
-      instance.put(`/api/posts/matchstatus/${postId}`);
+      apis.updateMatchStatus(postId);
       window.location.reload();
     };
+
     if (res.isLoading) {
-      return <div>Loading...</div>;
+      return <LoadingSpinner />;
     }
     if (res.data) {
       const postData: PostDataProps = res.data.data;
@@ -111,7 +113,7 @@ const Match: FC = () => {
 
   const getJoinData = () => {
     if (join.isLoading) {
-      return;
+      return <LoadingSpinner />;
     }
     if (join.data && res.data?.data.matchStatus === 'ONGOING') {
       const joinData: JoinDataProps = join.data.data;
@@ -127,13 +129,13 @@ const Match: FC = () => {
                 <div className='flex gap-2'>
                   <button
                     type='button'
-                    onClick={async () => await instance.put(`/api/requests/${value.requestId}`, { status: 'ACCEPT' })}
+                    onClick={async () => await apis.updateTotalStatus(value.requestId, { status: 'ACCEPT' })}
                   >
                     승인
                   </button>
                   <button
                     type='button'
-                    onClick={async () => await instance.put(`/api/requests/${value.requestId}`, { status: 'REJECT' })}
+                    onClick={async () => await apis.updateTotalStatus(value.requestId, { status: 'REJECT' })}
                   >
                     거절
                   </button>
@@ -157,19 +159,20 @@ const Match: FC = () => {
                 <div className='flex gap-2'>
                   <button
                     type='button'
-                    onClick={async () => await instance.put(`/api/requests/${value.requestId}`, { status: 'WIN' })}
+                    onClick={async () => await apis.updateTotalStatus(value.requestId, { status: 'WIN' })}
                   >
                     승
                   </button>
                   <button
                     type='button'
-                    onClick={async () => await instance.put(`/api/requests/${value.requestId}`, { status: 'DRAW' })}
+                    onClick={async () => await apis.updateTotalStatus(value.requestId, { status: 'DRAW' })}
                   >
                     무
                   </button>
                   <button
                     type='button'
-                    onClick={async () => await instance.put(`/api/requests/${value.requestId}`, { status: 'LOSE' })}
+                    value='LOSE'
+                    onClick={async () => await apis.updateTotalStatus(value.requestId, { status: 'LOSE' })}
                   >
                     패
                   </button>
