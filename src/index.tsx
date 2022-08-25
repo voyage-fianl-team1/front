@@ -8,7 +8,10 @@ import { BrowserRouter } from 'react-router-dom';
 import App from './layouts/App';
 import reportWebVitals from './reportWebVitals';
 import { store } from './redux/store';
+import { PersistGate } from 'redux-persist/lib/integration/react';
+import { persistStore } from 'redux-persist';
 
+const persistor = persistStore(store);
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
@@ -20,12 +23,14 @@ const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement)
 
 root.render(
   <Provider store={store}>
-    <QueryClientProvider client={queryClient}>
-      <BrowserRouter>
-        <App />
-      </BrowserRouter>
-      <ReactQueryDevtools initialIsOpen={false} />
-    </QueryClientProvider>
+    <PersistGate loading={null} persistor={persistor}>
+      <QueryClientProvider client={queryClient}>
+        <BrowserRouter>
+          <App />
+        </BrowserRouter>
+        <ReactQueryDevtools initialIsOpen={false} />
+      </QueryClientProvider>
+    </PersistGate>
   </Provider>
 );
 

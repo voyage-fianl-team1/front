@@ -14,20 +14,18 @@ const MapContainer = () => {
   const mapRef = useRef(null);
   const dispatch = useDispatch();
   const overlay = useSelector((state: RootState) => state.overlay);
-  const nowPosition = useSelector((state: RootState) => state.position);
+  const nowPosition = useSelector((state: RootState) => state.persistReducered.position);
   const navigate = useNavigate();
   const res = useQuery(['matchList'], async () => await apis.getAroundGame(nowPosition.lat, nowPosition.lng));
+  console.log(res.data);
   const [position, setPosition] = useState({ lat: 0, lng: 0 });
   const [address, setAddress] = useState<string>();
   const [isOpen, setIsOpen] = useState(false);
-
+  //useMutation
   useEffect(() => {
     if (window.location.pathname !== '/map') {
       getAddress(position.lat, position.lng);
     }
-    return () => {
-      getAddress(0, 0);
-    };
   });
 
   const getAddress = (lat: number, lng: number) => {
@@ -42,7 +40,7 @@ const MapContainer = () => {
     };
     geocoder.coord2Address(coord.getLng(), coord.getLat(), callback);
   };
-
+  //맵을 마운트대 리덕스가 초기값면 다시 지오로케이션으로 가져오고 그 아니면 그냥 하기
   const handleSendAddress = () => {
     dispatch(addressAction({ address: address, lat: position.lat, lng: position.lng }));
     dispatch(toggleModalShow());
@@ -121,7 +119,7 @@ const MapContainer = () => {
     <Map
       center={{ lat: nowPosition.lat, lng: nowPosition.lng }}
       className='relative w-full h-screen'
-      level={4}
+      level={3}
       //level 14까지
       ref={mapRef}
       onClick={(_t, mouseEvent) =>

@@ -1,4 +1,6 @@
-import { configureStore } from '@reduxjs/toolkit';
+import { combineReducers, configureStore } from '@reduxjs/toolkit';
+import { persistReducer } from 'redux-persist';
+import storage from 'redux-persist/lib/storage/session';
 import userSlice from './features/userSlice';
 import addressSlice from './features/addressSlice';
 import commonSlice from './features/commonSlice';
@@ -7,6 +9,18 @@ import sortSlice from './features/sortSlice';
 import searchSlice from './features/searchSlice';
 import overlaySlice from './features/overlaySlice';
 import positionSlice from './features/postionSlice';
+
+const persistConfig = {
+  key: 'root',
+  storage,
+  whiteList: ['postion'],
+};
+
+const reducers = combineReducers({
+  position: positionSlice.reducer,
+});
+
+const persistReducered = persistReducer(persistConfig, reducers);
 
 export const store = configureStore({
   reducer: {
@@ -17,7 +31,7 @@ export const store = configureStore({
     sort: sortSlice.reducer,
     search: searchSlice.reducer,
     overlay: overlaySlice.reducer,
-    position: positionSlice.reducer,
+    persistReducered,
   },
 });
 

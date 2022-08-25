@@ -50,13 +50,13 @@ const Newpost: FC = () => {
       address: address.address,
     };
     const value = await apis.postUpload(postData);
-    const formData = new FormData();
-    for (let i = 0; i < uploadImage.length; i++) {
-      if (uploadImage[i] !== null) {
+    if (uploadImage.length > 0) {
+      const formData = new FormData();
+      for (let i = 0; i < uploadImage.length; i++) {
         formData.append('files', uploadImage[i]);
       }
+      await apis.uploadImage(value, formData);
     }
-    await apis.uploadImage(value, formData);
     navigate('/search');
   };
 
