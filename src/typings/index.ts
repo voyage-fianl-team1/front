@@ -91,15 +91,19 @@ export interface RecentMatch {
 
 export interface UserRequest {
   id: number;
-  matchStatus: string;
+  requestStatus: string;
   subject: string;
   title: string;
+  imageUrl: string[];
+  createdAt: string;
 }
 
 export interface UserPostType {
   id: number;
   subject: string;
   title: string;
+  imageUrl: string[];
+  createdAt: string;
 }
 
 export interface MatchHistoryType {
@@ -120,4 +124,12 @@ export interface PostUpload {
   lat: number;
   lng: number;
   address?: string;
+}
+
+export interface Notification {
+  content: string;
+  createdAt: string;
+  id: number;
+  isread: boolean;
+  postId: number;
 }

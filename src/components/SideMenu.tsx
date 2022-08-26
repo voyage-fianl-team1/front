@@ -50,7 +50,7 @@ const SideMenu = () => {
 
   return (
     <aside
-      className={`absolute top-0 bottom-0 right-0 w-[100%] bg-[#fff] transition-all z-100 ${
+      className={`absolute top-0 bottom-0 right-0 w-[100%] bg-[#fff] transition-all z-[999] ${
         sideMenuShow ? '' : 'translate-x-full'
       }`}
     >

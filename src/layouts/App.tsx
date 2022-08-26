@@ -1,4 +1,4 @@
-import React, { Suspense, useEffect, useState } from 'react';
+import React, { Suspense, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Route, Routes } from 'react-router-dom';
 import { RootState } from '../redux/store';
@@ -14,12 +14,13 @@ import Layout from './Layout';
 import ChatListPage from '../pages/ChatListPage';
 import Keyword from '../pages/keyword';
 import ChatDetail from '../pages/ChatDetail';
-import Review from '../components/Review';
 import { apis } from '../apis';
 import { login } from '../redux/features/userSlice';
 import { positionAction } from '../redux/features/postionSlice';
 import LoadingSpinner from '../components/loadingSpinner';
 import MatchHistory from '../pages/MatchHistory';
+import ProfileEdit from '../pages/ProfileEdit';
+import UserMatchMore from '../pages/UserMatchMore';
 
 const Home = React.lazy(() => import('../pages/Home'));
 
@@ -69,12 +70,13 @@ const App = () => {
             <Route path='/search' element={<Search />} />
             <Route path='/chat/:id' element={<ChatDetail />} />
             <Route path='/profile' element={<Profile />} />
+            <Route path='/profile/userMatchMore' element={<UserMatchMore />} />
+            <Route path='/profile/edit' element={<ProfileEdit />} />
             <Route path='/map' element={<Maps />} />
             <Route path='/match/:id' element={<Match />} />
             <Route path='/new' element={<New />} />
             <Route path='/new/:id/edit' element={<New />} />
             <Route path='/keword' element={<Keyword />} />
-            <Route path='/review' element={<Review />} />
             <Route path='/matchHistory/:id/subject/:subject' element={<MatchHistory />} />
           </Routes>
         </Layout>
