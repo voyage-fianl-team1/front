@@ -123,9 +123,9 @@ export interface PostUpload {
 }
 
 export interface Notification {
-  postId: number;
-  Id: number;
   content: string;
   createdAt: string;
+  id: number;
   isread: boolean;
+  postId: number;
 }
