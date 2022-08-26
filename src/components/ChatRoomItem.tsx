@@ -12,7 +12,7 @@ interface Props {
 const ChatRoomItem: FC<Props> = ({ id, data }) => {
   const navigate = useNavigate();
   const handleRoute = useCallback(() => {
-    navigate(`/chat/${id}`);
+    navigate(`/chat/${id}?title=${data.title}`);
   }, []);
   const { chats } = useSocket(id);
 
@@ -40,7 +40,11 @@ const ChatRoomItem: FC<Props> = ({ id, data }) => {
   return (
     <li className='flex justify-between items-center cursor-pointer relative ' onClick={handleRoute}>
       <div className='flex items-center gap-3'>
-        <img src={data.imgUrl ? data.imgUrl : '/assets/images/avatar.svg'} alt='avatar-icon' className='w-[48px]' />
+        <img
+          src={data.imgUrl ? data.imgUrl : '/assets/images/avatar.svg'}
+          alt='avatar-icon'
+          className='w-[48px] h-[48px] object-cover rounded-full'
+        />
         <div>
           <h1 className='font-bold'>{data.title}</h1>
           <p className='text-matchgi-gray text-sm'>

@@ -58,7 +58,7 @@ const UserInfoDisplay = () => {
             패 <span className='font-semibold'>{lose}</span>
           </li>
           <li className='ml-4'>
-            <Link to={`/matchHistory/${id}/subject/ALL`}>
+            <Link to={`/matchHistory/${id}/subject/ALL?nickname=${nickname}`}>
               <img src='/assets/images/menu/arrow.svg' alt='arrow' />
             </Link>
           </li>
