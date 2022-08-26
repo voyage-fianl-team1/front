@@ -22,10 +22,12 @@ const Chat: FC<Props> = ({ direction, bg, children, profilePath, username, creat
 
   return (
     <li className={`flex ${messageDirection} my-3 items-start gap-2`}>
-      {profilePath ? (
-        <img src={profilePath} alt='profile-image' className='w-[34px] h-[34px] rounded-full object-center' />
-      ) : direction === 'left' ? (
-        <img src='/assets/images/avatar.svg' alt='profile-default' className='' />
+      {direction === 'left' ? (
+        <img
+          src={profilePath || '/assets/images/avatar.svg'}
+          alt='profile-image'
+          className='w-[34px] h-[34px] rounded-full object-center'
+        />
       ) : null}
       <div>
         {direction === 'left' && <h2 className='ml-1 text-sm'>{username}</h2>}
@@ -48,4 +50,4 @@ const Chat: FC<Props> = ({ direction, bg, children, profilePath, username, creat
   );
 };
 
-export default React.memo(Chat);
+export default Chat;

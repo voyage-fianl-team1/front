@@ -20,8 +20,9 @@ const Match: FC = () => {
 
   const handleJoinTheGame = async () => {
     try {
-      const value = await apis.postJoinGame(postId);
+      await apis.postJoinGame(postId);
       alert('참가 신청이 완료되었습니다.');
+      navigate('/');
     } catch (err) {
       alert('참가 신청은 중복으로 할 수 없습니다.');
     }
