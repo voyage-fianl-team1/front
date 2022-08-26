@@ -12,7 +12,7 @@ interface Props {
 const ChatRoomItem: FC<Props> = ({ id, data }) => {
   const navigate = useNavigate();
   const handleRoute = useCallback(() => {
-    navigate(`/chat/${id}`);
+    navigate(`/chat/${id}?title=${data.title}`);
   }, []);
   const { chats } = useSocket(id);
 

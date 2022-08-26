@@ -1,5 +1,7 @@
 import React, { useCallback, useMemo } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { RootState } from '../redux/store';
 
 interface ITitleTable {
   [key: string]: string;
@@ -21,6 +23,8 @@ const titleTable: ITitleTable = {
 const PageTitle = () => {
   const navigate = useNavigate();
   const location = useLocation();
+  const param = useParams();
+  const { nickname } = useSelector((state: RootState) => state.user);
 
   const handleRouteBack = useCallback(() => {
     navigate(-1);
@@ -28,17 +32,16 @@ const PageTitle = () => {
 
   const title = useMemo(() => {
     if (!location.pathname) return;
-
+    const q = new URLSearchParams(location.search);
     // 채팅방은 별도로 분기처리
     if (/\/chat\/.+/g.test(location.pathname)) {
-      const roomId = location.pathname.split('/chat/')[1];
-      return `${roomId} 채팅방`;
+      const title = q.get('title');
+      return `${title}`;
     }
 
     // 유저 전적도 분기처리
     if (/\/matchHistory\/.+/g.test(location.pathname)) {
-      const roomId = location.pathname.split('/')[2];
-      return `${roomId} 의 전적`;
+      return `${q.get('nickname')}님의 전적`;
     }
 
     // 나머지는 key, value 로 처리
