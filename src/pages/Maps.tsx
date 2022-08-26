@@ -1,13 +1,11 @@
 import React, { useRef, useState, useEffect } from 'react';
 import { Map, ZoomControl, MapMarker, CustomOverlayMap } from 'react-kakao-maps-sdk';
-import { addressAction } from '../redux/features/addressSlice';
 import { useQuery } from '@tanstack/react-query';
 import { apis } from '../apis';
 import { useNavigate } from 'react-router-dom';
 import { overlayAction, overlayClear, OverlayState } from '../redux/features/overlaySlice';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../redux/store';
-import { toggleModalShow } from '../redux/features/sortSlice';
 import { ImageType } from '../typings';
 import { IoMdClose } from 'react-icons/io';
 
@@ -106,7 +104,6 @@ const Maps = () => {
       center={{ lat: nowPosition.lat, lng: nowPosition.lng }}
       className='relative w-full h-screen'
       level={3}
-      //level 14까지
       ref={mapRef}
     >
       <ZoomControl position={window.kakao.maps.ControlPosition.TOPRRIGHT} />
