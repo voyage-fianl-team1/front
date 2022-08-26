@@ -5,7 +5,7 @@ import { RootState } from '../redux/store';
 
 import New from '../pages/New';
 import Search from '../pages/Search';
-import Map from '../pages/Map';
+import Maps from '../pages/Maps';
 import Match from '../pages/Match';
 import Login from '../pages/Login';
 import SignUp from '../pages/SignUp';
@@ -68,7 +68,7 @@ const App = () => {
             <Route path='/search' element={<Search />} />
             <Route path='/chat/:id' element={<ChatDetail />} />
             <Route path='/profile' element={<Profile />} />
-            <Route path='/map' element={<Map />} />
+            <Route path='/map' element={<Maps />} />
             <Route path='/match/:id' element={<Match />} />
             <Route path='/new' element={<New />} />
             <Route path='/new/:id/edit' element={<New />} />

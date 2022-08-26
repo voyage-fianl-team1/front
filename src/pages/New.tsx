@@ -190,7 +190,7 @@ const Newpost: FC = () => {
         )}
       </section>
       <section className='flex w-full bg-white mt-3 justify-between'>
-        <span>{data ? data.address : address.address}</span>
+        <span>{address.address}</span>
         <button className='w-20 h-8 bg-black text-white cursor-pointer' onClick={handleToggleModal}>
           주소
         </button>

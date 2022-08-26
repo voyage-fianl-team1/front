@@ -1,15 +1,18 @@
-import React, { FC, useEffect } from 'react';
+import React, { FC } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { apis } from '../apis';
 import { useParams, Link } from 'react-router-dom';
 import { PostDataProps, JoinDataProps, ImageType } from '../typings';
 import { useNavigate } from 'react-router-dom';
 import LoadingSpinner from '../components/loadingSpinner';
+import { useDispatch } from 'react-redux';
+import { addressAction } from '../redux/features/addressSlice';
 
-const Match = () => {
+const Match: FC = () => {
   const param = useParams();
   const postId = Number(param.id);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const res = useQuery(['postList'], async () => await apis.getPostList(postId));
   const join = useQuery(['joinList'], async () => await apis.getJoinList(postId));
   const postData: PostDataProps = res?.data?.data;
@@ -32,7 +35,6 @@ const Match = () => {
   };
   const handleStatusChange = async () => {
     apis.updateMatchStatus(postId);
-    window.location.reload();
   };
 
   const CompleteBtn = () => {
@@ -90,7 +92,6 @@ const Match = () => {
                     postId: postId,
                     title: postData.title,
                     subject: postData.subject,
-                    address: postData.address,
                     lat: postData.lat,
                     lng: postData.lng,
                     imgurls: postData.imgurls,
@@ -99,7 +100,13 @@ const Match = () => {
                     content: postData.content,
                   }}
                 >
-                  <button className='bg-white mb-5' type='button'>
+                  <button
+                    className='bg-white mb-5'
+                    type='button'
+                    onClick={() =>
+                      dispatch(addressAction({ address: postData.address, lat: postData.lat, lng: postData.lng }))
+                    }
+                  >
                     수정하기
                   </button>
                 </Link>
@@ -159,35 +166,35 @@ const Match = () => {
     if (join.data && res.data?.data.matchStatus === 'MATCHEND') {
       const joinData: JoinDataProps = join.data.data;
       return (
-        <section className='flex h-24 justify-center items-center'>
+        <section className='flex flex-col justify-center items-center bg-green-500'>
           {joinData &&
             joinData.userList.map((value: ImageType, id: number) => (
               <>
-                <div key={id} className='flex'>
-                  {value.nickname}
-                  {value.status}
-                </div>
-                <div className='flex gap-2'>
-                  <button
-                    type='button'
-                    onClick={async () => await apis.updateTotalStatus(value.requestId, { status: 'WIN' })}
-                  >
-                    승
-                  </button>
-                  <button
-                    type='button'
-                    onClick={async () => await apis.updateTotalStatus(value.requestId, { status: 'DRAW' })}
-                  >
-                    무
-                  </button>
-                  <button
-                    type='button'
-                    value='LOSE'
-                    onClick={async () => await apis.updateTotalStatus(value.requestId, { status: 'LOSE' })}
-                  >
-                    패
-                  </button>
-                </div>
+                <section className='flex flex-col'>
+                  <div key={id}>
+                    {value.nickname}
+                    {value.status}
+                    <button
+                      type='button'
+                      onClick={async () => await apis.updateTotalStatus(value.requestId, { status: 'WIN' })}
+                    >
+                      승
+                    </button>
+                    <button
+                      type='button'
+                      onClick={async () => await apis.updateTotalStatus(value.requestId, { status: 'DRAW' })}
+                    >
+                      무
+                    </button>
+                    <button
+                      type='button'
+                      value='LOSE'
+                      onClick={async () => await apis.updateTotalStatus(value.requestId, { status: 'LOSE' })}
+                    >
+                      패
+                    </button>
+                  </div>
+                </section>
               </>
             ))}
         </section>
