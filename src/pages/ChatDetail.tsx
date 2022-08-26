@@ -9,6 +9,7 @@ import { RootState } from '../redux/store';
 import { useQuery } from '@tanstack/react-query';
 import { apis } from '../apis';
 import dayjs from 'dayjs';
+import { v4 as uuidv4 } from 'uuid';
 
 const ChatDetail = () => {
   const location = useLocation();
@@ -72,7 +73,7 @@ const ChatDetail = () => {
             // 첫 채팅일때
             if (idx === 0) {
               return (
-                <React.Fragment key={c.chatId}>
+                <React.Fragment key={c.chatId || uuidv4()}>
                   <ChatTimeLine>{dayjs(chats[idx]['createdAt']).format('YYYY-MM-DD (ddd)')}</ChatTimeLine>
                   <Chat
                     direction={c.userId === userId ? 'right' : 'left'}
@@ -94,7 +95,7 @@ const ChatDetail = () => {
                 dayjs(chats[idx]['createdAt']).format('YYYY-MM-DD')
             ) {
               return (
-                <React.Fragment key={c.chatId}>
+                <React.Fragment key={c.chatId || uuidv4()}>
                   <ChatTimeLine>{dayjs(chats[idx]['createdAt']).format('YYYY-MM-DD (ddd)')}</ChatTimeLine>
                   <Chat
                     direction={c.userId === userId ? 'right' : 'left'}
@@ -113,7 +114,7 @@ const ChatDetail = () => {
           // 같은 날짜의 채팅은 내용만
           return (
             <Chat
-              key={c.chatId}
+              key={c.chatId || uuidv4()}
               direction={c.userId === userId ? 'right' : 'left'}
               bg={c.userId === userId ? 'gray' : 'white'}
               username={c.nickname}
