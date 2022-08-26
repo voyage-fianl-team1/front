@@ -6,6 +6,7 @@ import { apis } from '../apis';
 import { RootState } from '../redux/store';
 import { useSelector } from 'react-redux';
 import LoadingSpinner from '../components/loadingSpinner';
+import { Helmet } from 'react-helmet';
 
 const Keyword: FC = () => {
   const navigate = useNavigate();
@@ -33,35 +34,40 @@ const Keyword: FC = () => {
   }, [inView]);
 
   return (
-    <div>
-      {searchList &&
-        searchList.pages.map((page, index) => (
-          <div key={index}>
-            {page.data.map((post: any) => (
-              <div
-                className='w-full h-20 mt-4 bg-white'
-                key={post.postId}
-                onClick={() => navigate(`/match/${post.postId}`)}
-                ref={ref}
-              >
-                <div className='flex flex-row'>
-                  <img
-                    src={post.imgUrl}
-                    alt='searchImg'
-                    className='box-border rounded-lg bg-#F4F5F5 w-20 h-20 border boder-#DCDDE0 bg-#F4F5F5'
-                  ></img>
-                  <span className='flex flex-col justify-center ml-5 gap-0.5'>
-                    <div className='text-xl'>{post.title}</div>
-                    <div className='text-sm text-gray-400'>주소</div>
-                    <div className='text-xs rounded-lg bg-gray-200 p-1.5'>{post.subject}</div>
-                  </span>
+    <>
+      <Helmet>
+        <title>매치기 | 검색</title>
+      </Helmet>
+      <div>
+        {searchList &&
+          searchList.pages.map((page, index) => (
+            <div key={index}>
+              {page.data.map((post: any) => (
+                <div
+                  className='w-full h-20 mt-4 bg-white'
+                  key={post.postId}
+                  onClick={() => navigate(`/match/${post.postId}`)}
+                  ref={ref}
+                >
+                  <div className='flex flex-row'>
+                    <img
+                      src={post.imgUrl}
+                      alt='searchImg'
+                      className='box-border rounded-lg bg-#F4F5F5 w-20 h-20 border boder-#DCDDE0 bg-#F4F5F5'
+                    ></img>
+                    <span className='flex flex-col justify-center ml-5 gap-0.5'>
+                      <div className='text-xl'>{post.title}</div>
+                      <div className='text-sm text-gray-400'>주소</div>
+                      <div className='text-xs rounded-lg bg-gray-200 p-1.5'>{post.subject}</div>
+                    </span>
+                  </div>
                 </div>
-              </div>
-            ))}
-            {isFetchingNextPage ? <LoadingSpinner /> : <div ref={ref} />}
-          </div>
-        ))}
-    </div>
+              ))}
+              {isFetchingNextPage ? <LoadingSpinner /> : <div ref={ref} />}
+            </div>
+          ))}
+      </div>
+    </>
   );
 };
 export default Keyword;
