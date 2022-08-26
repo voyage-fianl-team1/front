@@ -14,9 +14,7 @@ const ChatListPage = () => {
 
   const filterdChatRoomList = useMemo(() => {
     if (!data) return [];
-    return [...data].filter((chat) => {
-      return chat.title !== value;
-    });
+    return [...data].filter((chat) => chat.title !== value);
   }, [data, value]);
 
   if (!data) {
