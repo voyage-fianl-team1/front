@@ -2,27 +2,26 @@ import React, { Suspense, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Route, Routes } from 'react-router-dom';
 import { RootState } from '../redux/store';
-
-import New from '../pages/New';
-import Search from '../pages/Search';
-import Maps from '../pages/Maps';
-import Match from '../pages/Match';
-import Login from '../pages/Login';
-import SignUp from '../pages/SignUp';
-import Profile from '../pages/Profile';
 import Layout from './Layout';
-import ChatListPage from '../pages/ChatListPage';
-import Keyword from '../pages/keyword';
-import ChatDetail from '../pages/ChatDetail';
 import { apis } from '../apis';
 import { login } from '../redux/features/userSlice';
 import { positionAction } from '../redux/features/postionSlice';
 import LoadingSpinner from '../components/loadingSpinner';
-import MatchHistory from '../pages/MatchHistory';
-import ProfileEdit from '../pages/ProfileEdit';
-import UserMatchMore from '../pages/UserMatchMore';
 
 const Home = React.lazy(() => import('../pages/Home'));
+const Login = React.lazy(() => import('../pages/Login'));
+const SignUp = React.lazy(() => import('../pages/SignUp'));
+const ChatListPage = React.lazy(() => import('../pages/ChatListPage'));
+const Search = React.lazy(() => import('../pages/Search'));
+const ChatDetail = React.lazy(() => import('../pages/ChatDetail'));
+const Profile = React.lazy(() => import('../pages/Profile'));
+const UserMatchMore = React.lazy(() => import('../pages/UserMatchMore'));
+const ProfileEdit = React.lazy(() => import('../pages/ProfileEdit'));
+const Maps = React.lazy(() => import('../pages/Maps'));
+const Match = React.lazy(() => import('../pages/Match'));
+const New = React.lazy(() => import('../pages/New'));
+const Keyword = React.lazy(() => import('../pages/keyword'));
+const MatchHistory = React.lazy(() => import('../pages/MatchHistory'));
 
 const App = () => {
   const user = useSelector((state: RootState) => state.user);
