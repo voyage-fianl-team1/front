@@ -36,14 +36,16 @@ const SelectSubject = () => {
         </div>
         <span className='flex flex-row justify-center items-center gap-[11px] mb-[12px]'>
           <button
-            className='flex flex-col justify-center items-center w-[162px] h-[44px] border border-matchgi-bordergray rounded-[2px]'
+            className='flex flex-col justify-center items-center w-[162px] h-[44px] border border-matchgi-bordergray rounded-[2px]
+            focus:bg-matchgi-bordergray'
             value='ALL'
             onClick={handleSelectData}
           >
             전체
           </button>
           <button
-            className='flex flex-col justify-center items-center w-[162px] h-[44px] border border-matchgi-bordergray rounded-[2px]'
+            className='flex flex-col justify-center items-center w-[162px] h-[44px] border border-matchgi-bordergray rounded-[2px]
+            focus:bg-matchgi-bordergray'
             value='BASKETBALL'
             onClick={handleSelectData}
           >
@@ -52,14 +54,16 @@ const SelectSubject = () => {
         </span>
         <span className='flex flex-row justify-center items-center gap-[11px] mb-[12px]'>
           <button
-            className='flex flex-col justify-center items-center w-[162px] h-[44px] border border-matchgi-bordergray rounded-[2px]'
+            className='flex flex-col justify-center items-center w-[162px] h-[44px] border border-matchgi-bordergray rounded-[2px]
+            focus:bg-matchgi-bordergray'
             value='BILLIARDS'
             onClick={handleSelectData}
           >
             당구
           </button>
           <button
-            className='flex flex-col justify-center items-center w-[162px] h-[44px] border border-matchgi-bordergray rounded-[2px]'
+            className='flex flex-col justify-center items-center w-[162px] h-[44px] border border-matchgi-bordergray rounded-[2px]
+            focus:bg-matchgi-bordergray'
             value='BADMINTON'
             onClick={handleSelectData}
           >
@@ -68,14 +72,16 @@ const SelectSubject = () => {
         </span>
         <span className='flex flex-row justify-center items-center gap-[11px] mb-[12px]'>
           <button
-            className='flex flex-col justify-center items-center w-[162px] h-[44px] border border-matchgi-bordergray rounded-[2px]'
+            className='flex flex-col justify-center items-center w-[162px] h-[44px] border border-matchgi-bordergray rounded-[2px]
+            focus:bg-matchgi-bordergray'
             value='BOWLING'
             onClick={handleSelectData}
           >
             볼링
           </button>
           <button
-            className='flex flex-col justify-center items-center w-[162px] h-[44px] border border-matchgi-bordergray rounded-[2px]'
+            className='flex flex-col justify-center items-center w-[162px] h-[44px] border border-matchgi-bordergray rounded-[2px]
+            focus:bg-matchgi-bordergray'
             value='TENNIS'
             onClick={handleSelectData}
           >
@@ -84,14 +90,16 @@ const SelectSubject = () => {
         </span>
         <span className='flex flex-row justify-center items-center gap-[11px] mb-[44px]'>
           <button
-            className='flex flex-col justify-center items-center w-[162px] h-[44px] border border-matchgi-bordergray rounded-[2px]'
+            className='flex flex-col justify-center items-center w-[162px] h-[44px] border border-matchgi-bordergray rounded-[2px]
+            focus:bg-matchgi-bordergray'
             value='SOCCER'
             onClick={handleSelectData}
           >
             축구
           </button>
           <button
-            className='flex flex-col justify-center items-center w-[162px] h-[44px] border border-matchgi-bordergray rounded-[2px]'
+            className='flex flex-col justify-center items-center w-[162px] h-[44px] border border-matchgi-bordergray rounded-[2px]
+            focus:bg-matchgi-bordergray'
             value=''
             onClick={handleSelectData}
           >

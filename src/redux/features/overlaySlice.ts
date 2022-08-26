@@ -33,9 +33,10 @@ const overlaySlice = createSlice({
       state.imgUrl = action.payload.imgUrl;
       state.subject = action.payload.subject;
     },
+    overlayClear: () => initialState,
   },
 });
 
 export default overlaySlice;
 
-export const { overlayAction } = overlaySlice.actions;
+export const { overlayAction, overlayClear } = overlaySlice.actions;
