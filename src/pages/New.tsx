@@ -115,40 +115,6 @@ const Newpost: FC = () => {
     dispatch(toggleModalShow());
   }, [modalShow]);
 
-  const previewImage = () => {
-    if (data) {
-      return imgUrl.map((image: ImageType, id) => (
-        <div key={id}>
-          <img className='h-72 w-72' alt='' src={image['url']} />
-          <button type='button' onClick={() => handledeleteImage(id)}>
-            삭제
-          </button>
-        </div>
-      ));
-    } else {
-      return images.map((image, id) => (
-        <div key={id}>
-          <img className='h-72 w-72' alt='' src={image} />
-          <button type='button' onClick={() => handledeletePrevImg(id)}>
-            삭제
-          </button>
-        </div>
-      ));
-    }
-  };
-  const editPreviewImage = () => {
-    if (data) {
-      return images.map((image, id) => (
-        <div key={id}>
-          <img className='h-72 w-72' alt='' src={image} />
-          <button type='button' onClick={() => handledeletePrevImg(id)}>
-            삭제
-          </button>
-        </div>
-      ));
-    }
-  };
-
   return (
     <section className='flex flex-col justify-center bg-gray-200 w-full h-screen '>
       제목
@@ -159,8 +125,32 @@ const Newpost: FC = () => {
         {...register('title', { required: true })}
       />
       <section className='flex h-1/2 justify-center items-center gap-5'>
-        {previewImage()}
-        {editPreviewImage()}
+        {data
+          ? imgUrl.map((image: ImageType, id) => (
+              <div key={id}>
+                <img className='h-72 w-72' alt='' src={image['url']} />
+                <button type='button' onClick={() => handledeleteImage(id)}>
+                  삭제
+                </button>
+              </div>
+            ))
+          : images.map((image, id) => (
+              <div key={id}>
+                <img className='h-72 w-72' alt='' src={image} />
+                <button type='button' onClick={() => handledeletePrevImg(id)}>
+                  삭제
+                </button>
+              </div>
+            ))}
+        {data &&
+          images.map((image, id) => (
+            <div key={id}>
+              <img className='h-72 w-72' alt='' src={image} />
+              <button type='button' onClick={() => handledeletePrevImg(id)}>
+                삭제
+              </button>
+            </div>
+          ))}
       </section>
       <input type='file' multiple onChange={onSaveFiles} required />
       <section className='flex justify-center'>
@@ -200,7 +190,7 @@ const Newpost: FC = () => {
         )}
       </section>
       <section className='flex w-full bg-white mt-3 justify-between'>
-        <span>{data ? data.address : address.address}</span>
+        <span>{address.address}</span>
         <button className='w-20 h-8 bg-black text-white cursor-pointer' onClick={handleToggleModal}>
           주소
         </button>
