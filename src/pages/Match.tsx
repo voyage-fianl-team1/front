@@ -1,5 +1,5 @@
 import React, { FC } from 'react';
-import { useQuery } from '@tanstack/react-query';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { apis } from '../apis';
 import { useParams, Link } from 'react-router-dom';
 import { PostDataProps, JoinDataProps, ImageType } from '../typings';
@@ -13,14 +13,17 @@ const Match: FC = () => {
   const postId = Number(param.id);
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const res = useQuery(['postList'], async () => await apis.getPostList(postId));
+  const queryClient = useQueryClient();
+  const { data: res, refetch, isLoading } = useQuery(['postList'], async () => await apis.getPostList(postId), {});
   const join = useQuery(['joinList'], async () => await apis.getJoinList(postId));
-  const postData: PostDataProps = res?.data?.data;
+  const postData: PostDataProps = res?.data;
 
   const handleJoinTheGame = async () => {
     try {
       await apis.postJoinGame(postId);
+      queryClient.invalidateQueries(['joinList']);
       alert('참가 신청이 완료되었습니다.');
+      refetch();
     } catch (err) {
       alert('참가 신청은 중복으로 할 수 없습니다.');
     }
@@ -33,11 +36,12 @@ const Match: FC = () => {
       alert('게시글 삭제에 실패했습니다.');
     }
   };
-  const handleStatusChange = async () => {
-    apis.updateMatchStatus(postId);
-  };
 
   const CompleteBtn = () => {
+    const handleStatusChange = async () => {
+      await apis.updateMatchStatus(postId);
+      queryClient.invalidateQueries(['postList']);
+    };
     if (postData.owner === 1 && postData.matchStatus === 'ONGOING') {
       return (
         <button type='button' className='bg-black text-white' onClick={handleStatusChange}>
@@ -56,10 +60,10 @@ const Match: FC = () => {
   };
 
   const GetPostData = () => {
-    if (res.isLoading) {
+    if (isLoading) {
       return <LoadingSpinner />;
     }
-    if (res.data) {
+    if (res?.data) {
       return (
         <section className='flex flex-col justify-center bg-gray-200 w-full h-screen '>
           <div className='flex mt-3 w-full h-10 bg-white justify-between'>
@@ -133,17 +137,16 @@ const Match: FC = () => {
     if (join.isLoading) {
       return <LoadingSpinner />;
     }
-    if (join.data && res.data?.data.matchStatus === 'ONGOING') {
+    if (join.data && res?.data.matchStatus === 'ONGOING') {
       const joinData: JoinDataProps = join.data.data;
       return (
-        <section className='flex h-24 justify-center items-center'>
+        <section className='flex flex-col w-full h-24 justify-center items-start ml-5'>
           {joinData &&
             joinData.userList.map((value: ImageType, id: number) => (
-              <>
-                <div key={id} className='flex'>
-                  {value.nickname}
-                  {value.status}
-                </div>
+              <div key={id} className='flex border border-gray-50 gap-5'>
+                <span>{value.nickname}</span>
+                <span>{value.status}</span>
+
                 <div className='flex gap-2'>
                   <button
                     type='button'
@@ -158,44 +161,41 @@ const Match: FC = () => {
                     거절
                   </button>
                 </div>
-              </>
+              </div>
             ))}
         </section>
       );
     }
-    if (join.data && res.data?.data.matchStatus === 'MATCHEND') {
+    if (join.data && res?.data.matchStatus === 'MATCHEND') {
       const joinData: JoinDataProps = join.data.data;
       return (
-        <section className='flex flex-col justify-center items-center bg-green-500'>
+        <section className='flex flex-col w-full h-24 justify-center items-start ml-5'>
           {joinData &&
             joinData.userList.map((value: ImageType, id: number) => (
-              <>
-                <section className='flex flex-col'>
-                  <div key={id}>
-                    {value.nickname}
-                    {value.status}
-                    <button
-                      type='button'
-                      onClick={async () => await apis.updateTotalStatus(value.requestId, { status: 'WIN' })}
-                    >
-                      승
-                    </button>
-                    <button
-                      type='button'
-                      onClick={async () => await apis.updateTotalStatus(value.requestId, { status: 'DRAW' })}
-                    >
-                      무
-                    </button>
-                    <button
-                      type='button'
-                      value='LOSE'
-                      onClick={async () => await apis.updateTotalStatus(value.requestId, { status: 'LOSE' })}
-                    >
-                      패
-                    </button>
-                  </div>
-                </section>
-              </>
+              <div key={id} className='flex flex-row gap-5'>
+                <span>{value.nickname}</span>
+                <span>{value.status}</span>
+                <div className='gap-5'>
+                  <button
+                    type='button'
+                    onClick={async () => await apis.updateTotalStatus(value.requestId, { status: 'WIN' })}
+                  >
+                    승
+                  </button>
+                  <button
+                    type='button'
+                    onClick={async () => await apis.updateTotalStatus(value.requestId, { status: 'DRAW' })}
+                  >
+                    무
+                  </button>
+                  <button
+                    type='button'
+                    onClick={async () => await apis.updateTotalStatus(value.requestId, { status: 'LOSE' })}
+                  >
+                    패
+                  </button>
+                </div>
+              </div>
             ))}
         </section>
       );
