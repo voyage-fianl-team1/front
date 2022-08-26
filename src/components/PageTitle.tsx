@@ -27,7 +27,6 @@ const PageTitle = () => {
   const { nickname } = useSelector((state: RootState) => state.user);
 
   const handleRouteBack = useCallback(() => {
-    console.log(location.pathname);
     if (location.pathname === '/search') {
       navigate('/');
     } else {
