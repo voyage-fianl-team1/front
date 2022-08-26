@@ -67,4 +67,4 @@ const ChatRoomItem: FC<Props> = ({ id, data }) => {
   );
 };
 
-export default ChatRoomItem;
+export default React.memo(ChatRoomItem);
