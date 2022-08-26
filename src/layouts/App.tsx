@@ -14,6 +14,7 @@ import Layout from './Layout';
 import ChatListPage from '../pages/ChatListPage';
 import Keyword from '../pages/keyword';
 import ChatDetail from '../pages/ChatDetail';
+import Review from '../components/Review';
 import { apis } from '../apis';
 import { login } from '../redux/features/userSlice';
 import { positionAction } from '../redux/features/postionSlice';
@@ -73,6 +74,7 @@ const App = () => {
             <Route path='/new' element={<New />} />
             <Route path='/new/:id/edit' element={<New />} />
             <Route path='/keword' element={<Keyword />} />
+            <Route path='/review' element={<Review />} />
             <Route path='/matchHistory/:id/subject/:subject' element={<MatchHistory />} />
           </Routes>
         </Layout>
