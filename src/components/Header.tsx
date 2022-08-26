@@ -13,21 +13,28 @@ const alertPath = '/assets/images/alert.svg';
 const alertBasePath = '/assets/images/alert_base.svg';
 
 const Header = () => {
-  const { id } = useSelector((state: RootState) => state.user);
+  const { id, isLogin } = useSelector((state: RootState) => state.user);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const queryClient = useQueryClient();
   const { notifications, setNotifications } = useNotification(id);
-  useQuery(['notifications'], apis.getNotifications, {
+  const { refetch } = useQuery(['notifications'], apis.getNotifications, {
     onSuccess: (data: Notification[]) => {
       setNotifications(data);
     },
+    enabled: false,
   });
   const mutation = useMutation((id: number) => apis.postNotificationRead(id), {
     onSuccess: () => {
       queryClient.invalidateQueries(['notifications']);
     },
   });
+
+  useEffect(() => {
+    if (isLogin) {
+      refetch();
+    }
+  }, [isLogin]);
 
   const handleToggleSideMenu = useCallback(() => {
     dispatch(toggleSideMenuShow());
@@ -50,7 +57,6 @@ const Header = () => {
     mutation.mutate(id);
     // 게시글로 라우팅
     navigate(`match/${postId}`);
-    console.log(id, postId);
   }, []);
 
   return (
