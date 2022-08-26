@@ -94,12 +94,14 @@ export interface UserRequest {
   matchStatus: string;
   subject: string;
   title: string;
+  imageUrl: string[];
 }
 
 export interface UserPostType {
   id: number;
   subject: string;
   title: string;
+  imageUrl: string[];
 }
 
 export interface MatchHistoryType {

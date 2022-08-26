@@ -13,6 +13,7 @@ const titleTable: ITitleTable = {
   '/chatList': '채팅목록',
   '/map': '지도',
   '/new': '모집글 작성',
+  '/profile/edit': '내 정보 관리',
 };
 
 const PageTitle = () => {

@@ -19,6 +19,7 @@ import { login } from '../redux/features/userSlice';
 import { positionAction } from '../redux/features/postionSlice';
 import LoadingSpinner from '../components/loadingSpinner';
 import MatchHistory from '../pages/MatchHistory';
+import ProfileEdit from '../pages/ProfileEdit';
 
 const Home = React.lazy(() => import('../pages/Home'));
 
@@ -68,6 +69,7 @@ const App = () => {
             <Route path='/search' element={<Search />} />
             <Route path='/chat/:id' element={<ChatDetail />} />
             <Route path='/profile' element={<Profile />} />
+            <Route path='/profile/edit' element={<ProfileEdit />} />
             <Route path='/map' element={<Map />} />
             <Route path='/match/:id' element={<Match />} />
             <Route path='/new' element={<New />} />
