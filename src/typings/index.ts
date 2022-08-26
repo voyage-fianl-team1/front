@@ -121,3 +121,11 @@ export interface PostUpload {
   lng: number;
   address?: string;
 }
+
+export interface Notification {
+  postId: number;
+  Id: number;
+  content: string;
+  createdAt: string;
+  isread: boolean;
+}
