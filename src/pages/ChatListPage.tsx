@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import ChatSearchBar from '../components/ChatSearchBar';
 import ChatRoomItem from '../components/ChatRoomItem';
 import { useQuery } from '@tanstack/react-query';
@@ -7,6 +7,7 @@ import { ChatRoom } from '../typings';
 import LoadingSpinner from '../components/loadingSpinner';
 import { useInput } from '../hooks/useInput';
 import { Helmet } from 'react-helmet';
+import { useDebounce } from '../hooks/useDebounce';
 
 const ChatListPage = () => {
   const { value, handler } = useInput('');
@@ -17,7 +18,7 @@ const ChatListPage = () => {
     select: (data) => data.filter((d) => d.title !== value),
   });
 
-  useEffect(() => {
+  const filtering = useCallback(() => {
     if (timerRef.current) {
       clearTimeout(timerRef.current);
     }
@@ -29,12 +30,13 @@ const ChatListPage = () => {
       }
       const filtering = () => {
         const regExp = new RegExp(value, 'g');
-        console.log('호출', 1);
         setFilterData(data.filter((d) => regExp.test(d.title)));
       };
       timerRef.current = setTimeout(filtering, 500);
     }
   }, [data, value]);
+
+  useDebounce(filtering, 1000);
 
   if (!data) {
     return <LoadingSpinner />;
