@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React, { FC, useEffect } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { apis } from '../apis';
 import { useParams, Link } from 'react-router-dom';
@@ -6,55 +6,58 @@ import { PostDataProps, JoinDataProps, ImageType } from '../typings';
 import { useNavigate } from 'react-router-dom';
 import LoadingSpinner from '../components/loadingSpinner';
 
-const Match: FC = () => {
+const Match = () => {
   const param = useParams();
   const postId = Number(param.id);
+  const navigate = useNavigate();
   const res = useQuery(['postList'], async () => await apis.getPostList(postId));
   const join = useQuery(['joinList'], async () => await apis.getJoinList(postId));
-  const navigate = useNavigate();
-  const getPostData = () => {
-    const handleJoinTheGame = async () => {
-      try {
-        await apis.postJoinGame(postId);
-        alert('참가 신청이 완료되었습니다.');
-      } catch (err) {
-        alert('참가 신청은 중복으로 할 수 없습니다.');
-      }
-    };
-    const handleDeletePost = async () => {
-      try {
-        await apis.deletePost(postId);
-        navigate(-1);
-      } catch (err) {
-        alert('게시글 삭제에 실패했습니다.');
-      }
-    };
-    const CompleteBtn = () => {
-      const handleStatusChange = async () => {
-        apis.updateMatchStatus(postId);
-      };
-      const postData: PostDataProps = res?.data?.data;
-      if (postData.owner === 1 && postData.matchStatus === 'ONGOING') {
-        return (
-          <button type='button' className='bg-black text-white' onClick={handleStatusChange}>
-            완료하기
-          </button>
-        );
-      } else if (postData.owner === 1 && postData.matchStatus === 'MATCHEND') {
-        return (
-          <button type='button' className='bg-black text-white' onClick={handleStatusChange}>
-            되돌리기
-          </button>
-        );
-      } else if (postData.owner === -1) {
-        return;
-      }
-    };
+  const postData: PostDataProps = res?.data?.data;
+
+  const handleJoinTheGame = async () => {
+    try {
+      await apis.postJoinGame(postId);
+      alert('참가 신청이 완료되었습니다.');
+    } catch (err) {
+      alert('참가 신청은 중복으로 할 수 없습니다.');
+    }
+  };
+  const handleDeletePost = async () => {
+    try {
+      await apis.deletePost(postId);
+      navigate(-1);
+    } catch (err) {
+      alert('게시글 삭제에 실패했습니다.');
+    }
+  };
+  const handleStatusChange = async () => {
+    apis.updateMatchStatus(postId);
+    window.location.reload();
+  };
+
+  const CompleteBtn = () => {
+    if (postData.owner === 1 && postData.matchStatus === 'ONGOING') {
+      return (
+        <button type='button' className='bg-black text-white' onClick={handleStatusChange}>
+          완료하기
+        </button>
+      );
+    } else if (postData.owner === 1 && postData.matchStatus === 'MATCHEND') {
+      return (
+        <button type='button' className='bg-black text-white' onClick={handleStatusChange}>
+          되돌리기
+        </button>
+      );
+    } else if (postData.owner === -1) {
+      return;
+    }
+  };
+
+  const GetPostData = () => {
     if (res.isLoading) {
       return <LoadingSpinner />;
     }
     if (res.data) {
-      const postData: PostDataProps = res.data.data;
       return (
         <section className='flex flex-col justify-center bg-gray-200 w-full h-screen '>
           <div className='flex mt-3 w-full h-10 bg-white justify-between'>
@@ -77,7 +80,7 @@ const Match: FC = () => {
           </section>
           <section className='flex w-full bg-white mt-3'>주소 : {postData.address}</section>
           <div className='mb-5 w-full h-2/5'>{postData.content}</div>
-          {postData.owner === 1 ? getJoinData() : null}
+          {postData.owner === 1 ? GetJoinData() : null}
           <div className='flex items-center justify-center gap-5'>
             {postData.owner === 1 ? (
               <>
@@ -119,8 +122,7 @@ const Match: FC = () => {
       );
     }
   };
-
-  const getJoinData = () => {
+  const GetJoinData = () => {
     if (join.isLoading) {
       return <LoadingSpinner />;
     }
@@ -193,7 +195,7 @@ const Match: FC = () => {
     }
   };
 
-  return <div>{getPostData()}</div>;
+  return <div>{GetPostData()}</div>;
 };
 
 export default Match;
