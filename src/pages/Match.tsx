@@ -14,16 +14,15 @@ const Match: FC = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const queryClient = useQueryClient();
-  const { data: res, refetch, isLoading } = useQuery(['postList'], async () => await apis.getPostList(postId), {});
+  const { data: res, isLoading } = useQuery(['postList'], async () => await apis.getPostList(postId));
   const join = useQuery(['joinList'], async () => await apis.getJoinList(postId));
   const postData: PostDataProps = res?.data;
 
   const handleJoinTheGame = async () => {
     try {
-      await apis.postJoinGame(postId);
+      const value = await apis.postJoinGame(postId);
       queryClient.invalidateQueries(['joinList']);
       alert('참가 신청이 완료되었습니다.');
-      refetch();
     } catch (err) {
       alert('참가 신청은 중복으로 할 수 없습니다.');
     }
