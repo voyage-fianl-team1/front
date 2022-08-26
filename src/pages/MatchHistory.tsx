@@ -5,6 +5,7 @@ import { Link, useLocation } from 'react-router-dom';
 import LoadingSpinner from '../components/loadingSpinner';
 import { MatchHistoryType } from '../typings';
 import dayjs from 'dayjs';
+import { Helmet } from 'react-helmet';
 
 const histtoryTable: { [key: string]: any } = {
   LOSE: {
@@ -45,20 +46,32 @@ const MatchHistory = () => {
   }
 
   if (data.length === 0) {
-    return <div className='text-sm text-black/30 my-10'>참가한 경기가 없습니다</div>;
+    return (
+      <>
+        <Helmet>
+          <title>매치기 | 경기기록</title>
+        </Helmet>
+        <div className='text-sm text-black/30 my-10 text-center'>참가한 경기가 없습니다</div>
+      </>
+    );
   }
 
   return (
-    <ul className='flex flex-col gap-3 justify-start w-[100%] mt-5'>
-      {data.map((d, idx) => (
-        <li key={idx} className='flex justify-between bg-gray-100 p-2 rounded'>
-          <h1>
-            {dayjs(d.matchDeadline).format('YYYY/MM/DD')} <span className='ml-5'>{subjectTable[d.subject]}</span>
-          </h1>
-          <div className={`${histtoryTable[d.status].color}`}>{histtoryTable[d.status].text}</div>
-        </li>
-      ))}
-    </ul>
+    <>
+      <Helmet>
+        <title>매치기 | 경기기록</title>
+      </Helmet>
+      <ul className='flex flex-col gap-3 justify-start w-[100%] mt-5'>
+        {data.map((d, idx) => (
+          <li key={idx} className='flex justify-between bg-gray-100 p-2 rounded'>
+            <h1>
+              {dayjs(d.matchDeadline).format('YYYY/MM/DD')} <span className='ml-5'>{subjectTable[d.subject]}</span>
+            </h1>
+            <div className={`${histtoryTable[d.status].color}`}>{histtoryTable[d.status].text}</div>
+          </li>
+        ))}
+      </ul>
+    </>
   );
 };
 

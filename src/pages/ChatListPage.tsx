@@ -6,6 +6,7 @@ import { apis } from '../apis';
 import { ChatRoom } from '../typings';
 import LoadingSpinner from '../components/loadingSpinner';
 import { useInput } from '../hooks/useInput';
+import { Helmet } from 'react-helmet';
 
 const ChatListPage = () => {
   const { data } = useQuery<ChatRoom[]>(['chatRooms'], apis.getChatRooms);
@@ -25,14 +26,19 @@ const ChatListPage = () => {
   console.log(filterdChatRoomList);
 
   return (
-    <div>
-      <ChatSearchBar inputValue={value} handler={handler} />
-      <ul className='mt-8 flex flex-col gap-5'>
-        {filterdChatRoomList.map((r) => (
-          <ChatRoomItem key={r.roomId} id={r.roomId} data={r} />
-        ))}
-      </ul>
-    </div>
+    <>
+      <Helmet>
+        <title>매치기 | 채팅목록</title>
+      </Helmet>
+      <div>
+        <ChatSearchBar inputValue={value} handler={handler} />
+        <ul className='mt-8 flex flex-col gap-5'>
+          {filterdChatRoomList.map((r) => (
+            <ChatRoomItem key={r.roomId} id={r.roomId} data={r} />
+          ))}
+        </ul>
+      </div>
+    </>
   );
 };
 
