@@ -4,6 +4,7 @@ import { UserPostType } from '../typings';
 import { apis } from '../apis';
 import LoadingSpinner from './loadingSpinner';
 import { Link } from 'react-router-dom';
+import dayjs from 'dayjs';
 
 const UserPost = () => {
   const { data } = useQuery<UserPostType[]>(['user-posts'], apis.getUserPosts);
@@ -40,7 +41,7 @@ const UserPost = () => {
             <img src={d.imageUrl[0]} alt='imageUrl' className='w-[68px] h-[68px] rounded-[8px] object-cover' />
             <div className='ml-2 '>
               <h1 className='text-[16px] mb-1'>{d.title}</h1>
-              <p className='text-[#9A9B9F] text-[12px] mb-1'>날짜 데이터가 없어요 ㅠㅠ</p>
+              <p className='text-[#9A9B9F] text-[12px] mb-1'>{dayjs(d.createdAt).format('YYYY.MM.DD (ddd)')}</p>
               <p className='text-[#5D5E62] text-[12px] bg-[#F4F5F5] inline-block px-2 rounded'>{d.subject}</p>
             </div>
           </div>

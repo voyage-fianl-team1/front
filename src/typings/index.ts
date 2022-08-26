@@ -91,10 +91,11 @@ export interface RecentMatch {
 
 export interface UserRequest {
   id: number;
-  matchStatus: string;
+  requestStatus: string;
   subject: string;
   title: string;
   imageUrl: string[];
+  createdAt: string;
 }
 
 export interface UserPostType {
@@ -102,6 +103,7 @@ export interface UserPostType {
   subject: string;
   title: string;
   imageUrl: string[];
+  createdAt: string;
 }
 
 export interface MatchHistoryType {

@@ -1,4 +1,4 @@
-import React, { Suspense, useEffect, useState } from 'react';
+import React, { Suspense, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Route, Routes } from 'react-router-dom';
 import { RootState } from '../redux/store';
@@ -20,6 +20,7 @@ import { positionAction } from '../redux/features/postionSlice';
 import LoadingSpinner from '../components/loadingSpinner';
 import MatchHistory from '../pages/MatchHistory';
 import ProfileEdit from '../pages/ProfileEdit';
+import UserMatchMore from '../pages/UserMatchMore';
 
 const Home = React.lazy(() => import('../pages/Home'));
 
@@ -69,6 +70,7 @@ const App = () => {
             <Route path='/search' element={<Search />} />
             <Route path='/chat/:id' element={<ChatDetail />} />
             <Route path='/profile' element={<Profile />} />
+            <Route path='/profile/userMatchMore' element={<UserMatchMore />} />
             <Route path='/profile/edit' element={<ProfileEdit />} />
             <Route path='/map' element={<Map />} />
             <Route path='/match/:id' element={<Match />} />

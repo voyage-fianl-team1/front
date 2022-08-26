@@ -5,15 +5,30 @@ import { RootState } from '../redux/store';
 import { useNotification } from '../hooks/useNotification';
 import dayjs from 'dayjs';
 import { useNavigate } from 'react-router-dom';
+import { apis } from '../apis';
+import { useQuery, useQueryClient, useMutation } from '@tanstack/react-query';
+import { Notification } from '../typings';
 
 const alertPath = '/assets/images/alert.svg';
 const alertBasePath = '/assets/images/alert_base.svg';
 
 const Header = () => {
+  const { id } = useSelector((state: RootState) => state.user);
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { id } = useSelector((state: RootState) => state.user);
+  const queryClient = useQueryClient();
   const { notifications, setNotifications } = useNotification(id);
+  useQuery(['notifications'], apis.getNotifications, {
+    onSuccess: (data: Notification[]) => {
+      setNotifications(data);
+    },
+  });
+  const mutation = useMutation((id: number) => apis.postNotificationRead(id), {
+    onSuccess: () => {
+      queryClient.invalidateQueries(['notifications']);
+    },
+  });
+
   const handleToggleSideMenu = useCallback(() => {
     dispatch(toggleSideMenuShow());
   }, []);
@@ -23,18 +38,16 @@ const Header = () => {
     setNotificationShow((prev) => !prev);
   }, []);
 
-  const isNotificationExist = useMemo(() => notifications.length === 0, [notifications]);
-
-  //TODO: GET요청으로 기존의 쌓인 알림 합치기
-  //TODO: 알림 하나씩 누르면 읽음처리 + 해당게시글로 이동
-
-  useEffect(() => {
-    console.log(notifications);
+  const isNotificationExist = useMemo(() => {
+    if (notifications.length > 0) {
+      const res = notifications.some((v, idx) => !v.isread);
+      return res;
+    }
+    return false;
   }, [notifications]);
 
   const handleClick = useCallback((id: number, postId: number) => {
-    //TODO: 메세지 읽음처리 PUT
-
+    mutation.mutate(id);
     // 게시글로 라우팅
     navigate(`match/${postId}`);
     console.log(id, postId);
@@ -45,7 +58,7 @@ const Header = () => {
       <h1 className='text-2xl font-bold text-[#082555]'>매치기</h1>
       <ul className='flex gap-4 relative'>
         <li className='cursor-pointer' onClick={toggleNotification}>
-          <img src={isNotificationExist ? alertBasePath : alertPath} alt='alert-icon' />
+          <img src={isNotificationExist ? alertPath : alertBasePath} alt='alert-icon' />
         </li>
         <li onClick={handleToggleSideMenu} className='cursor-pointer'>
           <img src='/assets/images/hamberger.svg' alt='menu-icon' />

@@ -64,5 +64,3 @@ const ChatRoomItem: FC<Props> = ({ id, data }) => {
 };
 
 export default ChatRoomItem;
-
-//

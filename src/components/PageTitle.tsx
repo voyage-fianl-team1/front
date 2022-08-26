@@ -14,6 +14,7 @@ const titleTable: ITitleTable = {
   '/map': '지도',
   '/new': '모집글 작성',
   '/profile/edit': '내 정보 관리',
+  '/profile/userMatchMore': '내 경기 목록',
 };
 
 const PageTitle = () => {

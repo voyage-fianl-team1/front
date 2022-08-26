@@ -1,6 +1,11 @@
-import React, { useCallback, useState } from 'react';
+import React, { FC, useCallback, useState } from 'react';
 
-const ChatSearchBar = () => {
+interface Props {
+  inputValue: string;
+  handler: any;
+}
+
+const ChatSearchBar: FC<Props> = ({ inputValue, handler }) => {
   const [isFocus, setIsFocus] = useState(false);
   const handleFocus = useCallback(() => {
     setIsFocus(true);
@@ -21,6 +26,8 @@ const ChatSearchBar = () => {
         type='text'
         placeholder='검색'
         className='flex-1 outline-0 bg-transparent'
+        value={inputValue}
+        onChange={handler}
         onFocus={handleFocus}
         onBlur={handleFocusOut}
       />
