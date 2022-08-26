@@ -10,6 +10,7 @@ import { useQuery } from '@tanstack/react-query';
 import { apis } from '../apis';
 import dayjs from 'dayjs';
 import { v4 as uuidv4 } from 'uuid';
+import { Helmet } from 'react-helmet';
 
 const ChatDetail = () => {
   const location = useLocation();
@@ -66,68 +67,73 @@ const ChatDetail = () => {
   }, []);
 
   return (
-    <div>
-      <ul className='mb-[10rem]'>
-        {chats.map((c, idx) => {
-          if (idx >= 0 && idx < chats.length) {
-            // 첫 채팅일때
-            if (idx === 0) {
-              return (
-                <React.Fragment key={c.chatId || uuidv4()}>
-                  <ChatTimeLine>{dayjs(chats[idx]['createdAt']).format('YYYY-MM-DD (ddd)')}</ChatTimeLine>
-                  <Chat
-                    direction={c.userId === userId ? 'right' : 'left'}
-                    bg={c.userId === userId ? 'gray' : 'white'}
-                    username={c.nickname}
-                    profilePath={c.profileImgUrl}
-                    createdAt={c.createdAt}
-                  >
-                    {c.message}
-                  </Chat>
-                </React.Fragment>
-              );
+    <>
+      <Helmet>
+        <title>매치기 | 채팅방</title>
+      </Helmet>
+      <div>
+        <ul className='mb-[10rem]'>
+          {chats.map((c, idx) => {
+            if (idx >= 0 && idx < chats.length) {
+              // 첫 채팅일때
+              if (idx === 0) {
+                return (
+                  <React.Fragment key={c.chatId || uuidv4()}>
+                    <ChatTimeLine>{dayjs(chats[idx]['createdAt']).format('YYYY-MM-DD (ddd)')}</ChatTimeLine>
+                    <Chat
+                      direction={c.userId === userId ? 'right' : 'left'}
+                      bg={c.userId === userId ? 'gray' : 'white'}
+                      username={c.nickname}
+                      profilePath={c.profileImgUrl}
+                      createdAt={c.createdAt}
+                    >
+                      {c.message}
+                    </Chat>
+                  </React.Fragment>
+                );
+              }
+              // 채팅사이 날짜가 다를떄
+              if (
+                chats[idx - 1] &&
+                chats[idx] &&
+                dayjs(chats[idx - 1]['createdAt']).format('YYYY-MM-DD') !==
+                  dayjs(chats[idx]['createdAt']).format('YYYY-MM-DD')
+              ) {
+                return (
+                  <React.Fragment key={c.chatId || uuidv4()}>
+                    <ChatTimeLine>{dayjs(chats[idx]['createdAt']).format('YYYY-MM-DD (ddd)')}</ChatTimeLine>
+                    <Chat
+                      direction={c.userId === userId ? 'right' : 'left'}
+                      bg={c.userId === userId ? 'gray' : 'white'}
+                      username={c.nickname}
+                      profilePath={c.profileImgUrl}
+                      createdAt={c.createdAt}
+                    >
+                      {c.message}
+                    </Chat>
+                  </React.Fragment>
+                );
+              }
             }
-            // 채팅사이 날짜가 다를떄
-            if (
-              chats[idx - 1] &&
-              chats[idx] &&
-              dayjs(chats[idx - 1]['createdAt']).format('YYYY-MM-DD') !==
-                dayjs(chats[idx]['createdAt']).format('YYYY-MM-DD')
-            ) {
-              return (
-                <React.Fragment key={c.chatId || uuidv4()}>
-                  <ChatTimeLine>{dayjs(chats[idx]['createdAt']).format('YYYY-MM-DD (ddd)')}</ChatTimeLine>
-                  <Chat
-                    direction={c.userId === userId ? 'right' : 'left'}
-                    bg={c.userId === userId ? 'gray' : 'white'}
-                    username={c.nickname}
-                    profilePath={c.profileImgUrl}
-                    createdAt={c.createdAt}
-                  >
-                    {c.message}
-                  </Chat>
-                </React.Fragment>
-              );
-            }
-          }
 
-          // 같은 날짜의 채팅은 내용만
-          return (
-            <Chat
-              key={c.chatId || uuidv4()}
-              direction={c.userId === userId ? 'right' : 'left'}
-              bg={c.userId === userId ? 'gray' : 'white'}
-              username={c.nickname}
-              profilePath={c.profileImgUrl}
-              createdAt={c.createdAt}
-            >
-              {c.message}
-            </Chat>
-          );
-        })}
-      </ul>
-      <ChatForm onSubmit={handleSendMessage} />
-    </div>
+            // 같은 날짜의 채팅은 내용만
+            return (
+              <Chat
+                key={c.chatId || uuidv4()}
+                direction={c.userId === userId ? 'right' : 'left'}
+                bg={c.userId === userId ? 'gray' : 'white'}
+                username={c.nickname}
+                profilePath={c.profileImgUrl}
+                createdAt={c.createdAt}
+              >
+                {c.message}
+              </Chat>
+            );
+          })}
+        </ul>
+        <ChatForm onSubmit={handleSendMessage} />
+      </div>
+    </>
   );
 };
 
