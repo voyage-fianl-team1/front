@@ -23,8 +23,8 @@
 //   const ArrayIndex = [1, 2, 3, 4, 5];
 
 //   return (
-//     <section className='w-full h-80 border border-matchgi-gray flex flex-row items-center justify-center gap-2 rounded-lg p-1'>
-//       <div className='w-72 h-72 border border-matchgi-gray rounded-xl bg-matchgi-lightgray'></div>
+//     <section className='w-full h-[50rem] border border-matchgi-gray flex flex-col items-center justify-center gap-2 rounded-lg p-1'>
+//       <div className='w-60 h-60 border border-matchgi-gray rounded-xl bg-matchgi-lightgray'></div>
 //       <div className='flex flex-col justify-center items-center w-4/5 h-72 border border-matchgi-gray rounded-xl bg-matchgi-lightgray gap-2'>
 //         <input className='w-11/12 h-6 border border-matchgi-gray' {...register('title')}></input>
 //         <textarea className='w-11/12 h-36 border border-matchgi-gray' {...register('content')}></textarea>

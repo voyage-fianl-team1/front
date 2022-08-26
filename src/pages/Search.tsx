@@ -1,6 +1,6 @@
 import React, { FC, useEffect, useCallback } from 'react';
 import { useInView } from 'react-intersection-observer';
-import { useInfiniteQuery } from '@tanstack/react-query';
+import { useInfiniteQuery, useQueryClient } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
 import { apis } from '../apis';
 import { useDispatch, useSelector } from 'react-redux';
@@ -13,6 +13,7 @@ import { Helmet } from 'react-helmet';
 const SearchMatch: FC = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const queryClient = useQueryClient();
   const { ref, inView } = useInView();
   const sort = useSelector((state: RootState) => state.search.sort);
   const subject = useSelector((state: RootState) => state.search.subject);
@@ -27,9 +28,14 @@ const SearchMatch: FC = () => {
     data: postList,
     fetchNextPage,
     isFetchingNextPage,
+    refetch,
   } = useInfiniteQuery(['postData', sort, subject], ({ pageParam = 0 }) => fetchPostList(pageParam), {
     getNextPageParam: (lastPage) => (!lastPage.last ? lastPage.nextPage : undefined),
   });
+  useEffect(() => {
+    refetch();
+    queryClient.invalidateQueries(['postData']);
+  }, []);
 
   useEffect(() => {
     if (inView) fetchNextPage();
