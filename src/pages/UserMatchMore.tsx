@@ -1,11 +1,17 @@
 import React from 'react';
 import UserMatches from '../components/UserMatches';
+import { Helmet } from 'react-helmet';
 
 const UserMatchMore = () => {
   return (
-    <div>
-      <UserMatches />
-    </div>
+    <>
+      <Helmet>
+        <title>매치기 | 전적 상세</title>
+      </Helmet>
+      <div>
+        <UserMatches />
+      </div>
+    </>
   );
 };
 

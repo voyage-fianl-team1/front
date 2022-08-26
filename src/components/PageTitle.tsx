@@ -27,8 +27,13 @@ const PageTitle = () => {
   const { nickname } = useSelector((state: RootState) => state.user);
 
   const handleRouteBack = useCallback(() => {
-    navigate(-1);
-  }, []);
+    console.log(location.pathname);
+    if (location.pathname === '/search') {
+      navigate('/');
+    } else {
+      navigate(-1);
+    }
+  }, [location.pathname]);
 
   const title = useMemo(() => {
     if (!location.pathname) return;

@@ -8,6 +8,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../redux/store';
 import { ImageType } from '../typings';
 import { IoMdClose } from 'react-icons/io';
+import { Helmet } from 'react-helmet';
 
 const Maps = () => {
   const mapRef = useRef(null);
@@ -100,18 +101,23 @@ const Maps = () => {
     }
   };
   return (
-    <Map
-      center={{ lat: nowPosition.lat, lng: nowPosition.lng }}
-      className='relative w-full h-screen'
-      level={3}
-      ref={mapRef}
-    >
-      <ZoomControl position={window.kakao.maps.ControlPosition.TOPRRIGHT} />
-      <CustomOverlayMap position={{ lat: overlay.lat, lng: overlay.lng }} xAnchor={0.5} yAnchor={1.1}>
-        {MatchMarker()}
-        {CustomOverlay()}
-      </CustomOverlayMap>
-    </Map>
+    <>
+      <Helmet>
+        <title>매치기 | 근처찾기</title>
+      </Helmet>
+      <Map
+        center={{ lat: nowPosition.lat, lng: nowPosition.lng }}
+        className='relative w-full h-screen'
+        level={3}
+        ref={mapRef}
+      >
+        <ZoomControl position={window.kakao.maps.ControlPosition.TOPRRIGHT} />
+        <CustomOverlayMap position={{ lat: overlay.lat, lng: overlay.lng }} xAnchor={0.5} yAnchor={1.1}>
+          {MatchMarker()}
+          {CustomOverlay()}
+        </CustomOverlayMap>
+      </Map>
+    </>
   );
 };
 
