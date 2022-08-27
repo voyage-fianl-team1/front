@@ -1,59 +1,89 @@
-// import React, { FC, useState } from 'react';
-// import { useForm } from 'react-hook-form';
+import React, { FC, useCallback, useRef, useState } from 'react';
+import { useForm } from 'react-hook-form';
+import { apis } from '../apis';
+import { IoMdCloseCircleOutline } from 'react-icons/io';
 
-// const Review: FC = () => {
-//   const { register, getValues } = useForm({});
-//   const [clicked, setClicked] = useState([false, false, false, false, false]);
+const Review: FC = () => {
+  const { register, getValues } = useForm({});
+  const [imgSrc, setImgSrc] = useState<string[]>([
+    'https://cdn.pixabay.com/photo/2013/04/01/21/30/photo-99135_960_720.png',
+  ]);
+  const [file, setFile] = useState<File[]>();
+  const inputRef = useRef<HTMLInputElement | null>(null);
 
-//   const handleStarClick = (index: number) => {
-//     const clickStates = [...clicked];
-//     for (let i = 0; i < 5; i++) {
-//       clickStates[i] = i <= index ? true : false;
-//     }
-//     setClicked(clickStates);
-//   };
+  const onUploadIamge = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+    if (!e.target.files) {
+      return;
+    }
+    setFile(Array.from(e.target.files) || []);
+    setImgSrc([URL.createObjectURL(e.target.files[0])]);
+  }, []);
 
-//   const reviewPostUpload = {
-//     title: getValues().title,
-//     content: getValues().content,
-//     star: getValues().star,
-//   };
-//   console.log(reviewPostUpload);
+  const imgBtn = useCallback(() => {
+    if (!inputRef.current) {
+      return;
+    }
+    inputRef.current.click();
+  }, []);
 
-//   const ArrayIndex = [1, 2, 3, 4, 5];
+  const handledeleteImage = useCallback(() => {
+    setImgSrc(['https://cdn.pixabay.com/photo/2013/04/01/21/30/photo-99135_960_720.png']);
+    setFile([]);
+  }, []);
 
-//   return (
-//     <section className='w-full h-[50rem] border border-matchgi-gray flex flex-col items-center justify-center gap-2 rounded-lg p-1'>
-//       <div className='w-60 h-60 border border-matchgi-gray rounded-xl bg-matchgi-lightgray'></div>
-//       <div className='flex flex-col justify-center items-center w-4/5 h-72 border border-matchgi-gray rounded-xl bg-matchgi-lightgray gap-2'>
-//         <input className='w-11/12 h-6 border border-matchgi-gray' {...register('title')}></input>
-//         <textarea className='w-11/12 h-36 border border-matchgi-gray' {...register('content')}></textarea>
-//         <span className='flex flex-row'>
-//           {ArrayIndex.map((v, i) => (
-//             <>
-//               <div className='flex items-center' key={i}>
-//                 <svg
-//                   aria-hidden='true'
-//                   className='w-10 h-10 text-matchgi-gray active:text-yellow-300'
-//                   fill='currentColor'
-//                   viewBox='0 0 20 20'
-//                   xmlns='http://www.w3.org/2000/svg'
-//                 >
-//                   <title>First star</title>
-//                   <path d='M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z'></path>
-//                 </svg>
-//               </div>
-//             </>
-//           ))}
-//         </span>
-//         <span className='flex flex-row gap-5'>
-//           <button className='border w-14 h-7 border-black bg-white p-0.25 text-sm'>작성하기</button>
-//           <button className='border w-14 h-7 border-black bg-white p-0.25 text-sm'>취소</button>
-//         </span>
-//       </div>
-//     </section>
-//   );
-// };
+  const handleReviewUpload = async () => {
+    const reviewData = {
+      title: getValues().title,
+      content: getValues().content,
+    };
+    const value = await apis.reviewUpload(2, reviewData);
+    const formData = new FormData();
+    if (file !== undefined) {
+      for (let i = 0; i < file.length; i++) {
+        formData.append('files', file[i]);
+      }
+      await apis.reviewImage(value, formData);
+    }
+  };
 
-// export default Review;
-export {};
+  return (
+    <section className='w-full h-[40rem] border border-matchgi-gray flex flex-col items-center justify-center gap-2 rounded-lg p-1'>
+      <div className='w-60 h-60 mb-10'>
+        <span className='fixed ml-52 mt-3'>
+          <button className='text-2xl text-white' onClick={handledeleteImage}>
+            <IoMdCloseCircleOutline />
+          </button>
+        </span>
+        <img
+          alt='No Image'
+          src={imgSrc[0]}
+          className='flex flex-row gap-5 mb-4 w-60 h-60 rounded-3xl  bg-matchgi-lightgray'
+        />
+      </div>
+
+      <input type='file' accept='image/*' multiple className='hidden ' onChange={onUploadIamge} ref={inputRef}></input>
+      <div>
+        <button className='border border-black' onClick={imgBtn}>
+          파일올리기
+        </button>
+      </div>
+      <div className='flex flex-col justify-center items-center w-11/12 h-72 border border-matchgi-gray rounded-xl bg-matchgi-lightgray gap-2'>
+        <input className='w-11/12 h-6 border border-matchgi-gray' {...register('title')}></input>
+        <div className='flex flex-row'></div>
+        <textarea className='w-11/12 h-36 border border-matchgi-gray' {...register('content')}></textarea>
+        <span className='flex flex-row gap-5'>
+          <button
+            className='border w-14 h-7 border-black bg-white p-0.25 text-xs
+          '
+            onClick={handleReviewUpload}
+          >
+            작성하기
+          </button>
+          <button className='border w-14 h-7 border-black bg-white p-0.25 text-xs'>취소</button>
+        </span>
+      </div>
+    </section>
+  );
+};
+
+export default Review;

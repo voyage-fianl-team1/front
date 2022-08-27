@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { PostUpload, TotalStatus, UserInfo, UserLogin, UserSignUp } from '../typings';
+import { PostUpload, TotalStatus, UserInfo, UserLogin, UserSignUp, ReviewData } from '../typings';
 
 const SERVER_URL = 'http://52.78.157.63';
 
@@ -93,4 +93,12 @@ export const apis = {
   getAroundGame: (lat: number, lng: number) => instance.get(`/api/posts/gps?lat=${lat}&lng=${lng}`),
   getNotifications: () => instance.get('/api/users/notifications').then((res) => res.data),
   postNotificationRead: (notificationId: number) => instance.put(`/api/notifications/${notificationId}`),
+  reviewUpload: (postId: number, data: ReviewData) =>
+    instance.post(`/api/reviews/${postId}`, data).then((res) => {
+      return res.data.reviewId;
+    }),
+  reviewImage: (reviewId: number, data: FormData) =>
+    instance.post(`/api/images/reviews/${reviewId}`, data).then((res) => {
+      return alert('리뷰 작성이 완료되었습니다.');
+    }),
 };
