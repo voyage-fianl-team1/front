@@ -8,6 +8,7 @@ import { login } from '../redux/features/userSlice';
 import { positionAction } from '../redux/features/postionSlice';
 import LoadingSpinner from '../components/loadingSpinner';
 import Review from '../components/Review';
+import ReviewDetail from '../components/ReviewDetail';
 
 const Home = React.lazy(() => import('../pages/Home'));
 const Login = React.lazy(() => import('../pages/Login'));
@@ -78,6 +79,7 @@ const App = () => {
             <Route path='/new/:id/edit' element={<New />} />
             <Route path='/keword' element={<Keyword />} />
             <Route path='/review' element={<Review />} />
+            <Route path='/reviewdetail' element={<ReviewDetail />} />
             <Route path='/matchHistory/:id/subject/:subject' element={<MatchHistory />} />
           </Routes>
         </Layout>

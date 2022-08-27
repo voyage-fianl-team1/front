@@ -15,7 +15,7 @@ const Review: FC = () => {
     if (!e.target.files) {
       return;
     }
-    setFile(Array.from(e.target.files) || []);
+    setFile(Array.from(e.target.files));
     setImgSrc([URL.createObjectURL(e.target.files[0])]);
   }, []);
 
@@ -48,9 +48,9 @@ const Review: FC = () => {
 
   return (
     <section className='w-full h-[40rem] border border-matchgi-gray flex flex-col items-center justify-center gap-2 rounded-lg p-1'>
-      <div className='w-60 h-60 mb-10'>
+      <div className='w-60 h-60 mb-2'>
         <span className='fixed ml-52 mt-3'>
-          <button className='text-2xl text-white' onClick={handledeleteImage}>
+          <button className='text-2xl text-white font-black' onClick={handledeleteImage}>
             <IoMdCloseCircleOutline />
           </button>
         </span>
@@ -71,7 +71,7 @@ const Review: FC = () => {
         <input className='w-11/12 h-6 border border-matchgi-gray' {...register('title')}></input>
         <div className='flex flex-row'></div>
         <textarea className='w-11/12 h-36 border border-matchgi-gray' {...register('content')}></textarea>
-        <span className='flex flex-row gap-5'>
+        <span className='flex flex-row gap-5 mt-3'>
           <button
             className='border w-14 h-7 border-black bg-white p-0.25 text-xs
           '
