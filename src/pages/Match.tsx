@@ -29,8 +29,10 @@ const Match: FC = () => {
   };
   const handleDeletePost = async () => {
     try {
-      await apis.deletePost(postId);
-      navigate(-1);
+      if (window.confirm('게시글을 삭제하시겠습니까?')) {
+        await apis.deletePost(postId);
+        navigate(-1);
+      }
     } catch (err) {
       alert('게시글 삭제에 실패했습니다.');
     }

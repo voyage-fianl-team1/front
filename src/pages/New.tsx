@@ -102,12 +102,14 @@ const Newpost: FC = () => {
   };
 
   const handledeleteImage = async (id: number) => {
-    const imgpaths = data.imgpaths[id];
-    if (imgpaths !== undefined) {
-      await apis.deleteImage(imgpaths['path']);
-    }
-    if (data.imgurls.length > 0) {
-      setImageUrl(imgUrl.filter((_, index) => index !== id));
+    if (window.confirm('이미지를 삭제하시겠습니까?')) {
+      const imgpaths = data.imgpaths[id];
+      if (imgpaths !== undefined) {
+        await apis.deleteImage(imgpaths['path']);
+      }
+      if (data.imgurls.length > 0) {
+        setImageUrl(imgUrl.filter((_, index) => index !== id));
+      }
     }
   };
 
