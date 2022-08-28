@@ -15,7 +15,7 @@ const MatchItem = () => {
       {recentList &&
         recentList.map((v: RecentMatch, i: number) => (
           <div className='recent-match-card' key={i}>
-            <h1 className='font-semibold mb-1'>{v.title}</h1>
+            <h1 className='font-semibold mb-1 truncate ...'>{v.title}</h1>
             <h2>{v.subject}</h2>
             <p className='mt-5 text-sm text-matchgi-gray'>{v.address}</p>
             <div className='flex justify-between items-center mt-2'>
