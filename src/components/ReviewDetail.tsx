@@ -11,7 +11,6 @@ const ReviewDetail = () => {
     return <LoadingSpinner />;
   }
   const reviews = data.data.reviewList;
-  console.log();
   return (
     <section className='w-full h-[40rem] border border-matchgi-gray flex flex-col items-center justify-center gap-2 rounded-lg p-1'>
       <div className='w-60 h-60 mb-2'>

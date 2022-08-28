@@ -5,9 +5,9 @@ import { IoMdCloseCircleOutline } from 'react-icons/io';
 
 const Review: FC = () => {
   const { register, getValues } = useForm({});
-  const [imgSrc, setImgSrc] = useState<string[]>([
-    'https://cdn.pixabay.com/photo/2013/04/01/21/30/photo-99135_960_720.png',
-  ]);
+  const [imgSrc, setImgSrc] = useState<string>(
+    'https://cdn.pixabay.com/photo/2013/04/01/21/30/photo-99135_960_720.png'
+  );
   const [file, setFile] = useState<File[]>();
   const inputRef = useRef<HTMLInputElement | null>(null);
 
@@ -16,7 +16,7 @@ const Review: FC = () => {
       return;
     }
     setFile(Array.from(e.target.files));
-    setImgSrc([URL.createObjectURL(e.target.files[0])]);
+    setImgSrc(URL.createObjectURL(e.target.files[0]));
   }, []);
 
   const imgBtn = useCallback(() => {
@@ -27,7 +27,7 @@ const Review: FC = () => {
   }, []);
 
   const handledeleteImage = useCallback(() => {
-    setImgSrc(['https://cdn.pixabay.com/photo/2013/04/01/21/30/photo-99135_960_720.png']);
+    setImgSrc('https://cdn.pixabay.com/photo/2013/04/01/21/30/photo-99135_960_720.png');
     setFile([]);
   }, []);
 
@@ -56,7 +56,7 @@ const Review: FC = () => {
         </span>
         <img
           alt='No Image'
-          src={imgSrc[0]}
+          src={imgSrc}
           className='flex flex-row gap-5 mb-4 w-60 h-60 rounded-3xl  bg-matchgi-lightgray'
         />
       </div>
