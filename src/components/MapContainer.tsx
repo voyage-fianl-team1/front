@@ -1,4 +1,4 @@
-import React, { useRef, useState, useEffect } from 'react';
+import React, { useRef, useState, useEffect, useCallback } from 'react';
 import { Map, ZoomControl, MapMarker } from 'react-kakao-maps-sdk';
 import { addressAction } from '../redux/features/addressSlice';
 import { useDispatch, useSelector } from 'react-redux';
@@ -32,6 +32,10 @@ const MapContainer = () => {
     dispatch(addressAction({ address: address, lat: position.lat, lng: position.lng }));
     dispatch(toggleModalShow());
   };
+
+  const handleToggleModal = useCallback(() => {
+    dispatch(toggleModalShow());
+  }, []);
 
   return (
     <Map
