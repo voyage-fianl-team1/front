@@ -26,6 +26,7 @@
     "lodash": "^4.17.21",
     "prettier": "^2.7.1",
     "react": "^18.2.0",
+    "react-calendar": "^3.7.0",
     "react-dom": "^18.2.0",
     "react-helmet": "^6.1.0",
     "react-hook-form": "^7.34.0",
@@ -67,6 +68,7 @@
     ]
   },
   "devDependencies": {
+    "@types/react-calendar": "^3.5.2",
     "@types/redux-persist": "^4.3.1",
     "@typescript-eslint/eslint-plugin": "^5.33.0",
     "@typescript-eslint/parser": "^5.33.0",

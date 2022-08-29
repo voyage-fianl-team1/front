@@ -1,13 +1,13 @@
 import React, { useCallback, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { subjectSearchShow } from '../redux/features/searchSlice';
-import { toggleSelectShow } from '../redux/features/sortSlice';
+import { toggleSelectShow } from '../redux/features/toggleSlice';
 import { RootState } from '../redux/store';
 import { IoMdClose } from 'react-icons/io';
 
 const SelectSubject = () => {
   const dispatch = useDispatch();
-  const selectShow = useSelector((state: RootState) => state.sort.selectShow);
+  const selectShow = useSelector((state: RootState) => state.toggle.selectShow);
   const [subject, setSubject] = useState<string>('ALL');
   const handleToggleSelect = useCallback(() => {
     dispatch(toggleSelectShow());
@@ -100,7 +100,7 @@ const SelectSubject = () => {
           <button
             className='flex flex-col justify-center items-center w-[162px] h-[44px] border border-matchgi-bordergray rounded-[2px]
             focus:bg-matchgi-bordergray'
-            value=''
+            value='ETC'
             onClick={handleSelectData}
           >
             기타

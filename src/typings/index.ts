@@ -133,3 +133,8 @@ export interface Notification {
   isread: boolean;
   postId: number;
 }
+
+export interface ReviewData {
+  title: string;
+  content: string;
+}
