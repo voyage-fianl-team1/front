@@ -4,12 +4,14 @@ interface sortState {
   sortShow: boolean;
   selectShow: boolean;
   modalShow: boolean;
+  subjectShow: boolean;
 }
 
 const initialState: sortState = {
   sortShow: false,
   selectShow: false,
   modalShow: false,
+  subjectShow: false,
 };
 
 const sortSlice = createSlice({
@@ -25,10 +27,13 @@ const sortSlice = createSlice({
     toggleModalShow: (state) => {
       state.modalShow = !state.modalShow;
     },
+    toggleSubjectShow: (state) => {
+      state.subjectShow = !state.subjectShow;
+    },
     toggleClear: () => initialState,
   },
 });
 
 export default sortSlice;
 
-export const { toggleSortShow, toggleSelectShow, toggleModalShow, toggleClear } = sortSlice.actions;
+export const { toggleSortShow, toggleSelectShow, toggleModalShow, toggleClear, toggleSubjectShow } = sortSlice.actions;

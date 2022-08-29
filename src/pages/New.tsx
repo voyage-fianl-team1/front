@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useState, useCallback } from 'react';
+import React, { FC, useEffect, useState, useCallback, useRef } from 'react';
 import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../redux/store';
@@ -9,16 +9,20 @@ import { addressClear } from '../redux/features/addressSlice';
 import { toggleClear, toggleModalShow } from '../redux/features/sortSlice';
 import Modal from '../components/Modal';
 import MapContainer from '../components/MapContainer';
+import Calendars from '../components/Calendar';
 
 const Newpost: FC = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const inputRef = useRef<HTMLInputElement | null>(null);
   const [images, setImages] = useState<string[]>([]);
   const [uploadImage, setUploadImage] = useState<File[]>([]);
   const [imgUrl, setImageUrl] = useState([]);
   const address = useSelector((state: RootState) => state.address);
   const modalShow = useSelector((state: RootState) => state.sort.modalShow);
+  const date = useSelector((state: RootState) => state.calendar.date);
+  console.log(date);
   const { register, getValues } = useForm({});
   const data = location.state as PostEditDataProps;
 
@@ -95,6 +99,12 @@ const Newpost: FC = () => {
     }
     navigate('/search');
   };
+  const handleImgBtn = useCallback(() => {
+    if (!inputRef.current) {
+      return;
+    }
+    inputRef.current.click();
+  }, []);
 
   const handledeletePrevImg = async (id: number) => {
     setImages(images.filter((_, index) => index !== id));
@@ -117,20 +127,18 @@ const Newpost: FC = () => {
     dispatch(toggleModalShow());
   }, [modalShow]);
 
+  // const handleToggleSelect = useCallback(() => {
+  //   dispatch(toggleSubjectShow());
+  // }, []);
+
   return (
-    <section className='flex flex-col justify-center bg-gray-200 w-full h-screen '>
-      제목
-      <input
-        className='mb-3 w-full'
-        type='text'
-        defaultValue={data && data.title}
-        {...register('title', { required: true })}
-      />
-      <section className='flex h-1/2 justify-center items-center gap-5'>
+    <section>
+      <p className='text-[0.75rem] text-matchgi-black'>경기 썸네일</p>
+      <div className='flex flex-row'>
         {data
           ? imgUrl.map((image: ImageType, id) => (
               <div key={id}>
-                <img className='h-72 w-72' alt='' src={image['url']} />
+                <img className='h-5 w-5' alt='' src={image['url']} />
                 <button type='button' onClick={() => handledeleteImage(id)}>
                   삭제
                 </button>
@@ -138,7 +146,7 @@ const Newpost: FC = () => {
             ))
           : images.map((image, id) => (
               <div key={id}>
-                <img className='h-72 w-72' alt='' src={image} />
+                <img className='h-5 w-5' alt='' src={image} />
                 <button type='button' onClick={() => handledeletePrevImg(id)}>
                   삭제
                 </button>
@@ -147,41 +155,45 @@ const Newpost: FC = () => {
         {data &&
           images.map((image, id) => (
             <div key={id}>
-              <img className='h-72 w-72' alt='' src={image} />
+              <img className='h-5 w-5' alt='' src={image} />
               <button type='button' onClick={() => handledeletePrevImg(id)}>
                 삭제
               </button>
             </div>
           ))}
-      </section>
-      <input type='file' multiple onChange={onSaveFiles} required />
-      <section className='flex justify-center'>
-        <div className='w-full'>
-          모집마감일
-          <input
-            className='w-full'
-            type='date'
-            {...register('matchDeadline', { required: true })}
-            defaultValue={data && data.matchDeadline}
-          />
-        </div>
-      </section>
-      종목
-      <select
-        className='w-full text-center'
+        <img src='assets/images/post/photo.svg' className='cursor-pointer' onClick={handleImgBtn}></img>
+      </div>
+      <input type='file' accept='images/*' className='hidden' multiple onChange={onSaveFiles} required ref={inputRef} />
+      <div className='flex flex-col'>
+        <label className='w-[43px] h-[14px] text-[12px] leading-[120%]'>경기이름</label>
+        <input
+          className='box-border `py-[16px] px-[10px] w-11/12 h-[48px] bg-[#FFFFFF] rounded-[10px] border border-matchigi-bordergray
+          text-matchgi-black'
+          type='text'
+          id='matchname'
+          placeholder='경기 이름은 최대 20자까지 입력 가능합니다.'
+          defaultValue={data && data.title}
+          {...register('title', { required: true })}
+        />
+      </div>
+      <p className='text-[12px] text-matchgi-black'>종목</p>
+      <button
+        className='box-border `py-[16px] px-[10px] w-11/12 h-[48px] bg-[#FFFFFF] rounded-[10px] border border-matchigi-bordergray
+        text-matchgi-black'
         {...register('subject', { required: true })}
         defaultValue={data && data.subject}
-      >
-        <option value='ALL'>-종목을 골라주세요-</option>
-        <option value='SOCCER'>축구</option>
-        <option value='BASKETBALL'>농구</option>
-        <option value='BADMINTON'>배드민턴</option>
-        <option value='BILLIARDS'>당구</option>
-        <option value='BOWLING'>볼링</option>
-        <option value='TENNIS'>테니스</option>
-        <option value='ETC'>기타</option>
-      </select>
+      ></button>
       <section>
+        <section className='flex flex-col justify-center'>
+          <p className='text-[12px] text-matchgi-black'>모집마감일</p>
+          <div
+            className='box-border `py-[16px] px-[10px] w-11/12 h-[48px] bg-[#FFFFFF] rounded-[10px] border border-matchigi-bordergray
+            text-matchgi-black'
+          >
+            {data ? data.matchDeadline : date}
+          </div>
+          <Calendars />
+        </section>
         {modalShow && (
           <Modal onClickToggleModal={handleToggleModal}>
             <button className='ml-auto' onClick={handleToggleModal}>
@@ -191,31 +203,42 @@ const Newpost: FC = () => {
           </Modal>
         )}
       </section>
-      <section className='flex w-full bg-white mt-3 justify-between'>
-        <span>{address.address}</span>
-        <button className='w-20 h-8 bg-black text-white cursor-pointer' onClick={handleToggleModal}>
-          주소
-        </button>
+      <section className='flex flex-col w-full bg-white mt-3 justify-between'>
+        <p className='text-[12px] text-matchgi-black'>경기위치</p>
+        <div
+          className='box-border `py-[16px] px-[10px] w-11/12 h-[48px] bg-[#FFFFFF] rounded-[10px] border border-matchigi-bordergray
+            text-matchgi-black'
+          onClick={handleToggleModal}
+          defaultValue={address.address}
+        >
+          {address.address}
+        </div>
       </section>
-      내용
-      <textarea
-        className='mb-5 w-full h-2/5'
-        {...register('content', { required: true })}
-        defaultValue={data && data.content}
-      />
-      <div className='flex items-center justify-center gap-5'>
+      <section className='flex flex-col justify-center'>
+        <p className='text-[12px] leading-[120%] tracking-tighter text-matchgi-black'>내용</p>
+        <textarea
+          className='w-11/12 h-[169px] border border-matchgi-bordergray rounded-[10px] px-[16px] py-[12px]
+        mb-[60px]'
+          {...register('content', { required: true })}
+          placeholder='내용은 최대 100자까지 입력 가능합니다.'
+          defaultValue={data && data.content}
+        />
+      </section>
+
+      <div className='flex justify-center'>
         {data ? (
           <button className='bg-white mb-5' type='button' onClick={handleEditUpload}>
             수정하기
           </button>
         ) : (
-          <button className='bg-white mb-5' type='button' onClick={handleDataUpload}>
-            작성하기
+          <button
+            className='w-11/12 h-[47px] border border-matchgi-bordergray rounded-[4px] bg-matchgi-btnblue text-white cursor-pointer
+         '
+            onClick={handleDataUpload}
+          >
+            작성완료
           </button>
         )}
-        <button className='bg-white mb-5' type='button' onClick={() => navigate(-1)}>
-          취소
-        </button>
       </div>
     </section>
   );

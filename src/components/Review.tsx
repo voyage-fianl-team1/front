@@ -61,7 +61,7 @@ const Review: FC = () => {
         />
       </div>
 
-      <input type='file' accept='image/*' multiple className='hidden ' onChange={onUploadIamge} ref={inputRef}></input>
+      <input type='file' accept='image/*' multiple className='hidden' onChange={onUploadIamge} ref={inputRef}></input>
       <div>
         <button className='border border-black' onClick={imgBtn}>
           파일올리기

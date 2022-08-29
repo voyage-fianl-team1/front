@@ -9,15 +9,18 @@ import sortSlice from './features/sortSlice';
 import searchSlice from './features/searchSlice';
 import overlaySlice from './features/overlaySlice';
 import positionSlice from './features/postionSlice';
+import joinSlice from './features/joinSlice';
+import calendarSlice from './features/calendarSlice';
 
 const persistConfig = {
   key: 'root',
   storage,
-  whiteList: ['postion'],
+  whiteList: ['postion', 'join'],
 };
 
 const reducers = combineReducers({
   position: positionSlice.reducer,
+  join: joinSlice.reducer,
 });
 
 const persistReducered = persistReducer(persistConfig, reducers);
@@ -31,6 +34,7 @@ export const store = configureStore({
     sort: sortSlice.reducer,
     search: searchSlice.reducer,
     overlay: overlaySlice.reducer,
+    calendar: calendarSlice.reducer,
     persistReducered,
   },
   middleware: (getDefaultMiddleware) =>
