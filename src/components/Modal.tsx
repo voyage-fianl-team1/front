@@ -7,8 +7,8 @@ interface ModalDefaultType {
 
 function Modal({ onClickToggleModal, children }: PropsWithChildren<ModalDefaultType>) {
   return (
-    <ModalContainer>
-      <DialogBox className=' w-11/12 h-2/3'>{children}</DialogBox>
+    <div className='w-[100%] h-1/5 flex flex-col items-center justify-center'>
+      <DialogBox className=' w-[100%] h-2/3'>{children}</DialogBox>
       <Backdrop
         onClick={(e: React.MouseEvent) => {
           e.preventDefault();
@@ -17,27 +17,18 @@ function Modal({ onClickToggleModal, children }: PropsWithChildren<ModalDefaultT
           }
         }}
       />
-    </ModalContainer>
+    </div>
   );
 }
-
-const ModalContainer = styled.div`
-  width: 100%;
-  height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-`;
 
 const DialogBox = styled.dialog`
   display: flex;
   flex-direction: column;
   align-items: center;
-  border: none;
-  border-radius: 3px;
-  box-shadow: 0 0 30px rgba(30, 30, 30, 0.185);
+  border-radius: 10px;
+  box-shadow: 0 4px 20px rgba(30, 30, 30, 0.08);
   box-sizing: border-box;
-  background-color: white;
+  background-color: #fcfcfc;
   z-index: 10000;
 `;
 

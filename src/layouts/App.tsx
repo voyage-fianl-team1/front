@@ -11,8 +11,11 @@ import Review from '../components/Review';
 import ReviewDetail from '../components/ReviewDetail';
 
 const Home = React.lazy(() => import('../pages/Home'));
+const Splash = React.lazy(() => import('../pages/Splash'));
 const Login = React.lazy(() => import('../pages/Login'));
 const SignUp = React.lazy(() => import('../pages/SignUp'));
+const RedirectKakao = React.lazy(() => import('../pages/RedirectKakao'));
+const FailKakao = React.lazy(() => import('../pages/FailKakao'));
 const ChatListPage = React.lazy(() => import('../pages/ChatListPage'));
 const Search = React.lazy(() => import('../pages/Search'));
 const ChatDetail = React.lazy(() => import('../pages/ChatDetail'));
@@ -92,8 +95,11 @@ const App = () => {
       <Layout>
         <Routes>
           <Route path='/' element={<Home />} />
+          <Route path='/splash' element={<Splash />} />
           <Route path='/login' element={<Login />} />
           <Route path='/signup' element={<SignUp />} />
+          <Route path='/redirectKakao' element={<RedirectKakao />} />
+          <Route path='/failKakao' element={<FailKakao />} />
           <Route path='*' element={<div>로그인이 필요한 서비스 입니다</div>} />
         </Routes>
       </Layout>

@@ -7,6 +7,8 @@ import { useNavigate } from 'react-router-dom';
 import LoadingSpinner from '../components/loadingSpinner';
 import { useDispatch } from 'react-redux';
 import { addressAction } from '../redux/features/addressSlice';
+import { subjectAction } from '../redux/features/subjectSlice';
+import { calendarAction } from '../redux/features/calendarSlice';
 
 const GetMatchData: FC = () => {
   const param = useParams();
@@ -98,21 +100,21 @@ const GetMatchData: FC = () => {
               state={{
                 postId: postId,
                 title: postData.title,
-                subject: postData.subject,
                 lat: postData.lat,
                 lng: postData.lng,
                 imgurls: postData.imgurls,
                 imgpaths: postData.imgpaths,
-                matchDeadline: postData.matchDeadline,
                 content: postData.content,
               }}
             >
               <button
                 className='bg-white mb-5'
                 type='button'
-                onClick={() =>
-                  dispatch(addressAction({ address: postData.address, lat: postData.lat, lng: postData.lng }))
-                }
+                onClick={() => {
+                  dispatch(addressAction({ address: postData.address, lat: postData.lat, lng: postData.lng }));
+                  dispatch(subjectAction({ subject: postData.subject, value: postData.subject }));
+                  dispatch(calendarAction({ date: postData.matchDeadline }));
+                }}
               >
                 수정하기
               </button>

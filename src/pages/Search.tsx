@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import { apis } from '../apis';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../redux/store';
-import { toggleSortShow, toggleSelectShow, toggleClear } from '../redux/features/sortSlice';
+import { toggleSortShow, toggleSelectShow, toggleClear } from '../redux/features/toggleSlice';
 import { RiArrowDownSLine } from 'react-icons/ri';
 import LoadingSpinner from '../components/loadingSpinner';
 import { Helmet } from 'react-helmet';

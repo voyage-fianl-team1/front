@@ -1,7 +1,7 @@
 import React, { useCallback, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { sortSearchShow } from '../redux/features/searchSlice';
-import { toggleSortShow } from '../redux/features/sortSlice';
+import { toggleSortShow } from '../redux/features/toggleSlice';
 import { RootState } from '../redux/store';
 import { IoMdClose } from 'react-icons/io';
 import { BsCheckLg } from 'react-icons/bs';
@@ -9,7 +9,7 @@ import { BsCheckLg } from 'react-icons/bs';
 const SelectSort = () => {
   const dispatch = useDispatch();
   const [sort, setSort] = useState<string>('createAt');
-  const sortShow = useSelector((state: RootState) => state.sort.sortShow);
+  const sortShow = useSelector((state: RootState) => state.toggle.sortShow);
 
   const handleToggleSort = useCallback(() => {
     dispatch(toggleSortShow());
