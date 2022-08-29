@@ -1,9 +1,12 @@
 import React, { useCallback } from 'react';
 import { Link } from 'react-router-dom';
 
+const REST_API_KEY = 'a597e3cf0c15a9b1306bac7cf6ac73c4';
+const REDIRECT_URI = 'a597e3cf0c15a9b1306bac7cf6ac73c4';
+
 const Splash = () => {
   const handleKakaoLogin = useCallback(() => {
-    alert('준비중입니다');
+    window.location.href = `http://52.78.157.63/oauth2/authorization/kakao?client_id=${REST_API_KEY}&redirect_uri=${REDIRECT_URI}&response_type=code`;
   }, []);
 
   return (
