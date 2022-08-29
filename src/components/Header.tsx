@@ -70,7 +70,7 @@ const Header = () => {
           <img src='/assets/images/hamberger.svg' alt='menu-icon' />
         </li>
         {notificationShow && (
-          <ul className='absolute bottom-[-300px] right-10 w-[300px] bg-white h-[300px] flex flex-col gap-2 rounded'>
+          <ul className='absolute bottom-[-300px] right-10 w-[300px] bg-white h-[300px] flex flex-col gap-2 rounded overflow-auto'>
             {notifications.map((n) => (
               <li
                 key={n.id}

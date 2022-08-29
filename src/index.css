@@ -17,6 +17,9 @@ select{
 .recent-match-card{
     background: #FFFFFF;
     border: 1px solid #DCDDE0;
+    position: relative;
+    width: 139px;
+    height: 174px;
     box-shadow: 0 0 12px rgba(220, 221, 224, 0.2);
     border-radius: 10px;
     padding: 15px;

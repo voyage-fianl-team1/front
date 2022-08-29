@@ -25,15 +25,14 @@ const PageTitle = () => {
   const location = useLocation();
   const param = useParams();
   const { nickname } = useSelector((state: RootState) => state.user);
-
+  const isKakaoFirstLogin = useMemo(() => location.search?.split(/(\w+=[\w.-]+)/g)?.[1]?.split('=')?.[1], [location]);
   const handleRouteBack = useCallback(() => {
-    console.log(location.pathname);
-    if (location.pathname === '/search') {
+    if (location.pathname === '/search' || !!isKakaoFirstLogin) {
       navigate('/');
     } else {
       navigate(-1);
     }
-  }, [location.pathname]);
+  }, [location]);
 
   const title = useMemo(() => {
     if (!location.pathname) return;
