@@ -9,6 +9,7 @@ module.exports = {
         'matchgi-lightgray': '#F4F5F5',
         'matchgi-bordergray': '#DCDDE0',
         'matchgi-btnblue': '#14308B',
+        'matchgi-white': '#FCFCFC',
       },
     },
   },

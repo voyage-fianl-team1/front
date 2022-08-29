@@ -5,10 +5,11 @@ import { useNavigate } from 'react-router-dom';
 import { apis } from '../apis';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../redux/store';
-import { toggleSortShow, toggleSelectShow, toggleClear } from '../redux/features/sortSlice';
+import { toggleSortShow, toggleSelectShow, toggleClear } from '../redux/features/toggleSlice';
 import { RiArrowDownSLine } from 'react-icons/ri';
 import LoadingSpinner from '../components/loadingSpinner';
 import { Helmet } from 'react-helmet';
+import { joinAction } from '../redux/features/joinSlice';
 
 const SearchMatch: FC = () => {
   const navigate = useNavigate();
@@ -23,7 +24,6 @@ const SearchMatch: FC = () => {
     const last = res.data.last;
     return { data, last, nextPage: pageParam + 1 };
   };
-
   const {
     data: postList,
     fetchNextPage,
@@ -37,6 +37,7 @@ const SearchMatch: FC = () => {
     queryClient.invalidateQueries(['postData']);
   }, []);
 
+  console.log(postList);
   useEffect(() => {
     if (inView) fetchNextPage();
   }, [inView]);
@@ -83,7 +84,10 @@ const SearchMatch: FC = () => {
                   <div
                     className='w-full h-20 bg-white p-2'
                     key={post.postId}
-                    onClick={() => navigate(`/match/${post.postId}`)}
+                    onClick={() => {
+                      navigate(`/match/${post.postId}`);
+                      dispatch(joinAction({ postId: post.postId, matchStatus: post.matchStatus }));
+                    }}
                     ref={ref}
                   >
                     <div className='flex flex-row mb-[28px] items-center'>
@@ -94,7 +98,7 @@ const SearchMatch: FC = () => {
                       ></img>
                       <span className='flex flex-col justify-center ml-4 gap-[1px]'>
                         <div className='text-[16px] font-normal leading-normal text-matchgi-black'>{post.title}</div>
-                        <div className='text-xs text-matchgi-gray leading-normal'>주소</div>
+                        <div className='text-xs text-matchgi-gray leading-normal'>{post.address}</div>
                         <div className='flex text-[10px] item-start rounded-lg w-[40px] h-[18px] bg-matchgi-lightgray justify-center p-[0.1rem]'>
                           {post.subject}
                         </div>

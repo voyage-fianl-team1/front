@@ -33,6 +33,12 @@ const Keyword: FC = () => {
     if (inView) fetchNextPage();
   }, [inView]);
 
+  if (!searchList) {
+    return <LoadingSpinner />;
+  }
+  if (searchList.pages.length < 2) {
+    return <div className='text-sm text-black/30 my-10'>검색 결과가 없습니다.</div>;
+  }
   return (
     <>
       <Helmet>
