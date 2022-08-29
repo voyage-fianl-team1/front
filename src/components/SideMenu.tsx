@@ -39,7 +39,7 @@ const SideMenu = () => {
   }, []);
 
   const handleRouteToLogin = useCallback(() => {
-    navigate('/login');
+    navigate('/splash');
     dispatch(toggleSideMenuShow());
   }, []);
 

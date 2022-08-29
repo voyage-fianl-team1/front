@@ -9,6 +9,7 @@ import { positionAction } from '../redux/features/postionSlice';
 import LoadingSpinner from '../components/loadingSpinner';
 
 const Home = React.lazy(() => import('../pages/Home'));
+const Splash = React.lazy(() => import('../pages/Splash'));
 const Login = React.lazy(() => import('../pages/Login'));
 const SignUp = React.lazy(() => import('../pages/SignUp'));
 const ChatListPage = React.lazy(() => import('../pages/ChatListPage'));
@@ -88,6 +89,7 @@ const App = () => {
       <Layout>
         <Routes>
           <Route path='/' element={<Home />} />
+          <Route path='/splash' element={<Splash />} />
           <Route path='/login' element={<Login />} />
           <Route path='/signup' element={<SignUp />} />
           <Route path='*' element={<div>로그인이 필요한 서비스 입니다</div>} />
