@@ -31,6 +31,7 @@ const SearchMatch: FC = () => {
   } = useInfiniteQuery(['postData', sort, subject], ({ pageParam = 0 }) => fetchPostList(pageParam), {
     getNextPageParam: (lastPage) => (!lastPage.last ? lastPage.nextPage : undefined),
   });
+  console.log(postList);
   useEffect(() => {
     refetch();
     queryClient.invalidateQueries(['postData']);

@@ -11,6 +11,7 @@ import { subjectAction } from '../redux/features/subjectSlice';
 import { calendarAction } from '../redux/features/calendarSlice';
 import { StaticMap } from 'react-kakao-maps-sdk';
 import GetJoinData from './GetJoinData';
+import dayjs from 'dayjs';
 
 export interface IProps {
   data: { owner: number; postId: number; player: number; matchStatus: string };
@@ -57,24 +58,22 @@ const GetMatchData: FC = () => {
     }
   };
   const handleStatusChange = async () => {
-    await apis.updateMatchStatus(postId);
+    try {
+      await apis.updateMatchStatus(postId);
+    } catch (err) {
+      alert(err);
+    }
     queryClient.invalidateQueries(['postList']);
   };
 
   const CompleteBtn = () => {
-    if (postData.owner === 1 && postData.matchStatus === 'ONGOING') {
+    const a = new Date();
+    const b = dayjs(a).format('YYYY-MM-DD');
+    if (b > postData.matchDeadline && postData.owner === 1 && postData.matchStatus === 'ONGOING') {
       return (
         <>
           <button type='button' className='bg-black text-white' onClick={handleStatusChange}>
             완료하기
-          </button>
-        </>
-      );
-    } else if (postData.owner === 1 && postData.matchStatus === 'MATCHEND') {
-      return (
-        <>
-          <button type='button' className='bg-black text-white' onClick={handleStatusChange}>
-            되돌리기
           </button>
         </>
       );
@@ -160,6 +159,7 @@ const GetMatchData: FC = () => {
   return (
     <>
       <section className='flex flex-col justify-center w-full h-full bg-[#FCFCFC]'>
+        {CompleteBtn()}
         <div className='w-full h-[124px] pl-[20px] pt-[16px]'>
           <div className='flex flex-row gap-2 items-center mb-[24px]'>
             <img

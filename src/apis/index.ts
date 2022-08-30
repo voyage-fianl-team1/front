@@ -102,4 +102,5 @@ export const apis = {
       return alert('리뷰 작성이 완료되었습니다.');
     }),
   getReviewList: (postId: number) => instance.get(`/api/reviews/${postId}`),
+  getRewrite: () => instance.get('/api/posts/authority'),
 };
