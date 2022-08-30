@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React, { FC, useRef } from 'react';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { apis } from '../apis';
 import { useParams, Link } from 'react-router-dom';
@@ -16,6 +16,9 @@ const GetMatchData: FC = () => {
   const postId = Number(param.id);
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const matchRef = useRef<HTMLDivElement>(null);
+  const detailRef = useRef<HTMLDivElement>(null);
+  const locationRef = useRef<HTMLDivElement>(null);
   const queryClient = useQueryClient();
   const { data: res, isLoading } = useQuery(['postList'], async () => await apis.getPostList(postId));
   const postData: PostDataProps = res?.data;
@@ -67,7 +70,15 @@ const GetMatchData: FC = () => {
       return;
     }
   };
-
+  const handleMoveScroll = () => {
+    matchRef.current?.scrollIntoView({ behavior: 'smooth' });
+  };
+  const handleMoveScroll2 = () => {
+    detailRef.current?.scrollIntoView({ behavior: 'smooth' });
+  };
+  const handleMoveScroll3 = () => {
+    locationRef.current?.scrollIntoView({ behavior: 'smooth' });
+  };
   if (isLoading) {
     return <LoadingSpinner />;
   }
@@ -92,52 +103,69 @@ const GetMatchData: FC = () => {
           {postData.title}
         </div>
       </div>
-      <div className='flex flex-row w-full justify-center border border-matchgi-bordergray'>
-        <div className='w-1/3 flex justify-center border border-x-matchgi-bordergray'>
-          <p>경기정보</p>
-        </div>
-        <div className='w-1/3 flex justify-center border border-x-matchgi-bordergray'>
-          <p>경기상세</p>
-        </div>
-        <div className='w-1/3 flex justify-center border border-x-matchgi-bordergray'>
-          <p>경기장소</p>
-        </div>
+      <div className='flex flex-row w-full h-[29px] justify-center items-center gap-[65px]' ref={matchRef}>
+        <button
+          className='w-[58px] h-[29px] text-[#9A9B9F] pb-[10px] border border-x-0 border-t-0 border-b-[#FCFCFC] border-b-[3px]
+          focus:text-[#38393C] focus:font-semibold focus:border focus:border-b-[#14308B] focus:border-b-[3px]'
+          onClick={handleMoveScroll}
+        >
+          경기정보
+        </button>
+        <button
+          className='w-[58px] h-[29px] text-[#9A9B9F] pb-[10px] border border-x-0 border-t-0 border-b-[#FCFCFC] border-b-[3px]
+          focus:text-[#38393C] focus:font-semibold focus:border focus:border-b-[#14308B] focus:border-b-[3px]'
+          onClick={handleMoveScroll2}
+        >
+          경기상세
+        </button>
+        <button
+          className='w-[58px] h-[29px] text-[#9A9B9F] pb-[10px] border border-x-0 border-t-0 border-b-[#FCFCFC] border-b-[3px]
+          focus:text-[#38393C] focus:font-semibold focus:border focus:border-b-[#14308B] focus:border-b-[3px]'
+          onClick={handleMoveScroll3}
+        >
+          경기장소
+        </button>
       </div>
-      <section className='flex h-1/2 justify-center items-center gap-5'>
+      {/* <section className='flex h-1/2 justify-center items-center gap-5'>
         {postData &&
           postData.imgurls.map((image: ImageType, id) => (
             <div key={id}>
               <img className='h-72 w-72' alt='' src={image['url']} />
             </div>
           ))}
-      </section>
+      </section> */}
       <div className='w-full h-[199px] bg-[#F4F5F5] flex flex-col justify-center items-center mb-[28px]'>
-        <p className='w-full font-Noto leading-[120%] text-[#000] mb-[13px] font-medium text-[16px] pl-[20px]'>
+        <div className='w-full font-Noto leading-[120%] text-[#000] mb-[13px] font-medium text-[16px] pl-[20px]'>
           경기정보
-        </p>
+        </div>
         <section className='flex flex-row w-11/12 h-[109px] bg-[#FFFFFF] rounded-[16px] justify-left items-center gap-5 font-Noto'>
           <div className='font-medium tracking-[-0.02rem] leading-[150%] text-[#9A9B9F] ml-[25px]'>
-            <div className='w-full h-7'>경기종목</div>
-            <div className='w-full h-7'>모집마감일</div>
+            <p className='w-full h-7'>경기종목</p>
+            <p className='w-full h-7'>모집마감일</p>
           </div>
+
           <div>
-            <div className='w-full h-7'>{postData.subject}</div>
-            <div className='w-full h-7'>{postData.matchDeadline}</div>
+            <p className='w-full h-7'>{postData.subject}</p>
+            <p className='w-full h-7'>{postData.matchDeadline}</p>
           </div>
         </section>
+        <div ref={detailRef}></div>
       </div>
-      <section className='w-full h-[283px] mb-[28px]'>
-        <p className='w-full h-[30px] font-Noto font-medium text-[16px] leading-[120%] text-[#38393C] border border-x-0 border-t-0 border-b-matchgi-bordergray pl-[20px]'>
+      <div className='w-full h-[283px] mb-[28px]'>
+        <div className='w-full h-[30px] font-Noto font-medium text-[16px] leading-[120%] text-[#38393C] border border-x-0 border-t-0 border-b-matchgi-bordergray pl-[20px]'>
           경기상세
-        </p>
+        </div>
         <div className='flex w-full h-[236px] py-[10px] px-[12px] gap-[10px] items-start'>{postData.content}</div>
-      </section>
+      </div>
       <section className='w-full h-[289px] mb-[60px]'>
-        <p className='w-full h-[30px] font-Noto font-medium text-[16px] leading-[120%] text-[#38393C] border border-x-0 border-t-0 border-b-matchgi-bordergray pl-[20px]'>
+        <div
+          ref={locationRef}
+          className='w-full h-[30px] font-Noto font-medium text-[16px] leading-[120%] text-[#38393C] border border-x-0 border-t-0 border-b-matchgi-bordergray pl-[20px]'
+        >
           경기장소
-        </p>
-        <div className='flex flex-col w-full h-[270px] items-center text-center my-auto p-5'>
-          <p className='w-full h-[17px] font-Noto text-[12px] font-medium leading-[120%] mb-[25px] mt-[17.5px]'>
+        </div>
+        <div className='flex flex-col w-full h-[270px] items-center text-center p-5'>
+          <p className='w-full h-[17px] font-Noto text-[12px] font-medium leading-[120%] mb-[25px] mt-[10px]'>
             {postData.address}
           </p>
           {postData && (
