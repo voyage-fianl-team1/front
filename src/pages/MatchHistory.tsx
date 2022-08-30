@@ -78,23 +78,27 @@ const MatchHistory = () => {
       ) : (
         <ul className='flex flex-col gap-3 justify-start w-[100%] mt-5'>
           {data.map((d, idx) => (
-            <li key={idx} className='flex justify-between pb-5 pt-3 rounded border-b-[#F4F5F5] border-b-2'>
-              <div className='flex'>
-                <img src={d.imgUrl} alt='imageUrl' className='w-[68px] h-[68px] rounded-[8px] object-cover' />
-                <div className='ml-2 '>
-                  <h1 className='text-[16px] mb-1'>{d.title}</h1>
-                  <p className='text-[#9A9B9F] text-[12px] mb-1'>{dayjs(d.matchDeadline).format('YYYY.MM.DD (ddd)')}</p>
-                  <p className='text-[#5D5E62] text-[12px] bg-[#F4F5F5] inline-block px-2 rounded'>
-                    {subjectTable[d.subject]}
-                  </p>
+            <Link key={d.postId} to={`/match/${d.postId}`}>
+              <li key={idx} className='flex justify-between pb-5 pt-3 rounded border-b-[#F4F5F5] border-b-2'>
+                <div className='flex'>
+                  <img src={d.imgUrl} alt='imageUrl' className='w-[68px] h-[68px] rounded-[8px] object-cover' />
+                  <div className='ml-2 '>
+                    <h1 className='text-[16px] mb-1'>{d.title}</h1>
+                    <p className='text-[#9A9B9F] text-[12px] mb-1'>
+                      {dayjs(d.matchDeadline).format('YYYY.MM.DD (ddd)')}
+                    </p>
+                    <p className='text-[#5D5E62] text-[12px] bg-[#F4F5F5] inline-block px-2 rounded'>
+                      {subjectTable[d.subject]}
+                    </p>
+                  </div>
                 </div>
-              </div>
-              <div className='flex flex-col justify-center '>
-                <div className={`text-white text-[12px] rounded py-3 px-4 ${historyTable[d.status].color}`}>
-                  {historyTable[d.status].text}
+                <div className='flex flex-col justify-center '>
+                  <div className={`text-white text-[12px] rounded py-3 px-4 ${historyTable[d.status].color}`}>
+                    {historyTable[d.status].text}
+                  </div>
                 </div>
-              </div>
-            </li>
+              </li>
+            </Link>
           ))}
         </ul>
       )}

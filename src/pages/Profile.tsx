@@ -21,9 +21,7 @@ const Profile = () => {
       <Helmet>
         <title>매치기 | 마이페이지</title>
       </Helmet>
-
       <div className='flex flex-col items-center'>
-        {/*<UserInfo />*/}
         <UserInfoDisplay />
         <Link to='/profile/edit' className='w-[100%]'>
           <button className='border-[#DCDDE0] border-[1px] w-[100%] rounded-full py-1.5 mt-7'>내 정보 관리</button>
