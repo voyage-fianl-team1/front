@@ -37,7 +37,7 @@ const Keyword: FC = () => {
     return <LoadingSpinner />;
   }
   if (searchList.pages.length < 2) {
-    return <div className='text-sm text-black/30 my-10'>검색 결과가 없습니다.</div>;
+    return <div className='text-sm text-[#38393C] my-10'>검색 결과가 없습니다.</div>;
   }
   return (
     <>

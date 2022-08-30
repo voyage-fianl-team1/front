@@ -11,6 +11,10 @@ module.exports = {
         'matchgi-btnblue': '#14308B',
         'matchgi-white': '#FCFCFC',
       },
+      fontFamily: {
+        Noto: 'Noto Sans CJK KR',
+        SD: 'Apple SD Gothic Neo',
+      },
     },
   },
   plugins: [],

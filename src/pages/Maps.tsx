@@ -84,17 +84,17 @@ const Maps = () => {
               <IoMdClose />
             </button>
           </div>
-          <img src={overlay.imgUrl} alt='' className='w-full h-3/5 bg-slate-400'></img>
+          <img src={overlay.imgUrl} alt='' className='w-full h-[100px] bg-slate-400'></img>
           <span className='flex flex-col'>
             <div className='text-sm'>{overlay.title}</div>
             <div className='text-sm'>{overlay.subject}</div>
             <div className='text-sm'>{overlay.address}</div>
             <button onClick={() => navigate(`/match/${overlay.postId}`)}>GO</button>
-            <span className='flex flex-row justify-center'>
-              <div className='w-16 overflow-hidden inline-block'>
-                <div className='h-11 w-11 bg-white -rotate-45 transform origin-top-left'></div>
-              </div>
-            </span>
+          </span>
+          <span className='flex flex-row justify-center'>
+            <div className='w-16 overflow-hidden inline-block'>
+              <div className='h-11 w-11 bg-white -rotate-45 transform origin-top-left'></div>
+            </div>
           </span>
         </section>
       );
