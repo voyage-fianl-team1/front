@@ -35,8 +35,8 @@ const ProfileEdit = () => {
           </div>
         </div>
         <div className='flex justify-between items-center mt-8'>
-          <div>료
-            <h1 className='text-xs'>비밀번호</h1>
+          <div>
+            료<h1 className='text-xs'>비밀번호</h1>
             <h2 className='text-[#38393C]'>새로운 비밀번호로 변경 가능</h2>
           </div>
           <div>
