@@ -162,3 +162,10 @@ select{
 .divider{
     @apply h-[1px] w-[100%] bg-gray-500 my-10;
 }
+
+.match-box{
+    background: #FFFFFF;
+    border: 1px solid #DCDDE0;
+    box-shadow: 0 0 16px rgba(0, 0, 0, 0.04);
+    border-radius: 10px;
+}
