@@ -54,7 +54,11 @@ const UserMatches: FC<Props> = ({ maxCount }) => {
         <Link key={d.id} to={`/match/${d.id}`}>
           <li className='flex justify-between pb-5 pt-3 rounded border-b-[#F4F5F5] border-b-2'>
             <div className='flex'>
-              <img src={d.imageUrl[0]} alt='imageUrl' className='w-[68px] h-[68px] rounded-[8px] object-cover' />
+              <img
+                src={d.imageUrl[0] || '/assets/images/no-image.webp'}
+                alt='imageUrl'
+                className='w-[68px] h-[68px] rounded-[8px] object-cover'
+              />
               <div className='ml-2 '>
                 <h1 className='text-[16px] mb-1'>{d.title}</h1>
                 <p className='text-[#9A9B9F] text-[12px] mb-1'>{dayjs(d.createdAt).format('YYYY.MM.DD (ddd)')}</p>

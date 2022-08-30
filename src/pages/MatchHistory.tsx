@@ -81,7 +81,11 @@ const MatchHistory = () => {
             <Link key={d.postId} to={`/match/${d.postId}`}>
               <li key={idx} className='flex justify-between pb-5 pt-3 rounded border-b-[#F4F5F5] border-b-2'>
                 <div className='flex'>
-                  <img src={d.imgUrl} alt='imageUrl' className='w-[68px] h-[68px] rounded-[8px] object-cover' />
+                  <img
+                    src={d.imgUrl || '/assets/images/no-image.webp'}
+                    alt='imageUrl'
+                    className='w-[68px] h-[68px] rounded-[8px] object-cover'
+                  />
                   <div className='ml-2 '>
                     <h1 className='text-[16px] mb-1'>{d.title}</h1>
                     <p className='text-[#9A9B9F] text-[12px] mb-1'>
