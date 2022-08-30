@@ -1,13 +1,25 @@
+import { AxiosError } from 'axios';
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+import { apis } from '../apis';
 
 const WriteFloatingButton = () => {
+  const navigate = useNavigate();
+  const handleRewriteCheck = async () => {
+    try {
+      await apis.getRewrite();
+      navigate('/new');
+    } catch (err) {
+      if (err && err instanceof AxiosError) {
+        alert(err.response?.data);
+        navigate('/');
+      }
+    }
+  };
   return (
-    <Link to='/new'>
-      <div className='floating-button'>
-        <img src='/assets/images/write.svg' alt='write' />
-      </div>
-    </Link>
+    <button className='floating-button' onClick={handleRewriteCheck}>
+      <img src='/assets/images/write.svg' alt='write' />
+    </button>
   );
 };
 

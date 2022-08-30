@@ -60,7 +60,7 @@ const Newpost: FC = () => {
     };
 
     const value = await apis.postUpload(postData);
-
+    console.log(value);
     if (uploadImage.length > 0) {
       const formData = new FormData();
       for (let i = 0; i < uploadImage.length; i++) {
@@ -93,11 +93,7 @@ const Newpost: FC = () => {
       lng: address.lng,
       address: address.address,
     };
-    try {
-      await apis.updatePost(data.postId, postData);
-    } catch (err) {
-      alert('입력하지 않은 항목이 있습니다.');
-    }
+    await apis.updatePost(data.postId, postData);
     if (uploadImage.length > 0) {
       const formData = new FormData();
       for (let i = 0; i < uploadImage.length; i++) {
@@ -196,7 +192,7 @@ const Newpost: FC = () => {
           placeholder='경기 이름은 최대 20자까지 입력 가능합니다.'
           maxLength={20}
           defaultValue={data && data.title}
-          {...register('title', { required: true })}
+          {...register('title', { required: '제목을 적어주세요.' })}
         />
       </div>
       <div className='flex flex-col items-center'>

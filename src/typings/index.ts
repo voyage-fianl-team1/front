@@ -26,6 +26,10 @@ export interface PostDataProps {
   subject: string;
   content: string;
   owner: number;
+  profileImgUrl: string;
+  nickname: string;
+  player: number;
+  subjectValue: string;
 }
 
 export interface MatchData {

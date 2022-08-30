@@ -2,6 +2,13 @@
 @tailwind components;
 @tailwind utilities;
 
+<<<<<<< HEAD
+select {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  background: #fff url('../public/assets/images/arrow.svg') no-repeat 98% center;
+=======
 body{
     background-color: #FCFCFC;
 }
@@ -11,158 +18,168 @@ select{
     -moz-appearance: none;
     appearance: none;
     background: #fff url('../public/assets/images/arrow.svg') no-repeat 98% center;
+>>>>>>> 07886d1473a9b46ccc33e51e0fb78f7d99ed149f
 }
 
-.red-title{
-    @apply text-red-500 text-3xl font-bold p-4;
+.red-title {
+  @apply text-red-500 text-3xl font-bold p-4;
 }
 
-
-.recent-match-card{
-    background: #FFFFFF;
-    border: 1px solid #DCDDE0;
-    position: relative;
-    width: 139px;
-    height: 174px;
-    box-shadow: 0 0 12px rgba(220, 221, 224, 0.2);
-    border-radius: 10px;
-    padding: 15px;
-    display: inline-block;
-    flex: 0 0 169px;
+.recent-match-card {
+  background: #ffffff;
+  border: 1px solid #dcdde0;
+  position: relative;
+  width: 139px;
+  height: 174px;
+  box-shadow: 0 0 12px rgba(220, 221, 224, 0.2);
+  border-radius: 10px;
+  padding: 15px;
+  display: inline-block;
+  flex: 0 0 169px;
 }
 
-.scroll-bar-hide::-webkit-scrollbar{
-    display: none;
+.scroll-bar-hide::-webkit-scrollbar {
+  display: none;
 }
 
-.user-ranking-card{
-    background: #FFFFFF;
-    box-shadow: 4px 4px 16px 2px rgba(217, 217, 217, 0.24);
-    border-radius: 8px;
+.user-ranking-card {
+  background: #ffffff;
+  box-shadow: 4px 4px 16px 2px rgba(217, 217, 217, 0.24);
+  border-radius: 8px;
 }
 
-.floating-button{
-    width: 56px;
-    height: 56px;
-    background: #FFFFFF;
-    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border-radius: 50%;
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
+.floating-button {
+  width: 56px;
+  height: 56px;
+  background: #ffffff;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
 }
 
 /* 사이드 메뉴  */
-.menu-button{
-    background: #F4F5F5;
-    border-radius: 8px;
-    width: 100%;
-    margin-bottom: 1rem;
-    padding: 10px 0;
+.menu-button {
+  background: #f4f5f5;
+  border-radius: 8px;
+  width: 100%;
+  margin-bottom: 1rem;
+  padding: 10px 0;
 }
 
-.menu-button:hover{
-    background: #ececec;
+.menu-button:hover {
+  background: #ececec;
 }
 
-.menu-item{
-    @apply hover:bg-black/5 px-8 py-3 cursor-pointer flex items-center justify-between;
+.menu-item {
+  @apply hover:bg-black/5 px-8 py-3 cursor-pointer flex items-center justify-between;
 }
 
-.menu-item-inner{
-    @apply flex items-center gap-2;
+.menu-item-inner {
+  @apply flex items-center gap-2;
 }
 
 .loader {
-    font-size: 10px;
-    margin: 50px auto;
-    text-indent: -9999em;
-    width: 11em;
-    height: 11em;
-    border-radius: 50%;
-    background: #ffffff;
-    background: -moz-linear-gradient(left, #ffffff 10%, rgba(255, 255, 255, 0) 42%);
-    background: -webkit-linear-gradient(left, #ffffff 10%, rgba(255, 255, 255, 0) 42%);
-    background: -o-linear-gradient(left, #ffffff 10%, rgba(255, 255, 255, 0) 42%);
-    background: -ms-linear-gradient(left, #ffffff 10%, rgba(255, 255, 255, 0) 42%);
-    background: linear-gradient(to right, #ffffff 10%, rgba(255, 255, 255, 0) 42%);
-    position: relative;
-    -webkit-animation: load3 1.4s infinite linear;
-    animation: load3 1.4s infinite linear;
-    -webkit-transform: translateZ(0);
-    -ms-transform: translateZ(0);
-    transform: translateZ(0);
+  font-size: 10px;
+  margin: 50px auto;
+  text-indent: -9999em;
+  width: 11em;
+  height: 11em;
+  border-radius: 50%;
+  background: #ffffff;
+  background: -moz-linear-gradient(left, #ffffff 10%, rgba(255, 255, 255, 0) 42%);
+  background: -webkit-linear-gradient(left, #ffffff 10%, rgba(255, 255, 255, 0) 42%);
+  background: -o-linear-gradient(left, #ffffff 10%, rgba(255, 255, 255, 0) 42%);
+  background: -ms-linear-gradient(left, #ffffff 10%, rgba(255, 255, 255, 0) 42%);
+  background: linear-gradient(to right, #ffffff 10%, rgba(255, 255, 255, 0) 42%);
+  position: relative;
+  -webkit-animation: load3 1.4s infinite linear;
+  animation: load3 1.4s infinite linear;
+  -webkit-transform: translateZ(0);
+  -ms-transform: translateZ(0);
+  transform: translateZ(0);
 }
 .loader:before {
-    width: 50%;
-    height: 50%;
-    background: #ffffff;
-    border-radius: 100% 0 0 0;
-    position: absolute;
-    top: 0;
-    left: 0;
-    content: '';
+  width: 50%;
+  height: 50%;
+  background: #ffffff;
+  border-radius: 100% 0 0 0;
+  position: absolute;
+  top: 0;
+  left: 0;
+  content: '';
 }
 .loader:after {
-    background: #0dc5c1;
-    width: 75%;
-    height: 75%;
-    border-radius: 50%;
-    content: '';
-    margin: auto;
-    position: absolute;
-    top: 0;
-    left: 0;
-    bottom: 0;
-    right: 0;
+  background: #0dc5c1;
+  width: 75%;
+  height: 75%;
+  border-radius: 50%;
+  content: '';
+  margin: auto;
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
 }
 @-webkit-keyframes load3 {
-    0% {
-        -webkit-transform: rotate(0deg);
-        transform: rotate(0deg);
-    }
-    100% {
-        -webkit-transform: rotate(360deg);
-        transform: rotate(360deg);
-    }
+  0% {
+    -webkit-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
 }
 @keyframes load3 {
-    0% {
-        -webkit-transform: rotate(0deg);
-        transform: rotate(0deg);
-    }
-    100% {
-        -webkit-transform: rotate(360deg);
-        transform: rotate(360deg);
-    }
+  0% {
+    -webkit-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
 }
 
 /* 로그인 페이지 */
 
-.login-input{
-    background: #F4F5F5;
-    border-radius: 8px;
-    @apply py-2 px-4 mt-3 h-[44px];
+.login-input {
+  background: #f4f5f5;
+  border-radius: 8px;
+  @apply py-2 px-4 mt-3 h-[44px];
 }
 
-.login-button{
-    background: #14308B;
-    border-radius: 8px;
-    color:white;
-    @apply py-2 px-4 mt-3 h-[44px];
+.login-button {
+  background: #14308b;
+  border-radius: 8px;
+  color: white;
+  @apply py-2 px-4 mt-3 h-[44px];
 }
 
-.signup-input{
-    background: white;
-    border-radius: 8px;
-    @apply py-2 px-4 h-[44px] border-[1px] border-[#DCDDE0];
+.signup-input {
+  background: white;
+  border-radius: 8px;
+  @apply py-2 px-4 h-[44px] border-[1px] border-[#DCDDE0];
 }
 
 /* profile page */
 
+<<<<<<< HEAD
+.divider {
+  @apply h-[1px] w-[100%] bg-gray-500 my-10;
+}
+
+.detail-btn {
+  @apply w-[58px] h-[29px] text-[#9A9B9F] pb-[10px] border border-x-0 border-t-0 border-b-[#FCFCFC] border-b-[3px]
+    focus:text-[#38393C] focus:font-semibold focus:border focus:border-b-[#14308B] focus:border-b-[3px] focus:border-x-0 focus:border-t-0;
+}
+=======
 .divider{
     @apply h-[1px] w-[100%] bg-gray-500 my-10;
 }
@@ -173,3 +190,4 @@ select{
     box-shadow: 0 0 16px rgba(0, 0, 0, 0.04);
     border-radius: 10px;
 }
+>>>>>>> 07886d1473a9b46ccc33e51e0fb78f7d99ed149f
