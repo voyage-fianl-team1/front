@@ -8,7 +8,6 @@ import dayjs from 'dayjs';
 import { Helmet } from 'react-helmet';
 import { useSelector } from 'react-redux';
 import { RootState } from '../redux/store';
-import { statusTable } from '../components/UserMatches';
 
 const historyTable: { [key: string]: any } = {
   LOSE: {
@@ -81,9 +80,9 @@ const MatchHistory = () => {
           {data.map((d, idx) => (
             <li key={idx} className='flex justify-between pb-5 pt-3 rounded border-b-[#F4F5F5] border-b-2'>
               <div className='flex'>
-                <img src={imgURL} alt='imageUrl' className='w-[68px] h-[68px] rounded-[8px] object-cover' />
+                <img src={d.imgUrl} alt='imageUrl' className='w-[68px] h-[68px] rounded-[8px] object-cover' />
                 <div className='ml-2 '>
-                  <h1 className='text-[16px] mb-1'>{'게시글 제목'}</h1>
+                  <h1 className='text-[16px] mb-1'>{d.title}</h1>
                   <p className='text-[#9A9B9F] text-[12px] mb-1'>{dayjs(d.matchDeadline).format('YYYY.MM.DD (ddd)')}</p>
                   <p className='text-[#5D5E62] text-[12px] bg-[#F4F5F5] inline-block px-2 rounded'>
                     {subjectTable[d.subject]}
