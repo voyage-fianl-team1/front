@@ -9,7 +9,6 @@ import toggleSlice from './features/toggleSlice';
 import searchSlice from './features/searchSlice';
 import overlaySlice from './features/overlaySlice';
 import positionSlice from './features/postionSlice';
-import joinSlice from './features/joinSlice';
 import calendarSlice from './features/calendarSlice';
 import subjectSlice from './features/subjectSlice';
 
@@ -21,7 +20,6 @@ const persistConfig = {
 
 const reducers = combineReducers({
   position: positionSlice.reducer,
-  join: joinSlice.reducer,
 });
 
 const persistReducered = persistReducer(persistConfig, reducers);

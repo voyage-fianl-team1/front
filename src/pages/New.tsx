@@ -93,11 +93,7 @@ const Newpost: FC = () => {
       lng: address.lng,
       address: address.address,
     };
-    try {
-      await apis.updatePost(data.postId, postData);
-    } catch (err) {
-      alert('입력하지 않은 항목이 있습니다.');
-    }
+    await apis.updatePost(data.postId, postData);
     if (uploadImage.length > 0) {
       const formData = new FormData();
       for (let i = 0; i < uploadImage.length; i++) {

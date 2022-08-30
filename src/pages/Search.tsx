@@ -9,7 +9,6 @@ import { toggleSortShow, toggleSelectShow, toggleClear } from '../redux/features
 import { RiArrowDownSLine } from 'react-icons/ri';
 import LoadingSpinner from '../components/loadingSpinner';
 import { Helmet } from 'react-helmet';
-import { joinAction } from '../redux/features/joinSlice';
 
 const SearchMatch: FC = () => {
   const navigate = useNavigate();
@@ -84,10 +83,7 @@ const SearchMatch: FC = () => {
                   <div
                     className='w-full h-20 bg-white p-2'
                     key={post.postId}
-                    onClick={() => {
-                      navigate(`/match/${post.postId}`);
-                      dispatch(joinAction({ postId: post.postId, matchStatus: post.matchStatus }));
-                    }}
+                    onClick={() => navigate(`/match/${post.postId}`)}
                     ref={ref}
                   >
                     <div className='flex flex-row mb-[28px] items-center'>
