@@ -114,6 +114,9 @@ export interface MatchHistoryType {
   matchDeadline: string; // 경기한 날
   subject: string;
   status: string;
+  imgUrl: string;
+  postId: 5;
+  title: string;
 }
 
 export interface TotalStatus {

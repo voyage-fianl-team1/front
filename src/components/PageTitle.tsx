@@ -1,7 +1,5 @@
 import React, { useCallback, useMemo } from 'react';
-import { useLocation, useNavigate, useParams } from 'react-router-dom';
-import { useSelector } from 'react-redux';
-import { RootState } from '../redux/store';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 interface ITitleTable {
   [key: string]: string;
@@ -23,11 +21,9 @@ const titleTable: ITitleTable = {
 const PageTitle = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  const param = useParams();
-  const { nickname } = useSelector((state: RootState) => state.user);
-  const isKakaoFirstLogin = useMemo(() => location.search?.split(/(\w+=[\w.-]+)/g)?.[1]?.split('=')?.[1], [location]);
+  const isKakaoFirstLogin = useMemo(() => location.search.includes('firstKakaoLogin'), [location]);
   const handleRouteBack = useCallback(() => {
-    if (location.pathname === '/search' || !!isKakaoFirstLogin) {
+    if (location.pathname === '/search' || isKakaoFirstLogin) {
       navigate('/');
     } else {
       navigate(-1);
