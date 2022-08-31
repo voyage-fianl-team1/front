@@ -24,6 +24,7 @@ const Match: FC = () => {
   const matchRef = useRef<HTMLDivElement>(null);
   const detailRef = useRef<HTMLDivElement>(null);
   const locationRef = useRef<HTMLDivElement>(null);
+  const reviewRef = useRef<HTMLDivElement>(null);
   const queryClient = useQueryClient();
   const { data: res, isLoading, refetch } = useQuery(['postList', postId], async () => await apis.getPostList(postId));
   const postData: PostDataProps = res?.data;
@@ -70,6 +71,9 @@ const Match: FC = () => {
   };
   const handleMoveScroll3 = () => {
     locationRef.current?.scrollIntoView({ behavior: 'smooth' });
+  };
+  const handleMoveScroll4 = () => {
+    reviewRef.current?.scrollIntoView({ behavior: 'smooth' });
   };
 
   useEffect(() => {
@@ -197,8 +201,9 @@ const Match: FC = () => {
           >
             {postData.title}
           </div>
+          <div ref={matchRef}></div>
         </div>
-        <div className='flex flex-row w-full h-[29px] justify-center items-center gap-[65px]' ref={matchRef}>
+        <div className='flex flex-row w-full h-[29px] justify-center items-center gap-[40px]'>
           <button className='detail-btn' onClick={handleMoveScroll}>
             경기정보
           </button>
@@ -207,6 +212,9 @@ const Match: FC = () => {
           </button>
           <button className='detail-btn' onClick={handleMoveScroll3}>
             경기장소
+          </button>
+          <button className='detail-btn' onClick={handleMoveScroll4}>
+            댓글
           </button>
         </div>
         {/* <section className='flex h-1/2 justify-center items-center gap-5'>
@@ -231,16 +239,18 @@ const Match: FC = () => {
               <p className='w-full h-7'>{postData.subject}</p>
               <p className='w-full h-7'>{postData.matchDeadline}</p>
             </div>
+            <div ref={detailRef}></div>
           </section>
-          <div ref={detailRef}></div>
         </div>
         <div className='w-full h-[283px] mb-[28px]'>
           <div className='w-full h-[30px] font-Noto font-medium text-[16px] leading-[120%] text-[#38393C] border border-x-0 border-t-0 border-b-matchgi-bordergray pl-[20px]'>
             경기상세
           </div>
-          <div className='flex w-full h-[236px] py-[10px] px-[12px] gap-[10px] items-start'>{postData.content}</div>
+          <div className='flex w-full h-[236px] py-[10px] px-[12px] gap-[10px] items-start' ref={locationRef}>
+            {postData.content}
+          </div>
         </div>
-        <section className='w-full h-[289px] mb-[60px]' ref={locationRef}>
+        <section className='w-full h-[289px] mb-[60px]'>
           <div className='w-full h-[30px] font-Noto font-medium text-[16px] leading-[120%] text-[#38393C] border border-x-0 border-t-0 border-b-matchgi-bordergray pl-[20px]'>
             경기장소
           </div>
@@ -264,6 +274,7 @@ const Match: FC = () => {
             />
           </div>
         </section>
+        <div ref={reviewRef} />
         {HandleJoinBtn()}
       </section>
       <ReviewDetail {...drill} />
