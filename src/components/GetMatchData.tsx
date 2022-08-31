@@ -1,4 +1,4 @@
-import React, { FC, useRef } from 'react';
+import React, { FC, useRef, useEffect } from 'react';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { apis } from '../apis';
 import { useParams, Link } from 'react-router-dom';
@@ -25,7 +25,7 @@ const GetMatchData: FC = () => {
   const detailRef = useRef<HTMLDivElement>(null);
   const locationRef = useRef<HTMLDivElement>(null);
   const queryClient = useQueryClient();
-  const { data: res, isLoading } = useQuery(['postList', postId], async () => await apis.getPostList(postId));
+  const { data: res, isLoading, refetch } = useQuery(['postList', postId], async () => await apis.getPostList(postId));
   const postData: PostDataProps = res?.data;
   const drill: JoinDataProps = {
     data: {
@@ -91,6 +91,11 @@ const GetMatchData: FC = () => {
   const handleMoveScroll3 = () => {
     locationRef.current?.scrollIntoView({ behavior: 'smooth' });
   };
+
+  useEffect(() => {
+    refetch();
+    queryClient.invalidateQueries(['postData']);
+  }, []);
 
   const HandleJoinBtn = () => {
     if (postData.owner === 1) {

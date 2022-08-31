@@ -142,7 +142,6 @@ export interface Notification {
 }
 
 export interface ReviewData {
-  title: string;
   content: string;
 }
 

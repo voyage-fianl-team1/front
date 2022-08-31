@@ -1,21 +1,25 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { apis } from '../apis';
 import { useNavigate } from 'react-router-dom';
-import { useQuery } from '@tanstack/react-query';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
 import LoadingSpinner from './loadingSpinner';
 import { JoinDataProps, ImageType } from '../typings';
 import dayjs from 'dayjs';
 
 const ReviewDetail = (props: JoinDataProps) => {
   const navigate = useNavigate();
+  const queryClient = useQueryClient();
   const reviewDatail = props.data;
-  const res = useQuery(['reviewList'], async () => await apis.getReviewList(reviewDatail.postId));
-  const reviewList = res.data?.data.reviewList;
+  const { data, isLoading, refetch } = useQuery(
+    ['reviewList'],
+    async () => await apis.getReviewList(reviewDatail.postId)
+  );
+  const reviewList = data?.data.reviewList;
   const changeData = (data: string) => {
     return dayjs(data).format('YYYY.MM.DD');
   };
-  console.log(reviewList);
-  if (res.isLoading) {
+
+  if (isLoading) {
     return <LoadingSpinner />;
   }
   if (reviewList.length < 1) {
@@ -33,7 +37,7 @@ const ReviewDetail = (props: JoinDataProps) => {
   }
   if (reviewList.length >= 1) {
     return (
-      <section className='flex flex-col w-full h-full bg-[#FCFCFC]'>
+      <section className='flex flex-col w-full h-full bg-[#FCFCFC] mb-[42px]'>
         <p
           className='w-full h-[34px] font-Noto font-medium leading-[24px] text-[16 px] text-[#38393C] border border-[#EDEDED]
   border-x-0 border-t-0 pl-[20px] mb-[22px]'
@@ -68,10 +72,7 @@ const ReviewDetail = (props: JoinDataProps) => {
                     ''
                   )}
                 </div>
-                <div
-                  className='w-full h-[2px] border border-[#EDEDED]
-  border-x-0 border-t-0'
-                ></div>
+                <div className='w-full h-[2px] border border-[#EDEDED] border-x-0 border-t-0 bg-[#FCFCFC]' />
               </div>
             </>
           ))}

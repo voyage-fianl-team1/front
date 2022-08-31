@@ -81,7 +81,7 @@ const SearchMatch: FC = () => {
               <div key={index}>
                 {page.data.map((post: any) => (
                   <div
-                    className='w-full h-20 bg-white p-2'
+                    className='w-full h-20 bg-[#FCFCFC] p-2'
                     key={post.postId}
                     onClick={() => navigate(`/match/${post.postId}`)}
                     ref={ref}

@@ -3,10 +3,12 @@ import { useForm } from 'react-hook-form';
 import { apis } from '../apis';
 import { IoMdCloseCircleOutline } from 'react-icons/io';
 import { JoinDataProps } from '../typings';
+import { useQueryClient } from '@tanstack/react-query';
 
 const Review = (props: JoinDataProps) => {
-  const { register, getValues } = useForm({});
+  const { register, getValues, reset } = useForm({});
   const review = props.data;
+  const queryClient = useQueryClient();
   const [imgSrc, setImgSrc] = useState<string>('/assets/images/post/basic.svg');
   const [file, setFile] = useState<File[]>();
   const inputRef = useRef<HTMLInputElement | null>(null);
@@ -32,27 +34,24 @@ const Review = (props: JoinDataProps) => {
   }, []);
 
   const handleReviewUpload = async () => {
-    const reviewData = {
-      title: getValues().title,
-      content: getValues().content,
-    };
-    const value = await apis.reviewUpload(review.postId, reviewData);
+    const value = await apis.reviewUpload(review.postId, { content: getValues().content });
     const formData = new FormData();
     if (file !== undefined) {
-      for (let i = 0; i < file.length; i++) {
-        formData.append('files', file[i]);
-      }
+      formData.append('files', file[0]);
       await apis.reviewImage(value, formData);
     }
+    queryClient.invalidateQueries(['reviewList']);
+    setFile([]);
+    setImgSrc('/assets/images/post/basic.svg');
+    reset();
   };
-
   return (
     <>
-      <section className='w-full h-full flex flex-col justify-center items-center bg-[#FCFCFC] mt-[42px]'>
+      <section className='w-full h-full flex flex-col justify-center items-center bg-[#FCFCFC]'>
         <input type='file' accept='image/*' multiple className='hidden' onChange={onUploadIamge} ref={inputRef}></input>
         <p
           className='w-full mb-[34px] pl-[20px] text-[#38393C] font-medium leading-[21px] text-[14px]
-        font-Noto'
+        font-Noto bg-[#FCFCFC]'
         >
           내 리뷰 작성 하기
         </p>

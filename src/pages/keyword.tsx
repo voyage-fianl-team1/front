@@ -36,7 +36,7 @@ const Keyword: FC = () => {
   if (!searchList) {
     return <LoadingSpinner />;
   }
-  if (searchList.pages.length < 2) {
+  if (searchList?.pages[0].data.length < 2) {
     return <div className='text-sm text-[#38393C] my-10'>검색 결과가 없습니다.</div>;
   }
   return (
@@ -50,21 +50,23 @@ const Keyword: FC = () => {
             <div key={index}>
               {page.data.map((post: any) => (
                 <div
-                  className='w-full h-20 mt-4 bg-white'
+                  className='w-full h-20 bg-[#FCFCFC] p-2'
                   key={post.postId}
                   onClick={() => navigate(`/match/${post.postId}`)}
                   ref={ref}
                 >
-                  <div className='flex flex-row'>
+                  <div className='flex flex-row mb-[28px] items-center'>
                     <img
                       src={post.imgUrl}
                       alt='searchImg'
-                      className='box-border rounded-lg bg-#F4F5F5 w-20 h-20 border boder-#DCDDE0 bg-#F4F5F5'
+                      className='box-border rounded-lg bg-matchgi-lightgray w-16 h-16 border boder-#DCDDE0'
                     ></img>
-                    <span className='flex flex-col justify-center ml-5 gap-0.5'>
-                      <div className='text-xl'>{post.title}</div>
-                      <div className='text-sm text-gray-400'>주소</div>
-                      <div className='text-xs rounded-lg bg-gray-200 p-1.5'>{post.subject}</div>
+                    <span className='flex flex-col justify-center ml-4 gap-[1px]'>
+                      <div className='text-[16px] font-normal leading-normal text-matchgi-black'>{post.title}</div>
+                      <div className='text-xs text-matchgi-gray leading-normal'>주소</div>
+                      <div className='flex text-[10px] item-start rounded-lg w-[40px] h-[18px] bg-matchgi-lightgray justify-center p-[0.1rem]'>
+                        {post.subject}
+                      </div>
                     </span>
                   </div>
                 </div>
