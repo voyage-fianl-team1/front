@@ -67,7 +67,7 @@ const Review = (props: JoinDataProps) => {
             text-[#4A4B4E] tracking-[-0.04em] font-Noto bg-[#FCFCFC]'
               minLength={2}
               maxLength={100}
-              placeholder='최소 2글자 이상 100글자 미만으로 작성 해주세요.'
+              placeholder='댓글은 100글자 미만으로 작성 해주세요.'
               {...register('content')}
             ></textarea>
             <div className='w-[55px] h-[55px] absolute left-16'>

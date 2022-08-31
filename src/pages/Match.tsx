@@ -254,8 +254,8 @@ const Match: FC = () => {
           <div className='w-full h-[30px] font-Noto font-medium text-[16px] leading-[120%] text-[#38393C] border border-x-0 border-t-0 border-b-matchgi-bordergray pl-[20px]'>
             경기장소
           </div>
-          <div className='flex flex-col w-full h-[270px] items-center text-center p-5'>
-            <p className='w-full h-[17px] font-Noto text-[12px] font-medium leading-[120%] mb-[25px] mt-[10px]'>
+          <div className='flex flex-col w-full h-[270px] items-center p-5'>
+            <p className='w-full h-[17px] font-Noto text-[14px] font-medium leading-[120%] mb-[25px] mt-[10px]'>
               {postData.address}
             </p>
             <StaticMap

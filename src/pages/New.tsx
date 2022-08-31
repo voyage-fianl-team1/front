@@ -203,7 +203,7 @@ const Newpost: FC = () => {
           placeholder='경기 이름은 최대 20자까지 입력 가능합니다.'
           maxLength={20}
           defaultValue={data && data.title}
-          {...register('title', { required: '제목을 적어주세요.' })}
+          {...register('title')}
         />
       </div>
       <div className='flex flex-col items-center'>
@@ -212,14 +212,16 @@ const Newpost: FC = () => {
           className='box-border py-[16px] px-[10px] w-[100%] h-[48px] bg-[#FFFFFF] rounded-[10px] border border-matchigi-bordergray
         text-matchgi-black cursor-pointer mb-[36px]'
         >
-          <div className='flex flex-row w-full justify-between align-middle'>
-            {subject.subject}
-            {subjectShow ? (
-              <img src='/assets/images/post/arrow_top.svg' onClick={handleToggleSubject} />
-            ) : (
-              <img src='/assets/images/post/arrow_donw.svg' onClick={handleToggleSubject} />
-            )}
-          </div>
+          <span>
+            <div className='flex flex-row w-full justify-between'>
+              {subject.subject}
+              {subjectShow ? (
+                <img src='/assets/images/post/arrow_top.svg' onClick={handleToggleSubject} />
+              ) : (
+                <img src='/assets/images/post/arrow_donw.svg' onClick={handleToggleSubject} />
+              )}
+            </div>
+          </span>
         </div>
       </div>
       {subjectShow && <CustomSubject />}
@@ -227,12 +229,12 @@ const Newpost: FC = () => {
         <p className='w-[100%] text-[12px] text-matchgi-black mb-[12px]'>모집마감일</p>
         <div
           className='box-border py-[16px] px-[10px] w-[100%] h-[48px] bg-[#FFFFFF] rounded-[10px] border border-matchigi-bordergray
-            text-matchgi-black mb-[36px]'
+            text-matchgi-black mb-[36px] cursor-pointer'
           onClick={handleToggleCalendar}
         >
           <span className='flex flex-row'>
             <img src='/assets/images/post/calendar.svg' className='mr-2' />
-            <p>{date}</p>
+            <p className=''>{date}</p>
           </span>
         </div>
         {calendarShow && <Calendars />}
@@ -244,7 +246,7 @@ const Newpost: FC = () => {
           </Modal>
         )}
       </section>
-      <section className='flex flex-col bg-white items-center'>
+      <section className='flex flex-col bg-[#FCFCFC] items-center'>
         <p className='text-[12px] w-[100%] text-matchgi-black mb-[12px]'>경기위치</p>
         <div
           className='box-border `py-[16px] px-[10px] w-[100%] h-[48px] bg-[#FFFFFF] rounded-[10px] border border-matchigi-bordergray text-matchgi-black cursor-pointer mb-[36px]'
