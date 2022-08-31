@@ -1,13 +1,51 @@
 import React from 'react';
-import { useQuery } from '@tanstack/react-query';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
 import LoadingSpinner from './loadingSpinner';
 import { JoinDataProps, JoinData, ImageType } from '../typings';
 import { apis } from '../apis';
+import dayjs from 'dayjs';
+import { AxiosError } from 'axios';
 
 const GetJoinData = (props: JoinDataProps) => {
   const join = useQuery(['joinList'], async () => await apis.getJoinList(props.data.postId));
+  const acceptList = useQuery(['accpetList'], async () => await apis.getAcceptList(props.data.postId));
+  const acceptData = acceptList?.data?.data;
+  const date = new Date();
+  const nowDate = dayjs(date).format('YYYY-MM-DD');
   const joinData: JoinData = join?.data?.data;
-  const postData = props.data;
+  const queryClient = useQueryClient();
+  const postData = props?.data;
+  const handleStatusChange = async () => {
+    try {
+      await apis.updateMatchStatus(postData.postId);
+    } catch (err) {
+      if (err && err instanceof AxiosError) {
+        alert(err.response?.data);
+      }
+    }
+    queryClient.invalidateQueries(['postList']);
+  };
+
+  const CompleteBtn = () => {
+    if ('2022-09-03' > postData.matchDeadline && postData.owner === 1 && postData.matchStatus === 'ONGOING') {
+      return (
+        <>
+          <button
+            type='button'
+            className='w-[100%] h-[48px] border border-matchgi-bordergray rounded-[4px] bg-matchgi-btnblue text-[#FFFFFF] cursor-pointer mb-[36px]'
+            onClick={handleStatusChange}
+          >
+            완료하기
+          </button>
+        </>
+      );
+    } else if (postData.owner === -1) {
+      return;
+    } else {
+      return;
+    }
+  };
+
   if (join.isLoading) {
     return <LoadingSpinner />;
   }
@@ -26,7 +64,8 @@ const GetJoinData = (props: JoinDataProps) => {
       </>
     );
   }
-  if (postData.owner === 1 && postData.matchStatus === 'ONGOING') {
+
+  if (postData.owner === 1 && postData.matchStatus === 'ONGOING' && '2022-09-03' > postData.matchDeadline === false) {
     return (
       <section className='flex flex-col w-full h-full bg-[#FCFCFC]'>
         <p
@@ -57,15 +96,27 @@ const GetJoinData = (props: JoinDataProps) => {
                 <div className='flex flex-row gap-[32px] mt-[32px]'>
                   <button
                     type='button'
-                    className='w-[132px] h-[36px] bg-[#FFF] rounded-[4px] border border-[#949B9F]'
-                    onClick={async () => await apis.updateTotalStatus(value.requestId, { status: 'REJECT' })}
+                    className={`w-[132px] h-[36px] bg-[#FFF] rounded-[4px] ] ${
+                      value.status === 'REJECT' ? 'bg-red-500 text-[#FFF]' : 'bg-[#FFF] border border-[#949B9F'
+                    }`}
+                    value='REJECT'
+                    onClick={async () => {
+                      await apis.updateTotalStatus(value.requestId, { status: 'REJECT' });
+                      queryClient.invalidateQueries(['joinList']);
+                    }}
                   >
                     거절
                   </button>
                   <button
                     type='button'
-                    className='w-[132px] h-[36px] bg-[#14308B] rounded-[4px] text-[#FFF]'
-                    onClick={async () => await apis.updateTotalStatus(value.requestId, { status: 'ACCEPT' })}
+                    value='ACCEPT'
+                    className={`w-[132px] h-[36px] rounded-[4px]] ${
+                      value.status === 'ACCEPT' ? 'bg-[#14308B] text-[#FFF]' : 'bg-[#FFF] border border-[#949B9F'
+                    }`}
+                    onClick={async () => {
+                      await apis.updateTotalStatus(value.requestId, { status: 'ACCEPT' });
+                      queryClient.invalidateQueries(['joinList']);
+                    }}
                   >
                     승인
                   </button>
@@ -76,7 +127,7 @@ const GetJoinData = (props: JoinDataProps) => {
       </section>
     );
   }
-  if (postData.owner === -1 && postData.matchStatus === 'ONGOING') {
+  if (postData.owner === -1 && postData.matchStatus === 'ONGOING' && '2022-09-03' > postData.matchDeadline === false) {
     return (
       <section className='flex flex-col w-full h-full bg-[#FCFCFC]'>
         <p className='w-full h-[34px] font-Noto font-medium leading-[24px] text-[16 px] text-[#38393C] border border-[#EDEDED] border-x-0 border-t-0 pl-[20px] mb-[22px]'>
@@ -108,18 +159,21 @@ const GetJoinData = (props: JoinDataProps) => {
           ))}
       </section>
     );
-  }
-  if (postData.owner === 1 && postData.matchStatus === 'MATCHEND') {
+  } else if (
+    postData.owner === 1 &&
+    '2022-09-03' > postData.matchDeadline === true &&
+    postData.matchStatus === 'ONGOING'
+  ) {
     return (
       <section className='flex flex-col w-full h-full bg-[#FCFCFC]'>
         <p
           className='w-full h-[34px] font-Noto font-medium leading-[24px] text-[16 px] text-[#38393C] border border-[#EDEDED]
         border-x-0 border-t-0 pl-[20px] mb-[22px]'
         >
-          경기 결과
+          경기 결과 등록
         </p>
-        {joinData &&
-          joinData.userList.map((value: ImageType, id: number) => (
+        {acceptData &&
+          acceptData.map((value: ImageType, id: number) => (
             <>
               <div
                 key={id}
@@ -138,21 +192,38 @@ const GetJoinData = (props: JoinDataProps) => {
                 </div>
                 <div className='flex flex-row gap-[33px]'>
                   <button
-                    className='box-border w-[82px] h-[36px] bg-[#14308B] rounded-[4px] text-[#FFF] flex justify-center items-center mt-[36px]'
-                    onClick={async () => await apis.updateTotalStatus(value.requestId, { status: 'WIN' })}
+                    className={`box-border w-[82px] h-[36px] rounded-[4px] flex justify-center items-center mt-[36px]
+                    ${
+                      value.status === 'WIN'
+                        ? 'bg-[#14308B] text-[#FFF]'
+                        : 'bg-[#FFF] text-[#38393c] border border-[#C5C6CA]'
+                    }`}
+                    onClick={async () => {
+                      await apis.updateTotalStatus(value.requestId, { status: 'WIN' });
+                    }}
                   >
                     승
                   </button>
                   <button
-                    className='box-border w-[82px] h-[36px] bg-[#FFF] rounded-[4px] text-[#38393C] flex justify-center items-center mt-[36px]
-                    border border-[#C5C6CA]'
-                    onClick={async () => await apis.updateTotalStatus(value.requestId, { status: 'LOSE' })}
+                    className={`box-border w-[82px] h-[36px] rounded-[4px] flex justify-center items-center mt-[36px]
+                    ${
+                      value.status === 'LOSE'
+                        ? 'bg-red-600 text-[#FFF]'
+                        : 'bg-[#FFF] text-[#38393c] border border-[#C5C6CA]'
+                    }`}
+                    onClick={async () => {
+                      await apis.updateTotalStatus(value.requestId, { status: 'LOSE' });
+                    }}
                   >
                     패
                   </button>
                   <button
-                    className='box-border w-[82px] h-[36px] bg-[#DCDDE0] rounded-[4px] text-[#38393C] flex justify-center items-center mt-[36px]
-                    border border-[#C5C6CA]'
+                    className={`box-border w-[82px] h-[36px] rounded-[4px] flex justify-center items-center mt-[36px]
+                     ${
+                       value.status === 'DRAW'
+                         ? 'bg-yellow text-[#FFF]'
+                         : 'bg-[#FFF] text-[#38393c] border border-[#C5C6CA]'
+                     }`}
                     onClick={async () => await apis.updateTotalStatus(value.requestId, { status: 'DRAW' })}
                   >
                     무
@@ -161,10 +232,11 @@ const GetJoinData = (props: JoinDataProps) => {
               </div>
             </>
           ))}
+        {CompleteBtn()}
       </section>
     );
   }
-  if (postData.owner === -1 && postData.matchStatus === 'MATCHEND') {
+  if ('2022-09-03' > postData.matchDeadline === true && postData.matchStatus === 'MATCHEND') {
     return (
       <section className='flex flex-col w-full h-full bg-[#FCFCFC]'>
         <p

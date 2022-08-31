@@ -1,19 +1,13 @@
 import React from 'react';
 import { apis } from '../apis';
-import { useNavigate } from 'react-router-dom';
-import { useQuery, useQueryClient } from '@tanstack/react-query';
-import LoadingSpinner from './loadingSpinner';
+import { useQuery } from '@tanstack/react-query';
 import { JoinDataProps, ImageType } from '../typings';
+import LoadingSpinner from './loadingSpinner';
 import dayjs from 'dayjs';
 
 const ReviewDetail = (props: JoinDataProps) => {
-  const navigate = useNavigate();
-  const queryClient = useQueryClient();
   const reviewDatail = props.data;
-  const { data, isLoading, refetch } = useQuery(
-    ['reviewList'],
-    async () => await apis.getReviewList(reviewDatail.postId)
-  );
+  const { data, isLoading } = useQuery(['reviewList'], async () => await apis.getReviewList(reviewDatail.postId));
   const reviewList = data?.data.reviewList;
   const changeData = (data: string) => {
     return dayjs(data).format('YYYY.MM.DD.');
@@ -31,7 +25,7 @@ const ReviewDetail = (props: JoinDataProps) => {
         >
           댓글
         </p>
-        <p className='text-sm text-[#38393C] my-8 ml-3'>작성된 리뷰가 없습니다.</p>
+        <p className='text-sm text-[#38393C] my-8 ml-3'>작성된 댓글이 없습니다.</p>
       </div>
     );
   }

@@ -35,6 +35,7 @@ const GetMatchData: FC = () => {
       matchStatus: postData?.matchStatus,
       profileUrl: postData?.profileImgUrl,
       nickName: postData?.nickname,
+      matchDeadline: postData?.matchDeadline,
     },
   };
   const handleJoinTheGame = async () => {
@@ -58,30 +59,7 @@ const GetMatchData: FC = () => {
       alert('게시글 삭제에 실패했습니다.');
     }
   };
-  const handleStatusChange = async () => {
-    try {
-      await apis.updateMatchStatus(postId);
-    } catch (err) {
-      alert(err);
-    }
-    queryClient.invalidateQueries(['postList']);
-  };
 
-  const CompleteBtn = () => {
-    const a = new Date();
-    const b = dayjs(a).format('YYYY-MM-DD');
-    if (b > postData.matchDeadline && postData.owner === 1 && postData.matchStatus === 'ONGOING') {
-      return (
-        <>
-          <button type='button' className='bg-black text-white' onClick={handleStatusChange}>
-            완료하기
-          </button>
-        </>
-      );
-    } else if (postData.owner === -1) {
-      return;
-    }
-  };
   const handleMoveScroll = () => {
     matchRef.current?.scrollIntoView({ behavior: 'smooth' });
   };
@@ -98,7 +76,10 @@ const GetMatchData: FC = () => {
   }, []);
 
   const HandleJoinBtn = () => {
-    if (postData.owner === 1) {
+    //b > postData.matchDeadline true여야 됨
+    const a = new Date();
+    const b = dayjs(a).format('YYYY-MM-DD');
+    if (postData.owner === 1 && '2022-09-03' > postData.matchDeadline === false) {
       return (
         <div>
           <button
@@ -134,8 +115,28 @@ const GetMatchData: FC = () => {
           </Link>
         </div>
       );
+    } else if (postData.owner === 1 && '2022-09-03' > postData.matchDeadline === true) {
+      return (
+        //더미버튼
+        <div>
+          <button
+            className='w-1/2 h-[48px] border border-[#FCFCFC] rounded-[4px] bg-[#FCFCFC] text-[#FCFCFC]'
+            type='button'
+            disabled
+          >
+            삭제
+          </button>
+          <button
+            className='w-1/2 h-[48px] border border-[#FCFCFC] rounded-[4px] bg-[#FCFCFC] text-[#FCFCFC] cursor-pointer mb-[36px]'
+            type='button'
+          >
+            수정하기
+          </button>
+        </div>
+      );
     } else if (postData.owner === -1 && postData.player === -1) {
       return (
+        //더미버튼
         <>
           <button
             className='w-[100%] h-[48px] border border-matchgi-bordergray rounded-[4px] bg-matchgi-btnblue text-[#FFFFFF] cursor-pointer mb-[36px]'
@@ -165,7 +166,6 @@ const GetMatchData: FC = () => {
   return (
     <>
       <section className='flex flex-col justify-center w-full h-full bg-[#FCFCFC]'>
-        {CompleteBtn()}
         <div className='w-full h-[124px] pl-[20px] pt-[16px]'>
           <div className='flex flex-row gap-2 items-center mb-[24px]'>
             <img

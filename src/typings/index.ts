@@ -146,5 +146,13 @@ export interface ReviewData {
 }
 
 export interface JoinDataProps {
-  data: { owner: number; postId: number; player: number; matchStatus: string; profileUrl: string; nickName: string };
+  data: {
+    owner: number;
+    postId: number;
+    player: number;
+    matchStatus: string;
+    profileUrl: string;
+    nickName: string;
+    matchDeadline: string;
+  };
 }

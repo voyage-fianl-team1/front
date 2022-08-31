@@ -6,7 +6,7 @@ import { JoinDataProps } from '../typings';
 import { useQueryClient } from '@tanstack/react-query';
 
 const Review = (props: JoinDataProps) => {
-  const { register, getValues, resetField } = useForm({});
+  const { register, getValues, resetField, handleSubmit } = useForm({});
   const review = props.data;
   const queryClient = useQueryClient();
   const [imgSrc, setImgSrc] = useState<string>('/assets/images/post/basic.svg');
@@ -34,7 +34,9 @@ const Review = (props: JoinDataProps) => {
   }, []);
 
   const handleReviewUpload = async () => {
-    console.log(getValues().content);
+    if (getValues().content.length < 2) {
+      return alert('댓글 최소 2글자 이상 입력해주세요.');
+    }
     const value = await apis.reviewUpload(review.postId, { content: getValues().content });
     const formData = new FormData();
     if (file !== undefined && file.length >= 1) {
@@ -63,6 +65,9 @@ const Review = (props: JoinDataProps) => {
             <textarea
               className='w-full h-[60px] rounded-[10px] resize-none p-[16px] text-[14px] leading-[150%]
             text-[#4A4B4E] tracking-[-0.04em] font-Noto bg-[#FCFCFC]'
+              minLength={2}
+              maxLength={100}
+              placeholder='최소 2글자 이상 100글자 미만으로 작성 해주세요.'
               {...register('content')}
             ></textarea>
             <div className='w-[55px] h-[55px] absolute left-16'>
