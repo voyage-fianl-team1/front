@@ -6,7 +6,7 @@ import { JoinDataProps } from '../typings';
 import { useQueryClient } from '@tanstack/react-query';
 
 const Review = (props: JoinDataProps) => {
-  const { register, getValues, resetField, handleSubmit } = useForm({});
+  const { register, getValues, resetField } = useForm({});
   const review = props.data;
   const queryClient = useQueryClient();
   const [imgSrc, setImgSrc] = useState<string>('/assets/images/post/basic.svg');
