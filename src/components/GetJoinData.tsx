@@ -204,7 +204,7 @@ const GetJoinData = (props: JoinDataProps) => {
                     className={`box-border w-[82px] h-[36px] rounded-[4px] flex justify-center items-center mt-[36px]
                     ${
                       value.status === 'LOSE'
-                        ? 'bg-red-600 text-[#FFF]'
+                        ? 'bg-[#14308B] text-[#FFF]'
                         : 'bg-[#FFF] text-[#38393c] border border-[#C5C6CA]'
                     }`}
                     onClick={async () => {
@@ -217,7 +217,7 @@ const GetJoinData = (props: JoinDataProps) => {
                     className={`box-border w-[82px] h-[36px] rounded-[4px] flex justify-center items-center mt-[36px]
                      ${
                        value.status === 'DRAW'
-                         ? 'bg-yellow text-[#FFF]'
+                         ? 'bg-[#14308B] text-[#FFF]'
                          : 'bg-[#FFF] text-[#38393c] border border-[#C5C6CA]'
                      }`}
                     onClick={async () => await apis.updateTotalStatus(value.requestId, { status: 'DRAW' })}
