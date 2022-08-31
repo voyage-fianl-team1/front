@@ -6,7 +6,7 @@ import { JoinDataProps } from '../typings';
 import { useQueryClient } from '@tanstack/react-query';
 
 const Review = (props: JoinDataProps) => {
-  const { register, getValues, reset } = useForm({});
+  const { register, getValues, resetField } = useForm({});
   const review = props.data;
   const queryClient = useQueryClient();
   const [imgSrc, setImgSrc] = useState<string>('/assets/images/post/basic.svg');
@@ -34,17 +34,19 @@ const Review = (props: JoinDataProps) => {
   }, []);
 
   const handleReviewUpload = async () => {
+    console.log(getValues().content);
     const value = await apis.reviewUpload(review.postId, { content: getValues().content });
     const formData = new FormData();
-    if (file !== undefined) {
+    if (file !== undefined && file.length >= 1) {
       formData.append('files', file[0]);
       await apis.reviewImage(value, formData);
+      setFile([]);
     }
     queryClient.invalidateQueries(['reviewList']);
-    setFile([]);
     setImgSrc('/assets/images/post/basic.svg');
-    reset();
+    resetField('content');
   };
+  console.log(file);
   return (
     <>
       <section className='w-full h-full flex flex-col justify-center items-center bg-[#FCFCFC]'>
@@ -67,7 +69,6 @@ const Review = (props: JoinDataProps) => {
               <button className='text-[20px] text-[#FFF] font-black absolute right-0' onClick={handledeleteImage}>
                 <IoMdCloseCircleOutline />
               </button>
-
               <img alt='No Image' src={imgSrc} />
             </div>
             <button className='absolute bottom-[29rem] w-[24px] h-[24px] left-6' onClick={imgBtn}>

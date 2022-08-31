@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { apis } from '../apis';
 import { useNavigate } from 'react-router-dom';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
@@ -16,7 +16,7 @@ const ReviewDetail = (props: JoinDataProps) => {
   );
   const reviewList = data?.data.reviewList;
   const changeData = (data: string) => {
-    return dayjs(data).format('YYYY.MM.DD');
+    return dayjs(data).format('YYYY.MM.DD.');
   };
 
   if (isLoading) {
