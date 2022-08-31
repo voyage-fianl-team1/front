@@ -49,6 +49,17 @@ const Newpost: FC = () => {
   };
 
   const handleDataUpload = async () => {
+    if (getValues().title.length < 1) {
+      return alert('제목을 입력해주세요.');
+    } else if (subject.subject === '종목을 선택해주세요.') {
+      return alert('종목을 선택해주세요.');
+    } else if (date === '모집 마감일을 선택해 주세요.') {
+      return alert('모집 마감일을 선택해 주세요.');
+    } else if (address.address === '주소를 선택해 주세요.' && address.lat === 0 && address.lng === 0) {
+      return alert('주소를 선택해주세요.');
+    } else if (getValues().content.length < 1) {
+      return alert('내용을 입력해주세요.');
+    }
     const postData = {
       title: getValues().title,
       matchDeadline: date,

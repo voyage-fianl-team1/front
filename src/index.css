@@ -171,6 +171,10 @@ select{
     focus:text-[#38393C] focus:font-semibold focus:border focus:border-b-[#14308B] focus:border-b-[3px] focus:border-x-0 focus:border-t-0;
 }
 
+.divider{
+    @apply h-[1px] w-[100%] bg-gray-500 my-10;
+}
+
 .match-box{
     background: #FFFFFF;
     border: 1px solid #DCDDE0;
