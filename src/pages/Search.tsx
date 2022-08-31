@@ -31,13 +31,12 @@ const SearchMatch: FC = () => {
   } = useInfiniteQuery(['postData', sort, subject], ({ pageParam = 0 }) => fetchPostList(pageParam), {
     getNextPageParam: (lastPage) => (!lastPage.last ? lastPage.nextPage : undefined),
   });
-  console.log(postList);
+
   useEffect(() => {
     refetch();
     queryClient.invalidateQueries(['postData']);
   }, []);
 
-  console.log(postList);
   useEffect(() => {
     if (inView) fetchNextPage();
   }, [inView]);
@@ -82,7 +81,7 @@ const SearchMatch: FC = () => {
               <div key={index}>
                 {page.data.map((post: any) => (
                   <div
-                    className='w-full h-20 bg-white p-2'
+                    className='w-full h-20 bg-[#FCFCFC] p-2'
                     key={post.postId}
                     onClick={() => navigate(`/match/${post.postId}`)}
                     ref={ref}

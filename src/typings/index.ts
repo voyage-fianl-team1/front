@@ -50,7 +50,7 @@ export interface PostEditDataProps extends PostDataProps {
   postId: number;
 }
 
-export interface JoinDataProps {
+export interface JoinData {
   userList: [];
 }
 
@@ -142,6 +142,17 @@ export interface Notification {
 }
 
 export interface ReviewData {
-  title: string;
   content: string;
+}
+
+export interface JoinDataProps {
+  data: {
+    owner: number;
+    postId: number;
+    player: number;
+    matchStatus: string;
+    profileUrl: string;
+    nickName: string;
+    matchDeadline: string;
+  };
 }

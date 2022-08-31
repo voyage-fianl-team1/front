@@ -103,4 +103,5 @@ export const apis = {
     }),
   getReviewList: (postId: number) => instance.get(`/api/reviews/${postId}`),
   getRewrite: () => instance.get('/api/posts/authority'),
+  getAcceptList: (postId: number) => instance.get(`/api/posts/${postId}/request/accept`),
 };
