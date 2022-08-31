@@ -1,18 +1,11 @@
 import React, { FC, useRef, useEffect } from 'react';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { apis } from '../apis';
-import { useParams, Link } from 'react-router-dom';
-import { PostDataProps } from '../typings';
-import { useNavigate } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
+import { PostDataProps, JoinDataProps } from '../typings';
 import LoadingSpinner from '../components/loadingSpinner';
-import { useDispatch } from 'react-redux';
-import { addressAction } from '../redux/features/addressSlice';
-import { subjectAction } from '../redux/features/subjectSlice';
-import { calendarAction } from '../redux/features/calendarSlice';
 import { StaticMap } from 'react-kakao-maps-sdk';
 import GetJoinData from '../components/GetJoinData';
-import dayjs from 'dayjs';
-import { JoinDataProps } from '../typings';
 import Review from '../components/Review';
 import ReviewDetail from '../components/ReviewDetail';
 import HandleJoinEdit from '../components/HandleJoinEdit';
@@ -20,8 +13,6 @@ import HandleJoinEdit from '../components/HandleJoinEdit';
 const Match: FC = () => {
   const param = useParams();
   const postId = Number(param.id);
-  const navigate = useNavigate();
-  const dispatch = useDispatch();
   const matchRef = useRef<HTMLDivElement>(null);
   const detailRef = useRef<HTMLDivElement>(null);
   const locationRef = useRef<HTMLDivElement>(null);
@@ -29,8 +20,7 @@ const Match: FC = () => {
   const queryClient = useQueryClient();
   const { data: res, isLoading, refetch } = useQuery(['postList', postId], async () => await apis.getPostList(postId));
   const postData: PostDataProps = res?.data;
-  const date = new Date();
-  const nowDate = dayjs(date).format('YYYY-MM-DD');
+  console.log(postData.player);
   const drill: JoinDataProps = {
     data: {
       owner: postData?.owner,

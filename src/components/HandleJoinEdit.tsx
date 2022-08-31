@@ -73,23 +73,13 @@ const HandleJoinEdit = (props: JoinDataProps) => {
   } else if (postData.owner === 1 && nowDate > postData.matchDeadline === true) {
     return <></>;
   } else if (postData.owner === -1 && postData.player === -1) {
-    return (
-      <>
-        <button
-          className='w-[100%] h-[48px] border border-matchgi-bordergray rounded-[4px] bg-matchgi-btnblue text-[#FFFFFF] cursor-pointer mb-[36px]'
-          type='button'
-          onClick={handleJoinTheGame}
-        >
-          참가 신청하기
-        </button>
-      </>
-    );
+    return <></>;
   } else if (postData.owner === -1 && postData.player === 1) {
     return (
       <button
         className='w-[100%] h-[48px] border border-[#FCFCFC] rounded-[4px] bg-[#FCFCFC] text-[#FCFCFC] cursor-pointer mb-[36px]'
         type='button'
-        disabled
+        onClick={handleJoinTheGame}
       >
         참가 신청하기
       </button>

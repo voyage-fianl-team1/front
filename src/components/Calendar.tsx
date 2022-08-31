@@ -1,10 +1,10 @@
 import React, { useState, useCallback } from 'react';
 import { Calendar } from 'react-calendar';
-import './Calendars.css';
-import dayjs from 'dayjs';
 import { useDispatch } from 'react-redux';
 import { calendarAction } from '../redux/features/calendarSlice';
 import { toggleCalendarShow, toggleModal2Show } from '../redux/features/toggleSlice';
+import './Calendars.css';
+import dayjs from 'dayjs';
 import Modal from './Modal';
 const Calendars = () => {
   const [value, onChange] = useState(new Date());

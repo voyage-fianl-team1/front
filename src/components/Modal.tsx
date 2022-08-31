@@ -1,7 +1,7 @@
 import React, { PropsWithChildren, useRef } from 'react';
 import { useDispatch } from 'react-redux';
-import styled from 'styled-components';
 import { toggleClear } from '../redux/features/toggleSlice';
+import styled from 'styled-components';
 
 interface ModalDefaultType {
   onClickToggleModal: () => void;
