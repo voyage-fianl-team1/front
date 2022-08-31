@@ -82,7 +82,6 @@ const Match: FC = () => {
   }, []);
 
   const HandleJoinBtn = () => {
-    //b > postData.matchDeadline true여야 됨
     if (postData.owner === 1 && '2022-09-03' > postData.matchDeadline === false) {
       return (
         <div>
@@ -217,14 +216,6 @@ const Match: FC = () => {
             댓글
           </button>
         </div>
-        {/* <section className='flex h-1/2 justify-center items-center gap-5'>
-        {postData &&
-          postData.imgurls.map((image: ImageType, id) => (
-            <div key={id}>
-              <img className='h-72 w-72' alt='' src={image['url']} />
-            </div>
-          ))}
-      </section> */}
         <div className='w-full h-[199px] bg-[#F4F5F5] flex flex-col justify-center items-center mb-[28px]'>
           <div className='w-full font-Noto leading-[120%] text-[#000] mb-[13px] font-medium text-[16px] pl-[20px]'>
             경기정보
@@ -255,7 +246,7 @@ const Match: FC = () => {
             경기장소
           </div>
           <div className='flex flex-col w-full h-[270px] items-center p-5'>
-            <p className='w-full h-[17px] font-Noto text-[14px] font-medium leading-[120%] mb-[25px] mt-[10px]'>
+            <p className='w-full h-[17px] font-Noto text-[14px] font-medium leading-[120%] mb-[25px] mt-[10px] ml-[25px]'>
               {postData.address}
             </p>
             <StaticMap
