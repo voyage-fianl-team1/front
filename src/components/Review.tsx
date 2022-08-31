@@ -1,13 +1,13 @@
-import React, { FC, useCallback, useRef, useState } from 'react';
+import React, { useCallback, useRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { apis } from '../apis';
 import { IoMdCloseCircleOutline } from 'react-icons/io';
+import { JoinDataProps } from '../typings';
 
-const Review: FC = () => {
+const Review = (props: JoinDataProps) => {
   const { register, getValues } = useForm({});
-  const [imgSrc, setImgSrc] = useState<string>(
-    'https://cdn.pixabay.com/photo/2013/04/01/21/30/photo-99135_960_720.png'
-  );
+  const review = props.data;
+  const [imgSrc, setImgSrc] = useState<string>('/assets/images/post/basic.svg');
   const [file, setFile] = useState<File[]>();
   const inputRef = useRef<HTMLInputElement | null>(null);
 
@@ -27,7 +27,7 @@ const Review: FC = () => {
   }, []);
 
   const handledeleteImage = useCallback(() => {
-    setImgSrc('https://cdn.pixabay.com/photo/2013/04/01/21/30/photo-99135_960_720.png');
+    setImgSrc('/assets/images/post/basic.svg');
     setFile([]);
   }, []);
 
@@ -36,7 +36,7 @@ const Review: FC = () => {
       title: getValues().title,
       content: getValues().content,
     };
-    const value = await apis.reviewUpload(2, reviewData);
+    const value = await apis.reviewUpload(review.postId, reviewData);
     const formData = new FormData();
     if (file !== undefined) {
       for (let i = 0; i < file.length; i++) {
@@ -47,42 +47,45 @@ const Review: FC = () => {
   };
 
   return (
-    <section className='w-full h-[40rem] border border-matchgi-gray flex flex-col items-center justify-center gap-2 rounded-lg p-1'>
-      <div className='w-60 h-60 mb-2'>
-        <span className='fixed ml-52 mt-3'>
-          <button className='text-2xl text-white font-black' onClick={handledeleteImage}>
-            <IoMdCloseCircleOutline />
-          </button>
-        </span>
-        <img
-          alt='No Image'
-          src={imgSrc}
-          className='flex flex-row gap-5 mb-4 w-60 h-60 rounded-3xl  bg-matchgi-lightgray'
-        />
-      </div>
-
-      <input type='file' accept='image/*' multiple className='hidden' onChange={onUploadIamge} ref={inputRef}></input>
-      <div>
-        <button className='border border-black' onClick={imgBtn}>
-          파일올리기
-        </button>
-      </div>
-      <div className='flex flex-col justify-center items-center w-11/12 h-72 border border-matchgi-gray rounded-xl bg-matchgi-lightgray gap-2'>
-        <input className='w-11/12 h-6 border border-matchgi-gray' {...register('title')}></input>
+    <>
+      <section className='w-full h-full flex flex-col justify-center items-center bg-[#FCFCFC] mt-[42px]'>
+        <input type='file' accept='image/*' multiple className='hidden' onChange={onUploadIamge} ref={inputRef}></input>
+        <p
+          className='w-full mb-[34px] pl-[20px] text-[#38393C] font-medium leading-[21px] text-[14px]
+        font-Noto'
+        >
+          내 리뷰 작성 하기
+        </p>
         <div className='flex flex-row'></div>
-        <textarea className='w-11/12 h-36 border border-matchgi-gray' {...register('content')}></textarea>
-        <span className='flex flex-row gap-5 mt-3'>
-          <button
-            className='border w-14 h-7 border-black bg-white p-0.25 text-xs
+        <div className='w-full h-full mb-[36px]'>
+          <div className='w-full h-[149px] border border-matchgi-gray rounded-[10px] resize-none p-[16px] text-[14px] leading-[150%]'>
+            <textarea
+              className='w-full h-[60px] rounded-[10px] resize-none p-[16px] text-[14px] leading-[150%]
+            text-[#4A4B4E] tracking-[-0.04em] font-Noto bg-[#FCFCFC]'
+              {...register('content')}
+            ></textarea>
+            <div className='w-[55px] h-[55px] absolute left-16'>
+              <button className='text-[20px] text-[#FFF] font-black absolute right-0' onClick={handledeleteImage}>
+                <IoMdCloseCircleOutline />
+              </button>
+
+              <img alt='No Image' src={imgSrc} />
+            </div>
+            <button className='absolute bottom-[29rem] w-[24px] h-[24px] left-6' onClick={imgBtn}>
+              <img src='/assets/images/post/reviewImage.svg' alt='reviewImage' />
+            </button>
+            <button
+              className='absolute bottom-[29rem] right-6 border w-[52px] h-[27px] rounded-[4px] bg-[#14308B] text-[#FFF] p-0.25 text-[14px] leading-[0.07rem] tracking-[-0.04rem]
+          font-Noto py-[5px] px-[13px] gap-[10px]
           '
-            onClick={handleReviewUpload}
-          >
-            작성하기
-          </button>
-          <button className='border w-14 h-7 border-black bg-white p-0.25 text-xs'>취소</button>
-        </span>
-      </div>
-    </section>
+              onClick={handleReviewUpload}
+            >
+              입력
+            </button>
+          </div>
+        </div>
+      </section>
+    </>
   );
 };
 

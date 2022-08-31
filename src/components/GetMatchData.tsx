@@ -12,10 +12,9 @@ import { calendarAction } from '../redux/features/calendarSlice';
 import { StaticMap } from 'react-kakao-maps-sdk';
 import GetJoinData from './GetJoinData';
 import dayjs from 'dayjs';
-
-export interface IProps {
-  data: { owner: number; postId: number; player: number; matchStatus: string };
-}
+import { JoinDataProps } from '../typings';
+import Review from './Review';
+import ReviewDetail from './ReviewDetail';
 
 const GetMatchData: FC = () => {
   const param = useParams();
@@ -26,14 +25,16 @@ const GetMatchData: FC = () => {
   const detailRef = useRef<HTMLDivElement>(null);
   const locationRef = useRef<HTMLDivElement>(null);
   const queryClient = useQueryClient();
-  const { data: res, isLoading } = useQuery(['postList'], async () => await apis.getPostList(postId));
+  const { data: res, isLoading } = useQuery(['postList', postId], async () => await apis.getPostList(postId));
   const postData: PostDataProps = res?.data;
-  const drill: IProps = {
+  const drill: JoinDataProps = {
     data: {
       owner: postData?.owner,
       postId: postId,
       player: postData?.player,
       matchStatus: postData?.matchStatus,
+      profileUrl: postData?.profileImgUrl,
+      nickName: postData?.nickname,
     },
   };
   const handleJoinTheGame = async () => {
@@ -143,7 +144,7 @@ const GetMatchData: FC = () => {
     } else if (postData.owner === -1 && postData.player === 1) {
       return (
         <button
-          className='w-[100%] h-[48px] border border-[#FFFFFF] rounded-[4px] bg-[#FFFFFF] text-[#FFFFFF] cursor-pointer mb-[36px]'
+          className='w-[100%] h-[48px] border border-[#FCFCFC] rounded-[4px] bg-[#FCFCFC] text-[#FCFCFC] cursor-pointer mb-[36px]'
           type='button'
           disabled
         >
@@ -221,37 +222,34 @@ const GetMatchData: FC = () => {
           </div>
           <div className='flex w-full h-[236px] py-[10px] px-[12px] gap-[10px] items-start'>{postData.content}</div>
         </div>
-        <section className='w-full h-[289px] mb-[60px]'>
-          <div
-            ref={locationRef}
-            className='w-full h-[30px] font-Noto font-medium text-[16px] leading-[120%] text-[#38393C] border border-x-0 border-t-0 border-b-matchgi-bordergray pl-[20px]'
-          >
+        <section className='w-full h-[289px] mb-[60px]' ref={locationRef}>
+          <div className='w-full h-[30px] font-Noto font-medium text-[16px] leading-[120%] text-[#38393C] border border-x-0 border-t-0 border-b-matchgi-bordergray pl-[20px]'>
             경기장소
           </div>
           <div className='flex flex-col w-full h-[270px] items-center text-center p-5'>
             <p className='w-full h-[17px] font-Noto text-[12px] font-medium leading-[120%] mb-[25px] mt-[10px]'>
               {postData.address}
             </p>
-            {postData && (
-              <StaticMap
-                center={{
+            <StaticMap
+              center={{
+                lat: postData.lat,
+                lng: postData.lng,
+              }}
+              className='w-full h-full rounded-[20px]'
+              marker={{
+                position: {
                   lat: postData.lat,
                   lng: postData.lng,
-                }}
-                className='w-full h-full rounded-[20px]'
-                marker={{
-                  position: {
-                    lat: postData.lat,
-                    lng: postData.lng,
-                  },
-                }}
-                level={3}
-              />
-            )}
+                },
+              }}
+              level={3}
+            />
           </div>
         </section>
         {HandleJoinBtn()}
       </section>
+      <ReviewDetail {...drill} />
+      <Review {...drill} />
       <GetJoinData {...drill} />
     </>
   );

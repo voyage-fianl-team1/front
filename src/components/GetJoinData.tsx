@@ -1,13 +1,12 @@
 import React from 'react';
 import { useQuery } from '@tanstack/react-query';
 import LoadingSpinner from './loadingSpinner';
-import { JoinDataProps, ImageType } from '../typings';
+import { JoinDataProps, JoinData, ImageType } from '../typings';
 import { apis } from '../apis';
-import { IProps } from './GetMatchData';
 
-const GetJoinData = (props: IProps) => {
+const GetJoinData = (props: JoinDataProps) => {
   const join = useQuery(['joinList'], async () => await apis.getJoinList(props.data.postId));
-  const joinData: JoinDataProps = join?.data?.data;
+  const joinData: JoinData = join?.data?.data;
   const postData = props.data;
   if (join.isLoading) {
     return <LoadingSpinner />;
