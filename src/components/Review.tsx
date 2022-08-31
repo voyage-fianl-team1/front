@@ -46,7 +46,7 @@ const Review = (props: JoinDataProps) => {
     setImgSrc('/assets/images/post/basic.svg');
     resetField('content');
   };
-  console.log(file);
+
   return (
     <>
       <section className='w-full h-full flex flex-col justify-center items-center bg-[#FCFCFC]'>
@@ -55,7 +55,7 @@ const Review = (props: JoinDataProps) => {
           className='w-full mb-[34px] pl-[20px] text-[#38393C] font-medium leading-[21px] text-[14px]
         font-Noto bg-[#FCFCFC]'
         >
-          내 리뷰 작성 하기
+          댓글 작성 하기
         </p>
         <div className='flex flex-row'></div>
         <div className='w-full h-full mb-[36px]'>
@@ -71,17 +71,19 @@ const Review = (props: JoinDataProps) => {
               </button>
               <img alt='No Image' src={imgSrc} />
             </div>
-            <button className='absolute bottom-[29rem] w-[24px] h-[24px] left-6' onClick={imgBtn}>
-              <img src='/assets/images/post/reviewImage.svg' alt='reviewImage' />
-            </button>
-            <button
-              className='absolute bottom-[29rem] right-6 border w-[52px] h-[27px] rounded-[4px] bg-[#14308B] text-[#FFF] p-0.25 text-[14px] leading-[0.07rem] tracking-[-0.04rem]
+            <div className='flex flex-row justify-between'>
+              <button className='w-[24px] h-[24px]' onClick={imgBtn}>
+                <img src='/assets/images/post/reviewImage.svg' alt='reviewImage' />
+              </button>
+              <button
+                className='border w-[52px] h-[27px] rounded-[4px] bg-[#14308B] text-[#FFF] p-0.25 text-[14px] leading-[0.07rem] tracking-[-0.04rem]
           font-Noto py-[5px] px-[13px] gap-[10px]
           '
-              onClick={handleReviewUpload}
-            >
-              입력
-            </button>
+                onClick={handleReviewUpload}
+              >
+                입력
+              </button>
+            </div>
           </div>
         </div>
       </section>
