@@ -6,7 +6,13 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import { apis } from '../apis';
 import { PostEditDataProps, ImageType } from '../typings';
 import { addressClear } from '../redux/features/addressSlice';
-import { toggleCalendarShow, toggleClear, toggleModalShow, toggleSubjectShow } from '../redux/features/toggleSlice';
+import {
+  toggleCalendarShow,
+  toggleClear,
+  toggleModalShow,
+  toggleModal2Show,
+  toggleSubjectShow,
+} from '../redux/features/toggleSlice';
 import Modal from '../components/Modal';
 import MapContainer from '../components/MapContainer';
 import Calendars from '../components/Calendar';
@@ -237,15 +243,9 @@ const Newpost: FC = () => {
             <p className=''>{date}</p>
           </span>
         </div>
-        {calendarShow && <Calendars />}
       </section>
-      <section>
-        {modalShow && (
-          <Modal onClickToggleModal={handleToggleModal}>
-            <MapContainer />
-          </Modal>
-        )}
-      </section>
+      <section>{calendarShow && <Calendars />}</section>
+      <section>{modalShow && <MapContainer />}</section>
       <section className='flex flex-col bg-[#FCFCFC] items-center'>
         <p className='text-[12px] w-[100%] text-matchgi-black mb-[12px]'>경기위치</p>
         <div

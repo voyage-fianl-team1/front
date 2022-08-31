@@ -13,7 +13,6 @@ const GetJoinData = (props: JoinDataProps) => {
   const date = new Date();
   const nowDate = dayjs(date).format('YYYY-MM-DD');
   const joinData: JoinData = join?.data?.data;
-  console.log(acceptList.data);
   const queryClient = useQueryClient();
   const postData = props?.data;
   const handleStatusChange = async () => {

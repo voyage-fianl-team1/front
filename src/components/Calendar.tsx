@@ -4,7 +4,7 @@ import './Calendars.css';
 import dayjs from 'dayjs';
 import { useDispatch } from 'react-redux';
 import { calendarAction } from '../redux/features/calendarSlice';
-import { toggleCalendarShow, toggleModalShow } from '../redux/features/toggleSlice';
+import { toggleCalendarShow, toggleModal2Show } from '../redux/features/toggleSlice';
 import Modal from './Modal';
 const Calendars = () => {
   const [value, onChange] = useState(new Date());
@@ -15,7 +15,7 @@ const Calendars = () => {
     dispatch(toggleCalendarShow());
   };
   const handleToggleModal = useCallback(() => {
-    dispatch(toggleModalShow());
+    dispatch(toggleModal2Show());
   }, []);
 
   return (
@@ -28,7 +28,7 @@ const Calendars = () => {
           minDate={new Date()}
           calendarType='ISO 8601'
         />
-        <div className='flex flew-row justify-center gap-[20px] mt-24'>
+        <div className='flex flew-row justify-center gap-[20px] mt-20'>
           <button
             className='w-[82px] h-[45px] border border-[#9A9B9F] rounded-[8px]'
             onClick={() => dispatch(toggleCalendarShow())}
