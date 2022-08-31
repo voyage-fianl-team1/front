@@ -97,7 +97,7 @@ const GetJoinData = (props: JoinDataProps) => {
                   <button
                     type='button'
                     className={`w-[132px] h-[36px] bg-[#FFF] rounded-[4px] ] ${
-                      value.status === 'REJECT' ? 'bg-red-500 text-[#FFF]' : 'bg-[#FFF] border border-[#949B9F'
+                      value.status === 'REJECT' ? 'bg-[#14308B] text-[#FFF]' : 'bg-[#FFF] border border-[#949B9F'
                     }`}
                     value='REJECT'
                     onClick={async () => {

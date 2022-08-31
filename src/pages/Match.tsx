@@ -15,6 +15,7 @@ import dayjs from 'dayjs';
 import { JoinDataProps } from '../typings';
 import Review from '../components/Review';
 import ReviewDetail from '../components/ReviewDetail';
+import HandleJoinEdit from '../components/HandleJoinEdit';
 
 const Match: FC = () => {
   const param = useParams();
@@ -28,8 +29,8 @@ const Match: FC = () => {
   const queryClient = useQueryClient();
   const { data: res, isLoading, refetch } = useQuery(['postList', postId], async () => await apis.getPostList(postId));
   const postData: PostDataProps = res?.data;
-  const a = new Date();
-  const b = dayjs(a).format('YYYY-MM-DD');
+  const date = new Date();
+  const nowDate = dayjs(date).format('YYYY-MM-DD');
   const drill: JoinDataProps = {
     data: {
       owner: postData?.owner,
@@ -39,28 +40,15 @@ const Match: FC = () => {
       profileUrl: postData?.profileImgUrl,
       nickName: postData?.nickname,
       matchDeadline: postData?.matchDeadline,
+      lat: postData?.lat,
+      lng: postData?.lng,
+      address: postData?.address,
+      imgpaths: postData?.imgpaths,
+      imgurls: postData?.imgurls,
+      subjectValue: postData?.subjectValue,
+      subject: postData?.subject,
+      title: postData?.title,
     },
-  };
-  const handleJoinTheGame = async () => {
-    try {
-      if (window.confirm('참가 신청 하시겠습니까?')) {
-        await apis.postJoinGame(postId);
-      }
-      alert('참가 신청이 완료되었습니다.');
-      navigate('/');
-    } catch (err) {
-      alert('참가 신청은 중복으로 할 수 없습니다.');
-    }
-  };
-  const handleDeletePost = async () => {
-    try {
-      if (window.confirm('게시글을 삭제하시겠습니까?')) {
-        await apis.deletePost(postId);
-        navigate(-1);
-      }
-    } catch (err) {
-      alert('게시글 삭제에 실패했습니다.');
-    }
   };
 
   const handleMoveScroll = () => {
@@ -80,101 +68,6 @@ const Match: FC = () => {
     refetch();
     queryClient.invalidateQueries(['postData']);
   }, []);
-
-  const HandleJoinBtn = () => {
-    if (postData.owner === 1 && '2022-09-03' > postData.matchDeadline === false) {
-      return (
-        <div>
-          <button
-            className='w-1/2 h-[48px] border border-matchgi-bordergray rounded-[4px] bg-[#FCFCFC] text-[#38393C] cursor-pointer'
-            type='button'
-            onClick={handleDeletePost}
-          >
-            삭제
-          </button>
-          <Link
-            to={`/new/${postId}/edit`}
-            state={{
-              postId: postId,
-              title: postData.title,
-              lat: postData.lat,
-              lng: postData.lng,
-              imgurls: postData.imgurls,
-              imgpaths: postData.imgpaths,
-              content: postData.content,
-            }}
-          >
-            <button
-              className='w-1/2 h-[48px] border border-matchgi-bordergray rounded-[4px] bg-matchgi-btnblue text-[#FFFFFF] cursor-pointer mb-[36px]'
-              type='button'
-              onClick={() => {
-                dispatch(addressAction({ address: postData.address, lat: postData.lat, lng: postData.lng }));
-                dispatch(subjectAction({ subject: postData.subject, value: postData.subjectValue }));
-                dispatch(calendarAction({ date: postData.matchDeadline }));
-              }}
-            >
-              수정하기
-            </button>
-          </Link>
-        </div>
-      );
-    } else if (postData.owner === 1 && '2022-09-03' > postData.matchDeadline === true) {
-      return (
-        //더미버튼
-        <div>
-          <button
-            className='w-1/2 h-[48px] border border-[#FCFCFC] rounded-[4px] bg-[#FCFCFC] text-[#FCFCFC]'
-            type='button'
-            disabled
-          >
-            삭제
-          </button>
-          <button
-            className='w-1/2 h-[48px] border border-[#FCFCFC] rounded-[4px] bg-[#FCFCFC] text-[#FCFCFC] cursor-pointer mb-[36px]'
-            type='button'
-          >
-            수정하기
-          </button>
-        </div>
-      );
-    } else if (postData.owner === -1 && postData.player === -1) {
-      return (
-        //더미버튼
-        <>
-          <button
-            className='w-[100%] h-[48px] border border-matchgi-bordergray rounded-[4px] bg-matchgi-btnblue text-[#FFFFFF] cursor-pointer mb-[36px]'
-            type='button'
-            onClick={handleJoinTheGame}
-          >
-            참가 신청하기
-          </button>
-        </>
-      );
-    } else if (postData.owner === -1 && postData.player === 1) {
-      return (
-        <button
-          className='w-[100%] h-[48px] border border-[#FCFCFC] rounded-[4px] bg-[#FCFCFC] text-[#FCFCFC] cursor-pointer mb-[36px]'
-          type='button'
-          disabled
-        >
-          참가 신청하기
-        </button>
-      );
-    } else if (postData.owner === -1 && b > postData.matchDeadline) {
-      return (
-        //더미버튼
-        <>
-          <button
-            className='w-[100%] h-[48px] border border-matchgi-bordergray rounded-[4px] bg-matchgi-btnblue text-[#FFFFFF] cursor-pointer mb-[36px]'
-            type='button'
-            onClick={handleJoinTheGame}
-          >
-            참가 신청하기
-          </button>
-        </>
-      );
-    }
-  };
 
   if (isLoading) {
     return <LoadingSpinner />;
@@ -266,7 +159,7 @@ const Match: FC = () => {
           </div>
         </section>
         <div ref={reviewRef} />
-        {HandleJoinBtn()}
+        <HandleJoinEdit {...drill} />
       </section>
       <ReviewDetail {...drill} />
       <Review {...drill} />
