@@ -11,7 +11,6 @@ const Modal = ({ onClickToggleModal, children }: PropsWithChildren<ModalDefaultT
   const outside = useRef<HTMLDivElement>(null);
   const dispatch = useDispatch();
   const handleModal = (e: React.MouseEvent) => {
-    console.log(outside.current === e.target);
     e.preventDefault();
     if (onClickToggleModal) {
       onClickToggleModal();
