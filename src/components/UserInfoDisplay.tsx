@@ -44,7 +44,7 @@ const UserInfoDisplay = () => {
         />
       </div>
       <div>
-        <h1 className='mb-1 font-[500]'>{nickname}</h1>
+        <h1 className='mb-1 font-[500] max-w-[250px]'>{nickname}</h1>
         <ul className='flex items-center gap-2'>
           <li>
             경기 <span className='font-semibold'>{win + lose + draw}</span>

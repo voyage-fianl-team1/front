@@ -27,6 +27,8 @@ const Match: FC = () => {
   const queryClient = useQueryClient();
   const { data: res, isLoading, refetch } = useQuery(['postList', postId], async () => await apis.getPostList(postId));
   const postData: PostDataProps = res?.data;
+  const a = new Date();
+  const b = dayjs(a).format('YYYY-MM-DD');
   const drill: JoinDataProps = {
     data: {
       owner: postData?.owner,
@@ -77,8 +79,6 @@ const Match: FC = () => {
 
   const HandleJoinBtn = () => {
     //b > postData.matchDeadline true여야 됨
-    const a = new Date();
-    const b = dayjs(a).format('YYYY-MM-DD');
     if (postData.owner === 1 && '2022-09-03' > postData.matchDeadline === false) {
       return (
         <div>
@@ -156,6 +156,19 @@ const Match: FC = () => {
         >
           참가 신청하기
         </button>
+      );
+    } else if (postData.owner === -1 && b > postData.matchDeadline) {
+      return (
+        //더미버튼
+        <>
+          <button
+            className='w-[100%] h-[48px] border border-matchgi-bordergray rounded-[4px] bg-matchgi-btnblue text-[#FFFFFF] cursor-pointer mb-[36px]'
+            type='button'
+            onClick={handleJoinTheGame}
+          >
+            참가 신청하기
+          </button>
+        </>
       );
     }
   };

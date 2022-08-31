@@ -27,7 +27,7 @@ const GetJoinData = (props: JoinDataProps) => {
   };
 
   const CompleteBtn = () => {
-    if ('2022-09-03' > postData.matchDeadline && postData.owner === 1 && postData.matchStatus === 'ONGOING') {
+    if (nowDate > postData.matchDeadline && postData.owner === 1 && postData.matchStatus === 'ONGOING') {
       return (
         <>
           <button
@@ -65,7 +65,7 @@ const GetJoinData = (props: JoinDataProps) => {
     );
   }
 
-  if (postData.owner === 1 && postData.matchStatus === 'ONGOING' && '2022-09-03' > postData.matchDeadline === false) {
+  if (postData.owner === 1 && postData.matchStatus === 'ONGOING' && nowDate > postData.matchDeadline === false) {
     return (
       <section className='flex flex-col w-full h-full bg-[#FCFCFC]'>
         <p
@@ -127,7 +127,7 @@ const GetJoinData = (props: JoinDataProps) => {
       </section>
     );
   }
-  if (postData.owner === -1 && postData.matchStatus === 'ONGOING' && '2022-09-03' > postData.matchDeadline === false) {
+  if (postData.owner === -1 && postData.matchStatus === 'ONGOING' && nowDate > postData.matchDeadline === false) {
     return (
       <section className='flex flex-col w-full h-full bg-[#FCFCFC]'>
         <p className='w-full h-[34px] font-Noto font-medium leading-[24px] text-[16 px] text-[#38393C] border border-[#EDEDED] border-x-0 border-t-0 pl-[20px] mb-[22px]'>
@@ -159,11 +159,7 @@ const GetJoinData = (props: JoinDataProps) => {
           ))}
       </section>
     );
-  } else if (
-    postData.owner === 1 &&
-    '2022-09-03' > postData.matchDeadline === true &&
-    postData.matchStatus === 'ONGOING'
-  ) {
+  } else if (postData.owner === 1 && nowDate > postData.matchDeadline === true && postData.matchStatus === 'ONGOING') {
     return (
       <section className='flex flex-col w-full h-full bg-[#FCFCFC]'>
         <p
@@ -236,7 +232,7 @@ const GetJoinData = (props: JoinDataProps) => {
       </section>
     );
   }
-  if ('2022-09-03' > postData.matchDeadline === true && postData.matchStatus === 'MATCHEND') {
+  if (nowDate > postData.matchDeadline === true && postData.matchStatus === 'MATCHEND') {
     return (
       <section className='flex flex-col w-full h-full bg-[#FCFCFC]'>
         <p
