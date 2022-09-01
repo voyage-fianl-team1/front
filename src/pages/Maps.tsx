@@ -18,14 +18,16 @@ const Maps = () => {
   const res = useQuery(['matchList'], async () => await apis.getAroundGame(nowPosition.lat, nowPosition.lng));
   const [isOpen, setIsOpen] = useState(false);
   const outside = useRef<HTMLDivElement>(null);
+  const matchData = res?.data?.data;
 
-  const handleClickModal = (e: React.MouseEvent) => {
-    e.preventDefault();
-    if (isOpen && outside.current !== e.target) {
-      console.log(e.target, outside.current);
-      setIsOpen(false);
-    }
-  };
+  // const handleClickModal = (e: React.MouseEvent) => {
+  //   e.preventDefault();
+  //   if (isOpen && outside.current !== e.target) {
+  //     console.log(e.target, outside.current);
+  //     setIsOpen(false);
+  //   }
+  // };
+
   useEffect(() => {
     return () => {
       dispatch(overlayClear());
@@ -41,11 +43,16 @@ const Maps = () => {
     테니스: 'https://velog.velcdn.com/images/blaze096/post/f28b1561-f059-4fe9-b7f7-2696aa0c4f86/image.png',
     당구: 'https://velog.velcdn.com/images/blaze096/post/511632d1-23d4-4194-8b75-256fdf33f7c0/image.png',
   };
-
-  const MatchMarker = () => {
-    if (res.data) {
-      const matchData = res.data.data;
-      return (
+  if (res.isLoading) {
+    return <></>;
+  }
+  return (
+    <>
+      <Helmet>
+        <title>매치기 | 근처찾기</title>
+      </Helmet>
+      <Map center={{ lat: nowPosition.lat, lng: nowPosition.lng }} className='w-full h-screen' level={3} ref={mapRef}>
+        <ZoomControl position={window.kakao.maps.ControlPosition.TOPRRIGHT} />
         <div>
           {matchData &&
             matchData.map((v: OverlayState, i: number) => (
@@ -78,24 +85,12 @@ const Maps = () => {
               </div>
             ))}
         </div>
-      );
-    }
-  };
-  return (
-    <>
-      <Helmet>
-        <title>매치기 | 근처찾기</title>
-      </Helmet>
-      <Map center={{ lat: nowPosition.lat, lng: nowPosition.lng }} className='w-full h-screen' level={3} ref={mapRef}>
-        <ZoomControl position={window.kakao.maps.ControlPosition.TOPRRIGHT} />
-        {MatchMarker()}
-        {isOpen && (
-          <div ref={outside}>
+        <div className='w-full h-full'>
+          {isOpen && (
             <div className='flex flex-row items-center justify-center'>
               <div
                 className='fixed bottom-[56px] w-11/12 max-w-[900px] h-[136px] bg-[#FFF] z-10 rounded-[10px]
           border border-[#DCDDE0] shadow-[0_4px_20px_rgba(0,0,0,0.08)]'
-                onClick={handleClickModal}
               >
                 <div className='flex flex-row my-[24px]'>
                   <div className='flex flex-row justify-center items-center ml-[20px]'>
@@ -121,8 +116,8 @@ const Maps = () => {
                 </div>
               </div>
             </div>
-          </div>
-        )}
+          )}
+        </div>
       </Map>
     </>
   );
