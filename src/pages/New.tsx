@@ -5,13 +5,13 @@ import { RootState } from '../redux/store';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { apis } from '../apis';
 import { PostEditDataProps, ImageType } from '../typings';
-import { addressClear } from '../redux/features/addressSlice';
-import { toggleCalendarShow, toggleClear, toggleModalShow, toggleSubjectShow } from '../redux/features/toggleSlice';
 import MapContainer from '../components/MapContainer';
 import Calendars from '../components/Calendar';
-import { calendarClear } from '../redux/features/calendarSlice';
 import CustomSubject from '../components/CustomSelect';
 import { IoMdCloseCircleOutline } from 'react-icons/io';
+import { toggleCalendarShow, toggleClear, toggleModalShow, toggleSubjectShow } from '../redux/features/toggleSlice';
+import { addressClear } from '../redux/features/addressSlice';
+import { calendarClear } from '../redux/features/calendarSlice';
 import { subjectClear } from '../redux/features/subjectSlice';
 
 const Newpost: FC = () => {

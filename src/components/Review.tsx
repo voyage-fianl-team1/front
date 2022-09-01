@@ -70,11 +70,14 @@ const Review = (props: JoinDataProps) => {
               placeholder='댓글은 100글자 미만으로 작성 해주세요.'
               {...register('content')}
             ></textarea>
-            <div className='w-[55px] h-[55px] absolute left-16'>
-              <button className='text-[20px] text-[#FFF] font-black absolute right-0' onClick={handledeleteImage}>
+            <div className='absolute left-16'>
+              <button
+                className='w-[100px] h-[20px] text-[20px] text-[#FFF] absolute left-11'
+                onClick={handledeleteImage}
+              >
                 <IoMdCloseCircleOutline />
               </button>
-              <img alt='No Image' src={imgSrc} />
+              <img alt='No Image' src={imgSrc} className='w-[65px] h-[65px]' />
             </div>
             <div className='flex flex-row justify-between'>
               <button className='w-[24px] h-[24px]' onClick={imgBtn}>
