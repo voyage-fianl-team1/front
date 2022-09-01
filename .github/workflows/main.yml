@@ -18,18 +18,19 @@ jobs:
       AWS_DEFAULT_REGION: ${{ secrets.AWS_DEFAULT_REGION }}
     steps:
       - uses: actions/checkout@v1
+        env:
+          REACT_APP_SERVER_URL: '${{REACT_APP_SERVER_URL}}'
+          REACT_APP_SERVER_STOMP_URL: '${{REACT_APP_SERVER_STOMP_URL}}'
+          REACT_APP_REST_API_KEY: '${{REACT_APP_REST_API_KEY}}'
+          REACT_APP_REDIRECT_URI: '${{REACT_APP_REDIRECT_URI}}'
+          REACT_APP_KAKAO_APP_KEY: '${{REACT_APP_KAKAO_APP_KEY}}'
 
       - name: Install dependencies
         run: yarn
 
       - name: Build
         run: yarn build
-        env:
-            REACT_APP_SERVER_URL: '${{REACT_APP_SERVER_URL}}'
-            REACT_APP_SERVER_STOMP_URL: '${{REACT_APP_SERVER_STOMP_URL}}'
-            REACT_APP_REST_API_KEY: '${{REACT_APP_REST_API_KEY}}'
-            REACT_APP_REDIRECT_URI: '${{REACT_APP_REDIRECT_URI}}'
-            REACT_APP_KAKAO_APP_KEY: '${{REACT_APP_KAKAO_APP_KEY}}'
+
 
       - name: Deploy
         uses: lbertenasco/s3-deploy@v1
