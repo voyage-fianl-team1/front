@@ -5,14 +5,13 @@ import { RootState } from '../redux/store';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { apis } from '../apis';
 import { PostEditDataProps, ImageType } from '../typings';
-import { addressClear } from '../redux/features/addressSlice';
-import { toggleCalendarShow, toggleClear, toggleModalShow, toggleSubjectShow } from '../redux/features/toggleSlice';
-import Modal from '../components/Modal';
 import MapContainer from '../components/MapContainer';
 import Calendars from '../components/Calendar';
-import { calendarClear } from '../redux/features/calendarSlice';
 import CustomSubject from '../components/CustomSelect';
 import { IoMdCloseCircleOutline } from 'react-icons/io';
+import { toggleCalendarShow, toggleClear, toggleModalShow, toggleSubjectShow } from '../redux/features/toggleSlice';
+import { addressClear } from '../redux/features/addressSlice';
+import { calendarClear } from '../redux/features/calendarSlice';
 import { subjectClear } from '../redux/features/subjectSlice';
 
 const Newpost: FC = () => {
@@ -118,12 +117,6 @@ const Newpost: FC = () => {
     }
     navigate('/search');
   };
-  const handleImgBtn = useCallback(() => {
-    if (!inputRef.current) {
-      return;
-    }
-    inputRef.current.click();
-  }, []);
 
   const handledeletePrevImg = async (id: number) => {
     setImages(images.filter((_, index) => index !== id));
@@ -141,6 +134,13 @@ const Newpost: FC = () => {
       }
     }
   };
+
+  const handleImgBtn = useCallback(() => {
+    if (!inputRef.current) {
+      return;
+    }
+    inputRef.current.click();
+  }, []);
 
   const handleToggleModal = useCallback(() => {
     dispatch(toggleModalShow());
@@ -203,51 +203,49 @@ const Newpost: FC = () => {
           placeholder='경기 이름은 최대 20자까지 입력 가능합니다.'
           maxLength={20}
           defaultValue={data && data.title}
-          {...register('title', { required: '제목을 적어주세요.' })}
+          {...register('title')}
         />
       </div>
       <div className='flex flex-col items-center'>
         <p className='text-[12px] w-[100%] text-matchgi-black mb-[12px]'>종목</p>
         <div
-          className='box-border py-[16px] px-[10px] w-[100%] h-[48px] bg-[#FFFFFF] rounded-[10px] border border-matchigi-bordergray
-        text-matchgi-black cursor-pointer mb-[36px]'
+          className={`box-border py-[12px] px-[10px] w-[100%] h-[48px] bg-[#FFFFFF] rounded-[10px] border border-matchigi-bordergray
+        text-matchgi-black cursor-pointer mb-[36px] ${
+          subjectShow ? 'rounded-b-none border-[#C5C6CA] drop-shadow-[0_4px_10px_-10px_rgba(0,0,0,0.08)]' : ''
+        }`}
         >
-          <div className='flex flex-row w-full justify-between align-middle'>
-            {subject.subject}
-            {subjectShow ? (
-              <img src='/assets/images/post/arrow_top.svg' onClick={handleToggleSubject} />
-            ) : (
-              <img src='/assets/images/post/arrow_donw.svg' onClick={handleToggleSubject} />
-            )}
-          </div>
+          <span>
+            <div className='flex flex-row w-full justify-between'>
+              <p>{subject.subject}</p>
+              {subjectShow ? (
+                <img src='/assets/images/post/arrow_top.svg' onClick={handleToggleSubject} />
+              ) : (
+                <img src='/assets/images/post/arrow_donw.svg' onClick={handleToggleSubject} />
+              )}
+            </div>
+          </span>
         </div>
       </div>
       {subjectShow && <CustomSubject />}
       <section className='flex flex-col items-center'>
         <p className='w-[100%] text-[12px] text-matchgi-black mb-[12px]'>모집마감일</p>
         <div
-          className='box-border py-[16px] px-[10px] w-[100%] h-[48px] bg-[#FFFFFF] rounded-[10px] border border-matchigi-bordergray
-            text-matchgi-black mb-[36px]'
+          className='box-border py-[12px] px-[10px] w-[100%] h-[48px] bg-[#FFFFFF] rounded-[10px] border border-matchigi-bordergray
+            text-matchgi-black mb-[36px] cursor-pointer'
           onClick={handleToggleCalendar}
         >
           <span className='flex flex-row'>
             <img src='/assets/images/post/calendar.svg' className='mr-2' />
-            <p>{date}</p>
+            <p className=''>{date}</p>
           </span>
         </div>
-        {calendarShow && <Calendars />}
       </section>
-      <section>
-        {modalShow && (
-          <Modal onClickToggleModal={handleToggleModal}>
-            <MapContainer />
-          </Modal>
-        )}
-      </section>
-      <section className='flex flex-col bg-white items-center'>
+      <section>{calendarShow && <Calendars />}</section>
+      <section>{modalShow && <MapContainer />}</section>
+      <section className='flex flex-col bg-[#FCFCFC] items-center'>
         <p className='text-[12px] w-[100%] text-matchgi-black mb-[12px]'>경기위치</p>
         <div
-          className='box-border `py-[16px] px-[10px] w-[100%] h-[48px] bg-[#FFFFFF] rounded-[10px] border border-matchigi-bordergray text-matchgi-black cursor-pointer mb-[36px]'
+          className='box-border py-0.5 px-[10px] w-[100%] h-[48px] bg-[#FFFFFF] rounded-[10px] border border-matchigi-bordergray text-matchgi-black cursor-pointer mb-[36px]'
           onClick={handleToggleModal}
         >
           <p className='mt-2.5 flex flex-row'>
