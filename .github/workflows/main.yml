@@ -1,10 +1,5 @@
-
-
 name: Deploy to S3
 on:
-  push:
-    branches:
-      - master
   pull_request:
     branches:
       - master
@@ -21,6 +16,7 @@ jobs:
       REACT_APP_REST_API_KEY: ${{secrets.REACT_APP_REST_API_KEY}}
       REACT_APP_REDIRECT_URI: ${{secrets.REACT_APP_REDIRECT_URI}}
       REACT_APP_KAKAO_APP_KEY: ${{secrets.REACT_APP_KAKAO_APP_KEY}}
+      REACT_APP_SERVER_IP: ${{secrets.REACT_APP_SERVER_IP}}
     steps:
       - uses: actions/checkout@v1
 
