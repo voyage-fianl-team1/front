@@ -1,5 +1,10 @@
+
+
 name: Deploy to S3
 on:
+  push:
+    branches:
+      - master
   pull_request:
     branches:
       - master
