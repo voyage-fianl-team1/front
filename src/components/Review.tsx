@@ -79,7 +79,7 @@ const Review = (props: JoinDataProps) => {
                   >
                     <IoMdCloseCircleOutline />
                   </button>
-                  <img alt='No Image' src={imgSrc} className='w-[65px] h-[65px]' />
+                  <img alt='No Image' src={imgSrc} className='w-[65px] h-[60px]' />
                 </div>
               </>
             ) : (
