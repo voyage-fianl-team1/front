@@ -157,3 +157,10 @@ export interface JoinDataProps {
     matchDeadline: string;
   };
 }
+
+export interface UserRanking {
+  nickname: string;
+  subject: string;
+  profileUrl: string;
+  win: string;
+}

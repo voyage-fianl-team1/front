@@ -1,17 +1,33 @@
 import React from 'react';
 import UserRankingCard from './UserRankingCard';
-
-const mockData = [
-  { nickname: '킹콩맨', win: 33, subject: 'BASCKETBALL' },
-  { nickname: '마마보이', win: 23, subject: 'TENNIS' },
-  { nickname: '축구돌이', win: 14, subject: 'SCOCCER' },
-  { nickname: '헤헤오', win: 7, subject: 'SCOCCER' },
-];
+import { useQuery } from '@tanstack/react-query';
+import { apis } from '../apis';
+import { useSelector } from 'react-redux';
+import { RootState } from '../redux/store';
+import { UserRanking } from '../typings';
+import LoadingSpinner from './loadingSpinner';
 
 const UserRankingList = () => {
+  const { value: selectSubject } = useSelector((state: RootState) => state.subject);
+  const { data } = useQuery<UserRanking[]>(['allUserRankingList', selectSubject], () =>
+    apis.getAllUserRankingList('BOWLING')
+  );
+
+  if (!data) {
+    return <LoadingSpinner />;
+  }
+
+  if (!data.length) {
+    return (
+      <div className='flex flex-col gap-[12px] mb-12 text-center text-sm text-black/40'>
+        제일 먼저 경기를 완료해보세요!
+      </div>
+    );
+  }
+
   return (
     <div className='flex flex-col gap-[12px] mb-12'>
-      {mockData.map((d, idx) => (
+      {data.map((d, idx) => (
         <UserRankingCard key={idx} user={d} rank={idx + 1} />
       ))}
     </div>
