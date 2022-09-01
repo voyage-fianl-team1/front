@@ -12,7 +12,7 @@ const Review = (props: JoinDataProps) => {
   const [imgSrc, setImgSrc] = useState<string>('');
   const [file, setFile] = useState<File[]>();
   const inputRef = useRef<HTMLInputElement | null>(null);
-
+  console.log(imgSrc);
   const onUploadIamge = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     if (!e.target.files) {
       return;
@@ -45,7 +45,7 @@ const Review = (props: JoinDataProps) => {
       setFile([]);
     }
     queryClient.invalidateQueries(['reviewList']);
-    setImgSrc('/assets/images/post/basic.svg');
+    setImgSrc('');
     resetField('content');
   };
 

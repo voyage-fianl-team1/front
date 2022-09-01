@@ -14,7 +14,6 @@ const SearchMiddle = () => {
 
   const handleFocusOut = useCallback(() => {
     setIsFocus(false);
-    navigate('/');
   }, []);
 
   const handleKeyword = (e: React.KeyboardEvent<HTMLInputElement>) => {
@@ -33,7 +32,7 @@ const SearchMiddle = () => {
       <input
         type='text'
         placeholder='   제목, 내용으로 검색'
-        className='flex-1 outline-0 bg-[#FCFCFC]'
+        className='flex-1 outline-0 bg-[#FCFCFC] ml-2'
         onFocus={handleFocus}
         onBlur={handleFocusOut}
         onKeyPress={handleKeyword}

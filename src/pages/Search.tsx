@@ -61,7 +61,7 @@ const SearchMatch: FC = () => {
       <Helmet>
         <title>매치기 | 경기목록</title>
       </Helmet>
-      <section className=''>
+      <section>
         <span className='flex items-center mt-[16px] mb-[30px]'>
           <div className='flex items-center box-border py-0 px-3 absolute left-5 top-24.5 w-[75px] h-[30px] text-sm text-black bg-white rounded-full border border-matchgi-gray gap-[16px]'>
             <button className='flex flex-row items-center cursor-pointer' onClick={handleToggleSelect}>
@@ -100,7 +100,7 @@ const SearchMatch: FC = () => {
                         <div className='text-[12px] text-matchgi-gray leading-[150%] font-Noto mb-[2.5px]'>
                           {post.address}
                         </div>
-                        <div className='flex text-[10px] item-start rounded-lg w-[40px] h-[18px] bg-matchgi-lightgray justify-center p-[0.1rem] font-Noto'>
+                        <div className='flex text-[10px] srounded-lg w-[50px] h-[18px] bg-matchgi-lightgray justify-center p-[0.2rem] font-Noto'>
                           {post.subject}
                         </div>
                       </span>
