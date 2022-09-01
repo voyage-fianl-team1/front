@@ -9,7 +9,7 @@ const Review = (props: JoinDataProps) => {
   const { register, getValues, resetField } = useForm({});
   const review = props.data;
   const queryClient = useQueryClient();
-  const [imgSrc, setImgSrc] = useState<string>('/assets/images/post/basic.svg');
+  const [imgSrc, setImgSrc] = useState<string>('');
   const [file, setFile] = useState<File[]>();
   const inputRef = useRef<HTMLInputElement | null>(null);
 
@@ -29,7 +29,7 @@ const Review = (props: JoinDataProps) => {
   }, []);
 
   const handledeleteImage = useCallback(() => {
-    setImgSrc('/assets/images/post/basic.svg');
+    setImgSrc('');
     setFile([]);
   }, []);
 
@@ -70,7 +70,7 @@ const Review = (props: JoinDataProps) => {
               placeholder='댓글은 100글자 미만으로 작성 해주세요.'
               {...register('content')}
             ></textarea>
-            {imgSrc !== '/assets/images/post/basic.svg' ? (
+            {imgSrc !== '' ? (
               <>
                 <div className='absolute left-16'>
                   <button

@@ -15,6 +15,7 @@ const GetJoinData = (props: JoinDataProps) => {
   const joinData: JoinData = join?.data?.data;
   const queryClient = useQueryClient();
   const postData = props?.data;
+
   const handleStatusChange = async () => {
     try {
       await apis.updateMatchStatus(postData.postId);

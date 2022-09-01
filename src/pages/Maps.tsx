@@ -17,13 +17,13 @@ const Maps = () => {
   const navigate = useNavigate();
   const res = useQuery(['matchList'], async () => await apis.getAroundGame(nowPosition.lat, nowPosition.lng));
   const [isOpen, setIsOpen] = useState(false);
-  const outside = useRef<HTMLDivElement>(null);
   const matchData = res?.data?.data;
+  // const outside = useRef<HTMLDivElement>(null);
 
   // const handleClickModal = (e: React.MouseEvent) => {
+  //   console.log(e.target);
   //   e.preventDefault();
-  //   if (isOpen && outside.current !== e.target) {
-  //     console.log(e.target, outside.current);
+  //   if (isOpen && outside.current == e.target) {
   //     setIsOpen(false);
   //   }
   // };
@@ -85,39 +85,37 @@ const Maps = () => {
               </div>
             ))}
         </div>
-        <div className='w-full h-full'>
-          {isOpen && (
-            <div className='flex flex-row items-center justify-center'>
-              <div
-                className='fixed bottom-[56px] w-11/12 max-w-[900px] h-[136px] bg-[#FFF] z-10 rounded-[10px]
+        {isOpen && (
+          <div className='flex flex-row items-center justify-center'>
+            <div
+              className='fixed bottom-[56px] w-11/12 max-w-[900px] h-[136px] bg-[#FFF] z-10 rounded-[10px]
           border border-[#DCDDE0] shadow-[0_4px_20px_rgba(0,0,0,0.08)]'
-              >
-                <div className='flex flex-row my-[24px]'>
-                  <div className='flex flex-row justify-center items-center ml-[20px]'>
-                    <img
-                      src={overlay.imgUrl == null ? '/assets/images/post/noImage.svg' : overlay.imgUrl}
-                      alt='overlayImg'
-                      className='w-[84px] h-[84px] border border-[#DCDDE0] rounded-[10px]'
-                    />
-                  </div>
-                  <div className='flex flex-col justify-center gap-[8px] ml-[16px]'>
-                    <div className='text-[16px] font-Noto leading-[150%] text-[#38393C]'>{overlay.title}</div>
-                    <div className='text-[14px] font-Noto leading-[150%] text-[#717275]'>{overlay.address}</div>
-                    <div
-                      className='bg-[#F4F5F5] border border-[#F4F5F5] rounded-[4px] font-Noto text-[12px]
+            >
+              <div className='flex flex-row my-[24px]'>
+                <div className='flex flex-row justify-center items-center ml-[20px]'>
+                  <img
+                    src={overlay.imgUrl == null ? '/assets/images/post/noImage.svg' : overlay.imgUrl}
+                    alt='overlayImg'
+                    className='w-[84px] h-[84px] border border-[#DCDDE0] rounded-[10px]'
+                  />
+                </div>
+                <div className='flex flex-col justify-center gap-[8px] ml-[16px]'>
+                  <div className='text-[16px] font-Noto leading-[150%] text-[#38393C]'>{overlay.title}</div>
+                  <div className='text-[14px] font-Noto leading-[150%] text-[#717275]'>{overlay.address}</div>
+                  <div
+                    className='bg-[#F4F5F5] border border-[#F4F5F5] rounded-[4px] font-Noto text-[12px]
                 leading-[150%] text-[#5D5E62] w-[45px] h-[18px] text-center'
-                    >
-                      {overlay.subject}
-                    </div>
-                    <button onClick={() => navigate(`/match/${overlay.postId}`)}>
-                      <img src='/assets/images/post/right.svg' className='absolute w-[24px] h-[24px] right-3 top-14' />
-                    </button>
+                  >
+                    {overlay.subject}
                   </div>
+                  <button onClick={() => navigate(`/match/${overlay.postId}`)}>
+                    <img src='/assets/images/post/right.svg' className='absolute w-[24px] h-[24px] right-3 top-14' />
+                  </button>
                 </div>
               </div>
             </div>
-          )}
-        </div>
+          </div>
+        )}
       </Map>
     </>
   );
