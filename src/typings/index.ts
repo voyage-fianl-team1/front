@@ -91,6 +91,7 @@ export interface RecentMatch {
   content?: string;
   address?: string;
   postId: number;
+  createdAt: string;
 }
 
 export interface UserRequest {
@@ -164,4 +165,11 @@ export interface JoinDataProps {
     imgpaths: [];
     subjectValue: string;
   };
+}
+
+export interface UserRanking {
+  nickname: string;
+  subject: string;
+  profileUrl: string;
+  win: string;
 }

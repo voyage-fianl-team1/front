@@ -31,6 +31,10 @@ export const statusTable: { [key: string]: any } = {
     text: '무승부',
     color: 'bg-green-400',
   },
+  MYMATCH: {
+    text: '내 경기',
+    color: 'bg-black',
+  },
 };
 
 interface Props {

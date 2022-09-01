@@ -21,7 +21,7 @@ const Layout: FC<Props> = ({ children }) => {
   return (
     <>
       {navShow && <PageTitle />}
-      <div className='p-3 max-w-[1000px] m-auto relative overflow-hidden'>
+      <div className='px-[20px] max-w-[1000px] m-auto relative overflow-hidden'>
         <SideMenu />
         <SelectSubject />
         <SelectSort />

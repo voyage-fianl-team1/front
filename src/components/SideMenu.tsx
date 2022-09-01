@@ -61,10 +61,10 @@ const SideMenu = () => {
         </button>
       </div>
       <ul className='mt-5 divide-y-[1px] divide-black/5'>
-        <li className='menu-item ' onClick={() => handleRoute('/profile')}>
+        <li className='menu-item' onClick={() => handleRoute('/map')}>
           <div className='menu-item-inner'>
-            <img src='/assets/images/menu/user.svg' alt='user-icon' />
-            <span>마이페이지</span>
+            <img src='/assets/images/menu/map.svg' alt='marker-icon' />
+            <span>지도</span>
           </div>
           <img src='/assets/images/menu/arrow.svg' alt='arrow-icon' />
         </li>
@@ -75,10 +75,10 @@ const SideMenu = () => {
           </div>
           <img src='/assets/images/menu/arrow.svg' alt='arrow-icon' />
         </li>
-        <li className='menu-item' onClick={() => handleRoute('/map')}>
+        <li className='menu-item ' onClick={() => handleRoute('/profile')}>
           <div className='menu-item-inner'>
-            <img src='/assets/images/menu/marker.svg' alt='marker-icon' />
-            <span>지도</span>
+            <img src='/assets/images/menu/user.svg' alt='user-icon' />
+            <span>마이페이지</span>
           </div>
           <img src='/assets/images/menu/arrow.svg' alt='arrow-icon' />
         </li>
