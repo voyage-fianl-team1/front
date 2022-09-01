@@ -105,5 +105,5 @@ export const apis = {
   getRewrite: () => instance.get('/api/posts/authority'),
   getAcceptList: (postId: number) => instance.get(`/api/posts/${postId}/request/accept`),
   getAllUserRankingList: (subject = 'ALL') =>
-    instance.get(`/api/users/rank?page=1&size=5&subject=${subject}`).then((res) => res.data.content),
+    instance.get(`/api/users/rank?page=0&size=5&subject=${subject}`).then((res) => res.data.content),
 };

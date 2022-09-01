@@ -8,9 +8,9 @@ import { UserRanking } from '../typings';
 import LoadingSpinner from './loadingSpinner';
 
 const UserRankingList = () => {
-  const { value: selectSubject } = useSelector((state: RootState) => state.subject);
+  const { subject: selectSubject } = useSelector((state: RootState) => state.search);
   const { data } = useQuery<UserRanking[]>(['allUserRankingList', selectSubject], () =>
-    apis.getAllUserRankingList('BOWLING')
+    apis.getAllUserRankingList(selectSubject)
   );
 
   if (!data) {
