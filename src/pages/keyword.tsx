@@ -28,7 +28,7 @@ const Keyword: FC = () => {
   } = useInfiniteQuery(['searchData', keyword], ({ pageParam = 0 }) => fetchsearchList(pageParam), {
     getNextPageParam: (lastPage) => (!lastPage.last ? lastPage.nextPage : undefined),
   });
-
+  console.log(searchList?.pages[0].data.length);
   useEffect(() => {
     if (inView) fetchNextPage();
   }, [inView]);
@@ -36,7 +36,7 @@ const Keyword: FC = () => {
   if (!searchList) {
     return <LoadingSpinner />;
   }
-  if (searchList?.pages[0].data.length < 2) {
+  if (searchList?.pages[0].data.length < 1) {
     return <div className='text-sm text-[#38393C] my-10'>검색 결과가 없습니다.</div>;
   }
   return (
