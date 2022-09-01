@@ -9,6 +9,7 @@ import GetJoinData from '../components/GetJoinData';
 import Review from '../components/Review';
 import ReviewDetail from '../components/ReviewDetail';
 import HandleJoinEdit from '../components/HandleJoinEdit';
+import dayjs from 'dayjs';
 
 const Match: FC = () => {
   const param = useParams();
@@ -20,6 +21,19 @@ const Match: FC = () => {
   const queryClient = useQueryClient();
   const { data: res, isLoading, refetch } = useQuery(['postList', postId], async () => await apis.getPostList(postId));
   const postData: PostDataProps = res?.data;
+  const dday = () => {
+    const now = dayjs(new Date());
+    const a = dayjs(postData?.matchDeadline);
+    const c = now.diff(a, 'day');
+    if (c < 1 && a.format('YYYY-MM-DD') !== now.format('YYYY-MM-DD')) {
+      return <p className='w-[4rem] h-7 text-[#38393C]'>(D-{c + 1})</p>;
+    } else if (c < 1 && a.format('YYYY-MM-DD') === now.format('YYYY-MM-DD')) {
+      return <p className='w-[4rem] h-7 text-[#38393C]'>(D-DAY)</p>;
+    } else {
+      return <></>;
+    }
+  };
+
   const drill: JoinDataProps = {
     data: {
       owner: postData?.owner,
@@ -73,8 +87,8 @@ const Match: FC = () => {
             <p className='font-SD leading-[17px] tracking-[-0.02rem] text-[#BEBEBE]'>{postData.nickname}</p>
           </div>
           <div
-            className='flex w-full h-[22px] font-medium font-Noto
-        leading-[120%] text-[18px text-[#38393C]'
+            className={`flex w-full h-[22px] font-medium font-Noto
+        leading-[120%] text-[18px] ${postData.matchStatus === 'MATCHEND' ? ' text-[#9A9B9F]' : ' text-[#38393C]'}`}
           >
             {postData.title}
           </div>
@@ -105,7 +119,11 @@ const Match: FC = () => {
             </div>
             <div>
               <p className='w-full h-7'>{postData.subject}</p>
-              <p className='w-full h-7'>{postData.matchDeadline}</p>
+              <span className='flex flex-row'>
+                <p className='w-[100px] h-7'>{postData.matchDeadline}</p>
+                {postData.matchStatus === 'MATCHEND' ? <p className='w-[3.5rem] h-7 text-[#9A9B9F]'>(마감)</p> : <></>}
+                {dday()}
+              </span>
             </div>
             <div ref={detailRef}></div>
           </section>
@@ -114,7 +132,12 @@ const Match: FC = () => {
           <div className='w-full h-[30px] font-Noto font-medium text-[16px] leading-[120%] text-[#38393C] border border-x-0 border-t-0 border-b-matchgi-bordergray pl-[20px]'>
             경기상세
           </div>
-          <div className='flex w-full h-[236px] py-[10px] px-[12px] gap-[10px] items-start' ref={locationRef}>
+          <div
+            className={`flex w-full h-[236px] py-[10px] px-[12px] gap-[10px] items-start font-Noto ${
+              postData.matchStatus === 'MATCHEND' ? 'text-[#9A9B9F]' : 'text-[#38393C]'
+            }`}
+            ref={locationRef}
+          >
             {postData.content}
           </div>
         </div>
@@ -123,7 +146,11 @@ const Match: FC = () => {
             경기장소
           </div>
           <div className='flex flex-col w-full h-[270px] items-center p-5'>
-            <p className='w-full h-[17px] font-Noto text-[14px] font-medium leading-[120%] mb-[25px] mt-[10px] ml-[25px]'>
+            <p
+              className={`w-full h-[17px] font-Noto text-[14px] font-medium leading-[120%] mb-[25px] mt-[10px] ml-[25px] ${
+                postData.matchStatus === 'MATCHEND' ? 'text-[#9A9B9F]' : 'text-[#38393C]'
+              }`}
+            >
               {postData.address}
             </p>
             <StaticMap
