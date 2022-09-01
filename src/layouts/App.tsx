@@ -25,6 +25,7 @@ const Match = React.lazy(() => import('../pages/Match'));
 const New = React.lazy(() => import('../pages/New'));
 const Keyword = React.lazy(() => import('../pages/keyword'));
 const MatchHistory = React.lazy(() => import('../pages/MatchHistory'));
+const Searching = React.lazy(() => import('../pages/Searching'));
 
 const App = () => {
   const user = useSelector((state: RootState) => state.user);
@@ -79,6 +80,7 @@ const App = () => {
             <Route path='/new' element={<New />} />
             <Route path='/new/:id/edit' element={<New />} />
             <Route path='/keword' element={<Keyword />} />
+            <Route path='/searching' element={<Searching />} />
             <Route path='/matchHistory/:id/subject/:subject' element={<MatchHistory />} />
           </Routes>
         </Layout>

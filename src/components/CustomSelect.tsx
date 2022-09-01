@@ -19,10 +19,7 @@ const CustomSubject = () => {
         subjectShow ? '' : 'translate-y-full ease-in-out'
       }`}
     >
-      <section
-        className='flex flex-col justify-center items-center w-[100%] h-92 rounded-b-[20px] bg-white border border-[#C5C6CA]
-        drop-shadow-[0_4px_10px_rgba(0,0,0,0.08)]'
-      >
+      <section className='flex flex-col justify-center items-center w-[100%] h-92 rounded-b-[20px] bg-white border border-[#C5C6CA] drop-shadow-[0_4px_10px_rgba(0,0,0,0.08)]'>
         <button className='selectBtn' value='BASKETBALL' name='농구' onClick={handleSelectData}>
           농구
         </button>
