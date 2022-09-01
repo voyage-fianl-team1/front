@@ -19,6 +19,13 @@ const Maps = () => {
   const [isOpen, setIsOpen] = useState(false);
   const outside = useRef<HTMLDivElement>(null);
 
+  const handleClickModal = (e: React.MouseEvent) => {
+    e.preventDefault();
+    if (isOpen && outside.current !== e.target) {
+      console.log(e.target, outside.current);
+      setIsOpen(false);
+    }
+  };
   useEffect(() => {
     return () => {
       dispatch(overlayClear());
@@ -88,6 +95,7 @@ const Maps = () => {
               <div
                 className='fixed bottom-[56px] w-11/12 max-w-[900px] h-[136px] bg-[#FFF] z-10 rounded-[10px]
           border border-[#DCDDE0] shadow-[0_4px_20px_rgba(0,0,0,0.08)]'
+                onClick={handleClickModal}
               >
                 <div className='flex flex-row my-[24px]'>
                   <div className='flex flex-row justify-center items-center ml-[20px]'>
