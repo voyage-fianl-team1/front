@@ -10,7 +10,7 @@ const mockData = [
 
 const UserRankingList = () => {
   return (
-    <div className='flex flex-col gap-3 mb-12'>
+    <div className='flex flex-col gap-[12px] mb-12'>
       {mockData.map((d, idx) => (
         <UserRankingCard key={idx} user={d} rank={idx + 1} />
       ))}

@@ -4,6 +4,7 @@
 
 body{
     background-color: #FCFCFC;
+    @apply font-Noto;
 }
 
 select{
@@ -21,13 +22,14 @@ select{
   background: #ffffff;
   border: 1px solid #dcdde0;
   position: relative;
-  width: 139px;
+  max-width: 139px;
   height: 174px;
   box-shadow: 0 0 12px rgba(220, 221, 224, 0.2);
   border-radius: 10px;
   padding: 15px;
-  display: inline-block;
   flex: 0 0 169px;
+  display: flex;
+  flex-direction: column;
 }
 
 .scroll-bar-hide::-webkit-scrollbar {

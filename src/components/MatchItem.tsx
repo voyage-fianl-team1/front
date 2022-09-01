@@ -3,6 +3,7 @@ import { apis } from '../apis';
 import { useQuery } from '@tanstack/react-query';
 import { RecentMatch } from '../typings';
 import { useNavigate } from 'react-router-dom';
+import { convertDateShort } from '../util/converDate';
 
 const MatchItem = () => {
   const navigate = useNavigate();
@@ -15,13 +16,13 @@ const MatchItem = () => {
       {recentList &&
         recentList.map((v: RecentMatch, i: number) => (
           <div className='recent-match-card' key={i}>
-            <h1 className='font-semibold mb-1 truncate ...'>{v.title}</h1>
-            <h2>{v.subject}</h2>
-            <p className='mt-5 text-sm text-matchgi-gray'>{v.address}</p>
-            <div className='flex justify-between items-center mt-2'>
-              <span className='text-sm text-matchgi-gray'></span>
+            <h1 className='font-semibold text-[14px] mb-1 truncate ...'>{v.title}</h1>
+            <h2 className='text-[14px]'>{v.subject}</h2>
+            <p className='mt-[38px] text-[12px] text-matchgi-gray truncate ...'>{v.address}</p>
+            <div className='flex justify-between items-center mt-[12px]'>
+              <span className='text-sm text-matchgi-gray'>{convertDateShort(v.createdAt)}</span>
               <button
-                className='border-[1px] border-[#C5C6CA] text-sm p-1 rounded text-[#5D5E62] absolute bottom-3 right-2'
+                className='border-[1px] border-[#C5C6CA] text-sm px-[8px] py-[3px] rounded text-[#5D5E62] text-[12px] '
                 onClick={() => navigate(`/match/${v.postId}`)}
               >
                 더보기

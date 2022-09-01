@@ -9,7 +9,7 @@ const UserRankingCard: FC<Props> = ({ user, rank }) => {
   return (
     <div className='user-ranking-card flex justify-between items-center p-2'>
       <div className='flex items-center gap-2'>
-        <span className='font-bold text-xl'>{rank}</span>
+        <span className='font-bold text-xl min-w-[12px]'>{rank}</span>
         <img src='/assets/images/avatar.svg' alt='user-avatar' />
         <h2>{user.nickname}</h2>
       </div>

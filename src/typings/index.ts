@@ -91,6 +91,7 @@ export interface RecentMatch {
   content?: string;
   address?: string;
   postId: number;
+  createdAt: string;
 }
 
 export interface UserRequest {

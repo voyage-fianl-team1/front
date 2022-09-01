@@ -33,7 +33,7 @@ const SearchBar = () => {
       <input
         type='text'
         placeholder='제목, 내용으로 검색'
-        className='flex-1 outline-0'
+        className='flex-1 outline-0 placeholder:translate-y-0.5'
         onFocus={handleFocus}
         onBlur={handleFocusOut}
         onKeyPress={handleKeyword}
