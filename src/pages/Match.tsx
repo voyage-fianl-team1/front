@@ -9,6 +9,7 @@ import GetJoinData from '../components/GetJoinData';
 import Review from '../components/Review';
 import ReviewDetail from '../components/ReviewDetail';
 import HandleJoinEdit from '../components/HandleJoinEdit';
+import dayjs from 'dayjs';
 
 const Match: FC = () => {
   const param = useParams();
@@ -20,7 +21,19 @@ const Match: FC = () => {
   const queryClient = useQueryClient();
   const { data: res, isLoading, refetch } = useQuery(['postList', postId], async () => await apis.getPostList(postId));
   const postData: PostDataProps = res?.data;
-  console.log(postData?.matchStatus);
+  const dday = () => {
+    const now = dayjs(new Date());
+    const a = dayjs(postData?.matchDeadline);
+    const c = now.diff(a, 'day');
+    if (c < 1 && a.format('YYYY-MM-DD') !== now.format('YYYY-MM-DD')) {
+      return <p className='w-[4rem] h-7 text-[#38393C]'>(D-{c + 1})</p>;
+    } else if (c < 1 && a.format('YYYY-MM-DD') === now.format('YYYY-MM-DD')) {
+      return <p className='w-[4rem] h-7 text-[#38393C]'>(D-DAY)</p>;
+    } else {
+      return <></>;
+    }
+  };
+
   const drill: JoinDataProps = {
     data: {
       owner: postData?.owner,
@@ -107,8 +120,9 @@ const Match: FC = () => {
             <div>
               <p className='w-full h-7'>{postData.subject}</p>
               <span className='flex flex-row'>
-                <p className='w-2/3 h-7'>{postData.matchDeadline}</p>
+                <p className='w-[100px] h-7'>{postData.matchDeadline}</p>
                 {postData.matchStatus === 'MATCHEND' ? <p className='w-[3.5rem] h-7 text-[#9A9B9F]'>(마감)</p> : <></>}
+                {dday()}
               </span>
             </div>
             <div ref={detailRef}></div>

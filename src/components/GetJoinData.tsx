@@ -16,6 +16,15 @@ const GetJoinData = (props: JoinDataProps) => {
   const queryClient = useQueryClient();
   const postData = props?.data;
 
+  const status: ImageType = {
+    WIN: '승리',
+    LOSE: '패배',
+    DRAW: '무승부',
+    PENDING: '대기중',
+    ACCEPT: '승인',
+    REJECT: '거절',
+  };
+
   const handleStatusChange = async () => {
     try {
       await apis.updateMatchStatus(postData.postId);
@@ -153,7 +162,7 @@ const GetJoinData = (props: JoinDataProps) => {
                   <span>{value.nickname}</span>
                 </div>
                 <div className='w-[132px] h-[36px] bg-[#14308B] rounded-[4px] text-[#FFF] flex justify-center items-center mt-[36px]'>
-                  {value.status}
+                  {status[value.status]}
                 </div>
               </div>
             </>
@@ -261,7 +270,7 @@ const GetJoinData = (props: JoinDataProps) => {
                   <span>{value.nickname}</span>
                 </div>
                 <div className='box-border w-[132px] h-[36px] bg-[#14308B] rounded-[4px] text-[#FFF] flex justify-center items-center mt-[36px]'>
-                  {value.status}
+                  {status[value.status]}
                 </div>
               </div>
             </>
