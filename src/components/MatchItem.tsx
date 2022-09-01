@@ -21,7 +21,7 @@ const MatchItem = () => {
             <div className='flex justify-between items-center mt-2'>
               <span className='text-sm text-matchgi-gray'></span>
               <button
-                className='border-[1px] border-[#C5C6CA] text-sm p-1 rounded text-[#5D5E62] absolute bottom-3 right-2'
+                className='border-[1px] border-[#C5C6CA] text-sm p-1 rounded text-[#5D5E62] absolute bottom-3 right-4'
                 onClick={() => navigate(`/match/${v.postId}`)}
               >
                 더보기

@@ -25,7 +25,7 @@ const SearchBar = () => {
   };
   return (
     <div
-      className={`flex border-[1px] border-matchgi-gray h-[44px] rounded-[12px] items-center p-[5px] ${
+      className={`flex border-[1px] bg-[#FCFCFC] border-matchgi-gray h-[44px] rounded-[12px] items-center p-[5px] ${
         isFocus ? 'border-[#797CD4] border-[2px]' : ''
       }`}
     >
@@ -33,7 +33,7 @@ const SearchBar = () => {
       <input
         type='text'
         placeholder='제목, 내용으로 검색'
-        className='flex-1 outline-0'
+        className='flex-1 outline-0 bg-[#FCFCFC]'
         onFocus={handleFocus}
         onBlur={handleFocusOut}
         onKeyPress={handleKeyword}

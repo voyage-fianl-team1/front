@@ -7,8 +7,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../redux/store';
 import { toggleSortShow, toggleSelectShow, toggleClear } from '../redux/features/toggleSlice';
 import { RiArrowDownSLine } from 'react-icons/ri';
-import LoadingSpinner from '../components/loadingSpinner';
 import { Helmet } from 'react-helmet';
+import LoadingSpinner from '../components/loadingSpinner';
 
 const SearchMatch: FC = () => {
   const navigate = useNavigate();
@@ -23,6 +23,7 @@ const SearchMatch: FC = () => {
     const last = res.data.last;
     return { data, last, nextPage: pageParam + 1 };
   };
+
   const {
     data: postList,
     fetchNextPage,
@@ -88,14 +89,18 @@ const SearchMatch: FC = () => {
                   >
                     <div className='flex flex-row mb-[28px] items-center'>
                       <img
-                        src={post.imgUrl}
+                        src={post.imgUrl == null ? '/assets/images/post/noImage.svg' : post.imgUrl}
                         alt='NOIMG'
                         className='box-border rounded-lg bg-matchgi-lightgray w-16 h-16 border boder-#DCDDE0'
                       ></img>
                       <span className='flex flex-col justify-center ml-4 gap-[1px]'>
-                        <div className='text-[16px] font-normal leading-normal text-matchgi-black'>{post.title}</div>
-                        <div className='text-xs text-matchgi-gray leading-normal'>{post.address}</div>
-                        <div className='flex text-[10px] item-start rounded-lg w-[40px] h-[18px] bg-matchgi-lightgray justify-center p-[0.1rem]'>
+                        <div className='text-[16px] font-normal leading-[150%] text-matchgi-black font-Noto'>
+                          {post.title}
+                        </div>
+                        <div className='text-[12px] text-matchgi-gray leading-[150%] font-Noto mb-[2.5px]'>
+                          {post.address}
+                        </div>
+                        <div className='flex text-[10px] item-start rounded-lg w-[40px] h-[18px] bg-matchgi-lightgray justify-center p-[0.1rem] font-Noto'>
                           {post.subject}
                         </div>
                       </span>

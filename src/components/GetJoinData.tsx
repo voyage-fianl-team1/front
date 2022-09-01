@@ -79,7 +79,7 @@ const GetJoinData = (props: JoinDataProps) => {
             <>
               <div
                 key={id}
-                className='flex flex-col w-full h-[140px] justify-center items-center bg-[#F4F5F5] rounded-[10px]'
+                className='flex flex-col w-full h-[140px] justify-center items-center bg-[#F4F5F5] rounded-[10px] mb-[22px]'
               >
                 <div className='flex flex-row w-full h-[20px] items-center gap-3 ml-[16px]'>
                   <img
@@ -97,7 +97,7 @@ const GetJoinData = (props: JoinDataProps) => {
                   <button
                     type='button'
                     className={`w-[132px] h-[36px] bg-[#FFF] rounded-[4px] ] ${
-                      value.status === 'REJECT' ? 'bg-red-500 text-[#FFF]' : 'bg-[#FFF] border border-[#949B9F'
+                      value.status === 'REJECT' ? 'bg-[#14308B] text-[#FFF]' : 'bg-[#FFF] border border-[#949B9F'
                     }`}
                     value='REJECT'
                     onClick={async () => {
@@ -204,7 +204,7 @@ const GetJoinData = (props: JoinDataProps) => {
                     className={`box-border w-[82px] h-[36px] rounded-[4px] flex justify-center items-center mt-[36px]
                     ${
                       value.status === 'LOSE'
-                        ? 'bg-red-600 text-[#FFF]'
+                        ? 'bg-[#14308B] text-[#FFF]'
                         : 'bg-[#FFF] text-[#38393c] border border-[#C5C6CA]'
                     }`}
                     onClick={async () => {
@@ -217,7 +217,7 @@ const GetJoinData = (props: JoinDataProps) => {
                     className={`box-border w-[82px] h-[36px] rounded-[4px] flex justify-center items-center mt-[36px]
                      ${
                        value.status === 'DRAW'
-                         ? 'bg-yellow text-[#FFF]'
+                         ? 'bg-[#14308B] text-[#FFF]'
                          : 'bg-[#FFF] text-[#38393c] border border-[#C5C6CA]'
                      }`}
                     onClick={async () => await apis.updateTotalStatus(value.requestId, { status: 'DRAW' })}
