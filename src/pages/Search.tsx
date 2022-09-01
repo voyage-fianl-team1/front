@@ -23,6 +23,7 @@ const SearchMatch: FC = () => {
     const last = res.data.last;
     return { data, last, nextPage: pageParam + 1 };
   };
+
   const {
     data: postList,
     fetchNextPage,

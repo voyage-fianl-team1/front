@@ -20,7 +20,6 @@ const Match: FC = () => {
   const queryClient = useQueryClient();
   const { data: res, isLoading, refetch } = useQuery(['postList', postId], async () => await apis.getPostList(postId));
   const postData: PostDataProps = res?.data;
-  console.log(postData.player);
   const drill: JoinDataProps = {
     data: {
       owner: postData?.owner,
@@ -68,11 +67,7 @@ const Match: FC = () => {
         <div className='w-full h-[124px] pl-[20px] pt-[16px]'>
           <div className='flex flex-row gap-2 items-center mb-[24px]'>
             <img
-              src={
-                postData.profileImgUrl !== null
-                  ? postData.profileImgUrl
-                  : 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png'
-              }
+              src={postData.profileImgUrl !== null ? postData.profileImgUrl : '/assets/images/avatar.svg'}
               className='w-[36px] h-[36px] rounded-[100%]'
             />
             <p className='font-SD leading-[17px] tracking-[-0.02rem] text-[#BEBEBE]'>{postData.nickname}</p>
@@ -108,7 +103,6 @@ const Match: FC = () => {
               <p className='w-full h-7'>경기종목</p>
               <p className='w-full h-7'>모집마감일</p>
             </div>
-
             <div>
               <p className='w-full h-7'>{postData.subject}</p>
               <p className='w-full h-7'>{postData.matchDeadline}</p>

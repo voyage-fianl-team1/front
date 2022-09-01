@@ -44,11 +44,7 @@ const ReviewDetail = (props: JoinDataProps) => {
               <div key={id} className='flex flex-col w-full h-full'>
                 <div className='flex flex-row w-full h-[20px] items-center gap-3 ml-[16px] mt-[20px] mb-[16px]'>
                   <img
-                    src={
-                      value.profileImgUrl !== null
-                        ? value.profileImgUrl
-                        : 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png'
-                    }
+                    src={value.profileImgUrl !== null ? value.profileImgUrl : '/assets/images/avatar.svg'}
                     className='w-[24px] h-[24px] rounded-[100%]'
                   />
                   <div className='flex flex-col mt-1'>

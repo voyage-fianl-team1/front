@@ -245,7 +245,7 @@ const Newpost: FC = () => {
       <section className='flex flex-col bg-[#FCFCFC] items-center'>
         <p className='text-[12px] w-[100%] text-matchgi-black mb-[12px]'>경기위치</p>
         <div
-          className='box-border `py-[16px] px-[10px] w-[100%] h-[48px] bg-[#FFFFFF] rounded-[10px] border border-matchigi-bordergray text-matchgi-black cursor-pointer mb-[36px]'
+          className='box-border py-0.5 px-[10px] w-[100%] h-[48px] bg-[#FFFFFF] rounded-[10px] border border-matchigi-bordergray text-matchgi-black cursor-pointer mb-[36px]'
           onClick={handleToggleModal}
         >
           <p className='mt-2.5 flex flex-row'>
