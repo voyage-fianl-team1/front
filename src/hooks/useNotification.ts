@@ -3,8 +3,7 @@ import SockJS from 'sockjs-client';
 import { CompatClient, Stomp } from '@stomp/stompjs';
 import { StompSubscription } from '@stomp/stompjs/src/stomp-subscription';
 import { Chat, Notification } from '../typings';
-
-const socketServerURL = 'http://52.78.157.63/ws-stomp';
+import { SERVER_STOMP_URL } from '../apis';
 
 export function useNotification(userId: number | string | undefined, callback?: (body: any) => void) {
   const socketRef = useRef<WebSocket | null>(null);
@@ -14,7 +13,8 @@ export function useNotification(userId: number | string | undefined, callback?: 
   const [notifications, setNotifications] = useState<Notification[]>([]);
 
   useEffect(() => {
-    socketRef.current = new SockJS(socketServerURL);
+    if (!SERVER_STOMP_URL) return;
+    socketRef.current = new SockJS(SERVER_STOMP_URL);
     stompClientRef.current = Stomp.over(socketRef.current);
     stompClientRef.current.debug = () => {
       return;

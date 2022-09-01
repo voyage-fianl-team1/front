@@ -60,7 +60,7 @@ const ReviewDetail = (props: JoinDataProps) => {
                     <img
                       src={value.imgUrlList[0]}
                       alt='reviewImage'
-                      className='w-[160px] h-[96px] mb-[20px] ml-[16px]'
+                      className='w-[160px] h-[96px] mb-[20px] ml-[16px] rounded-[4px]'
                     />
                   ) : (
                     ''

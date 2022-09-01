@@ -1,7 +1,8 @@
 import axios from 'axios';
-import { PostUpload, TotalStatus, UserInfo, UserLogin, UserSignUp, ReviewData } from '../typings';
+import { PostUpload, TotalStatus, UserLogin, UserSignUp, ReviewData } from '../typings';
 
-const SERVER_URL = 'http://52.78.157.63';
+export const SERVER_URL = process.env.REACT_APP_SERVER_URL;
+export const SERVER_STOMP_URL = process.env.REACT_APP_SERVER_STOMP_URL;
 
 export const instance = axios.create({
   withCredentials: true,
