@@ -29,7 +29,7 @@ const UserInfoDisplay = () => {
   };
 
   return (
-    <div className='flex items-center justify-start w-[100%] gap-3'>
+    <div className='flex items-center justify-start w-[100%] gap-3 mt-3'>
       <div className='w-[72px] h-[72px]'>
         <input type='file' className='hidden' ref={imageRef} onChange={handleChange} />
         <MdChangeCircle

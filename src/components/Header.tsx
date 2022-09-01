@@ -60,7 +60,7 @@ const Header = () => {
   }, []);
 
   return (
-    <header className='flex justify-between pt-2 pb-4'>
+    <header className='flex justify-between pt-4 pb-4'>
       <h1 className='text-2xl font-bold text-[#082555]'>매치기</h1>
       <ul className='flex gap-4 relative'>
         <li className='cursor-pointer' onClick={toggleNotification}>
@@ -70,11 +70,13 @@ const Header = () => {
           <img src='/assets/images/hamberger.svg' alt='menu-icon' />
         </li>
         {notificationShow && (
-          <ul className='absolute bottom-[-300px] right-10 w-[300px] bg-white h-[300px] flex flex-col gap-2 rounded overflow-auto'>
+          <ul className='absolute bottom-[-300px] right-10 w-[300px] bg-white h-[300px] flex flex-col gap-2 rounded overflow-auto z-[999]'>
             {notifications.map((n) => (
               <li
                 key={n.id}
-                className={`rounded bg-gray-100 p-2 cursor-pointer ${n.isread ? '!text-black/20' : ''}`}
+                className={`rounded p-2 border-b-[1px] border-black/10 cursor-pointer ${
+                  n.isread ? '!text-black/20' : ''
+                }`}
                 onClick={() => handleClick(n.id, n.postId)}
               >
                 <span>{n.content}</span>
