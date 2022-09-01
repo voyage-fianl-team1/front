@@ -21,18 +21,6 @@ const Match: FC = () => {
   const queryClient = useQueryClient();
   const { data: res, isLoading, refetch } = useQuery(['postList', postId], async () => await apis.getPostList(postId));
   const postData: PostDataProps = res?.data;
-  const dday = () => {
-    const now = dayjs(new Date());
-    const a = dayjs(postData?.matchDeadline);
-    const c = now.diff(a, 'day');
-    if (c < 1 && a.format('YYYY-MM-DD') !== now.format('YYYY-MM-DD')) {
-      return <p className='w-[4rem] h-7 text-[#38393C]'>(D-{c + 1})</p>;
-    } else if (c < 1 && a.format('YYYY-MM-DD') === now.format('YYYY-MM-DD')) {
-      return <p className='w-[4rem] h-7 text-[#38393C]'>(D-DAY)</p>;
-    } else {
-      return <></>;
-    }
-  };
 
   const drill: JoinDataProps = {
     data: {
@@ -52,6 +40,22 @@ const Match: FC = () => {
       subject: postData?.subject,
       title: postData?.title,
     },
+  };
+  const dday = () => {
+    const now = dayjs(new Date());
+    const a = dayjs(postData?.matchDeadline);
+    const c = now.diff(a, 'day');
+    if (c < 1 && a.format('YYYY-MM-DD') !== now.format('YYYY-MM-DD')) {
+      return <p className='w-[4rem] h-7 text-[#38393C]'>(D-{c + 1})</p>;
+    } else if (c < 1 && a.format('YYYY-MM-DD') === now.format('YYYY-MM-DD')) {
+      return <p className='w-[4rem] h-7 text-[#38393C]'>(D-DAY)</p>;
+    } else {
+      return <></>;
+    }
+  };
+
+  const changeData = (data: string) => {
+    return dayjs(data).format('YYYY.MM.DD.');
   };
 
   const handleMoveScroll = () => {
@@ -95,7 +99,7 @@ const Match: FC = () => {
           <div ref={matchRef}></div>
         </div>
         <div className='flex flex-row w-full h-[29px] justify-center items-center gap-[40px]'>
-          <button className='detail-btn' onClick={handleMoveScroll}>
+          <button className='detail-btn' onClick={handleMoveScroll} autoFocus>
             경기정보
           </button>
           <button className='detail-btn' onClick={handleMoveScroll2}>
@@ -108,7 +112,10 @@ const Match: FC = () => {
             댓글
           </button>
         </div>
-        <div className='w-full h-[199px] bg-[#F4F5F5] flex flex-col justify-center items-center mb-[28px]'>
+        <div
+          className='w-full h-[199px] bg-[#F4F5F5] flex flex-col justify-center items-center mb-[28px] border-t-[#EDEDED] border
+        border-x-0 border-b-0'
+        >
           <div className='w-full font-Noto leading-[120%] text-[#000] mb-[13px] font-medium text-[16px] pl-[20px]'>
             경기정보
           </div>
@@ -120,7 +127,7 @@ const Match: FC = () => {
             <div>
               <p className='w-full h-7'>{postData.subject}</p>
               <span className='flex flex-row'>
-                <p className='w-[100px] h-7'>{postData.matchDeadline}</p>
+                <p className='w-[85px] h-7'>{changeData(postData.matchDeadline)}</p>
                 {postData.matchStatus === 'MATCHEND' ? <p className='w-[3.5rem] h-7 text-[#9A9B9F]'>(마감)</p> : <></>}
                 {dday()}
               </span>
