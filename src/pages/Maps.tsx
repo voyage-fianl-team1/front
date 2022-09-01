@@ -1,5 +1,5 @@
 import React, { useRef, useState, useEffect } from 'react';
-import { Map, ZoomControl, MapMarker, CustomOverlayMap } from 'react-kakao-maps-sdk';
+import { Map, ZoomControl, MapMarker } from 'react-kakao-maps-sdk';
 import { useQuery } from '@tanstack/react-query';
 import { apis } from '../apis';
 import { useNavigate } from 'react-router-dom';
@@ -7,7 +7,6 @@ import { overlayAction, overlayClear, OverlayState } from '../redux/features/ove
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../redux/store';
 import { ImageType } from '../typings';
-import { IoMdClose } from 'react-icons/io';
 import { Helmet } from 'react-helmet';
 
 const Maps = () => {
@@ -18,6 +17,16 @@ const Maps = () => {
   const navigate = useNavigate();
   const res = useQuery(['matchList'], async () => await apis.getAroundGame(nowPosition.lat, nowPosition.lng));
   const [isOpen, setIsOpen] = useState(false);
+  const matchData = res?.data?.data;
+  // const outside = useRef<HTMLDivElement>(null);
+
+  // const handleClickModal = (e: React.MouseEvent) => {
+  //   console.log(e.target);
+  //   e.preventDefault();
+  //   if (isOpen && outside.current == e.target) {
+  //     setIsOpen(false);
+  //   }
+  // };
 
   useEffect(() => {
     return () => {
@@ -34,11 +43,16 @@ const Maps = () => {
     테니스: 'https://velog.velcdn.com/images/blaze096/post/f28b1561-f059-4fe9-b7f7-2696aa0c4f86/image.png',
     당구: 'https://velog.velcdn.com/images/blaze096/post/511632d1-23d4-4194-8b75-256fdf33f7c0/image.png',
   };
-
-  const MatchMarker = () => {
-    if (res.data) {
-      const matchData = res.data.data;
-      return (
+  if (res.isLoading) {
+    return <></>;
+  }
+  return (
+    <>
+      <Helmet>
+        <title>매치기 | 근처찾기</title>
+      </Helmet>
+      <Map center={{ lat: nowPosition.lat, lng: nowPosition.lng }} className='w-full h-screen' level={3} ref={mapRef}>
+        <ZoomControl position={window.kakao.maps.ControlPosition.TOPRRIGHT} />
         <div>
           {matchData &&
             matchData.map((v: OverlayState, i: number) => (
@@ -71,51 +85,37 @@ const Maps = () => {
               </div>
             ))}
         </div>
-      );
-    }
-  };
-
-  const CustomOverlay = () => {
-    if (isOpen) {
-      return (
-        <section className='w-56 h-56 bg-white rounded-xl border border-matchgi-lightgray'>
-          <div className='text-right mr-1'>
-            <button className='text-sm' onClick={() => setIsOpen(false)}>
-              <IoMdClose />
-            </button>
-          </div>
-          <img src={overlay.imgUrl} alt='' className='w-full h-[100px] bg-slate-400'></img>
-          <span className='flex flex-col'>
-            <div className='text-sm'>{overlay.title}</div>
-            <div className='text-sm'>{overlay.subject}</div>
-            <div className='text-sm'>{overlay.address}</div>
-            <button onClick={() => navigate(`/match/${overlay.postId}`)}>GO</button>
-          </span>
-          <span className='flex flex-row justify-center'>
-            <div className='w-16 overflow-hidden inline-block'>
-              <div className='h-11 w-11 bg-white -rotate-45 transform origin-top-left'></div>
+        {isOpen && (
+          <div className='flex flex-row items-center justify-center'>
+            <div
+              className='fixed bottom-[56px] w-11/12 max-w-[900px] h-[136px] bg-[#FFF] z-10 rounded-[10px]
+          border border-[#DCDDE0] shadow-[0_4px_20px_rgba(0,0,0,0.08)]'
+            >
+              <div className='flex flex-row my-[24px]'>
+                <div className='flex flex-row justify-center items-center ml-[20px]'>
+                  <img
+                    src={overlay.imgUrl == null ? '/assets/images/post/noImage.svg' : overlay.imgUrl}
+                    alt='overlayImg'
+                    className='w-[84px] h-[84px] border border-[#DCDDE0] rounded-[10px]'
+                  />
+                </div>
+                <div className='flex flex-col justify-center gap-[8px] ml-[16px]'>
+                  <div className='text-[16px] font-Noto leading-[150%] text-[#38393C]'>{overlay.title}</div>
+                  <div className='text-[14px] font-Noto leading-[150%] text-[#717275]'>{overlay.address}</div>
+                  <div
+                    className='bg-[#F4F5F5] border border-[#F4F5F5] rounded-[4px] font-Noto text-[12px]
+                leading-[150%] text-[#5D5E62] w-[45px] h-[18px] text-center'
+                  >
+                    {overlay.subject}
+                  </div>
+                  <button onClick={() => navigate(`/match/${overlay.postId}`)}>
+                    <img src='/assets/images/post/right.svg' className='absolute w-[24px] h-[24px] right-3 top-14' />
+                  </button>
+                </div>
+              </div>
             </div>
-          </span>
-        </section>
-      );
-    }
-  };
-  return (
-    <>
-      <Helmet>
-        <title>매치기 | 근처찾기</title>
-      </Helmet>
-      <Map
-        center={{ lat: nowPosition.lat, lng: nowPosition.lng }}
-        className='relative w-full h-screen'
-        level={3}
-        ref={mapRef}
-      >
-        <ZoomControl position={window.kakao.maps.ControlPosition.TOPRRIGHT} />
-        <CustomOverlayMap position={{ lat: overlay.lat, lng: overlay.lng }} xAnchor={0.5} yAnchor={1.1}>
-          {MatchMarker()}
-          {CustomOverlay()}
-        </CustomOverlayMap>
+          </div>
+        )}
       </Map>
     </>
   );

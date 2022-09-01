@@ -2,16 +2,17 @@
 @tailwind components;
 @tailwind utilities;
 
+
 body{
     background-color: #FCFCFC;
     @apply font-Noto;
 }
 
-select{
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    appearance: none;
-    background: #fff url('../public/assets/images/arrow.svg') no-repeat 98% center;
+select {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  background: #fff url('../public/assets/images/arrow.svg') no-repeat 98% center;
 }
 
 .red-title {
@@ -168,18 +169,27 @@ select{
   @apply h-[1px] w-[100%] bg-gray-500 my-10;
 }
 
+.divider {
+  @apply h-[1px] w-[100%] bg-gray-500 my-10;
+}
+
+.match-box {
+  background: #ffffff;
+  border: 1px solid #dcdde0;
+  box-shadow: 0 0 16px rgba(0, 0, 0, 0.04);
+  border-radius: 10px;
+}
+
+/* detail page */
+
 .detail-btn {
   @apply w-[58px] h-[29px] text-[#9A9B9F] pb-[10px] border border-x-0 border-t-0 border-b-[#FCFCFC] border-b-[3px]
     focus:text-[#38393C] focus:font-semibold focus:border focus:border-b-[#14308B] focus:border-b-[3px] focus:border-x-0 focus:border-t-0;
 }
 
-.divider{
-    @apply h-[1px] w-[100%] bg-gray-500 my-10;
-}
+/* New page */
 
-.match-box{
-    background: #FFFFFF;
-    border: 1px solid #DCDDE0;
-    box-shadow: 0 0 16px rgba(0, 0, 0, 0.04);
-    border-radius: 10px;
+.selectBtn {
+  @apply flex flex-col justify-center pl-[16px] w-full h-[44px] border border-x-0 border-t-0
+  focus:bg-matchgi-bordergray;
 }
