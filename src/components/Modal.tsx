@@ -1,25 +1,33 @@
-import React, { PropsWithChildren } from 'react';
+import React, { PropsWithChildren, useRef } from 'react';
+import { useDispatch } from 'react-redux';
+import { toggleClear } from '../redux/features/toggleSlice';
 import styled from 'styled-components';
 
 interface ModalDefaultType {
   onClickToggleModal: () => void;
 }
 
-function Modal({ onClickToggleModal, children }: PropsWithChildren<ModalDefaultType>) {
+const Modal = ({ onClickToggleModal, children }: PropsWithChildren<ModalDefaultType>) => {
+  const outside = useRef<HTMLDivElement>(null);
+  const dispatch = useDispatch();
+  const handleModal = (e: React.MouseEvent) => {
+    e.preventDefault();
+    if (onClickToggleModal) {
+      onClickToggleModal();
+    }
+    if (outside.current !== e.target) {
+      dispatch(toggleClear());
+    }
+  };
   return (
-    <div className='w-[100%] flex flex-col items-center justify-center'>
-      <DialogBox className=' w-[100%] h-[448px]'>{children}</DialogBox>
-      <Backdrop
-        onClick={(e: React.MouseEvent) => {
-          e.preventDefault();
-          if (onClickToggleModal) {
-            onClickToggleModal();
-          }
-        }}
-      />
+    <div ref={outside}>
+      <div className='w-[100%] flex flex-col items-center justify-center'>
+        <DialogBox className=' w-[100%] h-[448px]'>{children}</DialogBox>
+        <Backdrop onClick={handleModal} />
+      </div>
     </div>
   );
-}
+};
 
 const DialogBox = styled.dialog`
   display: flex;

@@ -15,67 +15,34 @@ const CustomSubject = () => {
 
   return (
     <section
-      className={`absolute bottom-[263px] left-0 right-0 w-[100%] max-w-[1000px] m-auto transition-all z-50 p-3 ${
-        subjectShow ? '' : 'translate-y-full'
+      className={`absolute bottom-[258px] left-0 right-0 w-[100%] max-w-[1000px] m-auto transition-all z-50 p-3 ${
+        subjectShow ? '' : 'translate-y-full ease-in-out'
       }`}
     >
-      <section className='flex flex-col justify-center items-center w-[100%] h-92 rounded-b-[20px] bg-white border'>
-        <button
-          className='flex flex-col justify-center items-center w-full h-[44px] border border-x-0 border-t-0
-            focus:bg-matchgi-bordergray'
-          value='BASKETBALL'
-          name='농구'
-          onClick={handleSelectData}
-        >
+      <section
+        className='flex flex-col justify-center items-center w-[100%] h-92 rounded-b-[20px] bg-white border border-[#C5C6CA]
+        drop-shadow-[0_4px_10px_rgba(0,0,0,0.08)]'
+      >
+        <button className='selectBtn' value='BASKETBALL' name='농구' onClick={handleSelectData}>
           농구
         </button>
-        <button
-          className='flex flex-col justify-center items-center w-full h-[44px] border border-x-0 border-t-0
-            focus:bg-matchgi-bordergray'
-          value='BILLIARDS'
-          name='당구'
-          onClick={handleSelectData}
-        >
+        <button className='selectBtn' value='BILLIARDS' name='당구' onClick={handleSelectData}>
           당구
         </button>
-        <button
-          className='flex flex-col justify-center items-center w-full h-[44px] border border-x-0 border-t-0
-            focus:bg-matchgi-bordergray'
-          value='BADMINTON'
-          name='배드민턴'
-          onClick={handleSelectData}
-        >
+        <button className='selectBtn' value='BADMINTON' name='배드민턴' onClick={handleSelectData}>
           배드민턴
         </button>
-        <button
-          className='flex flex-col justify-center items-center w-full h-[44px] border border-x-0 border-t-0
-            focus:bg-matchgi-bordergray'
-          value='BOWLING'
-          name='볼링'
-          onClick={handleSelectData}
-        >
+        <button className='selectBtn' value='BOWLING' name='볼링' onClick={handleSelectData}>
           볼링
         </button>
-        <button
-          className='flex flex-col justify-center items-center w-full h-[44px] border border-x-0 border-t-0
-            focus:bg-matchgi-bordergray'
-          value='TENNIS'
-          name='테니스'
-          onClick={handleSelectData}
-        >
+        <button className='selectBtn' value='TENNIS' name='테니스' onClick={handleSelectData}>
           테니스
         </button>
-        <button
-          className='flex flex-col justify-center items-center w-full h-[44px] border border-x-0 border-t-0
-            focus:bg-matchgi-bordergray'
-          value='SOCCER'
-          name='축구'
-          onClick={handleSelectData}
-        >
+        <button className='selectBtn' value='SOCCER' name='축구' onClick={handleSelectData}>
           축구
         </button>
         <button
-          className='flex flex-col justify-center items-center w-full h-[44px] border-x-none rounded-b-[20px]
+          className='flex flex-col justify-center pl-[16px] w-full h-[44px] border-x-none rounded-b-[20px]
             focus:bg-matchgi-bordergray'
           value='ETC'
           name='기타'

@@ -44,14 +44,10 @@ const ReviewDetail = (props: JoinDataProps) => {
               <div key={id} className='flex flex-col w-full h-full'>
                 <div className='flex flex-row w-full h-[20px] items-center gap-3 ml-[16px] mt-[20px] mb-[16px]'>
                   <img
-                    src={
-                      value.profileImgUrl !== null
-                        ? value.profileImgUrl
-                        : 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png'
-                    }
+                    src={value.profileImgUrl !== null ? value.profileImgUrl : '/assets/images/avatar.svg'}
                     className='w-[24px] h-[24px] rounded-[100%]'
                   />
-                  <div className='flex flex-col mt-1'>
+                  <div className='flex flex-col mt-0.5'>
                     <span className='text-[12px] text-[#717275] leading-[120%]'>{value.nickname}</span>
                     <span className='text-[12px] text-[#717275] leading-[120%]'>{changeData(value.createdAt)}</span>
                   </div>
@@ -61,7 +57,11 @@ const ReviewDetail = (props: JoinDataProps) => {
                 </div>
                 <div>
                   {value.imgUrlList.length >= 1 ? (
-                    <img src={value.imgUrlList[0]} alt='reviewImage' className='w-[50px] mb-[20px] ml-[16px]' />
+                    <img
+                      src={value.imgUrlList[0]}
+                      alt='reviewImage'
+                      className='w-[160px] h-[96px] mb-[20px] ml-[16px]'
+                    />
                   ) : (
                     ''
                   )}
