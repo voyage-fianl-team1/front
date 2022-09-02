@@ -64,7 +64,7 @@ const Keyword: FC = () => {
                     <span className='flex flex-col justify-center ml-4 gap-[1px]'>
                       <div className='text-[16px] font-normal leading-normal text-matchgi-black'>{post.title}</div>
                       <div className='text-xs text-matchgi-gray leading-normal'>주소</div>
-                      <div className='flex text-[10px] item-start rounded-lg w-[40px] h-[18px] bg-matchgi-lightgray justify-center p-[0.1rem]'>
+                      <div className='flex text-[10px] item-start rounded-lg w-[50px] h-[18px] bg-matchgi-lightgray justify-center p-[0.1rem]'>
                         {post.subject}
                       </div>
                     </span>

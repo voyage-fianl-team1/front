@@ -25,6 +25,8 @@ const PageTitle = () => {
   const handleRouteBack = useCallback(() => {
     if (location.pathname === '/search' || isKakaoFirstLogin) {
       navigate('/');
+    } else if (location.pathname === '/keword') {
+      navigate('/');
     } else {
       navigate(-1);
     }
