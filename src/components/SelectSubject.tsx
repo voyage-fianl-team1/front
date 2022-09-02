@@ -17,10 +17,10 @@ const SelectSubject = () => {
     setSubject(e.currentTarget.value);
   };
 
-  const handleSendData = useCallback(() => {
+  const handleSendData = () => {
     dispatch(subjectSearchShow({ subject: subject }));
     dispatch(toggleSelectShow());
-  }, []);
+  };
 
   return (
     <section
@@ -36,74 +36,34 @@ const SelectSubject = () => {
           </button>
         </div>
         <span className='flex flex-row justify-center items-center gap-[11px] mb-[12px]'>
-          <button
-            className='flex flex-col justify-center items-center w-[162px] h-[44px] border border-matchgi-bordergray rounded-[2px]
-            focus:bg-matchgi-bordergray'
-            value='ALL'
-            onClick={handleSelectData}
-          >
+          <button className='subjectSelect' value='ALL' onClick={handleSelectData}>
             전체
           </button>
-          <button
-            className='flex flex-col justify-center items-center w-[162px] h-[44px] border border-matchgi-bordergray rounded-[2px]
-            focus:bg-matchgi-bordergray'
-            value='BASKETBALL'
-            onClick={handleSelectData}
-          >
+          <button className='subjectSelect' value='BASKETBALL' onClick={handleSelectData}>
             농구
           </button>
         </span>
         <span className='flex flex-row justify-center items-center gap-[11px] mb-[12px]'>
-          <button
-            className='flex flex-col justify-center items-center w-[162px] h-[44px] border border-matchgi-bordergray rounded-[2px]
-            focus:bg-matchgi-bordergray'
-            value='BILLIARDS'
-            onClick={handleSelectData}
-          >
+          <button className='subjectSelect' value='BILLIARDS' onClick={handleSelectData}>
             당구
           </button>
-          <button
-            className='flex flex-col justify-center items-center w-[162px] h-[44px] border border-matchgi-bordergray rounded-[2px]
-            focus:bg-matchgi-bordergray'
-            value='BADMINTON'
-            onClick={handleSelectData}
-          >
+          <button className='subjectSelect' value='BADMINTON' onClick={handleSelectData}>
             배드민턴
           </button>
         </span>
         <span className='flex flex-row justify-center items-center gap-[11px] mb-[12px]'>
-          <button
-            className='flex flex-col justify-center items-center w-[162px] h-[44px] border border-matchgi-bordergray rounded-[2px]
-            focus:bg-matchgi-bordergray'
-            value='BOWLING'
-            onClick={handleSelectData}
-          >
+          <button className='subjectSelect' value='BOWLING' onClick={handleSelectData}>
             볼링
           </button>
-          <button
-            className='flex flex-col justify-center items-center w-[162px] h-[44px] border border-matchgi-bordergray rounded-[2px]
-            focus:bg-matchgi-bordergray'
-            value='TENNIS'
-            onClick={handleSelectData}
-          >
+          <button className='subjectSelect' value='TENNIS' onClick={handleSelectData}>
             테니스
           </button>
         </span>
         <span className='flex flex-row justify-center items-center gap-[11px] mb-[44px]'>
-          <button
-            className='flex flex-col justify-center items-center w-[162px] h-[44px] border border-matchgi-bordergray rounded-[2px]
-            focus:bg-matchgi-bordergray'
-            value='SOCCER'
-            onClick={handleSelectData}
-          >
+          <button className='subjectSelect' value='SOCCER' onClick={handleSelectData}>
             축구
           </button>
-          <button
-            className='flex flex-col justify-center items-center w-[162px] h-[44px] border border-matchgi-bordergray rounded-[2px]
-            focus:bg-matchgi-bordergray'
-            value='ETC'
-            onClick={handleSelectData}
-          >
+          <button className='subjectSelect' value='ETC' onClick={handleSelectData}>
             기타
           </button>
         </span>

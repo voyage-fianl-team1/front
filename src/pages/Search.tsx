@@ -21,7 +21,7 @@ const SearchMatch: FC = () => {
   const subject = useSelector((state: RootState) => state.search.subject);
   const categoryName = useMemo(() => categories.find((c) => c.value === subject), [subject]);
   const sortName = useMemo(() => sortCategories.find((c) => c.value === sort), [sort]);
-  console.log(sort);
+
   const fetchPostList = async (pageParam: number) => {
     const res = await apis.getMainPostList(pageParam, subject, sort);
     const data = res.data.content;

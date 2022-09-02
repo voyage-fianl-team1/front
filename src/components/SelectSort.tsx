@@ -19,10 +19,10 @@ const SelectSort = () => {
     setSort(e.currentTarget.value);
   };
 
-  const handleSendData = useCallback(() => {
+  const handleSendData = () => {
     dispatch(sortSearchShow({ sort: sort }));
     dispatch(toggleSortShow());
-  }, []);
+  };
 
   return (
     <section
