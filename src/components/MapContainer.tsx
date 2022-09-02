@@ -30,10 +30,10 @@ const MapContainer = () => {
     geocoder.coord2Address(coord.getLng(), coord.getLat(), callback);
   };
 
-  const handleSendAddress = useCallback(() => {
+  const handleSendAddress = () => {
     dispatch(addressAction({ address: address, lat: position.lat, lng: position.lng }));
     dispatch(toggleModalShow());
-  }, []);
+  };
 
   const handleToggleModal = useCallback(() => {
     dispatch(toggleModalShow());

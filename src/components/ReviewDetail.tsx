@@ -53,7 +53,7 @@ const ReviewDetail = (props: JoinDataProps) => {
                   </div>
                 </div>
                 <div className='w-full ml-[16px] text-[#38393C] text-[14px] leading-[120%] font-Noto mb-[16px]'>
-                  {value.content}
+                  <pre className='w-full whitespace-pre-wrap'>{value.content}</pre>
                 </div>
                 <div>
                   {value.imgUrlList.length >= 1 ? (

@@ -64,7 +64,7 @@ const Review = (props: JoinDataProps) => {
           <div className='w-full h-[149px] border border-matchgi-gray rounded-[10px] resize-none p-[16px] text-[14px] leading-[150%]'>
             <textarea
               className='w-full h-[60px] rounded-[10px] resize-none p-[16px] text-[14px] leading-[150%]
-            text-[#4A4B4E] tracking-[-0.04em] font-Noto bg-[#FCFCFC]'
+            text-[#4A4B4E] tracking-[-0.04em] font-Noto bg-[#FCFCFC] whitespace-pre-wrap'
               minLength={2}
               maxLength={100}
               placeholder='댓글은 100글자 미만으로 작성 해주세요.'

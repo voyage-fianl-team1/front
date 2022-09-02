@@ -11,10 +11,10 @@ const Calendars = () => {
   const [value, onChange] = useState(new Date());
   const dispatch = useDispatch();
 
-  const handleCalendar = useCallback(() => {
+  const handleCalendar = () => {
     dispatch(calendarAction({ date: dayjs(value).format('YYYY-MM-DD') }));
     dispatch(toggleCalendarShow());
-  }, []);
+  };
 
   const handleToggleModal = useCallback(() => {
     dispatch(toggleModal2Show());
