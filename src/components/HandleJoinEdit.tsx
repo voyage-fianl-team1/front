@@ -72,9 +72,9 @@ const HandleJoinEdit = (props: JoinDataProps) => {
     );
   } else if (postData.owner === 1 && nowDate > postData.matchDeadline === true) {
     return <></>;
-  } else if (postData.owner === -1 && postData.player === -1) {
-    return <></>;
   } else if (postData.owner === -1 && postData.player === 1) {
+    return <></>;
+  } else if (postData.owner === -1 && postData.player === -1) {
     return (
       <button
         className='w-[100%] h-[48px] border border-[#FCFCFC] rounded-[4px] bg-[#FCFCFC] text-[#FCFCFC] cursor-pointer mb-[36px]'

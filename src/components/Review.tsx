@@ -12,7 +12,6 @@ const Review = (props: JoinDataProps) => {
   const [imgSrc, setImgSrc] = useState<string>('');
   const [file, setFile] = useState<File[]>();
   const inputRef = useRef<HTMLInputElement | null>(null);
-
   const onUploadIamge = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     if (!e.target.files) {
       return;
@@ -45,7 +44,7 @@ const Review = (props: JoinDataProps) => {
       setFile([]);
     }
     queryClient.invalidateQueries(['reviewList']);
-    setImgSrc('/assets/images/post/basic.svg');
+    setImgSrc('');
     resetField('content');
   };
 
@@ -91,12 +90,12 @@ const Review = (props: JoinDataProps) => {
                 <img src='/assets/images/post/reviewImage.svg' alt='reviewImage' />
               </button>
               <button
-                className='border w-[52px] h-[27px] rounded-[4px] bg-[#14308B] text-[#FFF] p-0.25 text-[14px] leading-[0.07rem] tracking-[-0.04rem]
-          font-Noto py-[5px] px-[13px] gap-[10px]
+                className='flex justify-center items-center border w-[52px] h-[27px] rounded-[4px] bg-[#14308B] text-[#FFF] p-0.25 text-[14px] leading-[0.07rem] tracking-[-0.04rem]
+          font-Noto
           '
                 onClick={handleReviewUpload}
               >
-                입력
+                <p>입력</p>
               </button>
             </div>
           </div>

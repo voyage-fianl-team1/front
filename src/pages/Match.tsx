@@ -46,9 +46,9 @@ const Match: FC = () => {
     const a = dayjs(postData?.matchDeadline);
     const c = now.diff(a, 'day');
     if (c < 1 && a.format('YYYY-MM-DD') !== now.format('YYYY-MM-DD')) {
-      return <p className='w-[4rem] h-7 text-[#38393C]'>(D-{c + 1})</p>;
+      return <p className='w-[5rem] h-7 text-[#38393C]'>(D-{c + 1})</p>;
     } else if (c < 1 && a.format('YYYY-MM-DD') === now.format('YYYY-MM-DD')) {
-      return <p className='w-[4rem] h-7 text-[#38393C]'>(D-DAY)</p>;
+      return <p className='w-[5rem] h-7 text-[#38393C]'>(D-DAY)</p>;
     } else {
       return <></>;
     }
@@ -98,7 +98,7 @@ const Match: FC = () => {
           </div>
           <div ref={matchRef}></div>
         </div>
-        <div className='flex flex-row w-full h-[29px] justify-center items-center gap-[40px]'>
+        <div className='flex flex-row w-full h-[29px] justify-center items-center gap-[25px]'>
           <button className='detail-btn' onClick={handleMoveScroll} autoFocus>
             경기정보
           </button>
@@ -126,10 +126,13 @@ const Match: FC = () => {
             </div>
             <div>
               <p className='w-full h-7'>{postData.subject}</p>
-              <span className='flex flex-row'>
+              <span className='flex flex-row gap-4'>
                 <p className='w-[85px] h-7'>{changeData(postData.matchDeadline)}</p>
-                {postData.matchStatus === 'MATCHEND' ? <p className='w-[3.5rem] h-7 text-[#9A9B9F]'>(마감)</p> : <></>}
-                {dday()}
+                {postData.matchStatus === 'MATCHEND' ? (
+                  <p className='w-[3.5rem] h-7 text-[#9A9B9F]'>(마감)</p>
+                ) : (
+                  <p className='w-[50px]'>{dday()}</p>
+                )}
               </span>
             </div>
             <div ref={detailRef}></div>

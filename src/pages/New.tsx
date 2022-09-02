@@ -213,14 +213,15 @@ const Newpost: FC = () => {
         text-matchgi-black cursor-pointer mb-[36px] ${
           subjectShow ? 'rounded-b-none border-[#C5C6CA] drop-shadow-[0_4px_10px_-10px_rgba(0,0,0,0.08)]' : ''
         }`}
+          onClick={handleToggleSubject}
         >
           <span>
             <div className='flex flex-row w-full justify-between'>
               <p>{subject.subject}</p>
               {subjectShow ? (
-                <img src='/assets/images/post/arrow_top.svg' onClick={handleToggleSubject} />
+                <img src='/assets/images/post/arrow_top.svg' />
               ) : (
-                <img src='/assets/images/post/arrow_donw.svg' onClick={handleToggleSubject} />
+                <img src='/assets/images/post/arrow_donw.svg' />
               )}
             </div>
           </span>
