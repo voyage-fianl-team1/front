@@ -28,7 +28,7 @@ const Keyword: FC = () => {
   } = useInfiniteQuery(['searchData', keyword], ({ pageParam = 0 }) => fetchsearchList(pageParam), {
     getNextPageParam: (lastPage) => (!lastPage.last ? lastPage.nextPage : undefined),
   });
-  console.log(searchList?.pages[0].data.length);
+
   useEffect(() => {
     if (inView) fetchNextPage();
   }, [inView]);
