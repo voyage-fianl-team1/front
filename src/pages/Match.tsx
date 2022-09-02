@@ -98,7 +98,7 @@ const Match: FC = () => {
           </div>
           <div ref={matchRef}></div>
         </div>
-        <div className='flex flex-row w-full h-[29px] justify-center items-center gap-[40px]'>
+        <div className='flex flex-row w-full h-[29px] justify-center items-center gap-[25px]'>
           <button className='detail-btn' onClick={handleMoveScroll} autoFocus>
             경기정보
           </button>
