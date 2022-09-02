@@ -39,6 +39,7 @@ const Match: FC = () => {
       subjectValue: postData?.subjectValue,
       subject: postData?.subject,
       title: postData?.title,
+      content: postData?.content,
     },
   };
   const dday = () => {
