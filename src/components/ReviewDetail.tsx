@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { apis } from '../apis';
 import { useQuery } from '@tanstack/react-query';
 import { JoinDataProps, ImageType } from '../typings';
@@ -6,7 +6,7 @@ import LoadingSpinner from './loadingSpinner';
 import dayjs from 'dayjs';
 
 const ReviewDetail = (props: JoinDataProps) => {
-  const reviewDatail = props.data;
+  const reviewDatail = useMemo(() => props.data, [props.data]);
   const { data, isLoading } = useQuery(['reviewList'], async () => await apis.getReviewList(reviewDatail.postId));
   const reviewList = data?.data.reviewList;
   const changeData = (data: string) => {

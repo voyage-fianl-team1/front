@@ -17,10 +17,11 @@ const SelectSubject = () => {
     setSubject(e.currentTarget.value);
   };
 
-  const handleSendData = () => {
+  const handleSendData = useCallback(() => {
     dispatch(subjectSearchShow({ subject: subject }));
     dispatch(toggleSelectShow());
-  };
+  }, []);
+
   return (
     <section
       className={`fixed bottom-0 left-0 right-0 w-[100%] max-w-[1000px] m-auto transition-all z-50 ${

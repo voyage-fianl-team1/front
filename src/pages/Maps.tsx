@@ -18,15 +18,6 @@ const Maps = () => {
   const res = useQuery(['matchList'], async () => await apis.getAroundGame(nowPosition.lat, nowPosition.lng));
   const [isOpen, setIsOpen] = useState(false);
   const matchData = res?.data?.data;
-  // const outside = useRef<HTMLDivElement>(null);
-
-  // const handleClickModal = (e: React.MouseEvent) => {
-  //   console.log(e.target);
-  //   e.preventDefault();
-  //   if (isOpen && outside.current == e.target) {
-  //     setIsOpen(false);
-  //   }
-  // };
 
   useEffect(() => {
     return () => {
@@ -43,6 +34,7 @@ const Maps = () => {
     테니스: 'https://velog.velcdn.com/images/blaze096/post/f28b1561-f059-4fe9-b7f7-2696aa0c4f86/image.png',
     당구: 'https://velog.velcdn.com/images/blaze096/post/511632d1-23d4-4194-8b75-256fdf33f7c0/image.png',
   };
+
   if (res.isLoading) {
     return <></>;
   }

@@ -12,7 +12,7 @@ const MapContainer = () => {
   const nowPosition = useSelector((state: RootState) => state.persistReducered.position);
   const [position, setPosition] = useState({ lat: 0, lng: 0 });
   const [address, setAddress] = useState<string>();
-  console.log(address);
+
   useEffect(() => {
     getAddress(position.lat, position.lng);
   }, [position]);
@@ -29,10 +29,11 @@ const MapContainer = () => {
     };
     geocoder.coord2Address(coord.getLng(), coord.getLat(), callback);
   };
-  const handleSendAddress = () => {
+
+  const handleSendAddress = useCallback(() => {
     dispatch(addressAction({ address: address, lat: position.lat, lng: position.lng }));
     dispatch(toggleModalShow());
-  };
+  }, []);
 
   const handleToggleModal = useCallback(() => {
     dispatch(toggleModalShow());
@@ -44,7 +45,6 @@ const MapContainer = () => {
         center={{ lat: nowPosition.lat, lng: nowPosition.lng }}
         className='relative w-[100%] h-[100%]'
         level={3}
-        //level 14까지
         ref={mapRef}
         onClick={(_t, mouseEvent) =>
           setPosition({

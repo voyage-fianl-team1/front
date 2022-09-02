@@ -1,4 +1,4 @@
-import React, { useCallback, useRef, useState } from 'react';
+import React, { useCallback, useRef, useState, useMemo } from 'react';
 import { useForm } from 'react-hook-form';
 import { apis } from '../apis';
 import { IoMdCloseCircleOutline } from 'react-icons/io';
@@ -7,12 +7,12 @@ import { useQueryClient } from '@tanstack/react-query';
 
 const Review = (props: JoinDataProps) => {
   const { register, getValues, resetField } = useForm({});
-  const review = props.data;
+  const review = useMemo(() => props.data, [props.data]);
   const queryClient = useQueryClient();
   const [imgSrc, setImgSrc] = useState<string>('');
   const [file, setFile] = useState<File[]>();
   const inputRef = useRef<HTMLInputElement | null>(null);
-  console.log(imgSrc);
+
   const onUploadIamge = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     if (!e.target.files) {
       return;

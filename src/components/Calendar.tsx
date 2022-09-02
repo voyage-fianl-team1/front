@@ -6,14 +6,16 @@ import { toggleCalendarShow, toggleModal2Show } from '../redux/features/toggleSl
 import './Calendars.css';
 import dayjs from 'dayjs';
 import Modal from './Modal';
+
 const Calendars = () => {
   const [value, onChange] = useState(new Date());
   const dispatch = useDispatch();
 
-  const handleCalendar = () => {
+  const handleCalendar = useCallback(() => {
     dispatch(calendarAction({ date: dayjs(value).format('YYYY-MM-DD') }));
     dispatch(toggleCalendarShow());
-  };
+  }, []);
+
   const handleToggleModal = useCallback(() => {
     dispatch(toggleModal2Show());
   }, []);
