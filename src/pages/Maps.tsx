@@ -2,7 +2,7 @@ import React, { useRef, useState, useEffect } from 'react';
 import { Map, ZoomControl, MapMarker } from 'react-kakao-maps-sdk';
 import { useQuery } from '@tanstack/react-query';
 import { apis } from '../apis';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { overlayAction, overlayClear, OverlayState } from '../redux/features/overlaySlice';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../redux/store';
@@ -10,12 +10,12 @@ import { ImageType } from '../typings';
 import { Helmet } from 'react-helmet';
 
 const Maps = () => {
-  const mapRef = useRef(null);
-  const location = useLocation();
+  const mapRef = useRef<any>(3);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const [level, setLevel] = useState<number>(3);
   const overlay = useSelector((state: RootState) => state.overlay);
   const nowPosition = useSelector((state: RootState) => state.persistReducered.position);
-  const navigate = useNavigate();
   const res = useQuery(['matchList'], async () => await apis.getAroundGame(nowPosition.lat, nowPosition.lng));
   const [isOpen, setIsOpen] = useState(false);
   const matchData = res?.data?.data;
@@ -44,7 +44,13 @@ const Maps = () => {
       <Helmet>
         <title>매치기 | 근처찾기</title>
       </Helmet>
-      <Map center={{ lat: nowPosition.lat, lng: nowPosition.lng }} className='w-full h-screen' level={3} ref={mapRef}>
+      <Map
+        center={{ lat: nowPosition.lat, lng: nowPosition.lng }}
+        className='w-full h-screen'
+        level={level}
+        onZoomChanged={(map) => setLevel(map.getLevel())}
+        ref={mapRef}
+      >
         <ZoomControl position={window.kakao.maps.ControlPosition.TOPRRIGHT} />
         <div>
           {matchData &&
@@ -97,7 +103,7 @@ const Maps = () => {
                   <div className='text-[14px] font-Noto leading-[150%] text-[#717275]'>{overlay.address}</div>
                   <div
                     className='bg-[#F4F5F5] border border-[#F4F5F5] rounded-[4px] font-Noto text-[12px]
-                leading-[150%] text-[#5D5E62] w-[45px] h-[18px] text-center'
+                leading-[150%] text-[#5D5E62] min-w-[30px] max-w-[45px] h-[18px] text-center'
                   >
                     {overlay.subject}
                   </div>
