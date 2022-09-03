@@ -2,10 +2,9 @@
 @tailwind components;
 @tailwind utilities;
 
-
-body{
-    background-color: #FCFCFC;
-    @apply font-Noto;
+body {
+  background-color: #fcfcfc;
+  @apply font-Noto;
 }
 
 select {
@@ -193,4 +192,8 @@ select {
 .selectBtn {
   @apply flex flex-col justify-center pl-[16px] w-full h-[44px] border border-x-0 border-t-0
   focus:bg-matchgi-bordergray;
+}
+
+.subjectSelect {
+  @apply flex flex-col justify-center items-center w-[162px] h-[44px] border border-matchgi-bordergray rounded-[2px] focus:bg-matchgi-bordergray;
 }

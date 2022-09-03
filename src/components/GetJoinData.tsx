@@ -1,10 +1,10 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
-import LoadingSpinner from './loadingSpinner';
 import { JoinDataProps, JoinData, ImageType } from '../typings';
 import { apis } from '../apis';
-import dayjs from 'dayjs';
 import { AxiosError } from 'axios';
+import dayjs from 'dayjs';
+import LoadingSpinner from './loadingSpinner';
 
 const GetJoinData = (props: JoinDataProps) => {
   const join = useQuery(['joinList'], async () => await apis.getJoinList(props.data.postId));
@@ -14,7 +14,7 @@ const GetJoinData = (props: JoinDataProps) => {
   const nowDate = dayjs(date).format('YYYY-MM-DD');
   const joinData: JoinData = join?.data?.data;
   const queryClient = useQueryClient();
-  const postData = props?.data;
+  const postData = useMemo(() => props?.data, [props.data]);
 
   const status: ImageType = {
     WIN: '승리',

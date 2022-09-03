@@ -2,7 +2,7 @@ import React, { useRef, useState, useEffect } from 'react';
 import { Map, ZoomControl, MapMarker } from 'react-kakao-maps-sdk';
 import { useQuery } from '@tanstack/react-query';
 import { apis } from '../apis';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { overlayAction, overlayClear, OverlayState } from '../redux/features/overlaySlice';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../redux/store';
@@ -11,6 +11,8 @@ import { Helmet } from 'react-helmet';
 
 const Maps = () => {
   const mapRef = useRef(null);
+  const location = useLocation();
+
   const dispatch = useDispatch();
   const overlay = useSelector((state: RootState) => state.overlay);
   const nowPosition = useSelector((state: RootState) => state.persistReducered.position);
@@ -18,15 +20,6 @@ const Maps = () => {
   const res = useQuery(['matchList'], async () => await apis.getAroundGame(nowPosition.lat, nowPosition.lng));
   const [isOpen, setIsOpen] = useState(false);
   const matchData = res?.data?.data;
-  // const outside = useRef<HTMLDivElement>(null);
-
-  // const handleClickModal = (e: React.MouseEvent) => {
-  //   console.log(e.target);
-  //   e.preventDefault();
-  //   if (isOpen && outside.current == e.target) {
-  //     setIsOpen(false);
-  //   }
-  // };
 
   useEffect(() => {
     return () => {
@@ -43,6 +36,7 @@ const Maps = () => {
     테니스: 'https://velog.velcdn.com/images/blaze096/post/f28b1561-f059-4fe9-b7f7-2696aa0c4f86/image.png',
     당구: 'https://velog.velcdn.com/images/blaze096/post/511632d1-23d4-4194-8b75-256fdf33f7c0/image.png',
   };
+
   if (res.isLoading) {
     return <></>;
   }
