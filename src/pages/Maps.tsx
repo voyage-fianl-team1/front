@@ -2,7 +2,7 @@ import React, { useRef, useState, useEffect } from 'react';
 import { Map, ZoomControl, MapMarker } from 'react-kakao-maps-sdk';
 import { useQuery } from '@tanstack/react-query';
 import { apis } from '../apis';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { overlayAction, overlayClear, OverlayState } from '../redux/features/overlaySlice';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../redux/store';
@@ -11,6 +11,8 @@ import { Helmet } from 'react-helmet';
 
 const Maps = () => {
   const mapRef = useRef(null);
+  const location = useLocation();
+
   const dispatch = useDispatch();
   const overlay = useSelector((state: RootState) => state.overlay);
   const nowPosition = useSelector((state: RootState) => state.persistReducered.position);
