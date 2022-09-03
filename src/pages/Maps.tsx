@@ -12,7 +12,6 @@ import { Helmet } from 'react-helmet';
 const Maps = () => {
   const mapRef = useRef(null);
   const location = useLocation();
-
   const dispatch = useDispatch();
   const overlay = useSelector((state: RootState) => state.overlay);
   const nowPosition = useSelector((state: RootState) => state.persistReducered.position);
