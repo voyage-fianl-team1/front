@@ -15,7 +15,7 @@ const CustomSubject = () => {
 
   return (
     <section
-      className={`absolute bottom-[258px] left-0 right-0 w-[100%] max-w-[1000px] m-auto transition-all z-50 p-3 ${
+      className={`absolute bottom-[237px] left-0 right-0 w-[100%] max-w-[1000px] m-auto transition-all z-50 p-5 ${
         subjectShow ? '' : 'translate-y-full ease-in-out'
       }`}
     >

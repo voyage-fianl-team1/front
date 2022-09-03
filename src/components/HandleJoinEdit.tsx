@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { useDispatch } from 'react-redux';
 import { useNavigate, Link } from 'react-router-dom';
 import { addressAction } from '../redux/features/addressSlice';
@@ -13,7 +13,7 @@ const HandleJoinEdit = (props: JoinDataProps) => {
   const nowDate = dayjs(date).format('YYYY-MM-DD');
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const postData = props.data;
+  const postData = useMemo(() => props.data, [props.data]);
   const handleJoinTheGame = async () => {
     try {
       if (window.confirm('참가 신청 하시겠습니까?')) {
@@ -72,9 +72,9 @@ const HandleJoinEdit = (props: JoinDataProps) => {
     );
   } else if (postData.owner === 1 && nowDate > postData.matchDeadline === true) {
     return <></>;
-  } else if (postData.owner === -1 && postData.player === -1) {
-    return <></>;
   } else if (postData.owner === -1 && postData.player === 1) {
+    return <></>;
+  } else if (postData.owner === -1 && postData.player === -1) {
     return (
       <button
         className='w-[100%] h-[48px] border border-[#FCFCFC] rounded-[4px] bg-[#FCFCFC] text-[#FCFCFC] cursor-pointer mb-[36px]'

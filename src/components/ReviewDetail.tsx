@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { apis } from '../apis';
 import { useQuery } from '@tanstack/react-query';
 import { JoinDataProps, ImageType } from '../typings';
@@ -6,7 +6,7 @@ import LoadingSpinner from './loadingSpinner';
 import dayjs from 'dayjs';
 
 const ReviewDetail = (props: JoinDataProps) => {
-  const reviewDatail = props.data;
+  const reviewDatail = useMemo(() => props.data, [props.data]);
   const { data, isLoading } = useQuery(['reviewList'], async () => await apis.getReviewList(reviewDatail.postId));
   const reviewList = data?.data.reviewList;
   const changeData = (data: string) => {
@@ -53,7 +53,7 @@ const ReviewDetail = (props: JoinDataProps) => {
                   </div>
                 </div>
                 <div className='w-full ml-[16px] text-[#38393C] text-[14px] leading-[120%] font-Noto mb-[16px]'>
-                  {value.content}
+                  <pre className='w-full whitespace-pre-wrap'>{value.content}</pre>
                 </div>
                 <div>
                   {value.imgUrlList.length >= 1 ? (

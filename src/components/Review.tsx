@@ -1,4 +1,4 @@
-import React, { useCallback, useRef, useState } from 'react';
+import React, { useCallback, useRef, useState, useMemo } from 'react';
 import { useForm } from 'react-hook-form';
 import { apis } from '../apis';
 import { IoMdCloseCircleOutline } from 'react-icons/io';
@@ -7,7 +7,7 @@ import { useQueryClient } from '@tanstack/react-query';
 
 const Review = (props: JoinDataProps) => {
   const { register, getValues, resetField } = useForm({});
-  const review = props.data;
+  const review = useMemo(() => props.data, [props.data]);
   const queryClient = useQueryClient();
   const [imgSrc, setImgSrc] = useState<string>('');
   const [file, setFile] = useState<File[]>();
@@ -45,7 +45,7 @@ const Review = (props: JoinDataProps) => {
       setFile([]);
     }
     queryClient.invalidateQueries(['reviewList']);
-    setImgSrc('/assets/images/post/basic.svg');
+    setImgSrc('');
     resetField('content');
   };
 
@@ -64,7 +64,7 @@ const Review = (props: JoinDataProps) => {
           <div className='w-full h-[149px] border border-matchgi-gray rounded-[10px] resize-none p-[16px] text-[14px] leading-[150%]'>
             <textarea
               className='w-full h-[60px] rounded-[10px] resize-none p-[16px] text-[14px] leading-[150%]
-            text-[#4A4B4E] tracking-[-0.04em] font-Noto bg-[#FCFCFC]'
+            text-[#4A4B4E] tracking-[-0.04em] font-Noto bg-[#FCFCFC] whitespace-pre-wrap'
               minLength={2}
               maxLength={100}
               placeholder='댓글은 100글자 미만으로 작성 해주세요.'
@@ -91,12 +91,12 @@ const Review = (props: JoinDataProps) => {
                 <img src='/assets/images/post/reviewImage.svg' alt='reviewImage' />
               </button>
               <button
-                className='border w-[52px] h-[27px] rounded-[4px] bg-[#14308B] text-[#FFF] p-0.25 text-[14px] leading-[0.07rem] tracking-[-0.04rem]
-          font-Noto py-[5px] px-[13px] gap-[10px]
+                className='flex justify-center items-center border w-[52px] h-[27px] rounded-[4px] bg-[#14308B] text-[#FFF] p-0.25 text-[14px] leading-[0.07rem] tracking-[-0.04rem]
+          font-Noto
           '
                 onClick={handleReviewUpload}
               >
-                입력
+                <p>입력</p>
               </button>
             </div>
           </div>

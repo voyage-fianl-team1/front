@@ -8,7 +8,7 @@ dayjs.locale('ko');
 const now = dayjs().format('YYYY-MM-DD HH:mm');
 
 export function getFromNow(date: string | Date) {
-  return dayjs(date).fromNow();
+  return dayjs(dayjs(date).add(-1, 's')).fromNow();
 }
 
 export function convertDateShort(date: string) {

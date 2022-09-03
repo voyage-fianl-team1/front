@@ -82,7 +82,7 @@ const MatchHistory = () => {
               <li key={idx} className='flex justify-between pb-5 pt-3 rounded border-b-[#F4F5F5] border-b-2'>
                 <div className='flex'>
                   <img
-                    src={d.imgUrl || '/assets/images/no-image.webp'}
+                    src={d.imgUrl || '/assets/images/post/noImage.svg'}
                     alt='imageUrl'
                     className='w-[68px] h-[68px] rounded-[8px] object-cover'
                   />

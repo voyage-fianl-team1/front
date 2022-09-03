@@ -46,8 +46,7 @@ const Newpost: FC = () => {
       [].forEach.call(files, readAndPreview);
     }
   };
-
-  const handleDataUpload = async () => {
+  const postValidation = () => {
     if (getValues().title.length < 1) {
       return alert('제목을 입력해주세요.');
     } else if (subject.subject === '종목을 선택해주세요.') {
@@ -59,6 +58,10 @@ const Newpost: FC = () => {
     } else if (getValues().content.length < 1) {
       return alert('내용을 입력해주세요.');
     }
+  };
+
+  const handleDataUpload = async () => {
+    postValidation();
     const postData = {
       title: getValues().title,
       matchDeadline: date,
@@ -94,6 +97,7 @@ const Newpost: FC = () => {
   }, []);
 
   const handleEditUpload = async () => {
+    postValidation();
     const postData = {
       title: getValues().title,
       matchDeadline: date,
@@ -213,14 +217,15 @@ const Newpost: FC = () => {
         text-matchgi-black cursor-pointer mb-[36px] ${
           subjectShow ? 'rounded-b-none border-[#C5C6CA] drop-shadow-[0_4px_10px_-10px_rgba(0,0,0,0.08)]' : ''
         }`}
+          onClick={handleToggleSubject}
         >
           <span>
             <div className='flex flex-row w-full justify-between'>
               <p>{subject.subject}</p>
               {subjectShow ? (
-                <img src='/assets/images/post/arrow_top.svg' onClick={handleToggleSubject} />
+                <img src='/assets/images/post/arrow_top.svg' />
               ) : (
-                <img src='/assets/images/post/arrow_donw.svg' onClick={handleToggleSubject} />
+                <img src='/assets/images/post/arrow_donw.svg' />
               )}
             </div>
           </span>
@@ -258,7 +263,7 @@ const Newpost: FC = () => {
         <p className='text-[12px] w-[100%] leading-[120%] tracking-tighter text-matchgi-black mb-[12px]'>내용</p>
         <textarea
           className='w-[100%] h-[169px] border border-matchgi-bordergray rounded-[10px] px-[16px] py-[12px]
-        mb-[60px] resize-none'
+        mb-[60px] resize-none whitespace-pre-wrap'
           {...register('content', { required: true })}
           maxLength={100}
           placeholder='내용은 최대 100자까지 입력 가능합니다.'

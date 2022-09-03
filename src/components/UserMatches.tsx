@@ -59,7 +59,7 @@ const UserMatches: FC<Props> = ({ maxCount }) => {
           <li className='flex justify-between pb-5 pt-3 rounded border-b-[#F4F5F5] border-b-2'>
             <div className='flex'>
               <img
-                src={d.imageUrl[0] || '/assets/images/no-image.webp'}
+                src={d.imageUrl[0] || '/assets/images/post/noImage.svg'}
                 alt='imageUrl'
                 className='w-[68px] h-[68px] rounded-[8px] object-cover'
               />
