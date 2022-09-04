@@ -13,13 +13,14 @@ const Maps = () => {
   const mapRef = useRef<any>(3);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const [state, setState] = useState({});
   const [level, setLevel] = useState<number>(3);
   const overlay = useSelector((state: RootState) => state.overlay);
   const nowPosition = useSelector((state: RootState) => state.persistReducered.position);
   const res = useQuery(['matchList'], async () => await apis.getAroundGame(nowPosition.lat, nowPosition.lng));
   const [isOpen, setIsOpen] = useState(false);
   const matchData = res?.data?.data;
-
+  console.log(state);
   useEffect(() => {
     return () => {
       dispatch(overlayClear());
@@ -50,6 +51,12 @@ const Maps = () => {
         level={level}
         onZoomChanged={(map) => setLevel(map.getLevel())}
         ref={mapRef}
+        onBoundsChanged={(map) =>
+          setState({
+            sw: map.getBounds().getSouthWest().toString(),
+            ne: map.getBounds().getNorthEast().toString(),
+          })
+        }
       >
         <ZoomControl position={window.kakao.maps.ControlPosition.TOPRRIGHT} />
         <div>
