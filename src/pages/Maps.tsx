@@ -1,5 +1,5 @@
 import React, { useRef, useState, useEffect } from 'react';
-import { Map, ZoomControl, MapMarker } from 'react-kakao-maps-sdk';
+import { Map, ZoomControl, MapMarker, MarkerClusterer } from 'react-kakao-maps-sdk';
 import { useQuery } from '@tanstack/react-query';
 import { apis } from '../apis';
 import { useNavigate } from 'react-router-dom';
@@ -20,7 +20,8 @@ const Maps = () => {
   const res = useQuery(['matchList'], async () => await apis.getAroundGame(nowPosition.lat, nowPosition.lng));
   const [isOpen, setIsOpen] = useState(false);
   const matchData = res?.data?.data;
-  console.log(state);
+  const [positions, setPositions] = useState([]);
+
   useEffect(() => {
     return () => {
       dispatch(overlayClear());
@@ -59,38 +60,40 @@ const Maps = () => {
         }
       >
         <ZoomControl position={window.kakao.maps.ControlPosition.TOPRRIGHT} />
-        <div>
-          {matchData &&
-            matchData.map((v: OverlayState, i: number) => (
-              <div key={i}>
-                <MapMarker
-                  position={{ lat: v.lat, lng: v.lng }}
-                  image={{
-                    src: MarkerObj[v.subject],
-                    size: {
-                      width: 38,
-                      height: 44,
-                    },
-                  }}
-                  clickable
-                  onClick={() => {
-                    setIsOpen(true);
-                    dispatch(
-                      overlayAction({
-                        postId: v.postId,
-                        address: v.address,
-                        title: v.title,
-                        subject: v.subject,
-                        lat: v.lat,
-                        lng: v.lng,
-                        imgUrl: v.imgUrl,
-                      })
-                    );
-                  }}
-                />
-              </div>
-            ))}
-        </div>
+        <MarkerClusterer averageCenter={true} minLevel={10}>
+          <div>
+            {matchData &&
+              matchData.map((v: OverlayState, i: number) => (
+                <div key={i}>
+                  <MapMarker
+                    position={{ lat: v.lat, lng: v.lng }}
+                    image={{
+                      src: MarkerObj[v.subject],
+                      size: {
+                        width: 38,
+                        height: 44,
+                      },
+                    }}
+                    clickable
+                    onClick={() => {
+                      setIsOpen(true);
+                      dispatch(
+                        overlayAction({
+                          postId: v.postId,
+                          address: v.address,
+                          title: v.title,
+                          subject: v.subject,
+                          lat: v.lat,
+                          lng: v.lng,
+                          imgUrl: v.imgUrl,
+                        })
+                      );
+                    }}
+                  />
+                </div>
+              ))}
+          </div>
+        </MarkerClusterer>
         {isOpen && (
           <div className='flex flex-row items-center justify-center'>
             <div
