@@ -20,7 +20,6 @@ const Maps = () => {
   const res = useQuery(['matchList'], async () => await apis.getAroundGame(nowPosition.lat, nowPosition.lng));
   const [isOpen, setIsOpen] = useState(false);
   const matchData = res?.data?.data;
-  const [positions, setPositions] = useState([]);
 
   useEffect(() => {
     return () => {
