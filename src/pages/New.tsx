@@ -75,7 +75,7 @@ const Newpost: FC = () => {
     };
 
     const value = await apis.postUpload(postData);
-    console.log(value);
+
     if (uploadImage.length > 0) {
       const formData = new FormData();
       for (let i = 0; i < uploadImage.length; i++) {
