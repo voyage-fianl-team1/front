@@ -10,10 +10,12 @@ import Review from '../components/Review';
 import ReviewDetail from '../components/ReviewDetail';
 import HandleJoinEdit from '../components/HandleJoinEdit';
 import dayjs from 'dayjs';
+import CopyToClipboard from 'react-copy-to-clipboard';
 
 const Match: FC = () => {
   const param = useParams();
   const postId = Number(param.id);
+  const url = window.location.href;
   const matchRef = useRef<HTMLDivElement>(null);
   const detailRef = useRef<HTMLDivElement>(null);
   const locationRef = useRef<HTMLDivElement>(null);
@@ -84,12 +86,19 @@ const Match: FC = () => {
     <>
       <section className='flex flex-col justify-center w-full h-full bg-[#FCFCFC]'>
         <div className='w-full h-[124px] pl-[20px] pt-[16px]'>
-          <div className='flex flex-row gap-2 items-center mb-[24px]'>
-            <img
-              src={postData.profileImgUrl !== null ? postData.profileImgUrl : '/assets/images/avatar.svg'}
-              className='w-[36px] h-[36px] rounded-[100%]'
-            />
-            <p className='font-SD leading-[17px] tracking-[-0.02rem] text-[#BEBEBE]'>{postData.nickname}</p>
+          <div className='flex mb-[24px] justify-between'>
+            <div className='flex flex-row gap-2 items-center'>
+              <img
+                src={postData.profileImgUrl !== null ? postData.profileImgUrl : '/assets/images/avatar.svg'}
+                className='w-[36px] h-[36px] rounded-[100%]'
+              />
+              <p className='font-SD leading-[17px] tracking-[-0.02rem] text-[#BEBEBE]'>{postData.nickname}</p>
+            </div>
+            <CopyToClipboard text={url} onCopy={() => alert('링크가 복사되었습니다.')}>
+              <button>
+                <img src='/assets/images/post/sharebtn.svg'></img>
+              </button>
+            </CopyToClipboard>
           </div>
           <div
             className={`flex w-full h-[22px] font-medium font-Noto
