@@ -46,6 +46,10 @@ const PageTitle = () => {
       return `${q.get('nickname')}님의 전적`;
     }
 
+    if (/\/match\/.+/g.test(location.pathname)) {
+      return '경기상세';
+    }
+
     // 나머지는 key, value 로 처리
     return titleTable[location.pathname];
   }, [location.pathname]);
