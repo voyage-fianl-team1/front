@@ -7,6 +7,7 @@ interface sortState {
   modal2Show: boolean;
   subjectShow: boolean;
   calendarShow: boolean;
+  notificationSideMenuShow: boolean;
 }
 
 const initialState: sortState = {
@@ -16,6 +17,7 @@ const initialState: sortState = {
   modal2Show: false,
   subjectShow: false,
   calendarShow: false,
+  notificationSideMenuShow: false,
 };
 
 const toggleSlice = createSlice({
@@ -41,6 +43,9 @@ const toggleSlice = createSlice({
       state.calendarShow = !state.calendarShow;
     },
     toggleClear: () => initialState,
+    toggleNotificationShow: (state) => {
+      state.notificationSideMenuShow = !state.notificationSideMenuShow;
+    },
   },
 });
 
@@ -54,4 +59,5 @@ export const {
   toggleClear,
   toggleSubjectShow,
   toggleCalendarShow,
+  toggleNotificationShow,
 } = toggleSlice.actions;

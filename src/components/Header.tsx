@@ -8,6 +8,7 @@ import { useNavigate } from 'react-router-dom';
 import { apis } from '../apis';
 import { useQuery, useQueryClient, useMutation } from '@tanstack/react-query';
 import { Notification } from '../typings';
+import { toggleNotificationShow } from '../redux/features/toggleSlice';
 
 const alertPath = '/assets/images/alert.svg';
 const alertBasePath = '/assets/images/alert_base.svg';
@@ -18,6 +19,7 @@ const Header = () => {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
   const { notifications, setNotifications } = useNotification(id);
+
   const { refetch } = useQuery(['notifications'], apis.getNotifications, {
     onSuccess: (data: Notification[]) => {
       setNotifications(data);
@@ -36,13 +38,12 @@ const Header = () => {
     }
   }, [isLogin]);
 
-  const handleToggleSideMenu = useCallback(() => {
-    dispatch(toggleSideMenuShow());
+  const toggleNotificationMenu = useCallback(() => {
+    dispatch(toggleNotificationShow());
   }, []);
-  const [notificationShow, setNotificationShow] = useState(false);
 
-  const toggleNotification = useCallback(() => {
-    setNotificationShow((prev) => !prev);
+  const toggleSideMenu = useCallback(() => {
+    dispatch(toggleSideMenuShow());
   }, []);
 
   const isNotificationExist = useMemo(() => {
@@ -53,38 +54,15 @@ const Header = () => {
     return false;
   }, [notifications]);
 
-  const handleClick = useCallback((id: number, postId: number) => {
-    mutation.mutate(id);
-    // 게시글로 라우팅
-    navigate(`match/${postId}`);
-  }, []);
-
   return (
-    <header className='flex justify-between pt-4 pb-4'>
-      <h1 className='text-2xl font-bold text-[#082555]'>매치기</h1>
+    <header className='flex justify-end py-[14px]'>
       <ul className='flex gap-4 relative'>
-        <li className='cursor-pointer' onClick={toggleNotification}>
+        <li className='cursor-pointer' onClick={toggleNotificationMenu}>
           <img src={isNotificationExist ? alertPath : alertBasePath} alt='alert-icon' />
         </li>
-        <li onClick={handleToggleSideMenu} className='cursor-pointer'>
+        <li onClick={toggleSideMenu} className='cursor-pointer'>
           <img src='/assets/images/hamberger.svg' alt='menu-icon' />
         </li>
-        {notificationShow && (
-          <ul className='absolute bottom-[-300px] right-10 w-[300px] bg-white h-[300px] flex flex-col gap-2 rounded overflow-auto z-[999]'>
-            {notifications.map((n) => (
-              <li
-                key={n.id}
-                className={`rounded p-2 border-b-[1px] border-black/10 cursor-pointer ${
-                  n.isread ? '!text-black/20' : ''
-                }`}
-                onClick={() => handleClick(n.id, n.postId)}
-              >
-                <span>{n.content}</span>
-                <span className='text-xs px-2 text-black/60'>{dayjs(n.createdAt).format('YYYY/MM/DD hh:mm')}</span>
-              </li>
-            ))}
-          </ul>
-        )}
       </ul>
     </header>
   );
