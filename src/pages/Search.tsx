@@ -21,7 +21,6 @@ const SearchMatch: FC = () => {
   const subject = useSelector((state: RootState) => state.search.subject);
   const categoryName = useMemo(() => categories.find((c) => c.value === subject), [subject]);
   const sortName = useMemo(() => sortCategories.find((c) => c.value === sort), [sort]);
-
   const fetchPostList = async (pageParam: number) => {
     const res = await apis.getMainPostList(pageParam, subject, sort);
     const data = res.data.content;
@@ -87,7 +86,7 @@ const SearchMatch: FC = () => {
               <div key={index}>
                 {page.data.map((post: any) => (
                   <div
-                    className='w-full h-20 bg-[#FCFCFC] p-2'
+                    className='w-full h-20 bg-[#FCFCFC] p-2 cursor-pointer'
                     key={post.postId}
                     onClick={() => navigate(`/match/${post.postId}`)}
                     ref={ref}
