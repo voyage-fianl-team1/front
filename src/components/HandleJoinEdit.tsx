@@ -20,7 +20,7 @@ const HandleJoinEdit = (props: JoinDataProps) => {
         await apis.postJoinGame(postData.postId);
         alert('참가 신청이 완료되었습니다.');
       }
-      navigate('/');
+      window.location.reload();
     } catch (err) {
       alert('참가 신청은 중복으로 할 수 없습니다.');
     }
@@ -36,7 +36,7 @@ const HandleJoinEdit = (props: JoinDataProps) => {
     }
   };
 
-  if (postData.owner === 1 && nowDate > postData.matchDeadline === false) {
+  if (postData.owner === 1 && postData.matchStatus === 'ONGOING') {
     return (
       <div>
         <button
@@ -70,7 +70,7 @@ const HandleJoinEdit = (props: JoinDataProps) => {
         </Link>
       </div>
     );
-  } else if (postData.owner === 1 && nowDate > postData.matchDeadline === true) {
+  } else if (postData.owner === 1 && postData.matchStatus === 'MATCHEND') {
     return <></>;
   } else if (postData.owner === -1 && postData.player === 1 && nowDate > postData.matchDeadline === false) {
     return <></>;
@@ -84,6 +84,8 @@ const HandleJoinEdit = (props: JoinDataProps) => {
         참가 신청하기
       </button>
     );
+  } else if (postData.owner === -1 && postData.player === -1 && nowDate >= postData.matchDeadline === true) {
+    return <></>;
   } else {
     return <></>;
   }
