@@ -69,7 +69,7 @@ const MatchHistory = () => {
           <span className='text-[#38393C] font-[500]'>{lose}</span>
         </div>
         <div className='flex flex-col items-center gap-3 py-5'>
-          <h1 className='text-[#717275]'>무</h1>
+          <h1 className='text-[#717275]'>무승부</h1>
           <span className='text-[#38393C] font-[500]'>{draw}</span>
         </div>
       </div>

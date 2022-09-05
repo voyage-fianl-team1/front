@@ -30,7 +30,7 @@ const ProfileEdit = () => {
       <div className='mt-5'>
         <div className='flex justify-between items-center'>
           <div>
-            <h1 className='text-xs'>닉네임</h1>
+            <h1 className='text-[14px]'>닉네임</h1>
             <h2 className='text-[#38393C] max-w-[250px]'>{nickname}</h2>
           </div>
           <div>
@@ -42,20 +42,20 @@ const ProfileEdit = () => {
             </button>
           </div>
         </div>
-        <div className='flex justify-between items-center mt-8'>
-          <div>
-            <h1 className='text-xs'>비밀번호</h1>
-            <h2 className='text-[#38393C]'>새로운 비밀번호로 변경 가능</h2>
-          </div>
-          <div>
-            <button
-              className='text-[#38393C] text-[12px] border-[1px] rounded py-1 px-2'
-              onClick={() => toggleModal('password')}
-            >
-              수정
-            </button>
-          </div>
-        </div>
+        {/*<div className='flex justify-between items-center mt-8'>*/}
+        {/*  <div>*/}
+        {/*    <h1 className='text-xs'>비밀번호</h1>*/}
+        {/*    <h2 className='text-[#38393C]'>새로운 비밀번호로 변경 가능</h2>*/}
+        {/*  </div>*/}
+        {/*  <div>*/}
+        {/*    <button*/}
+        {/*      className='text-[#38393C] text-[12px] border-[1px] rounded py-1 px-2'*/}
+        {/*      onClick={() => toggleModal('password')}*/}
+        {/*    >*/}
+        {/*      수정*/}
+        {/*    </button>*/}
+        {/*  </div>*/}
+        {/*</div>*/}
       </div>
       <div
         className={`fixed left-0 right-0 bg-white rounded-t-2xl h-[300px] transition-all ${

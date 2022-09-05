@@ -35,8 +35,8 @@ const UserNicknameChange: FC<Props> = ({ toggleModal }) => {
   }, [value]);
 
   return (
-    <div className='px-4 flex justify-center items-center flex-col pt-6'>
-      <div className='flex gap-2 items-center w-[100%]'>
+    <div className='px-4 flex justify-center items-center flex-col pt-6 gap-[28px]'>
+      <div className='flex  items-center w-[100%]'>
         <input
           id='nickname'
           type='text'
