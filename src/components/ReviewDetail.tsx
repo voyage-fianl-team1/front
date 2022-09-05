@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { apis } from '../apis';
 import { useQuery } from '@tanstack/react-query';
 import { JoinDataProps, ImageType } from '../typings';
@@ -6,7 +6,7 @@ import LoadingSpinner from './loadingSpinner';
 import dayjs from 'dayjs';
 
 const ReviewDetail = (props: JoinDataProps) => {
-  const reviewDatail = props.data;
+  const reviewDatail = useMemo(() => props.data, [props.data]);
   const { data, isLoading } = useQuery(['reviewList'], async () => await apis.getReviewList(reviewDatail.postId));
   const reviewList = data?.data.reviewList;
   const changeData = (data: string) => {
@@ -20,12 +20,12 @@ const ReviewDetail = (props: JoinDataProps) => {
     return (
       <div className='w-full h-[200px] bg-[#FCFCFC]'>
         <p
-          className='w-full h-[34px] font-Noto font-medium leading-[24px] text-[16 px] text-[#38393C] border border-[#EDEDED]
+          className='w-full h-[34px] font-Noto font-medium leading-[24px] text-[16px] text-[#38393C] border border-[#EDEDED]
   border-x-0 border-t-0 pl-[20px] mb-[22px]'
         >
           댓글
         </p>
-        <p className='text-sm text-[#38393C] my-8 ml-3'>작성된 댓글이 없습니다.</p>
+        <p className='text-sm text-[#38393C] my-8 ml-3 font-Noto'>작성된 댓글이 없습니다.</p>
       </div>
     );
   }
@@ -53,14 +53,14 @@ const ReviewDetail = (props: JoinDataProps) => {
                   </div>
                 </div>
                 <div className='w-full ml-[16px] text-[#38393C] text-[14px] leading-[120%] font-Noto mb-[16px]'>
-                  {value.content}
+                  <pre className='w-full whitespace-pre-wrap'>{value.content}</pre>
                 </div>
                 <div>
                   {value.imgUrlList.length >= 1 ? (
                     <img
                       src={value.imgUrlList[0]}
                       alt='reviewImage'
-                      className='w-[160px] h-[96px] mb-[20px] ml-[16px]'
+                      className='w-[160px] h-[96px] mb-[20px] ml-[16px] rounded-[4px]'
                     />
                   ) : (
                     ''

@@ -15,14 +15,11 @@ const CustomSubject = () => {
 
   return (
     <section
-      className={`absolute bottom-[258px] left-0 right-0 w-[100%] max-w-[1000px] m-auto transition-all z-50 p-3 ${
+      className={`absolute bottom-[237px] left-0 right-0 w-[100%] max-w-[1000px] m-auto transition-all z-50 p-5 ${
         subjectShow ? '' : 'translate-y-full ease-in-out'
       }`}
     >
-      <section
-        className='flex flex-col justify-center items-center w-[100%] h-92 rounded-b-[20px] bg-white border border-[#C5C6CA]
-        drop-shadow-[0_4px_10px_rgba(0,0,0,0.08)]'
-      >
+      <section className='flex flex-col justify-center items-center w-[100%] h-92 rounded-b-[20px] bg-white border border-[#C5C6CA] drop-shadow-[0_4px_10px_rgba(0,0,0,0.08)]'>
         <button className='selectBtn' value='BASKETBALL' name='농구' onClick={handleSelectData}>
           농구
         </button>

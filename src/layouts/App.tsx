@@ -25,6 +25,7 @@ const Match = React.lazy(() => import('../pages/Match'));
 const New = React.lazy(() => import('../pages/New'));
 const Keyword = React.lazy(() => import('../pages/keyword'));
 const MatchHistory = React.lazy(() => import('../pages/MatchHistory'));
+const Searching = React.lazy(() => import('../pages/Searching'));
 
 const App = () => {
   const user = useSelector((state: RootState) => state.user);
@@ -53,13 +54,14 @@ const App = () => {
           );
         },
         (err) => {
-          dispatch(positionAction({ lat: 0, lng: 0, isLoading: false }));
+          dispatch(positionAction({ lat: 37.56076156591573, lng: 126.98573914405821, isLoading: false }));
         }
       );
-    } else {
-      dispatch(positionAction({ lat: 0, lng: 0, isLoading: false }));
-      alert('현재 위치를 받아올 수 없습니다.');
     }
+    // else {
+    //   dispatch(positionAction({ lat: 37.33116, lng: 126.58111, isLoading: false }));
+    //   alert('현재 위치를 받아올 수 없습니다.');
+    // }
   }, []);
 
   if (user.isLogin) {
@@ -79,6 +81,7 @@ const App = () => {
             <Route path='/new' element={<New />} />
             <Route path='/new/:id/edit' element={<New />} />
             <Route path='/keword' element={<Keyword />} />
+            <Route path='/searching' element={<Searching />} />
             <Route path='/matchHistory/:id/subject/:subject' element={<MatchHistory />} />
           </Routes>
         </Layout>
@@ -94,8 +97,7 @@ const App = () => {
           <Route path='/splash' element={<Splash />} />
           <Route path='/login' element={<Login />} />
           <Route path='/signup' element={<SignUp />} />
-          {/* TODO: 지민님 매치 상세페이지에서 유저정보가 없으면 에러나는 부분이있네요, 비로그인 상태에서 상세페이지 보려면 수정필요할 것 같습니다*/}
-          <Route path='/match/:id' element={<Match />} />
+          {/* <Route path='/match/:id' element={<Match />} /> */}
           <Route path='/redirectKakao' element={<RedirectKakao />} />
           <Route path='/failKakao' element={<FailKakao />} />
           <Route path='*' element={<div>로그인이 필요한 서비스 입니다</div>} />

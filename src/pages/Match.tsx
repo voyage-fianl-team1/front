@@ -10,10 +10,12 @@ import Review from '../components/Review';
 import ReviewDetail from '../components/ReviewDetail';
 import HandleJoinEdit from '../components/HandleJoinEdit';
 import dayjs from 'dayjs';
+import CopyToClipboard from 'react-copy-to-clipboard';
 
 const Match: FC = () => {
   const param = useParams();
   const postId = Number(param.id);
+  const url = window.location.href;
   const matchRef = useRef<HTMLDivElement>(null);
   const detailRef = useRef<HTMLDivElement>(null);
   const locationRef = useRef<HTMLDivElement>(null);
@@ -21,18 +23,6 @@ const Match: FC = () => {
   const queryClient = useQueryClient();
   const { data: res, isLoading, refetch } = useQuery(['postList', postId], async () => await apis.getPostList(postId));
   const postData: PostDataProps = res?.data;
-  const dday = () => {
-    const now = dayjs(new Date());
-    const a = dayjs(postData?.matchDeadline);
-    const c = now.diff(a, 'day');
-    if (c < 1 && a.format('YYYY-MM-DD') !== now.format('YYYY-MM-DD')) {
-      return <p className='w-[4rem] h-7 text-[#38393C]'>(D-{c + 1})</p>;
-    } else if (c < 1 && a.format('YYYY-MM-DD') === now.format('YYYY-MM-DD')) {
-      return <p className='w-[4rem] h-7 text-[#38393C]'>(D-DAY)</p>;
-    } else {
-      return <></>;
-    }
-  };
 
   const drill: JoinDataProps = {
     data: {
@@ -51,7 +41,24 @@ const Match: FC = () => {
       subjectValue: postData?.subjectValue,
       subject: postData?.subject,
       title: postData?.title,
+      content: postData?.content,
     },
+  };
+  const dday = () => {
+    const now = dayjs(new Date());
+    const a = dayjs(postData?.matchDeadline);
+    const c = now.diff(a, 'day');
+    if (c < 1 && a.format('YYYY-MM-DD') !== now.format('YYYY-MM-DD')) {
+      return <p className='w-[5rem] h-7 text-[#38393C]'>(D{c + 1})</p>;
+    } else if (c < 1 && a.format('YYYY-MM-DD') === now.format('YYYY-MM-DD')) {
+      return <p className='w-[5rem] h-7 text-[#38393C]'>(D-DAY)</p>;
+    } else {
+      return <></>;
+    }
+  };
+
+  const changeData = (data: string) => {
+    return dayjs(data).format('YYYY.MM.DD.');
   };
 
   const handleMoveScroll = () => {
@@ -77,14 +84,21 @@ const Match: FC = () => {
   }
   return (
     <>
-      <section className='flex flex-col justify-center w-full h-full bg-[#FCFCFC]'>
+      <section className='flex flex-col justify-center w-full h-full bg-[#FCFCFC] font-Noto'>
         <div className='w-full h-[124px] pl-[20px] pt-[16px]'>
-          <div className='flex flex-row gap-2 items-center mb-[24px]'>
-            <img
-              src={postData.profileImgUrl !== null ? postData.profileImgUrl : '/assets/images/avatar.svg'}
-              className='w-[36px] h-[36px] rounded-[100%]'
-            />
-            <p className='font-SD leading-[17px] tracking-[-0.02rem] text-[#BEBEBE]'>{postData.nickname}</p>
+          <div className='flex mb-[24px] justify-between'>
+            <div className='flex flex-row gap-2 items-center'>
+              <img
+                src={postData.profileImgUrl !== null ? postData.profileImgUrl : '/assets/images/avatar.svg'}
+                className='w-[36px] h-[36px] rounded-[100%]'
+              />
+              <p className='font-SD leading-[17px] tracking-[-0.02rem] text-[#BEBEBE]'>{postData.nickname}</p>
+            </div>
+            <CopyToClipboard text={url} onCopy={() => alert('링크가 복사되었습니다.')}>
+              <button>
+                <img src='/assets/images/post/sharebtn.svg'></img>
+              </button>
+            </CopyToClipboard>
           </div>
           <div
             className={`flex w-full h-[22px] font-medium font-Noto
@@ -94,8 +108,8 @@ const Match: FC = () => {
           </div>
           <div ref={matchRef}></div>
         </div>
-        <div className='flex flex-row w-full h-[29px] justify-center items-center gap-[40px]'>
-          <button className='detail-btn' onClick={handleMoveScroll}>
+        <div className='flex flex-row w-full h-[29px] justify-center items-center gap-[25px]'>
+          <button className='detail-btn' onClick={handleMoveScroll} autoFocus>
             경기정보
           </button>
           <button className='detail-btn' onClick={handleMoveScroll2}>
@@ -108,7 +122,10 @@ const Match: FC = () => {
             댓글
           </button>
         </div>
-        <div className='w-full h-[199px] bg-[#F4F5F5] flex flex-col justify-center items-center mb-[28px]'>
+        <div
+          className='w-full h-[199px] bg-[#F4F5F5] flex flex-col justify-center items-center mb-[28px] border-t-[#EDEDED] border
+        border-x-0 border-b-0'
+        >
           <div className='w-full font-Noto leading-[120%] text-[#000] mb-[13px] font-medium text-[16px] pl-[20px]'>
             경기정보
           </div>
@@ -119,10 +136,13 @@ const Match: FC = () => {
             </div>
             <div>
               <p className='w-full h-7'>{postData.subject}</p>
-              <span className='flex flex-row'>
-                <p className='w-[100px] h-7'>{postData.matchDeadline}</p>
-                {postData.matchStatus === 'MATCHEND' ? <p className='w-[3.5rem] h-7 text-[#9A9B9F]'>(마감)</p> : <></>}
-                {dday()}
+              <span className='flex flex-row gap-4'>
+                <p className='w-[85px] h-7'>{changeData(postData.matchDeadline)}</p>
+                {postData.matchStatus === 'MATCHEND' ? (
+                  <p className='w-[3.5rem] h-7 text-[#9A9B9F]'>(마감)</p>
+                ) : (
+                  <p className='w-[50px]'>{dday()}</p>
+                )}
               </span>
             </div>
             <div ref={detailRef}></div>
@@ -138,16 +158,16 @@ const Match: FC = () => {
             }`}
             ref={locationRef}
           >
-            {postData.content}
+            <pre className='w-full whitespace-pre-wrap'>{postData.content}</pre>
           </div>
         </div>
-        <section className='w-full h-[289px] mb-[60px]'>
+        <section className='w-full h-[289px] mb-[36px]'>
           <div className='w-full h-[30px] font-Noto font-medium text-[16px] leading-[120%] text-[#38393C] border border-x-0 border-t-0 border-b-matchgi-bordergray pl-[20px]'>
             경기장소
           </div>
           <div className='flex flex-col w-full h-[270px] items-center p-5'>
             <p
-              className={`w-full h-[17px] font-Noto text-[14px] font-medium leading-[120%] mb-[25px] mt-[10px] ml-[25px] ${
+              className={`w-full h-[17px] font-Noto text-[14px] font-medium leading-[120%] mb-[25px] mt-[10px] ${
                 postData.matchStatus === 'MATCHEND' ? 'text-[#9A9B9F]' : 'text-[#38393C]'
               }`}
             >
