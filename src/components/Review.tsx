@@ -85,7 +85,6 @@ const Review = (props: JoinDataProps) => {
             ) : (
               <></>
             )}
-
             <div className='flex flex-row justify-between'>
               <button className='w-[24px] h-[24px]' onClick={imgBtn}>
                 <img src='/assets/images/post/reviewImage.svg' alt='reviewImage' />
