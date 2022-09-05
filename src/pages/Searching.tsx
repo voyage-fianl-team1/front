@@ -33,14 +33,14 @@ const SearchMiddle = () => {
   return (
     <>
       <div
-        className={`flex border-[1px] bg-[#FCFCFC] border-matchgi-gray h-[44px] rounded-[12px] items-center p-[5px] ${
-          isFocus ? 'border-[#797CD4] border-[2px]' : ''
+        className={`flex border-[1px] bg-[#FCFCFC] justify-center border-matchgi-gray rounded-full h-[44px] items-center p-[5px]${
+          isFocus ? 'border-[#797CD4]' : ''
         }`}
       >
         <input
           type='text'
           placeholder=' 제목, 내용으로 검색'
-          className='flex-1 outline-0 bg-[#FCFCFC] ml-2'
+          className='flex-1 outline-0 bg-[#FCFCFC] ml-4'
           onFocus={handleFocus}
           onBlur={handleFocusOut}
           onKeyPress={handleKeyword}

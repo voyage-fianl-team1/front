@@ -161,13 +161,13 @@ const Match: FC = () => {
             <pre className='w-full whitespace-pre-wrap'>{postData.content}</pre>
           </div>
         </div>
-        <section className='w-full h-[289px] mb-[60px]'>
+        <section className='w-full h-[289px] mb-[36px]'>
           <div className='w-full h-[30px] font-Noto font-medium text-[16px] leading-[120%] text-[#38393C] border border-x-0 border-t-0 border-b-matchgi-bordergray pl-[20px]'>
             경기장소
           </div>
           <div className='flex flex-col w-full h-[270px] items-center p-5'>
             <p
-              className={`w-full h-[17px] font-Noto text-[14px] font-medium leading-[120%] mb-[25px] mt-[10px] ml-[25px] ${
+              className={`w-full h-[17px] font-Noto text-[14px] font-medium leading-[120%] mb-[25px] mt-[10px] ${
                 postData.matchStatus === 'MATCHEND' ? 'text-[#9A9B9F]' : 'text-[#38393C]'
               }`}
             >
