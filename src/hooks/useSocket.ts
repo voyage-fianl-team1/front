@@ -5,13 +5,17 @@ import { StompSubscription } from '@stomp/stompjs/src/stomp-subscription';
 import { Chat } from '../typings';
 import { SERVER_STOMP_URL } from '../apis';
 
-export function useSocket(roomId: number | string, callback?: (body: any) => void) {
+export function useSocket(roomId: number | string, callback?: () => void) {
   const socketRef = useRef<WebSocket | null>(null);
   const stompClientRef = useRef<CompatClient | null>(null);
   const subscriptionRef = useRef<StompSubscription | null | undefined>(null);
   const accessToken = window.localStorage.getItem('accessToken');
   const [chats, setChats] = useState<Chat[]>([]);
   const firstChatRef = useRef<Chat | undefined>(undefined);
+
+  useEffect(() => {
+    callback && callback();
+  }, [chats]);
 
   useEffect(() => {
     if (!SERVER_STOMP_URL) return;
@@ -27,7 +31,6 @@ export function useSocket(roomId: number | string, callback?: (body: any) => voi
       subscriptionRef.current = stompClientRef?.current?.subscribe(`/room/${roomId}`, (message) => {
         const body = JSON.parse(message.body);
         setChats((prev) => [...prev, body.body]);
-        callback && callback(body);
       });
     });
 
