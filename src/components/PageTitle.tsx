@@ -46,12 +46,16 @@ const PageTitle = () => {
       return `${q.get('nickname')}님의 전적`;
     }
 
+    if (/\/match\/.+/g.test(location.pathname)) {
+      return '경기상세';
+    }
+
     // 나머지는 key, value 로 처리
     return titleTable[location.pathname];
   }, [location.pathname]);
 
   return (
-    <nav className='flex gap-3 items-center py-4 bg-white sticky top-0 z-[999] px-4 max-w-[1000px] m-auto'>
+    <nav className='flex gap-3 items-center py-4 bg-[#FCFCFC] sticky top-0 z-[999] px-4 max-w-[1000px] m-auto'>
       <img src='/assets/images/back.svg' alt='back-button' onClick={handleRouteBack} className='cursor-pointer' />
       <h1 className='text-lg font-bold'>{title}</h1>
     </nav>
