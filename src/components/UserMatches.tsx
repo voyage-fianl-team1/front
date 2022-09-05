@@ -8,7 +8,7 @@ import { Link } from 'react-router-dom';
 
 export const statusTable: { [key: string]: any } = {
   PENDING: {
-    text: '승인 대기중', // FIXME: 이건 지우기
+    text: '승인 대기중',
     color: 'bg-[#6367CC]',
   },
   REJECT: {
@@ -17,23 +17,23 @@ export const statusTable: { [key: string]: any } = {
   },
   ACCEPT: {
     text: '승인 완료',
-    color: 'bg-red-400',
+    color: 'bg-[#14308B]',
   },
   WIN: {
     text: '승리',
-    color: 'bg-blue-400',
+    color: 'bg-white border-[1px] border-[#3341A0] text-black',
   },
   LOSE: {
     text: '패배',
-    color: 'bg-gray-400',
+    color: 'bg-white border-[1px] border-[#9A9B9F] text-[#38393C] ',
   },
   DRAW: {
     text: '무승부',
-    color: 'bg-green-400',
+    color: 'bg-white border-[1px] border-[#DCDDE0] text-[#717275] ',
   },
   MYMATCH: {
     text: '내 경기',
-    color: 'bg-black',
+    color: 'bg-[#DCDDE0] border-[1px] border-[#9A9B9F] text-black ',
   },
 };
 
@@ -70,7 +70,7 @@ const UserMatches: FC<Props> = ({ maxCount }) => {
               </div>
             </div>
             <div className='flex flex-col justify-center '>
-              <div className={`text-white text-[12px] rounded py-1 px-1.5 ${statusTable[d.requestStatus].color}`}>
+              <div className={`text-white text-[12px] rounded py-[5px] px-[8px] ${statusTable[d.requestStatus].color}`}>
                 {statusTable[d.requestStatus].text}
               </div>
             </div>

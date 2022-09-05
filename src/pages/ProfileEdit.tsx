@@ -30,7 +30,7 @@ const ProfileEdit = () => {
       <div className='mt-5'>
         <div className='flex justify-between items-center'>
           <div>
-            <h1 className='text-xs'>닉네임</h1>
+            <h1 className='text-[14px]'>닉네임</h1>
             <h2 className='text-[#38393C] max-w-[250px]'>{nickname}</h2>
           </div>
           <div>

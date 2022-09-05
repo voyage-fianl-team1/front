@@ -5,6 +5,7 @@ import SideMenu from '../components/SideMenu';
 import PageTitle from '../components/PageTitle';
 import SelectSubject from '../components/SelectSubject';
 import SelectSort from '../components/SelectSort';
+import NotificationSideMenu from '../components/NotificationSideMenu';
 
 interface Props {
   children: JSX.Element;
@@ -23,6 +24,7 @@ const Layout: FC<Props> = ({ children }) => {
       {navShow && <PageTitle />}
       <div className='px-[20px] max-w-[1000px] m-auto relative overflow-hidden'>
         <SideMenu />
+        <NotificationSideMenu />
         <SelectSubject />
         <SelectSort />
         <div>{children}</div>
