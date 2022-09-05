@@ -22,18 +22,21 @@ const ChatDetail = () => {
   const [firstChatId, setFirstChatId] = useState<number>();
   const [scrollDir, setScrollDir] = useState('down');
   const [y, setY] = useState(0);
+  const chatBoxRef = useRef<HTMLUListElement>(null);
   const { refetch } = useQuery(['chatHistory', roomId, firstChatId], () => apis.getChatHistory(roomId, firstChatId), {
     onSuccess: (data) => {
       const { content, last } = data;
       const reversed = [...content].reverse();
       setChats((prev) => [...reversed, ...prev]);
       setFirstChatRef(reversed[0]);
-      window.scrollTo(0, document.body.scrollHeight);
+      console.log(chatBoxRef?.current?.scrollHeight);
+
+      chatBoxRef?.current?.scrollTo(0, 40);
     },
   });
 
   const scrollToBottom = useCallback(() => {
-    window.scrollTo(0, document.body.scrollHeight);
+    chatBoxRef?.current?.scrollTo(0, chatBoxRef?.current?.scrollHeight);
   }, []);
 
   const handleSendMessage = useCallback((message: string) => {
@@ -44,35 +47,44 @@ const ChatDetail = () => {
 
   const scrollNavigation = useCallback(
     (e: Event) => {
-      if (y > window.scrollY) {
-        setScrollDir('up');
-      } else {
-        setScrollDir('down');
+      if (chatBoxRef.current) {
+        if (y > chatBoxRef?.current?.scrollTop) {
+          setScrollDir('up');
+        } else {
+          setScrollDir('down');
+        }
+        setY(chatBoxRef?.current?.scrollTop);
       }
-      setY(window.scrollY);
     },
-    [y]
+    [y, chatBoxRef.current]
   );
 
   const scrollEvent = useCallback(
     (e: Event) => {
-      if (window.scrollY <= 200 && scrollDir === 'up') {
-        if (firstChatRef.current) {
-          setFirstChatId(firstChatRef.current?.chatId);
+      if (chatBoxRef.current) {
+        if (chatBoxRef?.current?.scrollTop <= 200 && scrollDir === 'up') {
+          if (firstChatRef.current) {
+            setFirstChatId(firstChatRef.current?.chatId);
+          }
         }
       }
     },
-    [firstChatRef.current, scrollDir]
+    [firstChatRef.current, scrollDir, chatBoxRef.current]
   );
 
   useEffect(() => {
-    window.addEventListener('scroll', scrollEvent);
-    window.addEventListener('scroll', scrollNavigation);
+    if (chatBoxRef.current) {
+      chatBoxRef.current.addEventListener('scroll', scrollEvent);
+      chatBoxRef.current.addEventListener('scroll', scrollNavigation);
+    }
+
     return () => {
-      window.removeEventListener('scroll', scrollEvent);
-      window.removeEventListener('scroll', scrollNavigation);
+      if (chatBoxRef.current) {
+        chatBoxRef.current.removeEventListener('scroll', scrollEvent);
+        chatBoxRef.current.removeEventListener('scroll', scrollNavigation);
+      }
     };
-  }, [scrollNavigation]);
+  }, [scrollNavigation, chatBoxRef.current]);
 
   useEffect(() => {
     setTimeout(() => {
@@ -92,8 +104,9 @@ const ChatDetail = () => {
       <Helmet>
         <title>매치기 | 채팅방</title>
       </Helmet>
-      <div>
-        <ul className='mb-[10rem]'>
+      <div className='flex flex-col h-[90vh] justify-around'>
+        <ul ref={chatBoxRef} className='overflow-y-auto '>
+          <div className='block w-full h-10'></div>
           {chats.map((c, idx) => {
             if (idx >= 0 && idx < chats.length) {
               // 첫 채팅일때
