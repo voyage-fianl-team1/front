@@ -12,7 +12,7 @@ const MapContainer = () => {
   const nowPosition = useSelector((state: RootState) => state.persistReducered.position);
   const [position, setPosition] = useState({ lat: 0, lng: 0 });
   const [address, setAddress] = useState<string>();
-  console.log(position);
+
   useEffect(() => {
     getAddress(position.lat, position.lng);
   }, [position]);
