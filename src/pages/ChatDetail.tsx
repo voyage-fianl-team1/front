@@ -105,7 +105,7 @@ const ChatDetail = () => {
       <Helmet>
         <title>매치기 | 채팅방</title>
       </Helmet>
-      <div className='flex flex-col h-[90vh] justify-around'>
+      <div className='flex flex-col h-[90vh] justify-between'>
         <ul ref={chatBoxRef} className='overflow-y-auto '>
           <div className='block w-full h-10'></div>
           {chats.map((c, idx) => {
