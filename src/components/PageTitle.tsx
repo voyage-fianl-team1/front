@@ -70,7 +70,7 @@ const PageTitle = () => {
           </div>
         </nav>
       ) : pathname === '/searching' ? (
-        <nav className='flex gap-3 items-center py-4 bg-[#FCFCFC] sticky top-0 z-[999] px-4 max-w-[1000px] m-auto'></nav>
+        <></>
       ) : (
         <nav className='flex gap-3 items-center py-4 bg-[#FCFCFC] sticky top-0 z-[999] px-4 max-w-[1000px] m-auto'>
           <img src='/assets/images/back.svg' alt='back-button' onClick={handleRouteBack} className='cursor-pointer' />
