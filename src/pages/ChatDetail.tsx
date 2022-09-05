@@ -16,7 +16,7 @@ const ChatDetail = () => {
   const location = useLocation();
   const roomId = location.pathname.split('/chat/')[1];
   const { chats, setChats, send, firstChatRef, setFirstChatRef } = useSocket(roomId, () => {
-    window.scrollTo(0, document.body.scrollHeight);
+    scrollToBottom();
   });
   const { id: userId } = useSelector((state: RootState) => state.user);
   const [firstChatId, setFirstChatId] = useState<number>();
@@ -36,13 +36,14 @@ const ChatDetail = () => {
   });
 
   const scrollToBottom = useCallback(() => {
-    chatBoxRef?.current?.scrollTo(0, chatBoxRef?.current?.scrollHeight);
+    if (chatBoxRef.current) {
+      chatBoxRef.current.scrollTop = chatBoxRef?.current?.scrollHeight + 1000;
+    }
   }, []);
 
   const handleSendMessage = useCallback((message: string) => {
     if (!message.length) return;
     send(message);
-    scrollToBottom();
   }, []);
 
   const scrollNavigation = useCallback(
@@ -104,7 +105,7 @@ const ChatDetail = () => {
       <Helmet>
         <title>매치기 | 채팅방</title>
       </Helmet>
-      <div className='flex flex-col h-[90vh] justify-around'>
+      <div className='flex flex-col h-[90vh] justify-between'>
         <ul ref={chatBoxRef} className='overflow-y-auto '>
           <div className='block w-full h-10'></div>
           {chats.map((c, idx) => {
