@@ -54,13 +54,14 @@ const App = () => {
           );
         },
         (err) => {
-          dispatch(positionAction({ lat: 0, lng: 0, isLoading: false }));
+          dispatch(positionAction({ lat: 37.56076156591573, lng: 126.98573914405821, isLoading: false }));
         }
       );
-    } else {
-      dispatch(positionAction({ lat: 0, lng: 0, isLoading: false }));
-      alert('현재 위치를 받아올 수 없습니다.');
     }
+    // else {
+    //   dispatch(positionAction({ lat: 37.33116, lng: 126.58111, isLoading: false }));
+    //   alert('현재 위치를 받아올 수 없습니다.');
+    // }
   }, []);
 
   if (user.isLogin) {
