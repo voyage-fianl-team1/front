@@ -56,11 +56,21 @@ const Keyword: FC = () => {
                   ref={ref}
                 >
                   <div className='flex flex-row mb-[28px] items-center'>
-                    <img
-                      src={post.imgUrl}
-                      alt='searchImg'
-                      className='box-border rounded-lg bg-matchgi-lightgray w-16 h-16 border boder-#DCDDE0'
-                    ></img>
+                    {post.imgUrl === null ? (
+                      <div className='flex box-border rounded-lg bg-matchgi-lightgray w-16 h-16 border boder-#DCDDE0 justify-center items-center'>
+                        <img
+                          src={post.imgUrl == null ? '/assets/images/post/noImage.svg' : post.imgUrl}
+                          alt='NOIMG'
+                          className='w-[36px] h-[36px]'
+                        />
+                      </div>
+                    ) : (
+                      <img
+                        src={post.imgUrl}
+                        alt='NOIMG'
+                        className='box-border rounded-lg bg-matchgi-lightgray w-16 h-16 border boder-#DCDDE0'
+                      ></img>
+                    )}
                     <span className='flex flex-col justify-center ml-4 gap-[1px]'>
                       <div className='text-[16px] font-normal leading-normal text-matchgi-black'>{post.title}</div>
                       <div className='text-xs text-matchgi-gray leading-normal'>주소</div>
