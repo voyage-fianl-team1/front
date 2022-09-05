@@ -20,12 +20,12 @@ const ReviewDetail = (props: JoinDataProps) => {
     return (
       <div className='w-full h-[200px] bg-[#FCFCFC]'>
         <p
-          className='w-full h-[34px] font-Noto font-medium leading-[24px] text-[16 px] text-[#38393C] border border-[#EDEDED]
+          className='w-full h-[34px] font-Noto font-medium leading-[24px] text-[16px] text-[#38393C] border border-[#EDEDED]
   border-x-0 border-t-0 pl-[20px] mb-[22px]'
         >
           댓글
         </p>
-        <p className='text-sm text-[#38393C] my-8 ml-3'>작성된 댓글이 없습니다.</p>
+        <p className='text-sm text-[#38393C] my-8 ml-3 font-Noto'>작성된 댓글이 없습니다.</p>
       </div>
     );
   }

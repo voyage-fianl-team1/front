@@ -84,7 +84,7 @@ const Match: FC = () => {
   }
   return (
     <>
-      <section className='flex flex-col justify-center w-full h-full bg-[#FCFCFC]'>
+      <section className='flex flex-col justify-center w-full h-full bg-[#FCFCFC] font-Noto'>
         <div className='w-full h-[124px] pl-[20px] pt-[16px]'>
           <div className='flex mb-[24px] justify-between'>
             <div className='flex flex-row gap-2 items-center'>
