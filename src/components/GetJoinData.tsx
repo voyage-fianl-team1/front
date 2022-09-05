@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React, { useEffect } from 'react';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { JoinDataProps, JoinData, ImageType } from '../typings';
 import { apis } from '../apis';
@@ -8,14 +8,16 @@ import LoadingSpinner from './loadingSpinner';
 
 const GetJoinData = (props: JoinDataProps) => {
   const join = useQuery(['joinList'], async () => await apis.getJoinList(props.data.postId));
-  const acceptList = useQuery(['accpetList'], async () => await apis.getAcceptList(props.data.postId));
-  const acceptData = acceptList?.data?.data;
+  const { data: acceptList, refetch } = useQuery(
+    ['acceptlist'],
+    async () => await apis.getAcceptList(props.data.postId)
+  );
+  const acceptData = acceptList?.data;
   const date = new Date();
   const nowDate = dayjs(date).format('YYYY-MM-DD');
   const joinData: JoinData = join?.data?.data;
   const queryClient = useQueryClient();
-  const postData = useMemo(() => props?.data, [props.data]);
-
+  const postData = props?.data;
   const status: ImageType = {
     WIN: '승리',
     LOSE: '패배',
@@ -28,16 +30,17 @@ const GetJoinData = (props: JoinDataProps) => {
   const handleStatusChange = async () => {
     try {
       await apis.updateMatchStatus(postData.postId);
+      queryClient.invalidateQueries(['postList']);
+      queryClient.invalidateQueries(['acceptlist']);
     } catch (err) {
       if (err && err instanceof AxiosError) {
         alert(err.response?.data);
       }
     }
-    queryClient.invalidateQueries(['postList']);
   };
 
   const CompleteBtn = () => {
-    if (nowDate > postData.matchDeadline && postData.owner === 1 && postData.matchStatus === 'ONGOING') {
+    if (nowDate >= postData.matchDeadline === true && postData.owner === 1 && postData.matchStatus === 'ONGOING') {
       return (
         <>
           <button
@@ -75,7 +78,7 @@ const GetJoinData = (props: JoinDataProps) => {
     );
   }
 
-  if (postData.owner === 1 && postData.matchStatus === 'ONGOING' && nowDate > postData.matchDeadline === false) {
+  if (postData.owner === 1 && postData.matchStatus === 'ONGOING') {
     return (
       <section className='flex flex-col w-full h-full bg-[#FCFCFC]'>
         <p
@@ -134,10 +137,11 @@ const GetJoinData = (props: JoinDataProps) => {
               </div>
             </>
           ))}
+        {CompleteBtn()}
       </section>
     );
   }
-  if (postData.owner === -1 && postData.matchStatus === 'ONGOING' && nowDate > postData.matchDeadline === false) {
+  if (postData.owner === -1 && postData.matchStatus === 'ONGOING') {
     return (
       <section className='flex flex-col w-full h-full bg-[#FCFCFC]'>
         <p className='w-full h-[34px] font-Noto font-medium leading-[24px] text-[16 px] text-[#38393C] border border-[#EDEDED] border-x-0 border-t-0 pl-[20px] mb-[22px]'>
@@ -169,7 +173,13 @@ const GetJoinData = (props: JoinDataProps) => {
           ))}
       </section>
     );
-  } else if (postData.owner === 1 && nowDate > postData.matchDeadline === true && postData.matchStatus === 'ONGOING') {
+  }
+  if (
+    postData.owner === 1 &&
+    nowDate >= postData.matchDeadline === true &&
+    postData.matchStatus === 'MATCHEND' &&
+    acceptData?.length >= 1
+  ) {
     return (
       <section className='flex flex-col w-full h-full bg-[#FCFCFC]'>
         <p
@@ -198,39 +208,35 @@ const GetJoinData = (props: JoinDataProps) => {
                 </div>
                 <div className='flex flex-row gap-[33px]'>
                   <button
-                    className={`box-border w-[82px] h-[36px] rounded-[4px] flex justify-center items-center mt-[36px]
-                    ${
-                      value.status === 'WIN'
-                        ? 'bg-[#14308B] text-[#FFF]'
-                        : 'bg-[#FFF] text-[#38393c] border border-[#C5C6CA]'
-                    }`}
+                    className='box-border w-[82px] h-[36px] rounded-[4px] flex justify-center items-center mt-[36px]
+                    bg-[#FFF] text-[#38393c] border border-[#C5C6CA] hover:bg-[#14308B] hover:text-[#FFF]'
                     onClick={async () => {
                       await apis.updateTotalStatus(value.requestId, { status: 'WIN' });
+                      queryClient.invalidateQueries(['acceptlist']);
+                      queryClient.invalidateQueries(['joinList']);
                     }}
                   >
                     승
                   </button>
                   <button
-                    className={`box-border w-[82px] h-[36px] rounded-[4px] flex justify-center items-center mt-[36px]
-                    ${
-                      value.status === 'LOSE'
-                        ? 'bg-[#14308B] text-[#FFF]'
-                        : 'bg-[#FFF] text-[#38393c] border border-[#C5C6CA]'
-                    }`}
+                    className='box-border w-[82px] h-[36px] rounded-[4px] flex justify-center items-center mt-[36px]
+                    bg-[#FFF] text-[#38393c] border border-[#C5C6CA] hover:bg-[#14308B] hover:text-[#FFF]'
                     onClick={async () => {
                       await apis.updateTotalStatus(value.requestId, { status: 'LOSE' });
+                      queryClient.invalidateQueries(['acceptlist']);
+                      queryClient.invalidateQueries(['joinList']);
                     }}
                   >
                     패
                   </button>
                   <button
-                    className={`box-border w-[82px] h-[36px] rounded-[4px] flex justify-center items-center mt-[36px]
-                     ${
-                       value.status === 'DRAW'
-                         ? 'bg-[#14308B] text-[#FFF]'
-                         : 'bg-[#FFF] text-[#38393c] border border-[#C5C6CA]'
-                     }`}
-                    onClick={async () => await apis.updateTotalStatus(value.requestId, { status: 'DRAW' })}
+                    className='box-border w-[82px] h-[36px] rounded-[4px] flex justify-center items-center mt-[36px]
+                    bg-[#FFF] text-[#38393c] border border-[#C5C6CA] hover:bg-[#14308B] hover:text-[#FFF]'
+                    onClick={async () => {
+                      await apis.updateTotalStatus(value.requestId, { status: 'DRAW' });
+                      queryClient.invalidateQueries(['acceptlist']);
+                      queryClient.invalidateQueries(['joinList']);
+                    }}
                   >
                     무
                   </button>
@@ -238,11 +244,10 @@ const GetJoinData = (props: JoinDataProps) => {
               </div>
             </>
           ))}
-        {CompleteBtn()}
       </section>
     );
   }
-  if (nowDate > postData.matchDeadline === true && postData.matchStatus === 'MATCHEND') {
+  if (nowDate >= postData.matchDeadline === true && postData.matchStatus === 'MATCHEND' && acceptData?.length === 0) {
     return (
       <section className='flex flex-col w-full h-full bg-[#FCFCFC]'>
         <p
