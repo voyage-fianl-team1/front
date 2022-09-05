@@ -55,6 +55,8 @@ const Newpost: FC = () => {
       return alert('모집 마감일을 선택해 주세요.');
     } else if (address.address === '주소를 선택해 주세요.' && address.lat === 0 && address.lng === 0) {
       return alert('주소를 선택해주세요.');
+    } else if (address.address === undefined) {
+      return alert('올바른 주소를 선택해주세요.');
     } else if (getValues().content.length < 1) {
       return alert('내용을 입력해주세요.');
     }
@@ -73,7 +75,7 @@ const Newpost: FC = () => {
     };
 
     const value = await apis.postUpload(postData);
-    console.log(value);
+
     if (uploadImage.length > 0) {
       const formData = new FormData();
       for (let i = 0; i < uploadImage.length; i++) {

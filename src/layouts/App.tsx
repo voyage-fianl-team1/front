@@ -96,8 +96,7 @@ const App = () => {
           <Route path='/splash' element={<Splash />} />
           <Route path='/login' element={<Login />} />
           <Route path='/signup' element={<SignUp />} />
-          {/* TODO: 지민님 매치 상세페이지에서 유저정보가 없으면 에러나는 부분이있네요, 비로그인 상태에서 상세페이지 보려면 수정필요할 것 같습니다*/}
-          <Route path='/match/:id' element={<Match />} />
+          {/* <Route path='/match/:id' element={<Match />} /> */}
           <Route path='/redirectKakao' element={<RedirectKakao />} />
           <Route path='/failKakao' element={<FailKakao />} />
           <Route path='*' element={<div>로그인이 필요한 서비스 입니다</div>} />

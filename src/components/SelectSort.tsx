@@ -41,7 +41,7 @@ const SelectSort = () => {
           <button
             className='w-[24px] h-[24px] order-0 flex-grow-0 border border-[#CCCCCC] rounded-[4px] bg-[#F2F2F2]
             focus:bg-[#4535CC]'
-            value='createAT'
+            value='createAt'
             onClick={handleSelectData}
           >
             <BsCheckLg
