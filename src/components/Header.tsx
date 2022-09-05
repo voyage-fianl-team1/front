@@ -60,7 +60,7 @@ const Header = () => {
   }, []);
 
   return (
-    <header className='flex justify-end pt-2 pb-4'>
+    <header className='flex justify-end py-3'>
       <ul className='flex gap-4 relative'>
         <li className='cursor-pointer' onClick={toggleNotification}>
           <img src={isNotificationExist ? alertPath : alertBasePath} alt='alert-icon' />

@@ -28,7 +28,6 @@ const Login = () => {
       const userInfo = await apis.getUser().then((res) => res.data);
       const { id, draw, lose, win, nickname, profileImgUrl } = userInfo;
       dispatch(login({ isLogin: true, id, draw, lose, win, nickname, profileImgUrl }));
-      alert('로그인 성공');
       navigate('/');
     } catch (e) {
       if (e instanceof AxiosError) {

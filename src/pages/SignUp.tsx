@@ -108,7 +108,6 @@ const SignUp = () => {
             />
           </div>
           {errors.password && <Error>{errors.password.message}</Error>}
-
           <p className='text-sm mb-2 mt-10'>비밀번호 확인</p>
           <div className='w-full relative'>
             <input
