@@ -20,14 +20,15 @@ const ChatDetail = () => {
   });
   const { id: userId } = useSelector((state: RootState) => state.user);
   const [firstChatId, setFirstChatId] = useState<number>();
-
+  const [scrollDir, setScrollDir] = useState('down');
+  const [y, setY] = useState(0);
   const { refetch } = useQuery(['chatHistory', roomId, firstChatId], () => apis.getChatHistory(roomId, firstChatId), {
     onSuccess: (data) => {
       const { content, last } = data;
       const reversed = [...content].reverse();
       setChats((prev) => [...reversed, ...prev]);
       setFirstChatRef(reversed[0]);
-      window.scrollBy(0, 10);
+      window.scrollTo(0, document.body.scrollHeight);
     },
   });
 
@@ -41,17 +42,37 @@ const ChatDetail = () => {
     scrollToBottom();
   }, []);
 
-  useEffect(() => {
-    const scrollEvent = (e: Event) => {
-      if (window.scrollY <= 200) {
+  const scrollNavigation = useCallback(
+    (e: Event) => {
+      if (y > window.scrollY) {
+        setScrollDir('up');
+      } else {
+        setScrollDir('down');
+      }
+      setY(window.scrollY);
+    },
+    [y]
+  );
+
+  const scrollEvent = useCallback(
+    (e: Event) => {
+      if (window.scrollY <= 200 && scrollDir === 'up') {
         if (firstChatRef.current) {
           setFirstChatId(firstChatRef.current?.chatId);
         }
       }
-    };
+    },
+    [firstChatRef.current, scrollDir]
+  );
+
+  useEffect(() => {
     window.addEventListener('scroll', scrollEvent);
-    return () => window.removeEventListener('scroll', scrollEvent);
-  }, []);
+    window.addEventListener('scroll', scrollNavigation);
+    return () => {
+      window.removeEventListener('scroll', scrollEvent);
+      window.removeEventListener('scroll', scrollNavigation);
+    };
+  }, [scrollNavigation]);
 
   useEffect(() => {
     setTimeout(() => {
@@ -62,7 +83,7 @@ const ChatDetail = () => {
   // 마지막 채팅 읽은시간 set
   useEffect(() => {
     return () => {
-      apis.setLastActive(parseInt(roomId)).then(console.log);
+      apis.setLastActive(parseInt(roomId));
     };
   }, []);
 
