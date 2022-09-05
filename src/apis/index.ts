@@ -104,4 +104,5 @@ export const apis = {
   getAcceptList: (postId: number) => instance.get(`/api/posts/${postId}/request/accept`),
   getAllUserRankingList: (subject = 'ALL') =>
     instance.get(`/api/users/rank?page=0&size=5&subject=${subject}`).then((res) => res.data.content),
+  getforGuestPostList: (postId: number) => instance.get(`/api/posts/${postId}/guest`),
 };

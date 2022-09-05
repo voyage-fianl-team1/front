@@ -97,7 +97,9 @@ const App = () => {
           <Route path='/splash' element={<Splash />} />
           <Route path='/login' element={<Login />} />
           <Route path='/signup' element={<SignUp />} />
-          {/* <Route path='/match/:id' element={<Match />} /> */}
+          <Route path='/match/:id' element={<Match />} />
+          <Route path='/search' element={<Search />} />
+          <Route path='/keword' element={<Keyword />} />
           <Route path='/redirectKakao' element={<RedirectKakao />} />
           <Route path='/failKakao' element={<FailKakao />} />
           <Route path='*' element={<div>로그인이 필요한 서비스 입니다</div>} />
