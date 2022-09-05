@@ -8,7 +8,7 @@ const CategoryList = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   return (
-    <div className='grid grid-cols-4 gap-[24px] justify-center cursor-pointer'>
+    <div className='grid grid-cols-4 md:grid-cols-8 gap-[24px] justify-center cursor-pointer'>
       {categories.map((c, idx) => (
         <div
           key={idx}
@@ -17,10 +17,10 @@ const CategoryList = () => {
             navigate('/search');
           }}
         >
-          <div className='bg-[#F4F5F5] flex justify-center items-center w-[100%] min-w-[66px] h-[66px]'>
-            <img src={c.icon} alt='all-icon' />
+          <div className='bg-[#F4F5F5] flex justify-center items-center w-[66px] h-[66px] m-auto'>
+            <img src={c.icon} alt='all-icon' className='' />
           </div>
-          <h5 className='text-[14px] text-center mt-1'>{c.title}</h5>
+          <h5 className='text-[14px] text-center mt-1 '>{c.title}</h5>
         </div>
       ))}
     </div>

@@ -13,7 +13,7 @@ const Splash = () => {
   return (
     <div className='min-h-[90vh]'>
       <div className='flex justify-center items-center flex-1 pt-20'>
-        <img src='https://picsum.photos/177/177' alt='logo' className='rounded-full object-cover' />
+        <img src='/assets/images/logo.svg' alt='logo' className='object-cover' />
       </div>
       <div className='absolute bottom-10 left-0 right-0 px-4 flex flex-col gap-4'>
         <Link to='/signup'>

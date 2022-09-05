@@ -19,8 +19,8 @@ const historyTable: { [key: string]: any } = {
     color: 'bg-[#3341A0]',
   },
   DRAW: {
-    text: '무',
-    color: 'bg-[#d2d2d2]',
+    text: '무승부',
+    color: 'bg-[#C5C6CA] text-black',
   },
 };
 
@@ -69,7 +69,7 @@ const MatchHistory = () => {
           <span className='text-[#38393C] font-[500]'>{lose}</span>
         </div>
         <div className='flex flex-col items-center gap-3 py-5'>
-          <h1 className='text-[#717275]'>무</h1>
+          <h1 className='text-[#717275]'>무승부</h1>
           <span className='text-[#38393C] font-[500]'>{draw}</span>
         </div>
       </div>
@@ -97,7 +97,7 @@ const MatchHistory = () => {
                   </div>
                 </div>
                 <div className='flex flex-col justify-center '>
-                  <div className={`text-white text-[12px] rounded py-3 px-4 ${historyTable[d.status].color}`}>
+                  <div className={`text-white rounded py-[6px] px-[12px] ${historyTable[d.status].color}`}>
                     {historyTable[d.status].text}
                   </div>
                 </div>
