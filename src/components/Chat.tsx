@@ -1,5 +1,4 @@
 import React, { FC, useMemo } from 'react';
-import dayjs from 'dayjs';
 import { getFromNow } from '../util/converDate';
 
 interface Props {
@@ -21,7 +20,7 @@ const Chat: FC<Props> = ({ direction, bg, children, profilePath, username, creat
   }, [direction]);
 
   return (
-    <li className={`flex ${messageDirection} my-3 items-start gap-2`}>
+    <li className={`flex ${messageDirection} mt-[24px] mb-[36px] items-start gap-2`}>
       {direction === 'left' ? (
         <img
           src={profilePath || '/assets/images/avatar.svg'}
@@ -30,10 +29,12 @@ const Chat: FC<Props> = ({ direction, bg, children, profilePath, username, creat
         />
       ) : null}
       <div>
-        {direction === 'left' && <h2 className='ml-1 text-sm'>{username}</h2>}
+        {direction === 'left' && <h2 className='ml-1 text-sm mb-[12px]'>{username}</h2>}
         <div className='flex'>
           <div
-            className={`${bgColorAndBorder} py-2 px-3 rounded-full ${direction === 'right' ? 'order-2' : 'order-1'}`}
+            className={`${bgColorAndBorder} pt-[12px] pb-[9px] px-[12px] rounded-full ${
+              direction === 'right' ? 'order-2' : 'order-1'
+            }`}
           >
             {children}
           </div>

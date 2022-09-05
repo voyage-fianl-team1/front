@@ -17,10 +17,10 @@ const CategoryList = () => {
             navigate('/search');
           }}
         >
-          <div className='bg-[#F4F5F5] flex justify-center items-center w-[100%] min-w-[66px] h-[66px]'>
-            <img src={c.icon} alt='all-icon' />
+          <div className='bg-[#F4F5F5] flex justify-center items-center md:w-[100%] md:h-[222px] w-[66px] h-[66px] m-auto'>
+            <img src={c.icon} alt='all-icon' className='md:w-[50px]' />
           </div>
-          <h5 className='text-[14px] text-center mt-1'>{c.title}</h5>
+          <h5 className='text-[14px] text-center mt-1 md:text-lg'>{c.title}</h5>
         </div>
       ))}
     </div>
