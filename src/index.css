@@ -77,6 +77,10 @@ select {
 .menu-item-inner {
   @apply flex items-center gap-2;
 }
+.notification-item {
+  @apply hover:bg-black/5 px-8 py-[16px] cursor-pointer flex items-center justify-between ;
+}
+
 
 .loader {
   font-size: 10px;
