@@ -26,9 +26,9 @@ const ChatForm: FC<Props> = ({ onSubmit }) => {
   );
 
   return (
-    <div className='fixed bg-[#FCFCFC] bottom-0 left-0 right-0 h-[40px]'>
+    <div className=''>
       <form
-        className={`fixed bottom-3 w-[90%] max-w-[1000px] left-0 right-0 m-auto border-[1px] border-[#C5C6CA] rounded-full flex items-center py-2 px-5 bg-[#FCFCFC] z-100 ${
+        className={`w-[90%] max-w-[1000px] m-auto border-[1px] border-[#C5C6CA] rounded-full flex items-center py-2 px-5 bg-[#FCFCFC] ${
           isFocus ? 'border-[#6367CC]' : ''
         }`}
         onSubmit={handleSubmit}

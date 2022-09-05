@@ -4,7 +4,7 @@ import { getFromNow } from '../util/converDate';
 interface Props {
   direction: 'right' | 'left';
   bg: 'gray' | 'white';
-  children: string | JSX.Element;
+  children: string;
   profilePath?: string;
   username?: string;
   createdAt: Date;
@@ -32,9 +32,9 @@ const Chat: FC<Props> = ({ direction, bg, children, profilePath, username, creat
         {direction === 'left' && <h2 className='ml-1 text-sm mb-[12px]'>{username}</h2>}
         <div className='flex'>
           <div
-            className={`${bgColorAndBorder} pt-[12px] pb-[9px] px-[12px] rounded-full ${
-              direction === 'right' ? 'order-2' : 'order-1'
-            }`}
+            className={`${bgColorAndBorder} ${
+              children.length > 15 ? 'rounded-md' : 'rounded-full'
+            } pt-[12px] pb-[9px] px-[12px] max-w-[50vw] ${direction === 'right' ? 'order-2' : 'order-1'}`}
           >
             {children}
           </div>
