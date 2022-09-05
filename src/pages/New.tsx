@@ -272,7 +272,6 @@ const Newpost: FC = () => {
           defaultValue={data && data.content}
         />
       </section>
-
       <div className='flex justify-center'>
         {data ? (
           <button
