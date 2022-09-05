@@ -10,6 +10,7 @@ import reportWebVitals from './reportWebVitals';
 import { store } from './redux/store';
 import { PersistGate } from 'redux-persist/lib/integration/react';
 import { persistStore } from 'redux-persist';
+import * as serviceWorkerRegistration from './serviceWorkerRegistration';
 
 const persistor = persistStore(store);
 const queryClient = new QueryClient({
@@ -35,4 +36,5 @@ root.render(
   </Provider>
 );
 
+serviceWorkerRegistration.register();
 reportWebVitals();

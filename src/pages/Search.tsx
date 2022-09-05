@@ -114,7 +114,7 @@ const SearchMatch: FC = () => {
                         <div className='text-[12px] text-matchgi-gray leading-[150%] font-Noto mb-[2.5px]'>
                           {post.address}
                         </div>
-                        <div className='flex text-[10px] rounded-[4px] w-[50px] h-[18px] bg-matchgi-lightgray justify-center p-[0.2rem] font-Noto'>
+                        <div className='flex text-[10px] rounded-[4px] min-w-[20px] w-[50px] h-[18px] bg-matchgi-lightgray justify-center p-[0.2rem] font-Noto'>
                           {post.subject}
                         </div>
                       </span>

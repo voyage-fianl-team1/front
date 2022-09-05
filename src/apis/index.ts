@@ -98,10 +98,7 @@ export const apis = {
     instance.post(`/api/reviews/${postId}`, data).then((res) => {
       return res.data.reviewId;
     }),
-  reviewImage: (reviewId: number, data: FormData) =>
-    instance.post(`/api/images/reviews/${reviewId}`, data).then((res) => {
-      return alert('리뷰 작성이 완료되었습니다.');
-    }),
+  reviewImage: (reviewId: number, data: FormData) => instance.post(`/api/images/reviews/${reviewId}`, data),
   getReviewList: (postId: number) => instance.get(`/api/reviews/${postId}`),
   getRewrite: () => instance.get('/api/posts/authority'),
   getAcceptList: (postId: number) => instance.get(`/api/posts/${postId}/request/accept`),
