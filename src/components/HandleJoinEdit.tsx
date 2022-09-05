@@ -20,7 +20,7 @@ const HandleJoinEdit = (props: JoinDataProps) => {
         await apis.postJoinGame(postData.postId);
         alert('참가 신청이 완료되었습니다.');
       }
-      navigate('/');
+      navigate(`/match/${postData.postId}`);
     } catch (err) {
       alert('참가 신청은 중복으로 할 수 없습니다.');
     }
