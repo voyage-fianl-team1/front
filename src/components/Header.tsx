@@ -60,8 +60,7 @@ const Header = () => {
   }, []);
 
   return (
-    <header className='flex justify-between pt-2 pb-4'>
-      <h1 className='text-2xl font-bold text-[#082555]'>매치기</h1>
+    <header className='flex justify-end pt-2 pb-4'>
       <ul className='flex gap-4 relative'>
         <li className='cursor-pointer' onClick={toggleNotification}>
           <img src={isNotificationExist ? alertPath : alertBasePath} alt='alert-icon' />

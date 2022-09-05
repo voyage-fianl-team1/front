@@ -4,7 +4,7 @@ import { apis } from '../apis';
 import styled from 'styled-components';
 import { UserLogin } from '../typings';
 import { AxiosError } from 'axios';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { login } from '../redux/features/userSlice';
 import { Helmet } from 'react-helmet';
@@ -43,13 +43,12 @@ const Login = () => {
         <title>매치기 | 로그인</title>
       </Helmet>
       <div className='m-2'>
-        <h1 className='text-lg font-bold text-center'>로그인</h1>
-        <div className='absolute left-0 right-0 h-[1px] bg-[#DCDDE0] top-14'></div>
+        <div className='absolute left-0 right-0 h-[1px] bg-[#DCDDE0] top-0'></div>
         <form className='flex flex-col mt-10' onSubmit={onSubmit}>
           <input
             className='login-input'
             type='text'
-            placeholder='이메일을 입력하세요'
+            placeholder='아이디를 입력하세요'
             {...register('email', { required: '이메일을 입력해주세요' })}
           />
           {errors.email && <Error>{errors.email.message}</Error>}
@@ -64,7 +63,9 @@ const Login = () => {
             <button type='submit' className='login-button w-[100%] '>
               로그인
             </button>
-            <p className='text-center text-sm underline text-matchgi-gray mt-10'>로그인 정보를 잊으셨나요?</p>
+            <Link to='/signup'>
+              <p className='text-center underline text-matchgi-gray mt-10'>아직 회원이 아니신가요?</p>
+            </Link>
           </div>
         </form>
       </div>
