@@ -36,7 +36,7 @@ const HandleJoinEdit = (props: JoinDataProps) => {
     }
   };
 
-  if (postData.owner === 1 && nowDate > postData.matchDeadline === false) {
+  if (postData.owner === 1 && postData.matchStatus === 'ONGOING') {
     return (
       <div>
         <button
@@ -70,7 +70,7 @@ const HandleJoinEdit = (props: JoinDataProps) => {
         </Link>
       </div>
     );
-  } else if (postData.owner === 1 && nowDate > postData.matchDeadline === true) {
+  } else if (postData.owner === 1 && postData.matchStatus === 'MATCHEND') {
     return <></>;
   } else if (postData.owner === -1 && postData.player === 1 && nowDate > postData.matchDeadline === false) {
     return <></>;
