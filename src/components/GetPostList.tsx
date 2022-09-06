@@ -9,6 +9,7 @@ import GetJoinData from '../components/GetJoinData';
 import Review from '../components/Review';
 import ReviewDetail from '../components/ReviewDetail';
 import HandleJoinEdit from '../components/HandleJoinEdit';
+import { Helmet } from 'react-helmet';
 import dayjs from 'dayjs';
 import CopyToClipboard from 'react-copy-to-clipboard';
 
@@ -83,6 +84,11 @@ const GetPostList = () => {
   }
   return (
     <>
+      <Helmet>
+        <title>매치기 | 경기 상세</title>
+        <meta name='description' content={postData.content} />
+        <meta property='og:image' content={postData.imgurls.pop()} />
+      </Helmet>
       <section className='flex flex-col justify-center w-full h-full bg-[#FCFCFC] font-Noto'>
         <div className='w-full h-[124px] pl-[20px] pt-[16px]'>
           <div className='flex mb-[24px] justify-between'>
