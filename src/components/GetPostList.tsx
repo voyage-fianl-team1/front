@@ -90,9 +90,13 @@ const GetPostList = () => {
         <meta name='viewport' content='width=device-width, initial-scale=1' />
         <meta name='theme-color' content='#000000' />
         <meta property='og:type' content='website' />
+        <meta property='og:url' content={`https://match-gi.com/match/${postId}`} />
         <meta property='og:title' content={`매치기 | ${postId}번째 경기 `} />
         <meta property='og:description' content={postData.content} />
-        <meta property='og:image' content={postData.imgurls.pop()} />
+        <meta
+          property='og:image'
+          content={postData.imgurls.pop() === '' || null ? '/logo512.png' : postData.imgurls.pop()}
+        />
       </Helmet>
       <section className='flex flex-col justify-center w-full h-full bg-[#FCFCFC] font-Noto'>
         <div className='w-full h-[124px] pl-[20px] pt-[16px]'>
