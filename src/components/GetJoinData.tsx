@@ -117,6 +117,7 @@ const GetJoinData = (props: JoinDataProps) => {
                       await apis.updateTotalStatus(value.requestId, { status: 'REJECT' });
                       queryClient.invalidateQueries(['joinList']);
                     }}
+                    disabled={value.status === 'REJECT' ? true : false}
                   >
                     거절
                   </button>
@@ -130,6 +131,7 @@ const GetJoinData = (props: JoinDataProps) => {
                       await apis.updateTotalStatus(value.requestId, { status: 'ACCEPT' });
                       queryClient.invalidateQueries(['joinList']);
                     }}
+                    disabled={value.status === 'ACCEPT' ? true : false}
                   >
                     승인
                   </button>
