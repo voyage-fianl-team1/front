@@ -18,7 +18,7 @@ const MatchItem = () => {
           <div className='recent-match-card' key={i}>
             <h1 className='font-semibold text-[14px] mb-[7px] truncate ...'>{v.title}</h1>
             <h2 className='text-[14px]'>{v.subject}</h2>
-            <h2 className='text-[14px]'>{v.content}</h2>
+            <h2 className='text-[14px] truncate ...'>{v.content}</h2>
             <p className='text-[12px] mt-[24px] text-matchgi-gray truncate ...'>{v.address}</p>
             <div className='flex justify-between items-center mt-[12px]'>
               <span className='text-sm text-matchgi-gray'>{convertDateShort(v.createdAt)}</span>
