@@ -13,12 +13,14 @@ import { toggleCalendarShow, toggleClear, toggleModalShow, toggleSubjectShow } f
 import { addressClear } from '../redux/features/addressSlice';
 import { calendarClear } from '../redux/features/calendarSlice';
 import { subjectClear } from '../redux/features/subjectSlice';
+import { useQueryClient } from '@tanstack/react-query';
 
 const Newpost: FC = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { register, getValues } = useForm({});
+  const queryClient = useQueryClient();
   const inputRef = useRef<HTMLInputElement | null>(null);
   const [images, setImages] = useState<string[]>([]);
   const [uploadImage, setUploadImage] = useState<File[]>([]);
@@ -75,7 +77,6 @@ const Newpost: FC = () => {
     };
 
     const value = await apis.postUpload(postData);
-
     if (uploadImage.length > 0) {
       const formData = new FormData();
       for (let i = 0; i < uploadImage.length; i++) {
@@ -83,6 +84,7 @@ const Newpost: FC = () => {
       }
       await apis.uploadImage(value, formData);
     }
+    queryClient.invalidateQueries(['postData']);
     navigate('/search');
   };
 
@@ -169,7 +171,7 @@ const Newpost: FC = () => {
             {data
               ? imgUrl.map((image: ImageType, id) => (
                   <div key={id}>
-                    <button type='button' className='absolute text-white' onClick={() => handledeleteImage(id)}>
+                    <button type='button' className='absolute text-red-500' onClick={() => handledeleteImage(id)}>
                       <IoMdCloseCircleOutline />
                     </button>
                     <img className='w-[68px] h-[68px] rounded-[8px]' alt='' src={image['url']} />
@@ -178,7 +180,7 @@ const Newpost: FC = () => {
               : images.map((image, id) => (
                   <div key={id}>
                     <div className='flex flex-col w-full h-full'>
-                      <button type='button' className='absolute text-white' onClick={() => handledeletePrevImg(id)}>
+                      <button type='button' className='absolute text-red-500' onClick={() => handledeletePrevImg(id)}>
                         <IoMdCloseCircleOutline />
                       </button>
                       <img className='w-[68px] h-[68px] rounded-[8px] mr-1' alt='' src={image} />
@@ -188,7 +190,7 @@ const Newpost: FC = () => {
             {data &&
               images.map((image, id) => (
                 <div key={id}>
-                  <button type='button' className='absolute text-white' onClick={() => handledeletePrevImg(id)}>
+                  <button type='button' className='absolute text-red-500' onClick={() => handledeletePrevImg(id)}>
                     <IoMdCloseCircleOutline />
                   </button>
                   <img className='w-[68px] h-[68px] rounded-[8px]' alt='' src={image} />
