@@ -40,7 +40,7 @@ const SelectSort = () => {
         <div className='flex flex-row gap-2 absolute top-[77px] left-[20px]'>
           <button
             className='w-[24px] h-[24px] order-0 flex-grow-0 border border-[#CCCCCC] rounded-[4px] bg-[#F2F2F2]
-            focus:bg-[#4535CC]'
+            focus:bg-[#4535CC] active:bg-[#4535CC]'
             value='createAt'
             onClick={handleSelectData}
           >
@@ -55,7 +55,7 @@ const SelectSort = () => {
         <div className='flex flex-row gap-2 absolute top-[135px] left-[20px]'>
           <button
             className='w-[24px] h-[24px] order-0 flex-grow-0 border border-[#CCCCCC] rounded-[4px] bg-[#F2F2F2]
-            focus:bg-[#4535CC]'
+            focus:bg-[#4535CC] active:bg-[#4535CC]'
             value='viewcount'
             onClick={handleSelectData}
           >
