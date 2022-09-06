@@ -4,13 +4,16 @@ import { CompatClient, Stomp } from '@stomp/stompjs';
 import { StompSubscription } from '@stomp/stompjs/src/stomp-subscription';
 import { Chat, Notification } from '../typings';
 import { SERVER_STOMP_URL } from '../apis';
+import { useDispatch, useSelector } from 'react-redux';
+import { RootState } from '../redux/store';
+import { append } from '../redux/features/notificationSlice';
 
 export function useNotification(userId: number | string | undefined, callback?: (body: any) => void) {
   const socketRef = useRef<WebSocket | null>(null);
   const stompClientRef = useRef<CompatClient | null>(null);
   const subscriptionRef = useRef<StompSubscription | null | undefined>(null);
   const accessToken = window.localStorage.getItem('accessToken');
-  const [notifications, setNotifications] = useState<Notification[]>([]);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     if (!SERVER_STOMP_URL) return;
@@ -25,7 +28,7 @@ export function useNotification(userId: number | string | undefined, callback?: 
     stompClientRef.current.connect({}, (receipt: any) => {
       subscriptionRef.current = stompClientRef?.current?.subscribe(`/room/user/${userId}`, (message) => {
         const body = JSON.parse(message.body);
-        setNotifications((prev) => [body, ...prev]);
+        dispatch(append(body));
         callback && callback(body);
       });
     });
@@ -41,7 +44,7 @@ export function useNotification(userId: number | string | undefined, callback?: 
     stompClientRef.current?.disconnect();
   }, []);
 
-  return { notifications, setNotifications, unsubscribe };
+  return { unsubscribe };
 }
 
 /**

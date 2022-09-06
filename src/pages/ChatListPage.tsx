@@ -12,31 +12,24 @@ import { useDebounce } from '../hooks/useDebounce';
 const ChatListPage = () => {
   const { value, handler } = useInput('');
   const [filterData, setFilterData] = useState<ChatRoom[]>([]);
-  const timerRef = useRef<any>(null);
 
   const { data } = useQuery<ChatRoom[]>(['chatRooms'], apis.getChatRooms, {
     select: (data) => data.filter((d) => d.title !== value),
   });
 
   const filtering = useCallback(() => {
-    if (timerRef.current) {
-      clearTimeout(timerRef.current);
-    }
     if (!data) {
       setFilterData([]);
     } else {
       if (value.length === 0) {
         setFilterData(data);
       }
-      const filtering = () => {
-        const regExp = new RegExp(value, 'g');
-        setFilterData(data.filter((d) => regExp.test(d.title)));
-      };
-      timerRef.current = setTimeout(filtering, 500);
+      const regExp = new RegExp(value, 'g');
+      setFilterData(data.filter((d) => regExp.test(d.title)));
     }
   }, [data, value]);
 
-  useDebounce(filtering, 1000);
+  useDebounce(filtering, 500);
 
   if (!data) {
     return <LoadingSpinner />;

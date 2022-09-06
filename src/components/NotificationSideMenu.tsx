@@ -11,6 +11,7 @@ import { apis } from '../apis';
 import { Notification } from '../typings';
 import { useNotification } from '../hooks/useNotification';
 import dayjs from 'dayjs';
+import { setNotifications } from '../redux/features/notificationSlice';
 
 const NotificationSideMenu = () => {
   const { id, isLogin } = useSelector((state: RootState) => state.user);
@@ -18,11 +19,11 @@ const NotificationSideMenu = () => {
   const dispatch = useDispatch();
   const queryClient = useQueryClient();
   const notificationSideMenuShow = useSelector((state: RootState) => state.toggle.notificationSideMenuShow);
-  const { notifications, setNotifications } = useNotification(id);
-
+  useNotification(id);
+  const notifications = useSelector((state: RootState) => state.notification.notifications);
   const { refetch } = useQuery(['notifications'], apis.getNotifications, {
     onSuccess: (data: Notification[]) => {
-      setNotifications(data);
+      dispatch(setNotifications(data));
     },
     enabled: false,
   });

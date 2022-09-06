@@ -3,6 +3,8 @@ import { useNavigate } from 'react-router-dom';
 import { ChatRoom } from '../typings';
 import { getFromNow } from '../util/converDate';
 import { useSocket } from '../hooks/useSocket';
+import { apis } from '../apis';
+import { useQuery } from '@tanstack/react-query';
 
 interface Props {
   id: number;
@@ -15,6 +17,7 @@ const ChatRoomItem: FC<Props> = ({ id, data }) => {
     navigate(`/chat/${id}?title=${data.title}`);
   }, []);
   const { chats } = useSocket(id);
+  const { data: userList } = useQuery(['userList', data.roomId], () => apis.getRoomUserList(data.roomId));
 
   const lastMessage = useMemo(() => {
     if (chats.length > 0) {
@@ -46,7 +49,9 @@ const ChatRoomItem: FC<Props> = ({ id, data }) => {
           className='w-[48px] h-[48px] object-cover rounded-full'
         />
         <div>
-          <h1 className='font-bold'>{data.title}</h1>
+          <h1 className='font-bold'>
+            {data.title} <span>({userList?.length}명 참가중)</span>
+          </h1>
           <p className='text-matchgi-gray text-sm'>
             {lastMessage ? (
               <span>{lastMessage.length > 25 ? lastMessage.slice(0, 26) + '...' : lastMessage}</span>
