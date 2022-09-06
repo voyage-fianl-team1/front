@@ -48,7 +48,8 @@ const Newpost: FC = () => {
       [].forEach.call(files, readAndPreview);
     }
   };
-  const postValidation = () => {
+
+  const handleDataUpload = async () => {
     if (getValues().title.length < 1) {
       return alert('제목을 입력해주세요.');
     } else if (subject.subject === '종목을 선택해주세요.') {
@@ -61,31 +62,28 @@ const Newpost: FC = () => {
       return alert('올바른 주소를 선택해주세요.');
     } else if (getValues().content.length < 1) {
       return alert('내용을 입력해주세요.');
-    }
-  };
+    } else {
+      const postData = {
+        title: getValues().title,
+        matchDeadline: date,
+        subject: subject.value,
+        content: getValues().content,
+        lat: address.lat,
+        lng: address.lng,
+        address: address.address,
+      };
 
-  const handleDataUpload = async () => {
-    postValidation();
-    const postData = {
-      title: getValues().title,
-      matchDeadline: date,
-      subject: subject.value,
-      content: getValues().content,
-      lat: address.lat,
-      lng: address.lng,
-      address: address.address,
-    };
-
-    const value = await apis.postUpload(postData);
-    if (uploadImage.length > 0) {
-      const formData = new FormData();
-      for (let i = 0; i < uploadImage.length; i++) {
-        formData.append('files', uploadImage[i]);
+      const value = await apis.postUpload(postData);
+      if (uploadImage.length > 0) {
+        const formData = new FormData();
+        for (let i = 0; i < uploadImage.length; i++) {
+          formData.append('files', uploadImage[i]);
+        }
+        await apis.uploadImage(value, formData);
       }
-      await apis.uploadImage(value, formData);
+      queryClient.invalidateQueries(['postData']);
+      navigate('/search');
     }
-    queryClient.invalidateQueries(['postData']);
-    navigate('/search');
   };
 
   useEffect(() => {
@@ -101,29 +99,42 @@ const Newpost: FC = () => {
   }, []);
 
   const handleEditUpload = async () => {
-    postValidation();
-    const postData = {
-      title: getValues().title,
-      matchDeadline: date,
-      subject: subject.value,
-      content: getValues().content,
-      lat: address.lat,
-      lng: address.lng,
-      address: address.address,
-    };
-    await apis.updatePost(data.postId, postData);
-    if (uploadImage.length > 0) {
-      const formData = new FormData();
-      for (let i = 0; i < uploadImage.length; i++) {
-        if (uploadImage[i] !== null) {
-          formData.append('files', uploadImage[i]);
-        }
-      }
-      await apis.uploadImage(data.postId, formData);
+    if (getValues().title.length < 1) {
+      return alert('제목을 입력해주세요.');
+    } else if (subject.subject === '종목을 선택해주세요.') {
+      return alert('종목을 선택해주세요.');
+    } else if (date === '모집 마감일을 선택해 주세요.') {
+      return alert('모집 마감일을 선택해 주세요.');
+    } else if (address.address === '주소를 선택해 주세요.' && address.lat === 0 && address.lng === 0) {
+      return alert('주소를 선택해주세요.');
+    } else if (address.address === undefined) {
+      return alert('올바른 주소를 선택해주세요.');
+    } else if (getValues().content.length < 1) {
+      return alert('내용을 입력해주세요.');
     } else {
+      const postData = {
+        title: getValues().title,
+        matchDeadline: date,
+        subject: subject.value,
+        content: getValues().content,
+        lat: address.lat,
+        lng: address.lng,
+        address: address.address,
+      };
+      await apis.updatePost(data.postId, postData);
+      if (uploadImage.length > 0) {
+        const formData = new FormData();
+        for (let i = 0; i < uploadImage.length; i++) {
+          if (uploadImage[i] !== null) {
+            formData.append('files', uploadImage[i]);
+          }
+        }
+        await apis.uploadImage(data.postId, formData);
+      } else {
+        navigate('/search');
+      }
       navigate('/search');
     }
-    navigate('/search');
   };
 
   const handledeletePrevImg = async (id: number) => {
