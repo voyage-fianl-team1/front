@@ -38,7 +38,6 @@ const SearchMatch: FC = () => {
   });
 
   useEffect(() => {
-    refetch();
     queryClient.invalidateQueries(['postData']);
   }, []);
 
