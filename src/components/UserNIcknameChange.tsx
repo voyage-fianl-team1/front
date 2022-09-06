@@ -21,6 +21,11 @@ const UserNicknameChange: FC<Props> = ({ toggleModal }) => {
       if (value !== nickname) {
         await apis.updateUser(value);
       }
+
+      if (value.length < 3 || value.length > 10) {
+        return alert('닉네임은 최소3자 최대 10자 이하여야합니다');
+      }
+
       // 수정하고나서 최신의 유저정보를 가져와서, 재로그인 시키면서, 유저정보 최신화
       const userInfo = await apis.getUser();
       dispatch(login(userInfo.data));

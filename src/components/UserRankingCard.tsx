@@ -1,4 +1,5 @@
 import React, { FC, useMemo } from 'react';
+import { Link } from 'react-router-dom';
 import { UserRanking } from '../typings';
 import { categories } from '../util/subjectTable';
 
@@ -18,7 +19,9 @@ const UserRankingCard: FC<Props> = ({ user, rank }) => {
           src={user.profileUrl ? user.profileUrl : '/assets/images/avatar.svg'}
           alt='user-avatar'
         />
-        <h2>{user.nickname.length > 15 ? user.nickname.slice(0, 16) + '...' : user.nickname}</h2>
+        <Link to={`/matchHistory/${1}/subject/ALL?nickname=${user.nickname}`}>
+          <h2>{user.nickname.length > 15 ? user.nickname.slice(0, 16) + '...' : user.nickname}</h2>
+        </Link>
       </div>
       <div className='flex items-center gap-2'>
         <span>{user.win}승</span>
