@@ -22,13 +22,14 @@ const PageTitle = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const pathname = window.location.pathname;
-  const isKakaoFirstLogin = useMemo(() => location.search.includes('firstKakaoLogin'), [location]);
+
   const handleRouteBack = useCallback(() => {
-    if (location.pathname === '/search' || isKakaoFirstLogin) {
+    if (location.pathname === '/search') {
       navigate('/');
-    }
-    if (/\/match\/.+/g.test(location.pathname)) {
+    } else if (/\/match\/.+/g.test(location.pathname)) {
       navigate('/search');
+    } else if (location.pathname === '/profile/edit') {
+      navigate('/profile');
     } else {
       navigate(-1);
     }
