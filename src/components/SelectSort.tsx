@@ -16,6 +16,7 @@ const SelectSort = () => {
   }, []);
 
   const handleSelectData = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.currentTarget.focus();
     setSort(e.currentTarget.value);
   };
 
