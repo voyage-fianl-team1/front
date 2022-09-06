@@ -77,7 +77,6 @@ const Newpost: FC = () => {
     };
 
     const value = await apis.postUpload(postData);
-    queryClient.invalidateQueries(['postData']);
     if (uploadImage.length > 0) {
       const formData = new FormData();
       for (let i = 0; i < uploadImage.length; i++) {
@@ -85,6 +84,7 @@ const Newpost: FC = () => {
       }
       await apis.uploadImage(value, formData);
     }
+    queryClient.invalidateQueries(['postData']);
     navigate('/search');
   };
 
