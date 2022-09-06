@@ -18,7 +18,7 @@ const UserRankingCard: FC<Props> = ({ user, rank }) => {
           src={user.profileUrl ? user.profileUrl : '/assets/images/avatar.svg'}
           alt='user-avatar'
         />
-        <h2>{user.nickname}</h2>
+        <h2>{user.nickname.length > 15 ? user.nickname.slice(0, 16) + '...' : user.nickname}</h2>
       </div>
       <div className='flex items-center gap-2'>
         <span>{user.win}승</span>

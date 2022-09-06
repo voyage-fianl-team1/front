@@ -13,7 +13,7 @@ const SelectCategory = () => {
   };
   return (
     <div
-      className='min-w-[75px] h-[30px] border-[1px] border-matchgi-gray rounded-full py-1 px-3 text-sm flex items-center justify-between gap-2'
+      className='min-w-[75px] h-[30px] border-[1px] border-matchgi-gray rounded-full py-1 px-3 text-sm flex items-center justify-between gap-2 cursor-pointer'
       onClick={openSubjectModal}
     >
       <span className='text-[12px] translate-y-[1.4px]'>{categoryName ? categoryName.title : ''}</span>

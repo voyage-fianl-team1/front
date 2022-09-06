@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useRef } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { apis } from '../apis';
 import { useParams } from 'react-router-dom';
@@ -19,7 +19,6 @@ const GuestPostList = () => {
   const detailRef = useRef<HTMLDivElement>(null);
   const locationRef = useRef<HTMLDivElement>(null);
   const reviewRef = useRef<HTMLDivElement>(null);
-
   const { data: res, isLoading } = useQuery(['guestList', postId], async () => await apis.getforGuestPostList(postId));
   const guestData: PostDataProps = res?.data;
   const drill: JoinDataProps = {
@@ -78,8 +77,10 @@ const GuestPostList = () => {
   return (
     <>
       <Helmet>
-        <title>매치기 | 경기 상세</title>
-        <meta name='description' content={guestData.content} />
+        <title>{`매치기 | ${postId}번째 경기 `}</title>
+        <meta property='og:type' content='website' />
+        <meta property='og:title' content={`매치기 | ${postId}번째 경기 `} />
+        <meta property='og:description' content={guestData.content} />
         <meta property='og:image' content={guestData.imgurls.pop()} />
       </Helmet>
       <section className='flex flex-col justify-center w-full h-full bg-[#FCFCFC] font-Noto'>

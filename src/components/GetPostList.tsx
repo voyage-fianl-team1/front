@@ -86,8 +86,10 @@ const GetPostList = () => {
   return (
     <>
       <Helmet>
-        <title>매치기 | 경기 상세</title>
-        <meta name='description' content={postData.content} />
+        <title>{`매치기 | ${postId}번째 경기 `}</title>
+        <meta property='og:type' content='website' />
+        <meta property='og:title' content={`매치기 | ${postId}번째 경기 `} />
+        <meta property='og:description' content={postData.content} />
         <meta property='og:image' content={postData.imgurls.pop()} />
       </Helmet>
       <section className='flex flex-col justify-center w-full h-full bg-[#FCFCFC] font-Noto'>

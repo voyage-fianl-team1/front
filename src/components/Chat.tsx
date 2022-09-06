@@ -34,7 +34,7 @@ const Chat: FC<Props> = ({ direction, bg, children, profilePath, username, creat
           <div
             className={`${bgColorAndBorder} ${
               children.length > 15 ? 'rounded-md' : 'rounded-full'
-            } pt-[12px] pb-[9px] px-[12px] max-w-[50vw] ${direction === 'right' ? 'order-2' : 'order-1'}`}
+            } pt-[12px] pb-[9px] px-[12px] max-w-[250px] break-all ${direction === 'right' ? 'order-2' : 'order-1'}`}
           >
             {children}
           </div>
