@@ -48,7 +48,7 @@ const GetPostList = () => {
     const a = dayjs(postData?.matchDeadline);
     const c = now.diff(a, 'day');
     if (c < 1 && a.format('YYYY-MM-DD') !== now.format('YYYY-MM-DD')) {
-      return <p className='w-[5rem] h-7 text-[#38393C]'>(D{c + 1})</p>;
+      return <p className='w-[5rem] h-7 text-[#38393C]'>(D-{c + 1})</p>;
     } else if (c < 1 && a.format('YYYY-MM-DD') === now.format('YYYY-MM-DD')) {
       return <p className='w-[5rem] h-7 text-[#38393C]'>(D-DAY)</p>;
     } else {

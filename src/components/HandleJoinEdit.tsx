@@ -4,6 +4,7 @@ import { useNavigate, Link } from 'react-router-dom';
 import { addressAction } from '../redux/features/addressSlice';
 import { calendarAction } from '../redux/features/calendarSlice';
 import { subjectAction } from '../redux/features/subjectSlice';
+import { useQueryClient } from '@tanstack/react-query';
 import dayjs from 'dayjs';
 import { apis } from '../apis';
 import { JoinDataProps } from '../typings';
@@ -11,6 +12,7 @@ import { JoinDataProps } from '../typings';
 const HandleJoinEdit = (props: JoinDataProps) => {
   const date = new Date();
   const nowDate = dayjs(date).format('YYYY-MM-DD');
+  const queryClient = useQueryClient();
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const postData = useMemo(() => props.data, [props.data]);
@@ -19,8 +21,8 @@ const HandleJoinEdit = (props: JoinDataProps) => {
       if (window.confirm('참가 신청 하시겠습니까?')) {
         await apis.postJoinGame(postData.postId);
         alert('참가 신청이 완료되었습니다.');
+        queryClient.invalidateQueries(['postList']);
       }
-      window.location.reload();
     } catch (err) {
       alert('참가 신청은 중복으로 할 수 없습니다.');
     }
