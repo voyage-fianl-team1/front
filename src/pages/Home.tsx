@@ -19,6 +19,8 @@ const Home: FC = () => {
     <>
       <Helmet>
         <title>매치기 | 스포츠를 함께 즐길 매칭상대를 찾아보세요! </title>
+        <meta name='viewport' content='width=device-width, initial-scale=1' />
+        <meta name='theme-color' content='#000000' />
         <meta name='매치기' content='스포츠를 함께 즐길 매칭상대를 찾아보세요!' />
       </Helmet>
       <main>
