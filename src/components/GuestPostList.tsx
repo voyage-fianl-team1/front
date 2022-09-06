@@ -9,7 +9,7 @@ import ReviewDetail from '../components/ReviewDetail';
 import dayjs from 'dayjs';
 import CopyToClipboard from 'react-copy-to-clipboard';
 import LoadingSpinner from './loadingSpinner';
-import { Helmet } from 'react-helmet-async';
+import { Helmet } from 'react-helmet';
 
 const GuestPostList = () => {
   const param = useParams();
