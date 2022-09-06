@@ -9,7 +9,7 @@ import GetJoinData from '../components/GetJoinData';
 import Review from '../components/Review';
 import ReviewDetail from '../components/ReviewDetail';
 import HandleJoinEdit from '../components/HandleJoinEdit';
-import { Helmet } from 'react-helmet-async';
+import { Helmet } from 'react-helmet';
 import dayjs from 'dayjs';
 import CopyToClipboard from 'react-copy-to-clipboard';
 
