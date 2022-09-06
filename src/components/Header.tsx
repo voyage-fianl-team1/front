@@ -9,6 +9,7 @@ import { apis } from '../apis';
 import { useQuery, useQueryClient, useMutation } from '@tanstack/react-query';
 import { Notification } from '../typings';
 import { toggleNotificationShow } from '../redux/features/toggleSlice';
+import { setNotifications } from '../redux/features/notificationSlice';
 
 const alertPath = '/assets/images/alert.svg';
 const alertBasePath = '/assets/images/alert_base.svg';
@@ -18,11 +19,11 @@ const Header = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const queryClient = useQueryClient();
-  const { notifications, setNotifications } = useNotification(id);
+  const notifications = useSelector((state: RootState) => state.notification.notifications);
 
   const { refetch } = useQuery(['notifications'], apis.getNotifications, {
     onSuccess: (data: Notification[]) => {
-      setNotifications(data);
+      dispatch(setNotifications(data));
     },
     enabled: false,
   });

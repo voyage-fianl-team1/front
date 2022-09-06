@@ -11,6 +11,7 @@ import overlaySlice from './features/overlaySlice';
 import positionSlice from './features/postionSlice';
 import calendarSlice from './features/calendarSlice';
 import subjectSlice from './features/subjectSlice';
+import notificationSlice from './features/notificationSlice';
 
 const persistConfig = {
   key: 'root',
@@ -36,6 +37,7 @@ export const store = configureStore({
     calendar: calendarSlice.reducer,
     subject: subjectSlice.reducer,
     persistReducered,
+    notification: notificationSlice.reducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
