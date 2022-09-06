@@ -9,6 +9,7 @@ import GetJoinData from '../components/GetJoinData';
 import Review from '../components/Review';
 import ReviewDetail from '../components/ReviewDetail';
 import HandleJoinEdit from '../components/HandleJoinEdit';
+import { Helmet } from 'react-helmet';
 import dayjs from 'dayjs';
 import CopyToClipboard from 'react-copy-to-clipboard';
 
@@ -47,8 +48,9 @@ const GetPostList = () => {
     const now = dayjs(new Date());
     const a = dayjs(postData?.matchDeadline);
     const c = now.diff(a, 'day');
+    const abs = Math.abs(c);
     if (c < 1 && a.format('YYYY-MM-DD') !== now.format('YYYY-MM-DD')) {
-      return <p className='w-[5rem] h-7 text-[#38393C]'>(D-{c + 1})</p>;
+      return <p className='w-[5rem] h-7 text-[#38393C]'>(D-{abs + 1})</p>;
     } else if (c < 1 && a.format('YYYY-MM-DD') === now.format('YYYY-MM-DD')) {
       return <p className='w-[5rem] h-7 text-[#38393C]'>(D-DAY)</p>;
     } else {
@@ -83,6 +85,11 @@ const GetPostList = () => {
   }
   return (
     <>
+      <Helmet>
+        <title>매치기 | 경기 상세</title>
+        <meta name='description' content={postData.content} />
+        <meta property='og:image' content={postData.imgurls.pop()} />
+      </Helmet>
       <section className='flex flex-col justify-center w-full h-full bg-[#FCFCFC] font-Noto'>
         <div className='w-full h-[124px] pl-[20px] pt-[16px]'>
           <div className='flex mb-[24px] justify-between'>
