@@ -87,6 +87,8 @@ const GetPostList = () => {
     <>
       <Helmet>
         <title>{`매치기 | ${postId}번째 경기 `}</title>
+        <meta name='viewport' content='width=device-width, initial-scale=1' />
+        <meta name='theme-color' content='#000000' />
         <meta property='og:type' content='website' />
         <meta property='og:title' content={`매치기 | ${postId}번째 경기 `} />
         <meta property='og:description' content={postData.content} />
