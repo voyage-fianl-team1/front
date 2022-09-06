@@ -9,6 +9,7 @@ import ReviewDetail from '../components/ReviewDetail';
 import dayjs from 'dayjs';
 import CopyToClipboard from 'react-copy-to-clipboard';
 import LoadingSpinner from './loadingSpinner';
+import { Helmet } from 'react-helmet';
 
 const GuestPostList = () => {
   const param = useParams();
@@ -76,6 +77,11 @@ const GuestPostList = () => {
   }
   return (
     <>
+      <Helmet>
+        <title>매치기 | 경기 상세</title>
+        <meta name='description' content={guestData.content} />
+        <meta property='og:image' content={guestData.imgurls.pop()} />
+      </Helmet>
       <section className='flex flex-col justify-center w-full h-full bg-[#FCFCFC] font-Noto'>
         <div className='w-full h-[124px] pl-[20px] pt-[16px]'>
           <div className='flex mb-[24px] justify-between'>
