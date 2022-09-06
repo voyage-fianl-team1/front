@@ -14,6 +14,7 @@ const SelectSubject = () => {
   }, []);
 
   const handleSelectData = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.currentTarget.focus();
     setSubject(e.currentTarget.value);
   };
 
