@@ -78,11 +78,8 @@ const GuestPostList = () => {
     <>
       <Helmet>
         <title>{`매치기 | ${postId}번째 경기 `}</title>
-        <meta name='viewport' content='width=device-width, initial-scale=1' />
-        <meta name='theme-color' content='#000000' />
         <meta name='description' content={guestData.content} data-react-helmet='true' />
         <meta name='keywords' content={guestData.title} data-react-helmet='true' />
-
         <meta property='og:type' content='website' data-react-helmet='true' />
         <meta property='og:site_name' content={guestData.title} data-react-helmet='true' />
         <meta property='og:url' content={`https://match-gi.com/match/${postId}`} data-react-helmet='true' />
