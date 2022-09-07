@@ -12,7 +12,11 @@ const SlideBanner = () => {
     <div className='mt-[20px] mb-[32px]'>
       <Swiper spaceBetween={50} slidesPerView={1} modules={[Autoplay]} autoplay={{ delay: 3000 }}>
         <SwiperSlide>
-          <img src='/assets/images/banner/banner1.svg' alt='banner-01' className='w-[100%] h-[100%]' />
+          <img
+            src='https://yougeun-bucket.s3.ap-northeast-2.amazonaws.com/banner/banner1.svg'
+            alt='banner-01'
+            className='w-[100%] h-[100%]'
+          />
         </SwiperSlide>
         <SwiperSlide>
           <img src='/assets/images/banner/banner3.svg' alt='banner-01' className='w-[100%] h-[100%]' />
