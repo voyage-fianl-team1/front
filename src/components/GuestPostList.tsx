@@ -127,7 +127,7 @@ const GuestPostList = () => {
           </div>
           <div ref={matchRef}></div>
         </div>
-        <div className='flex flex-row w-full h-[29px] justify-center items-center gap-[25px]'>
+        <div className='flex flex-row w-full h-[29px] justify-center items-center gap-[25px] font-Noto'>
           <button className='detail-btn' onClick={handleMoveScroll} autoFocus>
             경기정보
           </button>
@@ -149,18 +149,18 @@ const GuestPostList = () => {
             경기정보
           </div>
           <section className='flex flex-row w-11/12 h-[109px] bg-[#FFFFFF] rounded-[16px] justify-left items-center gap-5 font-Noto'>
-            <div className='font-medium tracking-[-0.02rem] leading-[150%] text-[#9A9B9F] ml-[25px]'>
+            <div className='font-medium tracking-[-0.02rem] leading-[150%] text-[#9A9B9F] ml-[25px] font-Noto'>
               <p className='w-full h-7'>경기종목</p>
               <p className='w-full h-7'>모집마감일</p>
             </div>
             <div>
               <p className='w-full h-7'>{guestData.subject}</p>
               <span className='flex flex-row gap-4'>
-                <p className='w-[85px] h-7'>{changeData(guestData.matchDeadline)}</p>
+                <p className='w-[85px] h-7 font-SD'>{changeData(guestData.matchDeadline)}</p>
                 {guestData.matchStatus === 'MATCHEND' ? (
-                  <p className='w-[3.5rem] h-7 text-[#9A9B9F]'>(마감)</p>
+                  <p className='w-[3.5rem] h-7 text-[#9A9B9F] font-Noto'>(마감)</p>
                 ) : (
-                  <p className='w-[50px]'>{dday()}</p>
+                  <p className='w-[50px] font-SD'>{dday()}</p>
                 )}
               </span>
             </div>
@@ -177,7 +177,7 @@ const GuestPostList = () => {
             }`}
             ref={locationRef}
           >
-            <pre className='w-full whitespace-pre-wrap'>{guestData.content}</pre>
+            <pre className='w-full whitespace-pre-wrap font-Noto'>{guestData.content}</pre>
           </div>
         </div>
         <section className='w-full h-[289px] mb-[36px]'>
@@ -210,7 +210,7 @@ const GuestPostList = () => {
         </section>
         <div ref={reviewRef} />
         <button
-          className='w-[100%] h-[48px] border border-matchgi-bordergray rounded-[4px] bg-matchgi-btnblue text-[#FCFCFC] cursor-pointer mb-[36px]'
+          className='w-[100%] h-[48px] border border-matchgi-bordergray rounded-[4px] bg-matchgi-btnblue text-[#FCFCFC] cursor-pointer mb-[36px] font-Noto'
           type='button'
           onClick={() => alert('참가 신청은 로그인 후 가능합니다.')}
         >

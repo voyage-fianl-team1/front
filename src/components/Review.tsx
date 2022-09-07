@@ -95,7 +95,7 @@ const Review = (props: JoinDataProps) => {
           '
                 onClick={handleReviewUpload}
               >
-                <p>입력</p>
+                <p className='font-Noto'>입력</p>
               </button>
             </div>
           </div>
