@@ -36,7 +36,7 @@ const ChatForm: FC<Props> = ({ onSubmit }) => {
         <input
           type='text'
           placeholder='메세지 내용을 입력하세요'
-          className='flex-1 outline-0'
+          className='flex-1 outline-0 '
           onFocus={handleFocus}
           onBlur={handleFocusOut}
           value={value}
