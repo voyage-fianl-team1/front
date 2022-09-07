@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { JoinDataProps, JoinData, ImageType } from '../typings';
 import { apis } from '../apis';
@@ -263,7 +263,9 @@ const GetJoinData = (props: JoinDataProps) => {
             <>
               <div
                 key={id}
-                className='flex flex-col w-full h-[140px] justify-center items-center bg-[#F4F5F5] rounded-[10px] mb-[16px]'
+                className={`flex flex-col w-full h-[140px] justify-center items-center bg-[#F4F5F5] rounded-[10px] mb-[16px] ${
+                  value.status === 'PENDING' ? 'hidden' : ''
+                }`}
               >
                 <div className='flex flex-row w-full h-[20px] items-center gap-3 ml-[16px]'>
                   <img
