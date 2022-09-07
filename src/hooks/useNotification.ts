@@ -14,6 +14,7 @@ export function useNotification(userId: number | string | undefined, callback?: 
   const subscriptionRef = useRef<StompSubscription | null | undefined>(null);
   const accessToken = window.localStorage.getItem('accessToken');
   const dispatch = useDispatch();
+  const { isLogin } = useSelector((state: RootState) => state.user);
 
   useEffect(() => {
     if (!SERVER_STOMP_URL) return;
@@ -37,7 +38,7 @@ export function useNotification(userId: number | string | undefined, callback?: 
       subscriptionRef.current?.unsubscribe();
       stompClientRef.current?.disconnect();
     };
-  }, []);
+  }, [isLogin]);
 
   const unsubscribe = useCallback(() => {
     subscriptionRef.current?.unsubscribe();
