@@ -30,6 +30,8 @@ const PageTitle = () => {
       navigate('/search');
     } else if (location.pathname === '/profile/edit') {
       navigate('/profile');
+    } else if (location.pathname === '/profile') {
+      navigate('/');
     } else {
       navigate(-1);
     }
