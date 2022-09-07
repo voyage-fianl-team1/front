@@ -134,7 +134,7 @@ const GetPostList = () => {
           </div>
           <div ref={matchRef}></div>
         </div>
-        <div className='flex flex-row w-full h-[29px] justify-center items-center gap-[25px]'>
+        <div className='flex flex-row w-full h-[29px] justify-center items-center gap-[25px] font-Noto'>
           <button className='detail-btn' onClick={handleMoveScroll} autoFocus>
             경기정보
           </button>
@@ -161,13 +161,13 @@ const GetPostList = () => {
               <p className='w-full h-7'>모집마감일</p>
             </div>
             <div>
-              <p className='w-full h-7'>{postData.subject}</p>
+              <p className='w-full h-7 font-Noto'>{postData.subject}</p>
               <span className='flex flex-row gap-4'>
-                <p className='w-[85px] h-7'>{changeData(postData.matchDeadline)}</p>
+                <p className='w-[85px] h-7 font-SD'>{changeData(postData.matchDeadline)}</p>
                 {postData.matchStatus === 'MATCHEND' ? (
-                  <p className='w-[3.5rem] h-7 text-[#9A9B9F]'>(마감)</p>
+                  <p className='w-[3.5rem] h-7 text-[#9A9B9F] font-Noto'>(마감)</p>
                 ) : (
-                  <p className='w-[50px]'>{dday()}</p>
+                  <p className='w-[50px] font-SD'>{dday()}</p>
                 )}
               </span>
             </div>
@@ -184,7 +184,7 @@ const GetPostList = () => {
             }`}
             ref={locationRef}
           >
-            <pre className='w-full whitespace-pre-wrap'>{postData.content}</pre>
+            <pre className='w-full whitespace-pre-wrap font-Noto'>{postData.content}</pre>
           </div>
         </div>
         <section className='w-full h-[289px] mb-[36px]'>
