@@ -106,7 +106,7 @@ const SignUp = () => {
               placeholder='닉네임'
               {...register('nickname', {
                 required: '닉네임을 입력해주세요',
-                minLength: { value: 5, message: '최소 5자 이상입니다' },
+                minLength: { value: 2, message: '최소 2자 이상입니다' },
                 maxLength: { value: 10, message: '쵀대 10자 이하입니다' },
               })}
             />
