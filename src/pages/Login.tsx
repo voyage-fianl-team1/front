@@ -59,7 +59,7 @@ const Login = () => {
           />
           {errors.password && <Error>{errors.password.message}</Error>}
           <div className='fixed bottom-20 left-0 right-0 px-5 max-w-[1000px] m-auto'>
-            <button type='submit' className='login-button w-[100%] '>
+            <button data-testid='login-button' type='submit' className='login-button w-[100%] '>
               로그인
             </button>
             <Link to='/signup'>

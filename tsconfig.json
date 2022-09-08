@@ -7,7 +7,9 @@
       "esnext"
     ],
     "types": [
-      "kakao.maps.d.ts"
+      "kakao.maps.d.ts",
+      "cypress",
+      "@testing-library/cypress"
     ],
     "allowJs": true,
     "skipLibCheck": true,
@@ -19,10 +21,10 @@
     "module": "esnext",
     "moduleResolution": "node",
     "resolveJsonModule": true,
-    "isolatedModules": true,
+    "isolatedModules": false,
     "noEmit": true,
     "jsx": "react-jsx",
-    "strictPropertyInitialization": false
+    "strictPropertyInitialization": false,
   },
   "include": [
     "src"
