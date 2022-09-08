@@ -172,5 +172,5 @@ export interface UserRanking {
   subject: string;
   profileUrl: string;
   win: string;
-  postId: number;
+  userId: number;
 }
