@@ -123,7 +123,7 @@ const SignUp = () => {
             <input
               className='signup-input'
               type={passwordShow ? 'text' : 'password'}
-              placeholder='password'
+              placeholder='비밀번호'
               {...register('password', { required: '비밀번호를 입력해주세요' })}
             />
             <img
@@ -151,7 +151,7 @@ const SignUp = () => {
           </div>
           {errors.passwordCheck && <Error>{errors.passwordCheck.message}</Error>}
           <div className='max-w-[1000px] m-auto w-[100%] mt-10'>
-            <button className='login-button w-[100%]' type='submit'>
+            <button data-testid='submit' className='login-button w-[100%]' type='submit'>
               회원가입
             </button>
           </div>

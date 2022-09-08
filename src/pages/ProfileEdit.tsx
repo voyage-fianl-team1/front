@@ -31,7 +31,9 @@ const ProfileEdit = () => {
         <div className='flex justify-between items-center'>
           <div>
             <h1 className='text-[14px]'>닉네임</h1>
-            <h2 className='text-[#38393C] max-w-[250px]'>{nickname}</h2>
+            <h2 data-testid='nickname' className='text-[#38393C] max-w-[250px]'>
+              {nickname}
+            </h2>
           </div>
           <div>
             <button

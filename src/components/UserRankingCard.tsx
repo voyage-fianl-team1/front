@@ -19,7 +19,7 @@ const UserRankingCard: FC<Props> = ({ user, rank }) => {
           src={user.profileUrl ? user.profileUrl : '/assets/images/avatar.svg'}
           alt='user-avatar'
         />
-        <Link to={`/matchHistory/${1}/subject/ALL?nickname=${user.nickname}`}>
+        <Link to={`/matchHistory/${user.postId}/subject/ALL?nickname=${user.nickname}`}>
           <h2>{user.nickname.length > 15 ? user.nickname.slice(0, 16) + '...' : user.nickname}</h2>
         </Link>
       </div>
