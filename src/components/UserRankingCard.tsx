@@ -10,6 +10,7 @@ interface Props {
 
 const UserRankingCard: FC<Props> = ({ user, rank }) => {
   const subjectInfo = useMemo(() => categories.find((c) => c.value === user.subject), [user.subject]);
+
   return (
     <div className='user-ranking-card flex justify-between items-center p-2'>
       <div className='flex items-center gap-2'>

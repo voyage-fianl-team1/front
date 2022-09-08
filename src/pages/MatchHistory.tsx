@@ -55,7 +55,7 @@ const MatchHistory = () => {
       <Helmet>
         <title>매치기 | 경기기록</title>
       </Helmet>
-      <div className='match-box flex justify-around p-2'>
+      {/* <div className='match-box flex justify-around p-2'>
         <div className='flex flex-col items-center gap-3 py-5'>
           <h1 className='text-[#717275]'>전체경기</h1>
           <span className='text-[#38393C] font-[500]'>{win + lose + draw}</span>
@@ -72,7 +72,7 @@ const MatchHistory = () => {
           <h1 className='text-[#717275]'>무승부</h1>
           <span className='text-[#38393C] font-[500]'>{draw}</span>
         </div>
-      </div>
+      </div> */}
       {data.length === 0 ? (
         <div className='text-sm text-black/30 my-10 text-center'>참가한 경기가 없습니다</div>
       ) : (
