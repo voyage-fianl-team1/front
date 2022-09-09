@@ -38,9 +38,9 @@ const SearchMatch: FC = () => {
     getNextPageParam: (lastPage) => (!lastPage.last ? lastPage.nextPage : undefined),
   });
 
-  useEffect(() => {
-    queryClient.removeQueries();
-  }, []);
+  // useEffect(() => {
+  //   queryClient.removeQueries();
+  // }, []);
 
   useEffect(() => {
     if (inView) fetchNextPage();
