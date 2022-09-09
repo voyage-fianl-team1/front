@@ -21,6 +21,7 @@ const HandleJoinEdit = (props: JoinDataProps) => {
         await apis.postJoinGame(postData.postId);
         alert('참가 신청이 완료되었습니다.');
         queryClient.invalidateQueries(['postList']);
+        queryClient.invalidateQueries(['joinList']);
       }
     } catch (err) {
       alert('참가 신청은 중복으로 할 수 없습니다.');
@@ -31,6 +32,7 @@ const HandleJoinEdit = (props: JoinDataProps) => {
       if (window.confirm('게시글을 삭제하시겠습니까?')) {
         await apis.deletePost(postData.postId);
         alert('게시글이 삭제되었습니다.');
+        queryClient.removeQueries(['postData']);
         navigate(-1);
       }
     } catch (err) {

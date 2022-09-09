@@ -31,8 +31,8 @@ const GetJoinData = (props: JoinDataProps) => {
     }
   };
 
-  const handleScoreChange = async (e: React.MouseEvent<HTMLButtonElement>, requestId: string) => {
-    await apis.updateTotalStatus(requestId, { status: e.currentTarget.value });
+  const handleScoreChange = async (requestId: string, value: string) => {
+    await apis.updateTotalStatus(requestId, { status: value });
     queryClient.invalidateQueries(['acceptlist']);
     queryClient.invalidateQueries(['joinList']);
   };
@@ -77,10 +77,7 @@ const GetJoinData = (props: JoinDataProps) => {
                       value.status === 'REJECT' ? 'bg-[#14308B] text-[#FFF]' : 'bg-[#FFF] border border-[#949B9F'
                     }`}
                     value='REJECT'
-                    onClick={async () => {
-                      await apis.updateTotalStatus(value.requestId, { status: 'REJECT' });
-                      queryClient.invalidateQueries(['joinList']);
-                    }}
+                    onClick={(e) => handleScoreChange(value.requestId, e.currentTarget.value)}
                     disabled={value.status === 'REJECT' ? true : false}
                   >
                     거절
@@ -91,10 +88,7 @@ const GetJoinData = (props: JoinDataProps) => {
                     className={`w-[132px] h-[36px] rounded-[4px]] ${
                       value.status === 'ACCEPT' ? 'bg-[#14308B] text-[#FFF]' : 'bg-[#FFF] border border-[#949B9F'
                     }`}
-                    onClick={async () => {
-                      await apis.updateTotalStatus(value.requestId, { status: 'ACCEPT' });
-                      queryClient.invalidateQueries(['joinList']);
-                    }}
+                    onClick={(e) => handleScoreChange(value.requestId, e.currentTarget.value)}
                     disabled={value.status === 'ACCEPT' ? true : false}
                   >
                     승인
@@ -168,33 +162,21 @@ const GetJoinData = (props: JoinDataProps) => {
                   <button
                     className='joinScore'
                     value='WIN'
-                    onClick={async () => {
-                      await apis.updateTotalStatus(value.requestId, { status: 'WIN' });
-                      queryClient.invalidateQueries(['acceptlist']);
-                      queryClient.invalidateQueries(['joinList']);
-                    }}
+                    onClick={(e) => handleScoreChange(value.requestId, e.currentTarget.value)}
                   >
                     승
                   </button>
                   <button
                     className='joinScore'
                     value='LOSE'
-                    onClick={async () => {
-                      await apis.updateTotalStatus(value.requestId, { status: 'LOSE' });
-                      queryClient.invalidateQueries(['acceptlist']);
-                      queryClient.invalidateQueries(['joinList']);
-                    }}
+                    onClick={(e) => handleScoreChange(value.requestId, e.currentTarget.value)}
                   >
                     패
                   </button>
                   <button
                     className='joinScore'
                     value='DRAW'
-                    onClick={async () => {
-                      await apis.updateTotalStatus(value.requestId, { status: 'DRAW' });
-                      queryClient.invalidateQueries(['acceptlist']);
-                      queryClient.invalidateQueries(['joinList']);
-                    }}
+                    onClick={(e) => handleScoreChange(value.requestId, e.currentTarget.value)}
                   >
                     무
                   </button>
