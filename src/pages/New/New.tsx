@@ -13,11 +13,13 @@ import { subjectClear } from '../../redux/features/subjectSlice';
 import MapContainer from '../../components/Calendar/MapContainer';
 import Calendars from '../../components/Calendar/Calendar';
 import CustomSubject from '../../components/Select/CustomSelect';
+import { useQueryClient } from '@tanstack/react-query';
 
 const Newpost: FC = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const queryClient = useQueryClient();
   const { register, getValues } = useForm({});
   const inputRef = useRef<HTMLInputElement | null>(null);
   const [images, setImages] = useState<string[]>([]);
@@ -78,6 +80,7 @@ const Newpost: FC = () => {
         }
         await apis.uploadImage(value, formData);
       }
+      queryClient.removeQueries(['postData']);
       navigate('/search');
     }
   };
@@ -127,6 +130,7 @@ const Newpost: FC = () => {
         }
         await apis.uploadImage(data.postId, formData);
       }
+      queryClient.removeQueries(['postData']);
       navigate('/search');
     }
   };

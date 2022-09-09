@@ -32,6 +32,7 @@ const HandleJoinEdit = (props: JoinDataProps) => {
       if (window.confirm('게시글을 삭제하시겠습니까?')) {
         await apis.deletePost(postData.postId);
         alert('게시글이 삭제되었습니다.');
+        queryClient.removeQueries(['postData']);
         navigate(-1);
       }
     } catch (err) {
