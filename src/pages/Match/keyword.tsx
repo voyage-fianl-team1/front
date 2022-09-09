@@ -2,10 +2,10 @@ import React, { FC, useEffect } from 'react';
 import { useInView } from 'react-intersection-observer';
 import { useInfiniteQuery } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
-import { apis } from '../apis';
-import { RootState } from '../redux/store';
+import { apis } from '../../apis';
+import { RootState } from '../../redux/store';
 import { useSelector } from 'react-redux';
-import LoadingSpinner from '../components/loadingSpinner';
+import LoadingSpinner from '../../components/loadingSpinner';
 import { Helmet } from 'react-helmet';
 
 const Keyword: FC = () => {

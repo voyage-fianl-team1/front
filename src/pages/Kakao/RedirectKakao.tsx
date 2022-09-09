@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { apis } from '../apis';
-import { login } from '../redux/features/userSlice';
+import { apis } from '../../apis';
+import { login } from '../../redux/features/userSlice';
 import { useDispatch } from 'react-redux';
 
 const RedirectKakao = () => {

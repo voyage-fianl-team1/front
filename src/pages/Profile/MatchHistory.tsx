@@ -1,13 +1,13 @@
 import React from 'react';
 import { useQuery } from '@tanstack/react-query';
-import { apis } from '../apis';
+import { apis } from '../../apis';
 import { Link, useLocation } from 'react-router-dom';
-import LoadingSpinner from '../components/loadingSpinner';
-import { MatchHistoryType } from '../typings';
+import LoadingSpinner from '../../components/loadingSpinner';
+import { MatchHistoryType } from '../../typings';
 import dayjs from 'dayjs';
 import { Helmet } from 'react-helmet';
 import { useSelector } from 'react-redux';
-import { RootState } from '../redux/store';
+import { RootState } from '../../redux/store';
 
 const historyTable: { [key: string]: any } = {
   LOSE: {

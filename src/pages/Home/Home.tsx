@@ -1,16 +1,16 @@
 import React, { FC } from 'react';
-import SearchBar from '../components/SearchBar';
-import SlideBanner from '../components/SlideBanner';
-import SubTitle from '../components/SubTitle';
-import Header from '../components/Header';
-import CategoryList from '../components/CategoryList';
-import ShowMoreMatchesButton from '../components/ShowMoreMatchesButton';
-import LatestMatchList from '../components/LatestMatchList';
-import SelectCategory from '../components/SelectCategory';
-import UserRankingList from '../components/UserRankingList';
-import WriteFloatingButton from '../components/WriteFloatingButton';
+import SearchBar from '../../components/SearchBar';
+import SlideBanner from '../../components/SlideBanner';
+import SubTitle from '../../components/SubTitle';
+import Header from '../../components/Header';
+import CategoryList from '../../components/CategoryList';
+import ShowMoreMatchesButton from '../../components/ShowMoreMatchesButton';
+import LatestMatchList from '../../components/LatestMatchList';
+import SelectCategory from '../../components/SelectCategory';
+import UserRankingList from '../../components/UserRankingList';
+import WriteFloatingButton from '../../components/WriteFloatingButton';
 import { useSelector } from 'react-redux';
-import { RootState } from '../redux/store';
+import { RootState } from '../../redux/store';
 import { Helmet } from 'react-helmet';
 
 const Home: FC = () => {

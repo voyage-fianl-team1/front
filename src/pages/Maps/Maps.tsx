@@ -1,12 +1,12 @@
 import React, { useRef, useState, useEffect } from 'react';
 import { Map, ZoomControl, MapMarker, MarkerClusterer } from 'react-kakao-maps-sdk';
 import { useQuery } from '@tanstack/react-query';
-import { apis } from '../apis';
+import { apis } from '../../apis';
 import { useNavigate } from 'react-router-dom';
-import { overlayAction, overlayClear, OverlayState } from '../redux/features/overlaySlice';
+import { overlayAction, overlayClear, OverlayState } from '../../redux/features/overlaySlice';
 import { useDispatch, useSelector } from 'react-redux';
-import { RootState } from '../redux/store';
-import { ImageType } from '../typings';
+import { RootState } from '../../redux/store';
+import { ImageType } from '../../typings';
 import { Helmet } from 'react-helmet';
 
 const Maps = () => {

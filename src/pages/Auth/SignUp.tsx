@@ -1,8 +1,8 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { apis } from '../apis';
+import { apis } from '../../apis';
 import styled from 'styled-components';
-import { UserSignUp } from '../typings';
+import { UserSignUp } from '../../typings';
 import { AxiosError } from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { Helmet } from 'react-helmet';

@@ -1,13 +1,13 @@
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import ChatSearchBar from '../components/ChatSearchBar';
-import ChatRoomItem from '../components/ChatRoomItem';
+import ChatSearchBar from '../../components/ChatSearchBar';
+import ChatRoomItem from '../../components/ChatRoomItem';
 import { useQuery } from '@tanstack/react-query';
-import { apis } from '../apis';
-import { ChatRoom } from '../typings';
-import LoadingSpinner from '../components/loadingSpinner';
-import { useInput } from '../hooks/useInput';
+import { apis } from '../../apis';
+import { ChatRoom } from '../../typings';
+import LoadingSpinner from '../../components/loadingSpinner';
+import { useInput } from '../../hooks/useInput';
 import { Helmet } from 'react-helmet';
-import { useDebounce } from '../hooks/useDebounce';
+import { useDebounce } from '../../hooks/useDebounce';
 
 const ChatListPage = () => {
   const { value, handler } = useInput('');

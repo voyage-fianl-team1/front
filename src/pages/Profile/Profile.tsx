@@ -1,12 +1,12 @@
 import React from 'react';
-import UserMatches from '../components/UserMatches';
-import UserPost from '../components/UserPost';
+import UserMatches from '../../components/UserMatches';
+import UserPost from '../../components/UserPost';
 import { Link } from 'react-router-dom';
-import UserInfoDisplay from '../components/UserInfoDisplay';
+import UserInfoDisplay from '../../components/UserInfoDisplay';
 import { useQuery } from '@tanstack/react-query';
-import { UserPostType, UserRequest } from '../typings';
-import { apis } from '../apis';
-import LoadingSpinner from '../components/loadingSpinner';
+import { UserPostType, UserRequest } from '../../typings';
+import { apis } from '../../apis';
+import LoadingSpinner from '../../components/loadingSpinner';
 import { Helmet } from 'react-helmet';
 
 const Profile = () => {

@@ -2,7 +2,7 @@ import React, { useRef } from 'react';
 import { useForm } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { keywordAction } from '../redux/features/keywordSlice';
+import { keywordAction } from '../../redux/features/keywordSlice';
 
 const SearchMiddle = () => {
   const dispatch = useDispatch();

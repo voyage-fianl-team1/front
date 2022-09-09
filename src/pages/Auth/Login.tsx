@@ -1,12 +1,12 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
-import { apis } from '../apis';
+import { apis } from '../../apis';
 import styled from 'styled-components';
-import { UserLogin } from '../typings';
+import { UserLogin } from '../../typings';
 import { AxiosError } from 'axios';
 import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { login } from '../redux/features/userSlice';
+import { login } from '../../redux/features/userSlice';
 import { Helmet } from 'react-helmet';
 
 const Login = () => {

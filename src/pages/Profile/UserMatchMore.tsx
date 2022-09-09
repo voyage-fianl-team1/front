@@ -1,5 +1,5 @@
 import React from 'react';
-import UserMatches from '../components/UserMatches';
+import UserMatches from '../../components/UserMatches';
 import { Helmet } from 'react-helmet';
 
 const UserMatchMore = () => {

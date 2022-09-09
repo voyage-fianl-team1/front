@@ -2,15 +2,15 @@ import React, { FC, useEffect, useCallback, useMemo } from 'react';
 import { useInView } from 'react-intersection-observer';
 import { useInfiniteQuery, useQueryClient } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
-import { apis } from '../apis';
+import { apis } from '../../apis';
 import { useDispatch, useSelector } from 'react-redux';
-import { RootState } from '../redux/store';
-import { toggleSortShow, toggleSelectShow, toggleClear } from '../redux/features/toggleSlice';
+import { RootState } from '../../redux/store';
+import { toggleSortShow, toggleSelectShow, toggleClear } from '../../redux/features/toggleSlice';
 import { RiArrowDownSLine } from 'react-icons/ri';
-import { categories } from '../util/subjectTable';
-import { sortCategories } from '../util/sortTables';
+import { categories } from '../../util/subjectTable';
+import { sortCategories } from '../../util/sortTables';
 import { Helmet } from 'react-helmet';
-import LoadingSpinner from '../components/loadingSpinner';
+import LoadingSpinner from '../../components/loadingSpinner';
 
 const SearchMatch: FC = () => {
   const navigate = useNavigate();
