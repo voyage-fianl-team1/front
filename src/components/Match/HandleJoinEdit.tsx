@@ -5,13 +5,12 @@ import { addressAction } from '../../redux/features/addressSlice';
 import { calendarAction } from '../../redux/features/calendarSlice';
 import { subjectAction } from '../../redux/features/subjectSlice';
 import { useQueryClient } from '@tanstack/react-query';
-import dayjs from 'dayjs';
 import { apis } from '../../apis';
 import { JoinDataProps } from '../../typings';
+import dayjs from 'dayjs';
 
 const HandleJoinEdit = (props: JoinDataProps) => {
-  const date = new Date();
-  const nowDate = dayjs(date).format('YYYY-MM-DD');
+  const nowDate = dayjs(new Date()).format('YYYY-MM-DD');
   const queryClient = useQueryClient();
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -31,7 +30,7 @@ const HandleJoinEdit = (props: JoinDataProps) => {
     try {
       if (window.confirm('게시글을 삭제하시겠습니까?')) {
         await apis.deletePost(postData.postId);
-        navigate(-1);
+        navigate('/search');
       }
     } catch (err) {
       alert('게시글 삭제에 실패했습니다.');
@@ -43,7 +42,6 @@ const HandleJoinEdit = (props: JoinDataProps) => {
       <div>
         <button
           className='w-1/2 h-[48px] border border-matchgi-bordergray rounded-[4px] bg-[#FCFCFC] text-[#38393C] cursor-pointer'
-          type='button'
           onClick={handleDeletePost}
         >
           삭제
@@ -60,7 +58,6 @@ const HandleJoinEdit = (props: JoinDataProps) => {
         >
           <button
             className='w-1/2 h-[48px] border border-matchgi-bordergray rounded-[4px] bg-matchgi-btnblue text-[#FFFFFF] cursor-pointer mb-[36px]'
-            type='button'
             onClick={() => {
               dispatch(addressAction({ address: postData.address, lat: postData.lat, lng: postData.lng }));
               dispatch(subjectAction({ subject: postData.subject, value: postData.subjectValue }));
@@ -72,21 +69,17 @@ const HandleJoinEdit = (props: JoinDataProps) => {
         </Link>
       </div>
     );
-  } else if (postData.owner === 1 && postData.matchStatus === 'MATCHEND') {
-    return <></>;
-  } else if (postData.owner === -1 && postData.player === 1 && nowDate > postData.matchDeadline === false) {
-    return <></>;
   } else if (postData.owner === -1 && postData.player === -1 && nowDate > postData.matchDeadline === false) {
     return (
-      <button
-        className='w-[100%] h-[48px] border border-matchgi-bordergray rounded-[4px] bg-matchgi-btnblue text-[#FCFCFC] cursor-pointer mb-[36px]'
-        type='button'
-        onClick={handleJoinTheGame}
-      >
+      <button className='joinBtn' onClick={handleJoinTheGame}>
         참가 신청하기
       </button>
     );
+  } else if (postData.owner === -1 && postData.player === 1 && nowDate > postData.matchDeadline === false) {
+    return <></>;
   } else if (postData.owner === -1 && postData.player === -1 && nowDate >= postData.matchDeadline === true) {
+    return <></>;
+  } else if (postData.owner === 1 && postData.matchStatus === 'MATCHEND') {
     return <></>;
   } else {
     return <></>;

@@ -1,19 +1,20 @@
 import React, { useRef } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { apis } from '../../apis';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import { PostDataProps, JoinDataProps } from '../../typings';
 import { StaticMap } from 'react-kakao-maps-sdk';
-import GetJoinData from './GetJoinData';
-import ReviewDetail from '../Review/ReviewDetail';
+import { Helmet } from 'react-helmet';
 import dayjs from 'dayjs';
 import CopyToClipboard from 'react-copy-to-clipboard';
-import LoadingSpinner from '../Common/loadingSpinner';
+import GetJoinData from './GetJoinData';
+import ReviewDetail from '../Review/ReviewDetail';
 import Dday from './Dday';
-import { Helmet } from 'react-helmet';
+import LoadingSpinner from '../Common/loadingSpinner';
 
 const GuestPostList = () => {
   const param = useParams();
+  const navigate = useNavigate();
   const postId = Number(param.id);
   const url = window.location.href;
   const matchRef = useRef<HTMLDivElement>(null);
@@ -119,7 +120,7 @@ const GuestPostList = () => {
           className='w-full h-[199px] bg-[#F4F5F5] flex flex-col justify-center items-center mb-[28px] border-t-[#EDEDED] border
         border-x-0 border-b-0'
         >
-          <div className='w-full font-Noto leading-[120%] text-[#000] mb-[13px] font-medium text-[16px] pl-[20px]'>
+          <div className='w-full font-Noto leading-[120%] text-[#38393C] mb-[13px] font-medium text-[16px] pl-[20px]'>
             경기정보
           </div>
           <section className='flex flex-row w-11/12 h-[109px] bg-[#FFFFFF] rounded-[16px] justify-left items-center gap-5 font-Noto'>
@@ -144,9 +145,7 @@ const GuestPostList = () => {
           </section>
         </div>
         <div className='w-full h-[283px] mb-[28px]'>
-          <div className='w-full h-[30px] font-Noto font-medium text-[16px] leading-[120%] text-[#38393C] border border-x-0 border-t-0 border-b-matchgi-bordergray pl-[20px]'>
-            경기상세
-          </div>
+          <div className='GuestSubHeader'>경기상세</div>
           <div
             className={`flex w-full h-[236px] py-[10px] px-[12px] gap-[10px] items-start font-Noto ${
               guestData.matchStatus === 'MATCHEND' ? 'text-[#9A9B9F]' : 'text-[#38393C]'
@@ -157,9 +156,7 @@ const GuestPostList = () => {
           </div>
         </div>
         <section className='w-full h-[289px] mb-[36px]'>
-          <div className='w-full h-[30px] font-Noto font-medium text-[16px] leading-[120%] text-[#38393C] border border-x-0 border-t-0 border-b-matchgi-bordergray pl-[20px]'>
-            경기장소
-          </div>
+          <div className='GuestSubHeader'>경기장소</div>
           <div className='flex flex-col w-full h-[270px] items-center p-5'>
             <p
               className={`w-full h-[17px] font-Noto text-[14px] font-medium leading-[120%] mb-[25px] mt-[10px] ${
@@ -186,9 +183,11 @@ const GuestPostList = () => {
         </section>
         <div ref={reviewRef} />
         <button
-          className='w-[100%] h-[48px] border border-matchgi-bordergray rounded-[4px] bg-matchgi-btnblue text-[#FCFCFC] cursor-pointer mb-[36px] font-Noto'
-          type='button'
-          onClick={() => alert('참가 신청은 로그인 후 가능합니다.')}
+          className='joinBtn'
+          onClick={() => {
+            alert('참가 신청은 로그인 후 가능합니다.');
+            navigate('/splash');
+          }}
         >
           참가 신청하기
         </button>

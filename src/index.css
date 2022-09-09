@@ -220,3 +220,13 @@ select {
   @apply box-border w-[82px] h-[36px] rounded-[4px] flex justify-center items-center mt-[36px]
   bg-[#FFF] text-[#38393c] border border-[#C5C6CA] hover:bg-[#14308B] hover:text-[#FFF]
 }
+
+/*GuestPostLIst*/
+
+.GuestSubHeader {
+  @apply w-full h-[30px] font-Noto font-medium text-[16px] leading-[120%] text-[#38393C] border border-x-0 border-t-0 border-b-matchgi-bordergray pl-[20px]
+}
+
+.joinBtn{
+  @apply w-[100%] h-[48px] border border-matchgi-bordergray rounded-[4px] bg-matchgi-btnblue text-[#FCFCFC] cursor-pointer mb-[36px] font-Noto
+}

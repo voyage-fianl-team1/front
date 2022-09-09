@@ -3,6 +3,7 @@ import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { JoinDataProps, JoinData, ImageType } from '../../typings';
 import { apis } from '../../apis';
 import { AxiosError } from 'axios';
+import { scoreStatus } from '../../util/scoreTables';
 import dayjs from 'dayjs';
 import LoadingSpinner from '../Common/loadingSpinner';
 
@@ -13,19 +14,10 @@ const GetJoinData = (props: JoinDataProps) => {
     async () => await apis.getAcceptList(props.data.postId)
   );
   const acceptData = acceptList?.data;
-  const date = new Date();
-  const nowDate = dayjs(date).format('YYYY-MM-DD');
+  const nowDate = dayjs(new Date()).format('YYYY-MM-DD');
   const queryClient = useQueryClient();
   const joinData: JoinData = join?.data?.data;
   const postData = props?.data;
-  const status: ImageType = {
-    WIN: '승리',
-    LOSE: '패배',
-    DRAW: '무승부',
-    PENDING: '대기중',
-    ACCEPT: '승인',
-    REJECT: '거절',
-  };
 
   const handleStatusChange = async () => {
     try {
@@ -39,23 +31,10 @@ const GetJoinData = (props: JoinDataProps) => {
     }
   };
 
-  const CompleteBtn = () => {
-    if (nowDate >= postData.matchDeadline === true && postData.owner === 1 && postData.matchStatus === 'ONGOING') {
-      return (
-        <>
-          <button
-            className='w-[100%] h-[48px] border border-matchgi-bordergray rounded-[4px] bg-matchgi-btnblue text-[#FFFFFF] cursor-pointer mb-[36px]'
-            onClick={handleStatusChange}
-          >
-            완료하기
-          </button>
-        </>
-      );
-    } else if (postData.owner === -1) {
-      return;
-    } else {
-      return;
-    }
+  const handleScoreChange = async (e: React.MouseEvent<HTMLButtonElement>, requestId: string) => {
+    await apis.updateTotalStatus(requestId, { status: e.currentTarget.value });
+    queryClient.invalidateQueries(['acceptlist']);
+    queryClient.invalidateQueries(['joinList']);
   };
 
   if (join.isLoading) {
@@ -124,7 +103,16 @@ const GetJoinData = (props: JoinDataProps) => {
               </div>
             </>
           ))}
-        {CompleteBtn()}
+        {nowDate >= postData.matchDeadline === true && postData.owner === 1 && postData.matchStatus === 'ONGOING' ? (
+          <button
+            className='w-[100%] h-[48px] border border-matchgi-bordergray rounded-[4px] bg-matchgi-btnblue text-[#FFFFFF] cursor-pointer mb-[36px]'
+            onClick={handleStatusChange}
+          >
+            완료하기
+          </button>
+        ) : (
+          ''
+        )}
       </section>
     );
   }
@@ -146,7 +134,7 @@ const GetJoinData = (props: JoinDataProps) => {
                   />
                   <span>{value.nickname}</span>
                 </div>
-                <div className='joinStatus'>{status[value.status]}</div>
+                <div className='joinStatus'>{scoreStatus[value.status]}</div>
               </div>
             </>
           ))}
@@ -179,6 +167,7 @@ const GetJoinData = (props: JoinDataProps) => {
                 <div className='flex flex-row gap-[33px]'>
                   <button
                     className='joinScore'
+                    value='WIN'
                     onClick={async () => {
                       await apis.updateTotalStatus(value.requestId, { status: 'WIN' });
                       queryClient.invalidateQueries(['acceptlist']);
@@ -189,6 +178,7 @@ const GetJoinData = (props: JoinDataProps) => {
                   </button>
                   <button
                     className='joinScore'
+                    value='LOSE'
                     onClick={async () => {
                       await apis.updateTotalStatus(value.requestId, { status: 'LOSE' });
                       queryClient.invalidateQueries(['acceptlist']);
@@ -199,6 +189,7 @@ const GetJoinData = (props: JoinDataProps) => {
                   </button>
                   <button
                     className='joinScore'
+                    value='DRAW'
                     onClick={async () => {
                       await apis.updateTotalStatus(value.requestId, { status: 'DRAW' });
                       queryClient.invalidateQueries(['acceptlist']);
@@ -234,7 +225,7 @@ const GetJoinData = (props: JoinDataProps) => {
                   />
                   <span>{value.nickname}</span>
                 </div>
-                <div className='joinStatus'>{status[value.status]}</div>
+                <div className='joinStatus'>{scoreStatus[value.status]}</div>
               </div>
             </>
           ))}

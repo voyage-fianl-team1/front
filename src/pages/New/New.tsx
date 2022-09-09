@@ -32,6 +32,7 @@ const Newpost: FC = () => {
   const subjectShow = useSelector((state: RootState) => state.toggle.subjectShow);
   const date = useSelector((state: RootState) => state.calendar.date);
   const data = location.state as PostEditDataProps;
+
   const onSaveFiles = (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = e.target.files!;
     if (!files[0]) return;
@@ -74,6 +75,7 @@ const Newpost: FC = () => {
       };
 
       const value = await apis.postUpload(postData);
+      queryClient.invalidateQueries(['postData']);
       if (uploadImage.length > 0) {
         const formData = new FormData();
         for (let i = 0; i < uploadImage.length; i++) {
@@ -81,7 +83,6 @@ const Newpost: FC = () => {
         }
         await apis.uploadImage(value, formData);
       }
-      queryClient.invalidateQueries(['postData']);
       navigate('/search');
     }
   };
@@ -122,6 +123,7 @@ const Newpost: FC = () => {
         address: address.address,
       };
       await apis.updatePost(data.postId, postData);
+      queryClient.invalidateQueries(['postData']);
       if (uploadImage.length > 0) {
         const formData = new FormData();
         for (let i = 0; i < uploadImage.length; i++) {
@@ -130,8 +132,6 @@ const Newpost: FC = () => {
           }
         }
         await apis.uploadImage(data.postId, formData);
-      } else {
-        navigate('/search');
       }
       navigate('/search');
     }
