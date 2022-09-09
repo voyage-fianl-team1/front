@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
-import Chat from '../../components/Chat';
-import ChatTimeLine from '../../components/ChatTimeLine';
-import ChatForm from '../../components/ChatForm';
+import Chat from '../../components/Chat/Chat';
+import ChatTimeLine from '../../components/Chat/ChatTimeLine';
+import ChatForm from '../../components/Chat/ChatForm';
 import { useSocket } from '../../hooks/useSocket';
 import { useLocation } from 'react-router-dom';
 import { useSelector } from 'react-redux';

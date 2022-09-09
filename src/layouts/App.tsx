@@ -6,7 +6,7 @@ import Layout from './Layout';
 import { apis } from '../apis';
 import { login } from '../redux/features/userSlice';
 import { positionAction } from '../redux/features/postionSlice';
-import LoadingSpinner from '../components/loadingSpinner';
+import LoadingSpinner from '../components/Common/loadingSpinner';
 
 const Home = React.lazy(() => import('../pages/Home/Home'));
 const Splash = React.lazy(() => import('../pages/Auth/Splash'));

@@ -1,6 +1,6 @@
 import React, { FC } from 'react';
-import GetPostList from '../../components/GetPostList';
-import GuestPostList from '../../components/GuestPostList';
+import GetPostList from '../../components/Match/GetPostList';
+import GuestPostList from '../../components/Match/GuestPostList';
 
 const Match: FC = () => {
   if (localStorage.getItem('accessToken') === null || '' || undefined) {

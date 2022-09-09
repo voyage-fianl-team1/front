@@ -1,17 +1,17 @@
 import React, { FC } from 'react';
-import SearchBar from '../../components/SearchBar';
-import SlideBanner from '../../components/SlideBanner';
-import SubTitle from '../../components/SubTitle';
-import Header from '../../components/Header';
-import CategoryList from '../../components/CategoryList';
-import ShowMoreMatchesButton from '../../components/ShowMoreMatchesButton';
-import LatestMatchList from '../../components/LatestMatchList';
-import SelectCategory from '../../components/SelectCategory';
-import UserRankingList from '../../components/UserRankingList';
-import WriteFloatingButton from '../../components/WriteFloatingButton';
+import SearchBar from '../../components/Match/SearchBar';
+import SlideBanner from '../../components/Common/SlideBanner';
+import SubTitle from '../../components/Common/SubTitle';
+import Header from '../../components/Common/Header';
+import CategoryList from '../../components/Common/CategoryList';
+import ShowMoreMatchesButton from '../../components/Match/ShowMoreMatchesButton';
+import SelectCategory from '../../components/Select/SelectCategory';
+import UserRankingList from '../../components/User/UserRankingList';
+import WriteFloatingButton from '../../components/Common/WriteFloatingButton';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../redux/store';
 import { Helmet } from 'react-helmet';
+import MatchItemList from '../../components/Match/MatchItemList';
 
 const Home: FC = () => {
   const sideMenuShow = useSelector((state: RootState) => state.common.sideMenuShow);
@@ -32,7 +32,7 @@ const Home: FC = () => {
         <SubTitle>종목별 경기 보기</SubTitle>
         <CategoryList />
         <SubTitle rightMenu={<ShowMoreMatchesButton />}>최신 경기 목록</SubTitle>
-        <LatestMatchList />
+        <MatchItemList />
         <SubTitle rightMenu={<SelectCategory />}>개인 랭킹</SubTitle>
         <UserRankingList />
         {!sideMenuShow && <WriteFloatingButton />}

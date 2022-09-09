@@ -10,7 +10,7 @@ import { RiArrowDownSLine } from 'react-icons/ri';
 import { categories } from '../../util/subjectTable';
 import { sortCategories } from '../../util/sortTables';
 import { Helmet } from 'react-helmet';
-import LoadingSpinner from '../../components/loadingSpinner';
+import LoadingSpinner from '../../components/Common/loadingSpinner';
 
 const SearchMatch: FC = () => {
   const navigate = useNavigate();

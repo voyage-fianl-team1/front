@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import { apis } from '../../apis';
 import { RootState } from '../../redux/store';
 import { useSelector } from 'react-redux';
-import LoadingSpinner from '../../components/loadingSpinner';
+import LoadingSpinner from '../../components/Common/loadingSpinner';
 import { Helmet } from 'react-helmet';
 
 const Keyword: FC = () => {

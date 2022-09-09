@@ -2,7 +2,7 @@ import React, { useCallback, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../redux/store';
 import { Helmet } from 'react-helmet';
-import UserNicknameChange from '../../components/UserNIcknameChange';
+import UserNicknameChange from '../../components/User/UserNIcknameChange';
 
 interface UpdateUser {
   nickname: string;
