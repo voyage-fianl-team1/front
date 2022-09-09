@@ -5,22 +5,20 @@ import { RootState } from '../../redux/store';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { apis } from '../../apis';
 import { PostEditDataProps, ImageType } from '../../typings';
-import MapContainer from '../../components/Modal/MapContainer';
-import Calendars from '../../components/Modal/Calendar';
-import CustomSubject from '../../components/Select/CustomSelect';
 import { IoMdCloseCircleOutline } from 'react-icons/io';
 import { toggleCalendarShow, toggleClear, toggleModalShow, toggleSubjectShow } from '../../redux/features/toggleSlice';
 import { addressClear } from '../../redux/features/addressSlice';
 import { calendarClear } from '../../redux/features/calendarSlice';
 import { subjectClear } from '../../redux/features/subjectSlice';
-import { useQueryClient } from '@tanstack/react-query';
+import MapContainer from '../../components/Modal/MapContainer';
+import Calendars from '../../components/Modal/Calendar';
+import CustomSubject from '../../components/Select/CustomSelect';
 
 const Newpost: FC = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { register, getValues } = useForm({});
-  const queryClient = useQueryClient();
   const inputRef = useRef<HTMLInputElement | null>(null);
   const [images, setImages] = useState<string[]>([]);
   const [uploadImage, setUploadImage] = useState<File[]>([]);
@@ -73,9 +71,7 @@ const Newpost: FC = () => {
         lng: address.lng,
         address: address.address,
       };
-
       const value = await apis.postUpload(postData);
-      queryClient.invalidateQueries(['postData']);
       if (uploadImage.length > 0) {
         const formData = new FormData();
         for (let i = 0; i < uploadImage.length; i++) {
@@ -123,7 +119,6 @@ const Newpost: FC = () => {
         address: address.address,
       };
       await apis.updatePost(data.postId, postData);
-      queryClient.invalidateQueries(['postData']);
       if (uploadImage.length > 0) {
         const formData = new FormData();
         for (let i = 0; i < uploadImage.length; i++) {

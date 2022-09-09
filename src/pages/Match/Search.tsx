@@ -6,6 +6,7 @@ import { apis } from '../../apis';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../redux/store';
 import { toggleSortShow, toggleSelectShow, toggleClear } from '../../redux/features/toggleSlice';
+import { subjectSearchShowClear, sortSearchShowClear } from '../../redux/features/searchSlice';
 import { RiArrowDownSLine } from 'react-icons/ri';
 import { categories } from '../../util/subjectTable';
 import { sortCategories } from '../../util/sortTables';
@@ -37,9 +38,9 @@ const SearchMatch: FC = () => {
     getNextPageParam: (lastPage) => (!lastPage.last ? lastPage.nextPage : undefined),
   });
 
-  useEffect(() => {
-    queryClient.invalidateQueries(['postData']);
-  }, []);
+  // useEffect(() => {
+  //   queryClient.removeQueries();
+  // }, []);
 
   useEffect(() => {
     if (inView) fetchNextPage();
@@ -56,6 +57,8 @@ const SearchMatch: FC = () => {
   useEffect(() => {
     return () => {
       dispatch(toggleClear());
+      dispatch(sortSearchShowClear());
+      dispatch(subjectSearchShowClear());
     };
   }, []);
 
