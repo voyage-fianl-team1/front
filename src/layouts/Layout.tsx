@@ -1,11 +1,11 @@
 import React, { FC, useMemo } from 'react';
 import { useLocation } from 'react-router-dom';
 
-import SideMenu from '../components/SideMenu';
-import PageTitle from '../components/PageTitle';
-import SelectSubject from '../components/SelectSubject';
-import SelectSort from '../components/SelectSort';
-import NotificationSideMenu from '../components/NotificationSideMenu';
+import SideMenu from '../components/Common/SideMenu';
+import PageTitle from '../components/Common/PageTitle';
+import SelectSubject from '../components/Select/SelectSubject';
+import SelectSort from '../components/Select/SelectSort';
+import NotificationSideMenu from '../components/Common/NotificationSideMenu';
 
 interface Props {
   children: JSX.Element;

@@ -17,12 +17,14 @@ const searchSlice = createSlice({
     sortSearchShow: (state, action: PayloadAction<searchState>) => {
       state.sort = action.payload.sort;
     },
+    sortSearchShowClear: () => initialState,
     subjectSearchShow: (state, action: PayloadAction<searchState>) => {
       state.subject = action.payload.subject;
     },
+    subjectSearchShowClear: () => initialState,
   },
 });
 
 export default searchSlice;
 
-export const { sortSearchShow, subjectSearchShow } = searchSlice.actions;
+export const { sortSearchShow, subjectSearchShow, subjectSearchShowClear, sortSearchShowClear } = searchSlice.actions;
