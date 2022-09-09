@@ -200,3 +200,23 @@ select {
 .subjectSelect {
   @apply flex flex-col justify-center items-center w-[162px] h-[44px] border border-matchgi-bordergray rounded-[2px] focus:bg-matchgi-bordergray;
 }
+
+.uploadEditbtn {
+  @apply w-[100%] h-[47px] border border-matchgi-bordergray rounded-[4px] bg-matchgi-btnblue text-white cursor-pointer
+}
+
+/*GetJoinData*/
+
+.joinHeader {
+  @apply w-full h-[34px] font-Noto font-medium leading-[24px] text-[16px] text-[#38393C] border border-[#EDEDED]
+  border-x-0 border-t-0 pl-[20px] mb-[22px]
+
+}
+.joinStatus {
+@apply box-border w-[132px] h-[36px] bg-[#14308B] rounded-[4px] text-[#FFF] flex justify-center items-center mt-[36px]
+}
+
+.joinScore {
+  @apply box-border w-[82px] h-[36px] rounded-[4px] flex justify-center items-center mt-[36px]
+  bg-[#FFF] text-[#38393c] border border-[#C5C6CA] hover:bg-[#14308B] hover:text-[#FFF]
+}

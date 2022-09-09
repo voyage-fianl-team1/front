@@ -9,6 +9,7 @@ import ReviewDetail from '../Review/ReviewDetail';
 import dayjs from 'dayjs';
 import CopyToClipboard from 'react-copy-to-clipboard';
 import LoadingSpinner from '../Common/loadingSpinner';
+import Dday from './Dday';
 import { Helmet } from 'react-helmet';
 
 const GuestPostList = () => {
@@ -40,24 +41,6 @@ const GuestPostList = () => {
       title: guestData?.title,
       content: guestData?.content,
     },
-  };
-
-  const dday = () => {
-    const now = dayjs(new Date());
-    const a = dayjs(guestData?.matchDeadline);
-    const c = now.diff(a, 'day');
-    const abs = Math.abs(c);
-    if (c < 1 && a.format('YYYY-MM-DD') !== now.format('YYYY-MM-DD')) {
-      return <p className='w-[5rem] h-7 text-[#38393C]'>(D-{abs + 1})</p>;
-    } else if (c < 1 && a.format('YYYY-MM-DD') === now.format('YYYY-MM-DD')) {
-      return <p className='w-[5rem] h-7 text-[#38393C]'>(D-DAY)</p>;
-    } else {
-      return <></>;
-    }
-  };
-
-  const changeData = (data: string) => {
-    return dayjs(data).format('YYYY.MM.DD.');
   };
 
   const handleMoveScroll = () => {
@@ -92,15 +75,6 @@ const GuestPostList = () => {
           content={guestData.imgurls.pop() === '' || null ? '/logo512.png' : guestData.imgurls.pop()}
           data-react-helmet='true'
         />
-
-        <meta name='twitter:title' content={guestData.title} data-react-helmet='true' />
-        <meta name='twitter:description' content={guestData.content} data-react-helmet='true' />
-        <meta
-          name='twitter:image'
-          content={guestData.imgurls.pop() === '' || null ? '/logo512.png' : guestData.imgurls.pop()}
-          data-react-helmet='true'
-        />
-
         <link rel='canonical' href={`https://match-gi.com/match/${postId}`} />
       </Helmet>
       <section className='flex flex-col justify-center w-full h-full bg-[#FCFCFC] font-Noto'>
@@ -156,11 +130,13 @@ const GuestPostList = () => {
             <div>
               <p className='w-full h-7'>{guestData.subject}</p>
               <span className='flex flex-row gap-4'>
-                <p className='w-[85px] h-7 font-SD'>{changeData(guestData.matchDeadline)}</p>
+                <p className='w-[85px] h-7 font-SD'>{dayjs(guestData.matchDeadline).format('YYYY.MM.DD.')}</p>
                 {guestData.matchStatus === 'MATCHEND' ? (
                   <p className='w-[3.5rem] h-7 text-[#9A9B9F] font-Noto'>(마감)</p>
                 ) : (
-                  <p className='w-[50px] font-SD'>{dday()}</p>
+                  <p className='w-[50px] font-SD'>
+                    <Dday {...drill} />
+                  </p>
                 )}
               </span>
             </div>

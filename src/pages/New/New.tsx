@@ -5,8 +5,8 @@ import { RootState } from '../../redux/store';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { apis } from '../../apis';
 import { PostEditDataProps, ImageType } from '../../typings';
-import MapContainer from '../../components/Calendar/MapContainer';
-import Calendars from '../../components/Calendar/Calendar';
+import MapContainer from '../../components/Modal/MapContainer';
+import Calendars from '../../components/Modal/Calendar';
 import CustomSubject from '../../components/Select/CustomSelect';
 import { IoMdCloseCircleOutline } from 'react-icons/io';
 import { toggleCalendarShow, toggleClear, toggleModalShow, toggleSubjectShow } from '../../redux/features/toggleSlice';
@@ -287,18 +287,11 @@ const Newpost: FC = () => {
       </section>
       <div className='flex justify-center'>
         {data ? (
-          <button
-            className='w-[100%] h-[47px] border border-matchgi-bordergray rounded-[4px] bg-matchgi-btnblue text-white cursor-pointer'
-            type='button'
-            onClick={handleEditUpload}
-          >
+          <button className='uploadEditbtn' onClick={handleEditUpload}>
             수정하기
           </button>
         ) : (
-          <button
-            className='w-[100%] h-[47px] border border-matchgi-bordergray rounded-[4px] bg-matchgi-btnblue text-white cursor-pointer'
-            onClick={handleDataUpload}
-          >
+          <button className='uploadEditbtn' onClick={handleDataUpload}>
             작성완료
           </button>
         )}
