@@ -47,11 +47,12 @@ const GetPostList = () => {
   };
 
   const handleMoveScroll = (e: React.MouseEvent<HTMLButtonElement>) => {
-    if (e.currentTarget.value === '1') {
+    const value = e.currentTarget.value;
+    if (value === '1') {
       matchRef.current?.scrollIntoView({ behavior: 'smooth' });
-    } else if (e.currentTarget.value === '2') {
+    } else if (value === '2') {
       detailRef.current?.scrollIntoView({ behavior: 'smooth' });
-    } else if (e.currentTarget.value === '3') {
+    } else if (value === '3') {
       locationRef.current?.scrollIntoView({ behavior: 'smooth' });
     } else {
       reviewRef.current?.scrollIntoView({ behavior: 'smooth' });
