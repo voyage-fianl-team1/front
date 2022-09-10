@@ -10,8 +10,8 @@ import { toggleCalendarShow, toggleClear, toggleModalShow, toggleSubjectShow } f
 import { addressClear } from '../../redux/features/addressSlice';
 import { calendarClear } from '../../redux/features/calendarSlice';
 import { subjectClear } from '../../redux/features/subjectSlice';
-import MapContainer from '../../components/Calendar/MapContainer';
-import Calendars from '../../components/Calendar/Calendar';
+import MapContainer from '../../components/Modal/MapContainer';
+import Calendars from '../../components/Modal/Calendar';
 import CustomSubject from '../../components/Select/CustomSelect';
 import { useQueryClient } from '@tanstack/react-query';
 
