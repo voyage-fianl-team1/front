@@ -40,6 +40,12 @@ const HandleJoinEdit = (props: JoinDataProps) => {
     }
   };
 
+  const handleDispatchData = () => {
+    dispatch(addressAction({ address: postData.address, lat: postData.lat, lng: postData.lng }));
+    dispatch(subjectAction({ subject: postData.subject, value: postData.subjectValue }));
+    dispatch(calendarAction({ date: postData.matchDeadline }));
+  };
+
   if (postData.owner === 1 && postData.matchStatus === 'ONGOING') {
     return (
       <div>
@@ -61,11 +67,7 @@ const HandleJoinEdit = (props: JoinDataProps) => {
         >
           <button
             className='w-1/2 h-[48px] border border-matchgi-bordergray rounded-[4px] bg-matchgi-btnblue text-[#FFFFFF] cursor-pointer mb-[36px]'
-            onClick={() => {
-              dispatch(addressAction({ address: postData.address, lat: postData.lat, lng: postData.lng }));
-              dispatch(subjectAction({ subject: postData.subject, value: postData.subjectValue }));
-              dispatch(calendarAction({ date: postData.matchDeadline }));
-            }}
+            onClick={handleDispatchData}
           >
             수정하기
           </button>

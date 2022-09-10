@@ -9,10 +9,7 @@ import LoadingSpinner from '../Common/loadingSpinner';
 
 const GetJoinData = (props: JoinDataProps) => {
   const join = useQuery(['joinList'], async () => await apis.getJoinList(props.data.postId));
-  const { data: acceptList, refetch } = useQuery(
-    ['acceptlist'],
-    async () => await apis.getAcceptList(props.data.postId)
-  );
+  const { data: acceptList } = useQuery(['acceptlist'], async () => await apis.getAcceptList(props.data.postId));
   const acceptData = acceptList?.data;
   const nowDate = dayjs(new Date()).format('YYYY-MM-DD');
   const queryClient = useQueryClient();

@@ -44,17 +44,16 @@ const GuestPostList = () => {
     },
   };
 
-  const handleMoveScroll = () => {
-    matchRef.current?.scrollIntoView({ behavior: 'smooth' });
-  };
-  const handleMoveScroll2 = () => {
-    detailRef.current?.scrollIntoView({ behavior: 'smooth' });
-  };
-  const handleMoveScroll3 = () => {
-    locationRef.current?.scrollIntoView({ behavior: 'smooth' });
-  };
-  const handleMoveScroll4 = () => {
-    reviewRef.current?.scrollIntoView({ behavior: 'smooth' });
+  const handleMoveScroll = (e: React.MouseEvent<HTMLButtonElement>) => {
+    if (e.currentTarget.value === '1') {
+      matchRef.current?.scrollIntoView({ behavior: 'smooth' });
+    } else if (e.currentTarget.value === '2') {
+      detailRef.current?.scrollIntoView({ behavior: 'smooth' });
+    } else if (e.currentTarget.value === '3') {
+      locationRef.current?.scrollIntoView({ behavior: 'smooth' });
+    } else {
+      reviewRef.current?.scrollIntoView({ behavior: 'smooth' });
+    }
   };
 
   if (isLoading) {
@@ -103,16 +102,16 @@ const GuestPostList = () => {
           <div ref={matchRef}></div>
         </div>
         <div className='flex flex-row w-full h-[29px] justify-center items-center gap-[25px] font-Noto'>
-          <button className='detail-btn' onClick={handleMoveScroll} autoFocus>
+          <button className='detail-btn' onClick={handleMoveScroll} autoFocus value='1'>
             경기정보
           </button>
-          <button className='detail-btn' onClick={handleMoveScroll2}>
+          <button className='detail-btn' onClick={handleMoveScroll} value='2'>
             경기상세
           </button>
-          <button className='detail-btn' onClick={handleMoveScroll3}>
+          <button className='detail-btn' onClick={handleMoveScroll} value='3'>
             경기장소
           </button>
-          <button className='detail-btn' onClick={handleMoveScroll4}>
+          <button className='detail-btn' onClick={handleMoveScroll} value='4'>
             댓글
           </button>
         </div>

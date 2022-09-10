@@ -58,10 +58,6 @@ const App = () => {
         }
       );
     }
-    // else {
-    //   dispatch(positionAction({ lat: 37.33116, lng: 126.58111, isLoading: false }));
-    //   alert('현재 위치를 받아올 수 없습니다.');
-    // }
   }, []);
 
   if (user.isLogin) {

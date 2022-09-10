@@ -21,6 +21,7 @@ const SearchMatch: FC = () => {
   const subject = useSelector((state: RootState) => state.search.subject);
   const categoryName = useMemo(() => categories.find((c) => c.value === subject), [subject]);
   const sortName = useMemo(() => sortCategories.find((c) => c.value === sort), [sort]);
+
   const fetchPostList = async (pageParam: number) => {
     const res = await apis.getMainPostList(pageParam, subject, sort);
     const data = res.data.content;
@@ -40,20 +41,20 @@ const SearchMatch: FC = () => {
     if (inView) fetchNextPage();
   }, [inView]);
 
-  const handleToggleSelect = useCallback(() => {
-    dispatch(toggleSelectShow());
-  }, []);
-
-  const handleToggleSort = useCallback(() => {
-    dispatch(toggleSortShow());
-  }, []);
-
   useEffect(() => {
     return () => {
       dispatch(toggleClear());
       dispatch(sortSearchShowClear());
       dispatch(subjectSearchShowClear());
     };
+  }, []);
+
+  const handleToggleSelect = useCallback(() => {
+    dispatch(toggleSelectShow());
+  }, []);
+
+  const handleToggleSort = useCallback(() => {
+    dispatch(toggleSortShow());
   }, []);
 
   return (
