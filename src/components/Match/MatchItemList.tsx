@@ -8,7 +8,6 @@ import { convertDateShort } from '../../util/converDate';
 const MatchItemList = () => {
   const navigate = useNavigate();
   const res = useQuery(['recentMatchList'], apis.getMatchItem);
-
   const recentList = res?.data?.data.content;
 
   return (
