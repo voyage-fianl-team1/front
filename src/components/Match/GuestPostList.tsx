@@ -5,6 +5,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { PostDataProps, JoinDataProps } from '../../typings';
 import { StaticMap } from 'react-kakao-maps-sdk';
 import { Helmet } from 'react-helmet';
+import { useScroll } from '../../hooks/useScroll';
 import dayjs from 'dayjs';
 import CopyToClipboard from 'react-copy-to-clipboard';
 import GetJoinData from './GetJoinData';
@@ -14,13 +15,10 @@ import LoadingSpinner from '../Common/loadingSpinner';
 
 const GuestPostList = () => {
   const param = useParams();
+  const { matchRef, detailRef, locationRef, reviewRef, handleMoveScroll } = useScroll('');
   const navigate = useNavigate();
   const postId = Number(param.id);
   const url = window.location.href;
-  const matchRef = useRef<HTMLDivElement>(null);
-  const detailRef = useRef<HTMLDivElement>(null);
-  const locationRef = useRef<HTMLDivElement>(null);
-  const reviewRef = useRef<HTMLDivElement>(null);
   const { data: res, isLoading } = useQuery(['guestList', postId], async () => await apis.getforGuestPostList(postId));
   const guestData: PostDataProps = res?.data;
   const drill: JoinDataProps = {
@@ -42,19 +40,6 @@ const GuestPostList = () => {
       title: guestData?.title,
       content: guestData?.content,
     },
-  };
-
-  const handleMoveScroll = (e: React.MouseEvent<HTMLButtonElement>) => {
-    const value = e.currentTarget.value;
-    if (value === '1') {
-      matchRef.current?.scrollIntoView({ behavior: 'smooth' });
-    } else if (value === '2') {
-      detailRef.current?.scrollIntoView({ behavior: 'smooth' });
-    } else if (value === '3') {
-      locationRef.current?.scrollIntoView({ behavior: 'smooth' });
-    } else {
-      reviewRef.current?.scrollIntoView({ behavior: 'smooth' });
-    }
   };
 
   if (isLoading) {

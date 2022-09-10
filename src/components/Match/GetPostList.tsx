@@ -1,10 +1,11 @@
-import React, { useRef, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { apis } from '../../apis';
 import { useParams } from 'react-router-dom';
 import { PostDataProps, JoinDataProps } from '../../typings';
 import { StaticMap } from 'react-kakao-maps-sdk';
 import { Helmet } from 'react-helmet';
+import { useScroll } from '../../hooks/useScroll';
 import CopyToClipboard from 'react-copy-to-clipboard';
 import dayjs from 'dayjs';
 import LoadingSpinner from '../Common/loadingSpinner';
@@ -18,10 +19,7 @@ const GetPostList = () => {
   const param = useParams();
   const postId = Number(param.id);
   const url = window.location.href;
-  const matchRef = useRef<HTMLDivElement>(null);
-  const detailRef = useRef<HTMLDivElement>(null);
-  const locationRef = useRef<HTMLDivElement>(null);
-  const reviewRef = useRef<HTMLDivElement>(null);
+  const { matchRef, detailRef, locationRef, reviewRef, handleMoveScroll } = useScroll('');
   const queryClient = useQueryClient();
   const { data: res, isLoading } = useQuery(['postList', postId], async () => await apis.getPostList(postId));
   const postData: PostDataProps = res?.data;
@@ -44,19 +42,6 @@ const GetPostList = () => {
       title: postData?.title,
       content: postData?.content,
     },
-  };
-
-  const handleMoveScroll = (e: React.MouseEvent<HTMLButtonElement>) => {
-    const value = e.currentTarget.value;
-    if (value === '1') {
-      matchRef.current?.scrollIntoView({ behavior: 'smooth' });
-    } else if (value === '2') {
-      detailRef.current?.scrollIntoView({ behavior: 'smooth' });
-    } else if (value === '3') {
-      locationRef.current?.scrollIntoView({ behavior: 'smooth' });
-    } else {
-      reviewRef.current?.scrollIntoView({ behavior: 'smooth' });
-    }
   };
 
   useEffect(() => {
