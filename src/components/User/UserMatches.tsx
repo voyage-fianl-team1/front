@@ -5,8 +5,9 @@ import LoadingSpinner from '../Common/loadingSpinner';
 import { UserRequest } from '../../typings';
 import dayjs from 'dayjs';
 import { Link } from 'react-router-dom';
-import { categories } from '../../util/constant/subjectTable';
-import { sortCategories } from '../../util/constant/sortTables';
+import { categories } from '../../shared/constant/subjectTable';
+import { sortCategories } from '../../shared/constant/sortTables';
+import useUserRequests from '../../hooks/queries/useUserRequests';
 
 export const statusTable: { [key: string]: any } = {
   PENDING: {
@@ -44,7 +45,7 @@ interface Props {
 }
 
 const UserMatches: FC<Props> = ({ maxCount }) => {
-  const { data } = useQuery<UserRequest[]>(['user-requests'], apis.getUserRequests);
+  const { data } = useUserRequests();
 
   if (!data) {
     return <LoadingSpinner />;

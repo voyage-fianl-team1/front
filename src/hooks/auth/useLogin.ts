@@ -6,6 +6,7 @@ import { login } from '../../redux/features/userSlice';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { useForm } from 'react-hook-form';
+import { setItemToLS } from '../../util/handleLocalStorage';
 
 function useLogin() {
   const navigate = useNavigate();
@@ -46,11 +47,11 @@ function useLogin() {
   }, []);
 
   const setTokens = useCallback((accessToken: string, refreshToken: string) => {
-    window.localStorage.setItem('accessToken', accessToken);
-    window.localStorage.setItem('refreshToken', refreshToken);
+    setItemToLS('accessToken', accessToken);
+    setItemToLS('refreshToken', refreshToken);
   }, []);
 
-  return { fetchUserInfo, register, errors, onSubmit };
+  return { fetchUserInfo, register, errors, onSubmit, setTokens };
 }
 
 export default useLogin;
