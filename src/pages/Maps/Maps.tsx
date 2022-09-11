@@ -6,8 +6,9 @@ import { useNavigate } from 'react-router-dom';
 import { overlayAction, overlayClear, OverlayState } from '../../redux/features/overlaySlice';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../redux/store';
-import { ImageType } from '../../typings';
 import { Helmet } from 'react-helmet';
+import { MarkerObj } from '../../util/constant/makerTable';
+import LoadingSpinner from '../../components/Common/loadingSpinner';
 
 const Maps = () => {
   const mapRef = useRef<any>(3);
@@ -28,18 +29,8 @@ const Maps = () => {
     };
   }, []);
 
-  const MarkerObj: ImageType = {
-    축구: '/assets/images/map/soccer.svg',
-    농구: '/assets/images/map/basketball.svg',
-    기타: '/assets/images/map/etc.svg',
-    볼링: '/assets/images/map/bowling.svg',
-    배드민턴: '/assets/images/map/badminton.svg',
-    테니스: '/assets/images/map/tennis.svg',
-    당구: '/assets/images/map/bil.svg',
-  };
-
   if (res.isLoading) {
-    return <></>;
+    return <LoadingSpinner />;
   }
   return (
     <>
