@@ -102,8 +102,7 @@ export const apis = {
   getReviewList: (postId: number) => instance.get(`/api/reviews/${postId}`),
   getRewrite: () => instance.get('/api/posts/authority'),
   getAcceptList: (postId: number) => instance.get(`/api/posts/${postId}/request/accept`),
-  getAllUserRankingList: (subject = 'ALL') =>
-    instance.get(`/api/users/rank?page=0&size=5&subject=${subject}`).then((res) => res.data.content),
+  getAllUserRankingList: (subject = 'ALL') => instance.get(`/api/users/rank?page=0&size=5&subject=${subject}`),
   getforGuestPostList: (postId: number) => instance.get(`/api/posts/${postId}/guest`),
   getRoomUserList: (roomId: number) => instance.get(`/api/users/rooms/${roomId}/userList`).then((res) => res.data),
 };
