@@ -5,8 +5,8 @@ import LoadingSpinner from '../Common/loadingSpinner';
 import { UserRequest } from '../../typings';
 import dayjs from 'dayjs';
 import { Link } from 'react-router-dom';
-import { categories } from '../../util/subjectTable';
-import { sortCategories } from '../../util/sortTables';
+import { categories } from '../../util/constant/subjectTable';
+import { sortCategories } from '../../util/constant/sortTables';
 
 export const statusTable: { [key: string]: any } = {
   PENDING: {

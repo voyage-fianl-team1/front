@@ -15,6 +15,7 @@ const HandleJoinEdit = (props: JoinDataProps) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const postData = useMemo(() => props.data, [props.data]);
+
   const handleJoinTheGame = async () => {
     try {
       if (window.confirm('참가 신청 하시겠습니까?')) {

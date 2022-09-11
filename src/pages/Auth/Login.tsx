@@ -1,40 +1,11 @@
 import React from 'react';
-import { useForm } from 'react-hook-form';
-import { apis } from '../../apis';
 import styled from 'styled-components';
-import { UserLogin } from '../../typings';
-import { AxiosError } from 'axios';
-import { Link, useNavigate } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
-import { login } from '../../redux/features/userSlice';
+import { Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
+import useLogin from '../../hooks/auth/useLogin';
 
 const Login = () => {
-  const navigate = useNavigate();
-  const dispatch = useDispatch();
-
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<UserLogin>();
-  const onSubmit = handleSubmit(async (data: UserLogin) => {
-    try {
-      const result = await apis.signIn(data);
-      const accessToken = result.data.accessToken.split(' ')[1];
-      const refreshToken = result.data.refreshToken;
-      window.localStorage.setItem('accessToken', accessToken);
-      window.localStorage.setItem('refreshToken', refreshToken);
-      const userInfo = await apis.getUser().then((res) => res.data);
-      const { id, draw, lose, win, nickname, profileImgUrl } = userInfo;
-      dispatch(login({ isLogin: true, id, draw, lose, win, nickname, profileImgUrl }));
-      navigate('/');
-    } catch (e) {
-      if (e instanceof AxiosError) {
-        alert(e.response?.data);
-      }
-    }
-  });
+  const { register, errors, onSubmit } = useLogin();
 
   return (
     <>

@@ -4,6 +4,7 @@ import { addressAction } from '../../redux/features/addressSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../redux/store';
 import { toggleModalShow } from '../../redux/features/toggleSlice';
+import { useCalendar } from '../../hooks/modal/useCalendar';
 import Modal from './Modal';
 
 const MapContainer = () => {
@@ -12,6 +13,7 @@ const MapContainer = () => {
   const nowPosition = useSelector((state: RootState) => state.persistReducered.position);
   const [position, setPosition] = useState({ lat: 0, lng: 0 });
   const [address, setAddress] = useState<string>();
+  const { handleToggleModal } = useCalendar('');
 
   useEffect(() => {
     getAddress(position.lat, position.lng);
@@ -35,10 +37,6 @@ const MapContainer = () => {
     dispatch(toggleModalShow());
   };
 
-  const handleToggleModal = useCallback(() => {
-    dispatch(toggleModalShow());
-  }, []);
-
   return (
     <Modal onClickToggleModal={handleToggleModal}>
       <Map
@@ -60,15 +58,13 @@ const MapContainer = () => {
           <div className='w-full h-[50px] flex justify-center items-center bg-[#FCFCFC] mt-3'>{address}</div>
           <span className='flex flex-row items-center gap-5 mt-3'>
             <button
-              type='button'
               className='w-[82px] h-[45px] bg-[#FFF] text-[16px] text-[#38393C] leading-[19px] border border-[#9A9B9F]
             font-medium text-center rounded-[8px]'
-              onClick={() => dispatch(toggleModalShow())}
+              onClick={handleToggleModal}
             >
               닫기
             </button>
             <button
-              type='button'
               className='w-[181px] h-[45px] bg-matchgi-btnblue text-[16px] text-[#FFF] leading-[19px]
             font-medium text-center rounded-[8px]'
               onClick={handleSendAddress}

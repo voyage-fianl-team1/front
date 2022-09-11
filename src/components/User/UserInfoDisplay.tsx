@@ -1,37 +1,24 @@
-import React, { ChangeEvent, useRef, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import React, { useRef } from 'react';
 import { Link } from 'react-router-dom';
-import { RootState } from '../../redux/store';
-import { apis } from '../../apis';
-import { login } from '../../redux/features/userSlice';
 import { MdChangeCircle } from 'react-icons/md';
+import useCurrentUser from '../../hooks/auth/useCurrentUser';
+import useUpdateProfileImage from '../../hooks/auth/useUpdateProfileImage';
 
 const UserInfoDisplay = () => {
-  const { nickname, profileImgUrl, win, lose, draw, id } = useSelector((state: RootState) => state.user);
+  const {
+    user: { nickname, profileImgUrl, win, lose, draw, id },
+  } = useCurrentUser();
+  const { handleUpdateUserImage } = useUpdateProfileImage();
   const imageRef = useRef<HTMLInputElement>(null);
-  const dispatch = useDispatch();
-
   const handleClickImage = () => {
     if (!imageRef.current) return;
     imageRef.current.click();
   };
 
-  const handleChange = async (e: ChangeEvent<HTMLInputElement>) => {
-    if (!e.target.files) return;
-    try {
-      const result = await apis.updateUserProfileImage(e.target.files[0]);
-      const userInfo = await apis.getUser();
-      dispatch(login(userInfo.data));
-    } catch (e) {
-      console.error(e);
-      alert('프로필 사진 변경중 에러가 발생하였습니다');
-    }
-  };
-
   return (
     <div className='flex items-center justify-start w-[100%] gap-3 mt-3'>
       <div className='w-[72px] h-[72px]'>
-        <input type='file' className='hidden' ref={imageRef} onChange={handleChange} />
+        <input type='file' className='hidden' ref={imageRef} onChange={handleUpdateUserImage} />
         <MdChangeCircle
           className='absolute top-1 left-[65px] cursor-pointer hover:rotate-90 transition-all duration-300'
           size={28}

@@ -5,7 +5,7 @@ import { useParams } from 'react-router-dom';
 import { PostDataProps, JoinDataProps } from '../../typings';
 import { StaticMap } from 'react-kakao-maps-sdk';
 import { Helmet } from 'react-helmet';
-import { useScroll } from '../../hooks/useScroll';
+import { useScroll } from '../../hooks/match/useScroll';
 import CopyToClipboard from 'react-copy-to-clipboard';
 import dayjs from 'dayjs';
 import LoadingSpinner from '../Common/loadingSpinner';

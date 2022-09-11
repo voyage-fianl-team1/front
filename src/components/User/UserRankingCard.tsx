@@ -1,7 +1,7 @@
 import React, { FC, useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import { UserRanking } from '../../typings';
-import { categories } from '../../util/subjectTable';
+import { categories } from '../../util/constant/subjectTable';
 
 interface Props {
   user: UserRanking;
