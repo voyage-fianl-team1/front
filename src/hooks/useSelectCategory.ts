@@ -2,7 +2,7 @@ import { useCallback, useMemo } from 'react';
 import { subjectSearchShow } from '../redux/features/searchSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../redux/store';
-import { categories } from '../util/subjectTable';
+import { categories } from '../util/constant/subjectTable';
 import { toggleSelectShow } from '../redux/features/toggleSlice';
 
 /**

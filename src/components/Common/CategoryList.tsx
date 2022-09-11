@@ -1,6 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { categories } from '../../util/subjectTable';
+import { categories } from '../../util/constant/subjectTable';
 import useSelectCategory from '../../hooks/useSelectCategory';
 
 const CategoryList = () => {

@@ -15,9 +15,15 @@ const commonSlice = createSlice({
     toggleSideMenuShow: (state) => {
       state.sideMenuShow = !state.sideMenuShow;
     },
+    closeSideMenu: (state) => {
+      state.sideMenuShow = false;
+    },
+    openSideMenu: (state) => {
+      state.sideMenuShow = true;
+    },
   },
 });
 
 export default commonSlice;
 
-export const { toggleSideMenuShow } = commonSlice.actions;
+export const { toggleSideMenuShow, closeSideMenu, openSideMenu } = commonSlice.actions;

@@ -5,7 +5,7 @@ import { apis } from '../../apis';
 import LoadingSpinner from '../Common/loadingSpinner';
 import { Link } from 'react-router-dom';
 import dayjs from 'dayjs';
-import { categories } from '../../util/subjectTable';
+import { categories } from '../../util/constant/subjectTable';
 
 const UserPost = () => {
   const { data } = useQuery<UserPostType[]>(['user-posts'], apis.getUserPosts);

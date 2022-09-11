@@ -8,13 +8,12 @@ import ShowMoreMatchesButton from '../../components/Match/ShowMoreMatchesButton'
 import SelectCategory from '../../components/Select/SelectCategory';
 import UserRankingList from '../../components/User/UserRankingList';
 import WriteFloatingButton from '../../components/Common/WriteFloatingButton';
-import { useSelector } from 'react-redux';
-import { RootState } from '../../redux/store';
 import { Helmet } from 'react-helmet';
 import MatchItemList from '../../components/Match/MatchItemList';
+import useSideMenu from '../../hooks/useSideMenu';
 
 const Home: FC = () => {
-  const sideMenuShow = useSelector((state: RootState) => state.common.sideMenuShow);
+  const { sideMenuShow } = useSideMenu();
   return (
     <>
       <Helmet>

@@ -1,77 +1,19 @@
-import React, { useCallback, useEffect, useMemo, useState } from 'react';
-import { useForm } from 'react-hook-form';
-import { apis } from '../../apis';
+import React from 'react';
 import styled from 'styled-components';
-import { UserSignUp } from '../../typings';
-import { AxiosError } from 'axios';
-import { useNavigate } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
+import useSignUp from '../../hooks/auth/useSignUp';
 
 const SignUp = () => {
   const {
     register,
-    watch,
-    handleSubmit,
-    setError,
     setValue,
-    formState: { errors },
-  } = useForm<UserSignUp>();
-  const navigate = useNavigate();
-  const onSubmit = handleSubmit(async (data: UserSignUp) => {
-    console.log(errors);
-    if (!isValidate.status) {
-      return alert(isValidate.message);
-    }
-    try {
-      const result = await apis.signUp(data);
-      alert(result.data);
-      navigate('/login');
-    } catch (e) {
-      if (e instanceof AxiosError) {
-        alert(e.response?.data);
-      }
-    }
-  });
-  const [passwordShow, setPasswordShow] = useState(false);
-  const [passwordCheckShow, setPasswordCheckShow] = useState(false);
-  const [passwordError, setPasswordError] = useState(false);
-  const isValidate = useMemo(() => {
-    if (passwordError) {
-      return {
-        status: false,
-        message: '비밀번호를 확인해주세요',
-      };
-    }
-
-    return {
-      status: true,
-      message: '',
-    };
-  }, [passwordError]);
-
-  const togglePsswordShow = useCallback(() => {
-    setPasswordShow((prev) => !prev);
-  }, []);
-
-  const togglePsswordCheckShow = useCallback(() => {
-    setPasswordCheckShow((prev) => !prev);
-  }, []);
-
-  useEffect(() => {
-    const subscription = watch((value, { name, type }) => {
-      if (name === 'passwordCheck' || name === 'password') {
-        if (value.password !== value.passwordCheck) {
-          setError('passwordCheck', { message: '동일하지 않은 비밀번호 입니다' });
-          setPasswordError(true);
-        } else {
-          setError('passwordCheck', { message: '' });
-          setPasswordError(false);
-        }
-      }
-    });
-    return () => subscription.unsubscribe();
-  }, [watch]);
-
+    onSubmit,
+    errors,
+    passwordShow,
+    passwordCheckShow,
+    togglePsswordShow,
+    togglePsswordCheckShow,
+  } = useSignUp();
   return (
     <>
       <Helmet>

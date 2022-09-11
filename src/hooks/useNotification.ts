@@ -4,8 +4,8 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { apis } from '../apis';
 import { Notification } from '../typings';
 import { setNotifications } from '../redux/features/notificationSlice';
-import useCurrentUser from './useCurrentUser';
-import { useCallback, useEffect, useMemo } from 'react';
+import useCurrentUser from './auth/useCurrentUser';
+import { useCallback, useMemo } from 'react';
 import { toggleNotificationShow } from '../redux/features/toggleSlice';
 
 function useNotification() {
