@@ -1,57 +1,46 @@
-import { useCallback, useEffect, useRef, useState } from 'react';
-import SockJS from 'sockjs-client';
-import { CompatClient, Stomp } from '@stomp/stompjs';
-import { StompSubscription } from '@stomp/stompjs/src/stomp-subscription';
-import { Chat, Notification } from '../typings';
-import { SERVER_STOMP_URL } from '../apis';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../redux/store';
-import { append } from '../redux/features/notificationSlice';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { apis } from '../apis';
+import { Notification } from '../typings';
+import { setNotifications } from '../redux/features/notificationSlice';
+import useCurrentUser from './auth/useCurrentUser';
+import { useCallback, useMemo } from 'react';
+import { toggleNotificationShow } from '../redux/features/toggleSlice';
 
-export function useNotification(userId: number | string | undefined, callback?: (body: any) => void) {
-  const socketRef = useRef<WebSocket | null>(null);
-  const stompClientRef = useRef<CompatClient | null>(null);
-  const subscriptionRef = useRef<StompSubscription | null | undefined>(null);
-  const accessToken = window.localStorage.getItem('accessToken');
+function useNotification() {
+  const {
+    user: { isLogin },
+  } = useCurrentUser();
   const dispatch = useDispatch();
-  const { isLogin } = useSelector((state: RootState) => state.user);
+  const queryClient = useQueryClient();
+  const notifications = useSelector((state: RootState) => state.notification.notifications);
 
-  useEffect(() => {
-    if (!SERVER_STOMP_URL) return;
-    socketRef.current = new SockJS(SERVER_STOMP_URL);
-    stompClientRef.current = Stomp.over(socketRef.current);
-    stompClientRef.current.debug = () => {
-      return;
-    };
+  const { refetch } = useQuery(['notifications'], apis.getNotifications, {
+    onSuccess: (data: Notification[]) => {
+      dispatch(setNotifications(data));
+    },
+    enabled: isLogin,
+  });
+  const mutation = useMutation((id: number) => apis.postNotificationRead(id), {
+    onSuccess: () => {
+      queryClient.invalidateQueries(['notifications']);
+    },
+  });
 
-    if (!socketRef || !stompClientRef) return;
-
-    stompClientRef.current.connect({}, (receipt: any) => {
-      subscriptionRef.current = stompClientRef?.current?.subscribe(`/room/user/${userId}`, (message) => {
-        const body = JSON.parse(message.body);
-        dispatch(append(body));
-        callback && callback(body);
-      });
-    });
-
-    return () => {
-      subscriptionRef.current?.unsubscribe();
-      stompClientRef.current?.disconnect();
-    };
-  }, [isLogin]);
-
-  const unsubscribe = useCallback(() => {
-    subscriptionRef.current?.unsubscribe();
-    stompClientRef.current?.disconnect();
+  const toggleNotificationMenu = useCallback(() => {
+    dispatch(toggleNotificationShow());
   }, []);
 
-  return { unsubscribe };
+  const isNotificationExist = useMemo(() => {
+    if (notifications.length > 0) {
+      const res = notifications.some((v, idx) => !v.isread);
+      return res;
+    }
+    return false;
+  }, [notifications]);
+
+  return { notifications, refetch, mutate: mutation.mutate, toggleNotificationMenu, isNotificationExist };
 }
 
-/**
- * content: "ee님이 소켓연결테스트 에 참가신청하셨습니다"
- * createdAt: "2022-08-26T17:37:30.844"
- * id: 8
- * isread: false
- * postId: 14
- */
+export default useNotification;

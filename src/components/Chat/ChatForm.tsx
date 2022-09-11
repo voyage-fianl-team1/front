@@ -1,5 +1,5 @@
 import React, { FC, FormEvent, useCallback, useState } from 'react';
-import { useInput } from '../../hooks/useInput';
+import { useInput } from '../../hooks/util/useInput';
 
 interface Props {
   onSubmit: (message: string) => void;

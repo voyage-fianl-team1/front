@@ -1,19 +1,14 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
-import { subjectSearchShow } from '../../redux/features/searchSlice';
+import useSelectCategory from '../../hooks/useSelectCategory';
 
 const ShowMoreMatchesButton = () => {
   const navigate = useNavigate();
-  const dispatch = useDispatch();
+  const { handleSelect } = useSelectCategory(() => {
+    navigate('/search');
+  });
   return (
-    <button
-      className='text-[#4A4B4E] text-sm'
-      onClick={() => {
-        navigate('/search');
-        dispatch(subjectSearchShow({ subject: 'ALL' }));
-      }}
-    >
+    <button className='text-[#4A4B4E] text-sm' onClick={() => handleSelect('ALL')}>
       더보기 +
     </button>
   );

@@ -2,10 +2,10 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 import SockJS from 'sockjs-client';
 import { CompatClient, Stomp } from '@stomp/stompjs';
 import { StompSubscription } from '@stomp/stompjs/src/stomp-subscription';
-import { Chat } from '../typings';
-import { SERVER_STOMP_URL } from '../apis';
+import { Chat } from '../../typings';
+import { SERVER_STOMP_URL } from '../../apis';
 
-export function useSocket(roomId: number | string, callback?: () => void) {
+export function useChatSocket(roomId: number | string, callback?: () => void) {
   const socketRef = useRef<WebSocket | null>(null);
   const stompClientRef = useRef<CompatClient | null>(null);
   const subscriptionRef = useRef<StompSubscription | null | undefined>(null);

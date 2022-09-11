@@ -1,12 +1,11 @@
 import React, { Suspense, useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { Route, Routes } from 'react-router-dom';
-import { RootState } from '../redux/store';
 import Layout from './Layout';
-import { apis } from '../apis';
-import { login } from '../redux/features/userSlice';
 import { positionAction } from '../redux/features/postionSlice';
 import LoadingSpinner from '../components/Common/loadingSpinner';
+import useCurrentUser from '../hooks/auth/useCurrentUser';
+import useLogin from '../hooks/auth/useLogin';
 
 const Home = React.lazy(() => import('../pages/Home/Home'));
 const Splash = React.lazy(() => import('../pages/Auth/Splash'));
@@ -28,21 +27,15 @@ const MatchHistory = React.lazy(() => import('../pages/Profile/MatchHistory'));
 const Searching = React.lazy(() => import('../pages/Match/Searching'));
 
 const App = () => {
-  const user = useSelector((state: RootState) => state.user);
   const dispatch = useDispatch();
+  const { fetchUserInfo } = useLogin();
+  const {
+    user: { isLogin },
+  } = useCurrentUser();
 
   useEffect(() => {
-    const autoLogin = async () => {
-      try {
-        const userInfo = await apis.getUser().then((res) => res.data);
-        const { id, draw, lose, win, nickname, profileImgUrl } = userInfo;
-        dispatch(login({ isLogin: true, id, draw, lose, win, nickname, profileImgUrl }));
-        console.log('자동로그인 되었습니다');
-      } catch (e) {
-        console.error('자동로그인 실패');
-      }
-    };
-    autoLogin();
+    // 페이지 최초 접속시 자동 로그인 처리
+    fetchUserInfo().then((res) => console.log(res.msg));
   }, []);
 
   useEffect(() => {
@@ -64,7 +57,7 @@ const App = () => {
     // }
   }, []);
 
-  if (user.isLogin) {
+  if (isLogin) {
     return (
       <Suspense fallback={<LoadingSpinner />}>
         <Layout>
