@@ -2,7 +2,7 @@ import React, { useCallback, useEffect, useRef, useState } from 'react';
 import Chat from '../../components/Chat/Chat';
 import ChatTimeLine from '../../components/Chat/ChatTimeLine';
 import ChatForm from '../../components/Chat/ChatForm';
-import { useSocket } from '../../hooks/useSocket';
+import { useChatSocket } from '../../hooks/useChatSocket';
 import { useLocation } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../redux/store';
@@ -15,7 +15,7 @@ import { Helmet } from 'react-helmet';
 const ChatDetail = () => {
   const location = useLocation();
   const roomId = location.pathname.split('/chat/')[1];
-  const { chats, setChats, send, firstChatRef, setFirstChatRef } = useSocket(roomId, () => {
+  const { chats, setChats, send, firstChatRef, setFirstChatRef } = useChatSocket(roomId, () => {
     scrollToBottom();
   });
   const { id: userId } = useSelector((state: RootState) => state.user);

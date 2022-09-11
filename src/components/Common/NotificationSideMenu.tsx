@@ -9,7 +9,7 @@ import { toggleNotificationShow } from '../../redux/features/toggleSlice';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { apis } from '../../apis';
 import { Notification } from '../../typings';
-import { useNotification } from '../../hooks/useNotification';
+import { useNotificationSocket } from '../../hooks/useNotificationSocket';
 import dayjs from 'dayjs';
 import { setNotifications } from '../../redux/features/notificationSlice';
 
@@ -19,7 +19,7 @@ const NotificationSideMenu = () => {
   const dispatch = useDispatch();
   const queryClient = useQueryClient();
   const notificationSideMenuShow = useSelector((state: RootState) => state.toggle.notificationSideMenuShow);
-  useNotification(id);
+  useNotificationSocket(id);
   const notifications = useSelector((state: RootState) => state.notification.notifications);
   const { refetch } = useQuery(['notifications'], apis.getNotifications, {
     onSuccess: (data: Notification[]) => {
