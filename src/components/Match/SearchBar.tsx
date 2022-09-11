@@ -1,18 +1,10 @@
-import React, { useCallback, useState } from 'react';
+import React from 'react';
 import { useNavigate } from 'react-router-dom';
+import useFocus from '../../hooks/useFocus';
 
 const SearchBar = () => {
   const navigate = useNavigate();
-  const [isFocus, setIsFocus] = useState(false);
-
-  const handleFocus = useCallback(() => {
-    navigate('/searching');
-    setIsFocus(true);
-  }, []);
-
-  const handleFocusOut = useCallback(() => {
-    setIsFocus(false);
-  }, []);
+  const { isFocus, handleFocus, handleFocusOut } = useFocus(() => navigate('/searching'));
 
   return (
     <div
