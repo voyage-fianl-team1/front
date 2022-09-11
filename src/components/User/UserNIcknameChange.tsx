@@ -1,5 +1,5 @@
 import React, { FC, useCallback } from 'react';
-import { useInput } from '../../hooks/useInput';
+import { useInput } from '../../hooks/util/useInput';
 import { apis } from '../../apis';
 import { login } from '../../redux/features/userSlice';
 import { AxiosError } from 'axios';

@@ -5,9 +5,9 @@ import { useQuery } from '@tanstack/react-query';
 import { apis } from '../../apis';
 import { ChatRoom } from '../../typings';
 import LoadingSpinner from '../../components/Common/loadingSpinner';
-import { useInput } from '../../hooks/useInput';
+import { useInput } from '../../hooks/util/useInput';
 import { Helmet } from 'react-helmet';
-import { useDebounce } from '../../hooks/useDebounce';
+import { useDebounce } from '../../hooks/util/useDebounce';
 
 const ChatListPage = () => {
   const { value, handler } = useInput('');

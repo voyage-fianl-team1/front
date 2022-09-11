@@ -1,6 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import useFocus from '../../hooks/useFocus';
+import useFocus from '../../hooks/util/useFocus';
 
 const SearchBar = () => {
   const navigate = useNavigate();

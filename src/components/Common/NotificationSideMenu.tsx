@@ -9,7 +9,7 @@ import { toggleNotificationShow } from '../../redux/features/toggleSlice';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { apis } from '../../apis';
 import { Notification } from '../../typings';
-import { useNotificationSocket } from '../../hooks/useNotificationSocket';
+import { useNotificationSocket } from '../../hooks/socket/useNotificationSocket';
 import dayjs from 'dayjs';
 import { setNotifications } from '../../redux/features/notificationSlice';
 

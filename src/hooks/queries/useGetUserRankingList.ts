@@ -1,6 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
 import { apis } from '../../apis';
-import { RecentMatch, UserRanking } from '../../typings';
+import { UserRanking } from '../../typings';
 import { AxiosResponse } from 'axios';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../redux/store';

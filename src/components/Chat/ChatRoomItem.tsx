@@ -2,7 +2,7 @@ import React, { FC, useCallback, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ChatRoom } from '../../typings';
 import { getFromNow } from '../../util/converDate';
-import { useChatSocket } from '../../hooks/useChatSocket';
+import { useChatSocket } from '../../hooks/socket/useChatSocket';
 import { apis } from '../../apis';
 import { useQuery } from '@tanstack/react-query';
 
