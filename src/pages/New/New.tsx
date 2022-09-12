@@ -45,7 +45,7 @@ const Newpost: FC = () => {
                     <button type='button' className='absolute text-red-500' onClick={() => handledeleteImage(id)}>
                       <IoMdCloseCircleOutline />
                     </button>
-                    <img className='w-[68px] h-[68px] rounded-[8px]' alt='' src={image['url']} />
+                    <img className='w-[68px] h-[68px] rounded-[8px] mr-1' alt='' src={image['url']} />
                   </div>
                 ))
               : images.map((image, id) => (
@@ -64,7 +64,7 @@ const Newpost: FC = () => {
                   <button type='button' className='absolute text-red-500' onClick={() => handledeletePrevImg(id)}>
                     <IoMdCloseCircleOutline />
                   </button>
-                  <img className='w-[68px] h-[68px] rounded-[8px]' alt='' src={image} />
+                  <img className='w-[68px] h-[68px] rounded-[8px] mr-1' alt='' src={image} />
                 </div>
               ))}
             <img src='/assets/images/post/photo.svg' className='cursor-pointer' onClick={handleImgBtn}></img>

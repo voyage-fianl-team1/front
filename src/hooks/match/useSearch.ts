@@ -13,7 +13,7 @@ export function useSearch<T>(defaultValue: T) {
   const categoryName = useMemo(() => categories.find((c) => c.value === subject), [subject]);
   const sortName = useMemo(() => sortCategories.find((c) => c.value === sort), [sort]);
 
-  const ClearAll = () => {
+  const clearAll = () => {
     useEffect(() => {
       return () => {
         dispatch(toggleClear());
@@ -36,6 +36,6 @@ export function useSearch<T>(defaultValue: T) {
     handleToggleSort,
     categoryName,
     sortName,
-    ClearAll,
+    clearAll,
   };
 }
