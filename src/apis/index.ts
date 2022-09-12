@@ -91,7 +91,7 @@ export const apis = {
     }),
   uploadImage: (postId: number, data: FormData) => instance.post(`/api/images/posts/${postId}`, data),
   getAroundGame: (lat: number, lng: number) => instance.get(`/api/posts/gps?lat=${lat}&lng=${lng}`),
-  getNotifications: () => instance.get('/api/users/notifications').then((res) => res.data),
+  getNotifications: () => instance.get('/api/users/notifications'),
   postNotificationRead: (notificationId: number) => instance.put(`/api/notifications/${notificationId}`),
   reviewUpload: (postId: number, data: ReviewData) =>
     instance.post(`/api/reviews/${postId}`, data).then((res) => {

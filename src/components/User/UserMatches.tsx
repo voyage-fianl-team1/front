@@ -1,8 +1,5 @@
 import React, { FC } from 'react';
-import { useQuery } from '@tanstack/react-query';
-import { apis } from '../../apis';
 import LoadingSpinner from '../Common/loadingSpinner';
-import { UserRequest } from '../../typings';
 import dayjs from 'dayjs';
 import { Link } from 'react-router-dom';
 import { categories } from '../../shared/constant/subjectTable';

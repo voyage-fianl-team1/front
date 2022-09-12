@@ -14,4 +14,5 @@ export const queryKeys = {
   SEARCH: 'searchList',
   CHAT_ROOMS: 'chat-rooms',
   CHAT_HISTORY: 'chat-history',
+  NOTIFICATIONS: 'notifications',
 };

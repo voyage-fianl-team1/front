@@ -1,31 +1,23 @@
-import React from 'react';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { apis } from '../../apis';
+import React, { useCallback } from 'react';
 import LoadingSpinner from '../Common/loadingSpinner';
 import { Link } from 'react-router-dom';
 import dayjs from 'dayjs';
 import { categories } from '../../shared/constant/subjectTable';
 import useUserOwnPosts from '../../hooks/queries/useUserOwnPosts';
-import { queryKeys } from '../../shared/constant/queryKeys';
+import useRemovePost from '../../hooks/mutations/useRemovePost';
 
 const UserPost = () => {
   const { data: userOwnPosts, isLoading } = useUserOwnPosts();
-  const queryClient = useQueryClient();
-  const mutation = useMutation(
+  const { mutate } = useRemovePost();
+
+  const handleDelete = useCallback(
     (postId: number) => {
-      return apis.deletePost(postId);
+      if (window.confirm('정말 삭제하시겠습니까?')) {
+        mutate(postId);
+      }
     },
-    {
-      onSuccess: () => {
-        queryClient.invalidateQueries([queryKeys.USER_OWN_POSTS]);
-      },
-    }
+    [mutate]
   );
-  const handleDelete = (postId: number) => {
-    if (window.confirm('정말 삭제하시겠습니까?')) {
-      mutation.mutate(postId);
-    }
-  };
 
   if (isLoading) {
     return <LoadingSpinner />;

@@ -11,6 +11,7 @@ interface ResponseType {
 function useUserOwnPosts() {
   return useQuery([queryKeys.USER_OWN_POSTS], apis.getUserPosts, {
     select: (res: AxiosResponse<ResponseType>) => res.data.mypostList,
+    staleTime: Infinity,
   });
 }
 
