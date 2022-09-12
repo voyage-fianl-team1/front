@@ -1,12 +1,12 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
 import { categories } from '../../shared/constant/subjectTable';
 import useSelectCategory from '../../hooks/useSelectCategory';
+import usePush from '../../hooks/usePush';
 
 const CategoryList = () => {
-  const navigate = useNavigate();
+  const { push } = usePush();
   const { handleSelect } = useSelectCategory(() => {
-    navigate('/search');
+    push('/search');
   });
 
   return (
