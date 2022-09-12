@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { apis } from '../../apis';
 import { useParams, useNavigate } from 'react-router-dom';
@@ -6,7 +6,7 @@ import { PostDataProps, JoinDataProps } from '../../typings';
 import { StaticMap } from 'react-kakao-maps-sdk';
 import { Helmet } from 'react-helmet';
 import { useScroll } from '../../hooks/match/useScroll';
-import dayjs from 'dayjs';
+import { changeDataFormat } from '../../util/converDate';
 import CopyToClipboard from 'react-copy-to-clipboard';
 import GetJoinData from './GetJoinData';
 import ReviewDetail from '../Review/ReviewDetail';
@@ -14,8 +14,8 @@ import Dday from './Dday';
 import LoadingSpinner from '../Common/loadingSpinner';
 
 const GuestPostList = () => {
-  const param = useParams();
   const { matchRef, detailRef, locationRef, reviewRef, handleMoveScroll } = useScroll('');
+  const param = useParams();
   const navigate = useNavigate();
   const postId = Number(param.id);
   const url = window.location.href;
@@ -116,7 +116,7 @@ const GuestPostList = () => {
             <div>
               <p className='w-full h-7'>{guestData.subject}</p>
               <span className='flex flex-row gap-4'>
-                <p className='w-[85px] h-7 font-SD'>{dayjs(guestData.matchDeadline).format('YYYY.MM.DD.')}</p>
+                <p className='w-[85px] h-7 font-SD'>{changeDataFormat(guestData.matchDeadline)}</p>
                 {guestData.matchStatus === 'MATCHEND' ? (
                   <p className='w-[3.5rem] h-7 text-[#9A9B9F] font-Noto'>(마감)</p>
                 ) : (

@@ -1,32 +1,8 @@
-import React, { useRef } from 'react';
-import { useForm } from 'react-hook-form';
-import { useDispatch } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
-import { keywordAction } from '../../redux/features/keywordSlice';
+import React from 'react';
+import { useSearching } from '../../hooks/match/useSearching';
 
 const SearchMiddle = () => {
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
-  const { register, getValues } = useForm({});
-  const searchingRef = useRef(null);
-
-  const handleSearchingOut = (e: React.MouseEvent) => {
-    if (e.target === searchingRef.current) {
-      navigate('/');
-    }
-  };
-
-  const handleKeyword = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === 'Enter') {
-      dispatch(keywordAction({ keyword: getValues().keyword }));
-      navigate(`/keword`);
-    }
-  };
-
-  const handleButton = () => {
-    dispatch(keywordAction({ keyword: getValues().keyword }));
-    navigate(`/keword`);
-  };
+  const { handleSearchingOut, handleKeyword, handleButton, navigate, searchingRef, register } = useSearching('');
 
   return (
     <>

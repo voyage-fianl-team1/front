@@ -6,7 +6,7 @@ import Modal from './Modal';
 
 const MapContainer = () => {
   const { handleToggleModal } = useCalendar('');
-  const { mapRef, nowPosition, position, setPosition, address, handleSendAddress, loadAddress } = useMap('');
+  const { mapRef, nowPosition, position, address, handleSendAddress, loadAddress, mousePosition } = useMap('');
   loadAddress();
 
   return (
@@ -16,12 +16,7 @@ const MapContainer = () => {
         className='relative w-[100%] h-[100%]'
         level={3}
         ref={mapRef}
-        onClick={(_t, mouseEvent) =>
-          setPosition({
-            lat: mouseEvent.latLng.getLat(),
-            lng: mouseEvent.latLng.getLng(),
-          })
-        }
+        onClick={mousePosition}
       >
         <ZoomControl position={window.kakao.maps.ControlPosition.TOPRRIGHT} />
         <MapMarker position={{ lat: position.lat, lng: position.lng }} />

@@ -1,38 +1,20 @@
 import React from 'react';
-import { useQuery, useQueryClient } from '@tanstack/react-query';
+import { useQuery } from '@tanstack/react-query';
 import { JoinDataProps, JoinData, ImageType } from '../../typings';
 import { apis } from '../../apis';
-import { AxiosError } from 'axios';
 import { scoreStatus } from '../../util/scoreTables';
+import { useJoin } from '../../hooks/useJoin';
 import dayjs from 'dayjs';
 import LoadingSpinner from '../Common/loadingSpinner';
 
 const GetJoinData = (props: JoinDataProps) => {
   const join = useQuery(['joinList'], async () => await apis.getJoinList(props.data.postId));
   const { data: acceptList } = useQuery(['acceptlist'], async () => await apis.getAcceptList(props.data.postId));
-  const acceptData = acceptList?.data;
+  const { handleStatusChange, handleScoreChange } = useJoin('');
   const nowDate = dayjs(new Date()).format('YYYY-MM-DD');
-  const queryClient = useQueryClient();
   const joinData: JoinData = join?.data?.data;
+  const acceptData = acceptList?.data;
   const postData = props?.data;
-
-  const handleStatusChange = async () => {
-    try {
-      await apis.updateMatchStatus(postData.postId);
-      queryClient.invalidateQueries(['postList']);
-      queryClient.invalidateQueries(['acceptlist']);
-    } catch (err) {
-      if (err && err instanceof AxiosError) {
-        alert(err.response?.data);
-      }
-    }
-  };
-
-  const handleScoreChange = async (requestId: string, value: string) => {
-    await apis.updateTotalStatus(requestId, { status: value });
-    queryClient.invalidateQueries(['acceptlist']);
-    queryClient.invalidateQueries(['joinList']);
-  };
 
   if (join.isLoading) {
     return <LoadingSpinner />;
@@ -97,7 +79,7 @@ const GetJoinData = (props: JoinDataProps) => {
         {nowDate >= postData.matchDeadline === true && postData.owner === 1 && postData.matchStatus === 'ONGOING' ? (
           <button
             className='w-[100%] h-[48px] border border-matchgi-bordergray rounded-[4px] bg-matchgi-btnblue text-[#FFFFFF] cursor-pointer mb-[36px]'
-            onClick={handleStatusChange}
+            onClick={() => handleStatusChange(postData.postId)}
           >
             완료하기
           </button>

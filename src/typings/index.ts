@@ -158,7 +158,7 @@ export interface JoinDataProps {
     title: string;
     subject: string;
     content?: string;
-    address?: string;
+    address: string;
     lat: number;
     lng: number;
     imgurls: [];

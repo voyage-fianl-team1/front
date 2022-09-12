@@ -2,16 +2,13 @@ import React, { useMemo } from 'react';
 import { apis } from '../../apis';
 import { useQuery } from '@tanstack/react-query';
 import { JoinDataProps, ImageType } from '../../typings';
+import { changeDataFormat } from '../../util/converDate';
 import LoadingSpinner from '../Common/loadingSpinner';
-import dayjs from 'dayjs';
 
 const ReviewDetail = (props: JoinDataProps) => {
   const reviewDatail = useMemo(() => props.data, [props.data]);
   const { data, isLoading } = useQuery(['reviewList'], async () => await apis.getReviewList(reviewDatail.postId));
   const reviewList = data?.data.reviewList;
-  const changeData = (data: string) => {
-    return dayjs(data).format('YYYY.MM.DD.');
-  };
 
   if (isLoading) {
     return <LoadingSpinner />;
@@ -49,7 +46,9 @@ const ReviewDetail = (props: JoinDataProps) => {
                   />
                   <div className='flex flex-col mt-0.5'>
                     <span className='text-[12px] text-[#717275] leading-[120%]'>{value.nickname}</span>
-                    <span className='text-[12px] text-[#717275] leading-[120%]'>{changeData(value.createdAt)}</span>
+                    <span className='text-[12px] text-[#717275] leading-[120%]'>
+                      {changeDataFormat(value.createdAt)}
+                    </span>
                   </div>
                 </div>
                 <div className='w-full ml-[16px] text-[#38393C] text-[14px] leading-[120%] font-Noto mb-[16px]'>

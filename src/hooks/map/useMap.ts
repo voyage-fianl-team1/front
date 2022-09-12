@@ -34,6 +34,13 @@ export function useMap<T>(defaultValue: T) {
     dispatch(addressAction({ address: address, lat: position.lat, lng: position.lng }));
     dispatch(toggleModalShow());
   };
+
+  const mousePosition = (_t: any, mouseEvent: any) =>
+    setPosition({
+      lat: mouseEvent.latLng.getLat(),
+      lng: mouseEvent.latLng.getLng(),
+    });
+
   return {
     handleSendAddress,
     loadAddress,
@@ -43,5 +50,6 @@ export function useMap<T>(defaultValue: T) {
     setPosition,
     address,
     setAddress,
+    mousePosition,
   };
 }
