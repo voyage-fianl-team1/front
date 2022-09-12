@@ -1,13 +1,10 @@
 import React from 'react';
-import { useQuery } from '@tanstack/react-query';
-import { apis } from '../../apis';
-import { PostDataProps, JoinDataProps } from '../../typings';
 import { StaticMap } from 'react-kakao-maps-sdk';
 import { Helmet } from 'react-helmet';
 import { useScroll } from '../../hooks/match/useScroll';
 import { useUtil } from '../../hooks/post/useUtil';
 import { changeDataFormat } from '../../util/converDate';
-import { queryKeys } from '../../shared/constant/queryKeys';
+import { useGetPostList } from '../../hooks/queries/useGetPostList';
 import CopyToClipboard from 'react-copy-to-clipboard';
 import LoadingSpinner from '../Common/loadingSpinner';
 import GetJoinData from './GetJoinData';
@@ -19,28 +16,7 @@ import HandleJoinEdit from './HandleJoinEdit';
 const GetPostList = () => {
   const { matchRef, detailRef, locationRef, reviewRef, handleMoveScroll } = useScroll('');
   const { postId, url } = useUtil('');
-  const { data: res, isLoading } = useQuery([queryKeys.POSTLIST, postId], () => apis.getPostList(postId));
-  const postData: PostDataProps = res?.data;
-  const drill: JoinDataProps = {
-    data: {
-      owner: postData?.owner,
-      postId: postId,
-      player: postData?.player,
-      matchStatus: postData?.matchStatus,
-      profileUrl: postData?.profileImgUrl,
-      nickName: postData?.nickname,
-      matchDeadline: postData?.matchDeadline,
-      lat: postData?.lat,
-      lng: postData?.lng,
-      address: postData?.address,
-      imgpaths: postData?.imgpaths,
-      imgurls: postData?.imgurls,
-      subjectValue: postData?.subjectValue,
-      subject: postData?.subject,
-      title: postData?.title,
-      content: postData?.content,
-    },
-  };
+  const { postData, isLoading, drill } = useGetPostList(postId);
 
   if (isLoading) {
     return <LoadingSpinner />;
@@ -120,9 +96,7 @@ const GetPostList = () => {
                 {postData.matchStatus === 'MATCHEND' ? (
                   <p className='w-[3.5rem] h-7 text-[#9A9B9F] font-Noto'>(마감)</p>
                 ) : (
-                  <p className='w-[50px] font-SD'>
-                    <Dday {...drill} />
-                  </p>
+                  <Dday {...drill} />
                 )}
               </span>
             </div>

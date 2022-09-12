@@ -10,14 +10,14 @@ import LoadingSpinner from '../../components/Common/loadingSpinner';
 const SearchMatch: FC = () => {
   const navigate = useNavigate();
   const { ref, inView } = useInView();
-  const { categoryName, sortName, handleToggleSelect, handleToggleSort, ClearAll } = useSearch('');
+  const { categoryName, sortName, handleToggleSelect, handleToggleSort, clearAll } = useSearch('');
   const { fetchNextPage, isFetchingNextPage, postList } = useSearchList('');
 
   useEffect(() => {
     if (inView) fetchNextPage();
   }, [inView]);
 
-  ClearAll();
+  clearAll();
 
   return (
     <>

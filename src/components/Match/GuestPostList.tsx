@@ -1,5 +1,4 @@
 import React from 'react';
-import { JoinDataProps } from '../../typings';
 import { StaticMap } from 'react-kakao-maps-sdk';
 import { Helmet } from 'react-helmet';
 import { useScroll } from '../../hooks/match/useScroll';
@@ -15,28 +14,7 @@ import LoadingSpinner from '../Common/loadingSpinner';
 const GuestPostList = () => {
   const { matchRef, detailRef, locationRef, reviewRef, handleMoveScroll } = useScroll('');
   const { postId, url, navigate } = useUtil('');
-  const { guestData, isLoading } = useGetPostList(postId);
-
-  const drill: JoinDataProps = {
-    data: {
-      owner: guestData?.owner,
-      postId: postId,
-      player: guestData?.player,
-      matchStatus: guestData?.matchStatus,
-      profileUrl: guestData?.profileImgUrl,
-      nickName: guestData?.nickname,
-      matchDeadline: guestData?.matchDeadline,
-      lat: guestData?.lat,
-      lng: guestData?.lng,
-      address: guestData?.address,
-      imgpaths: guestData?.imgpaths,
-      imgurls: guestData?.imgurls,
-      subjectValue: guestData?.subjectValue,
-      subject: guestData?.subject,
-      title: guestData?.title,
-      content: guestData?.content,
-    },
-  };
+  const { guestData, isLoading, drill } = useGetPostList(postId);
 
   if (isLoading) {
     return <LoadingSpinner />;
@@ -116,9 +94,7 @@ const GuestPostList = () => {
                 {guestData.matchStatus === 'MATCHEND' ? (
                   <p className='w-[3.5rem] h-7 text-[#9A9B9F] font-Noto'>(마감)</p>
                 ) : (
-                  <p className='w-[50px] font-SD'>
-                    <Dday {...drill} />
-                  </p>
+                  <Dday {...drill} />
                 )}
               </span>
             </div>
