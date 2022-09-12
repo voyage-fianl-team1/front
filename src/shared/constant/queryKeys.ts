@@ -4,4 +4,6 @@ export const queryKeys = {
   USER_REQUESTS: 'user-requests',
   USER_OWN_POSTS: 'user-posts',
   USER_HISTORY: 'user-history',
+  CHAT_ROOMS: 'chat-rooms',
+  CHAT_HISTORY: 'chat-history',
 };
