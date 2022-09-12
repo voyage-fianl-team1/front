@@ -2,12 +2,12 @@ import React, { useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import { JoinDataProps } from '../../typings';
 import { useJoin } from '../../hooks/useJoin';
-import dayjs from 'dayjs';
+import { useUtil } from '../../hooks/post/useUtil';
 
 const HandleJoinEdit = (props: JoinDataProps) => {
   const { handleJoinTheGame, handleDispatchData, handleDeletePost } = useJoin('');
+  const { nowDate } = useUtil('');
   const postData = useMemo(() => props.data, [props.data]);
-  const nowDate = dayjs(new Date()).format('YYYY-MM-DD');
   const postId = postData?.postId;
 
   if (postData.owner === 1 && postData.matchStatus === 'ONGOING') {

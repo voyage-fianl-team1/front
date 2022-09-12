@@ -1,11 +1,11 @@
 import React, { useEffect } from 'react';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { apis } from '../../apis';
-import { useParams } from 'react-router-dom';
 import { PostDataProps, JoinDataProps } from '../../typings';
 import { StaticMap } from 'react-kakao-maps-sdk';
 import { Helmet } from 'react-helmet';
 import { useScroll } from '../../hooks/match/useScroll';
+import { useUtil } from '../../hooks/post/useUtil';
 import { changeDataFormat } from '../../util/converDate';
 import CopyToClipboard from 'react-copy-to-clipboard';
 import LoadingSpinner from '../Common/loadingSpinner';
@@ -16,14 +16,11 @@ import ReviewDetail from '../Review/ReviewDetail';
 import HandleJoinEdit from './HandleJoinEdit';
 
 const GetPostList = () => {
-  const param = useParams();
-  const postId = Number(param.id);
-  const url = window.location.href;
   const { matchRef, detailRef, locationRef, reviewRef, handleMoveScroll } = useScroll('');
-  const queryClient = useQueryClient();
+  const { postId, url } = useUtil('');
   const { data: res, isLoading } = useQuery(['postList', postId], () => apis.getPostList(postId));
+  const queryClient = useQueryClient();
   const postData: PostDataProps = res?.data;
-  console.log(postData);
   const drill: JoinDataProps = {
     data: {
       owner: postData?.owner,

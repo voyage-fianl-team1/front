@@ -183,5 +183,14 @@ export function usePost<T>(defaultValue: T) {
     uploadImage,
     imgUrl,
     data,
+    register,
+    handleEditUpload,
+    handleDataUpload,
+    address,
+    subject,
+    modalShow,
+    subjectShow,
+    calendarShow,
+    date,
   };
 }

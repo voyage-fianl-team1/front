@@ -4,14 +4,14 @@ import { JoinDataProps, JoinData, ImageType } from '../../typings';
 import { apis } from '../../apis';
 import { scoreStatus } from '../../shared/constant/scoreTable';
 import { useJoin } from '../../hooks/useJoin';
-import dayjs from 'dayjs';
+import { useUtil } from '../../hooks/post/useUtil';
 import LoadingSpinner from '../Common/loadingSpinner';
 
 const GetJoinData = (props: JoinDataProps) => {
+  const { handleStatusChange, handleScoreChange } = useJoin('');
+  const { nowDate } = useUtil('');
   const join = useQuery(['joinList'], async () => await apis.getJoinList(props.data.postId));
   const { data: acceptList } = useQuery(['acceptlist'], async () => await apis.getAcceptList(props.data.postId));
-  const { handleStatusChange, handleScoreChange } = useJoin('');
-  const nowDate = dayjs(new Date()).format('YYYY-MM-DD');
   const joinData: JoinData = join?.data?.data;
   const acceptData = acceptList?.data;
   const postData = props?.data;

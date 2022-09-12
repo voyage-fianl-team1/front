@@ -1,12 +1,12 @@
-import React from 'react';
-import { useQuery } from '@tanstack/react-query';
+import React, { useEffect } from 'react';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { apis } from '../../apis';
-import { useParams, useNavigate } from 'react-router-dom';
 import { PostDataProps, JoinDataProps } from '../../typings';
 import { StaticMap } from 'react-kakao-maps-sdk';
 import { Helmet } from 'react-helmet';
 import { useScroll } from '../../hooks/match/useScroll';
 import { changeDataFormat } from '../../util/converDate';
+import { useUtil } from '../../hooks/post/useUtil';
 import CopyToClipboard from 'react-copy-to-clipboard';
 import GetJoinData from './GetJoinData';
 import ReviewDetail from '../Review/ReviewDetail';
@@ -15,10 +15,8 @@ import LoadingSpinner from '../Common/loadingSpinner';
 
 const GuestPostList = () => {
   const { matchRef, detailRef, locationRef, reviewRef, handleMoveScroll } = useScroll('');
-  const param = useParams();
-  const navigate = useNavigate();
-  const postId = Number(param.id);
-  const url = window.location.href;
+  const { postId, url, navigate } = useUtil('');
+  const queryClient = useQueryClient();
   const { data: res, isLoading } = useQuery(['guestList', postId], async () => await apis.getforGuestPostList(postId));
   const guestData: PostDataProps = res?.data;
   const drill: JoinDataProps = {
@@ -41,6 +39,10 @@ const GuestPostList = () => {
       content: guestData?.content,
     },
   };
+
+  useEffect(() => {
+    queryClient.invalidateQueries(['guestList']);
+  }, []);
 
   if (isLoading) {
     return <LoadingSpinner />;
