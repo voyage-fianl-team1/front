@@ -1,23 +1,9 @@
-import React, { PropsWithChildren, useRef } from 'react';
-import { useDispatch } from 'react-redux';
-import { toggleClear } from '../../redux/features/toggleSlice';
-
-interface ModalDefaultType {
-  onClickToggleModal: () => void;
-}
+import React, { PropsWithChildren } from 'react';
+import { useModal } from '../../hooks/modal/useModal';
+import { ModalDefaultType } from '../../hooks/modal/useModal';
 
 const Modal = ({ onClickToggleModal, children }: PropsWithChildren<ModalDefaultType>) => {
-  const outside = useRef<HTMLDivElement>(null);
-  const dispatch = useDispatch();
-  const handleModal = (e: React.MouseEvent) => {
-    e.preventDefault();
-    if (onClickToggleModal) {
-      onClickToggleModal();
-    }
-    if (outside.current !== e.target) {
-      dispatch(toggleClear());
-    }
-  };
+  const { outside, handleModal } = useModal({ onClickToggleModal, children });
 
   return (
     <div ref={outside}>

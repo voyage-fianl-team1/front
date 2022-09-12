@@ -14,3 +14,7 @@ export function getFromNow(date: string | Date) {
 export function convertDateShort(date: string) {
   return dayjs(date).format('M/DD(ddd)');
 }
+
+export function changeDataFormat(date: string) {
+  return dayjs(date).format('YYYY.MM.DD.');
+}

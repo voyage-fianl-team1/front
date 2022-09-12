@@ -1,17 +1,8 @@
 import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { toggleSubjectShow } from '../../redux/features/toggleSlice';
-import { RootState } from '../../redux/store';
-import { subjectAction } from '../../redux/features/subjectSlice';
+import useCustomSelect from '../../hooks/useCustomSelect';
 
 const CustomSubject = () => {
-  const dispatch = useDispatch();
-  const subjectShow = useSelector((state: RootState) => state.toggle.subjectShow);
-
-  const handleSelectData = (e: React.MouseEvent<HTMLButtonElement>) => {
-    dispatch(subjectAction({ subject: e.currentTarget.name, value: e.currentTarget.value }));
-    dispatch(toggleSubjectShow());
-  };
+  const { subjectShow, handleSelectData } = useCustomSelect();
 
   return (
     <section

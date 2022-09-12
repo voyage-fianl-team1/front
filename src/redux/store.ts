@@ -16,7 +16,7 @@ import notificationSlice from './features/notificationSlice';
 const persistConfig = {
   key: 'root',
   storage,
-  whiteList: ['postion', 'join'],
+  whiteList: ['position', 'join'],
 };
 
 const reducers = combineReducers({

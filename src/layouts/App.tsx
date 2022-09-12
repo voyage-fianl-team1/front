@@ -20,7 +20,8 @@ const Profile = React.lazy(() => import('../pages/Profile/Profile'));
 const UserMatchMore = React.lazy(() => import('../pages/Profile/UserMatchMore'));
 const ProfileEdit = React.lazy(() => import('../pages/Profile/ProfileEdit'));
 const Maps = React.lazy(() => import('../pages/Maps/Maps'));
-const Match = React.lazy(() => import('../pages/Match/Match'));
+const GetPostList = React.lazy(() => import('../components/Match/GetPostList'));
+const GuestPostList = React.lazy(() => import('../components/Match/GuestPostList'));
 const New = React.lazy(() => import('../pages/New/New'));
 const Keyword = React.lazy(() => import('../pages/Match/keyword'));
 const MatchHistory = React.lazy(() => import('../pages/Profile/MatchHistory'));
@@ -50,10 +51,6 @@ const App = () => {
         }
       );
     }
-    // else {
-    //   dispatch(positionAction({ lat: 37.33116, lng: 126.58111, isLoading: false }));
-    //   alert('현재 위치를 받아올 수 없습니다.');
-    // }
   }, []);
 
   if (isLogin) {
@@ -69,7 +66,7 @@ const App = () => {
             <Route path='/profile/userMatchMore' element={<UserMatchMore />} />
             <Route path='/profile/edit' element={<ProfileEdit />} />
             <Route path='/map' element={<Maps />} />
-            <Route path='/match/:id' element={<Match />} />
+            <Route path='/match/:id' element={<GetPostList />} />
             <Route path='/new' element={<New />} />
             <Route path='/new/:id/edit' element={<New />} />
             <Route path='/keword' element={<Keyword />} />
@@ -89,7 +86,7 @@ const App = () => {
           <Route path='/splash' element={<Splash />} />
           <Route path='/login' element={<Login />} />
           <Route path='/signup' element={<SignUp />} />
-          <Route path='/match/:id' element={<Match />} />
+          <Route path='/match/:id' element={<GuestPostList />} />
           <Route path='/search' element={<Search />} />
           <Route path='/keword' element={<Keyword />} />
           <Route path='/searching' element={<Searching />} />
