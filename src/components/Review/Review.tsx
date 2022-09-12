@@ -1,58 +1,16 @@
-import React, { useCallback, useRef, useState, useMemo } from 'react';
-import { useForm } from 'react-hook-form';
-import { apis } from '../../apis';
-import { IoMdCloseCircleOutline } from 'react-icons/io';
+import React, { useMemo } from 'react';
+import { useReview } from '../../hooks/review/useReview';
 import { JoinDataProps } from '../../typings';
-import { useQueryClient } from '@tanstack/react-query';
+import { IoMdCloseCircleOutline } from 'react-icons/io';
 
 const Review = (props: JoinDataProps) => {
-  const { register, getValues, resetField } = useForm({});
   const review = useMemo(() => props.data, [props.data]);
-  const queryClient = useQueryClient();
-  const [imgSrc, setImgSrc] = useState<string>('');
-  const [file, setFile] = useState<File[]>();
-  const inputRef = useRef<HTMLInputElement | null>(null);
-
-  const onUploadIamge = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
-    if (!e.target.files) {
-      return;
-    }
-    setFile(Array.from(e.target.files));
-    setImgSrc(URL.createObjectURL(e.target.files[0]));
-  }, []);
-
-  const imgBtn = useCallback(() => {
-    if (!inputRef.current) {
-      return;
-    }
-    inputRef.current.click();
-  }, []);
-
-  const handledeleteImage = useCallback(() => {
-    setImgSrc('');
-    setFile([]);
-  }, []);
-
-  const handleReviewUpload = async () => {
-    if (getValues().content.length < 2) {
-      return alert('댓글 최소 2글자 이상 입력해주세요.');
-    }
-    const value = await apis.reviewUpload(review.postId, { content: getValues().content });
-    const formData = new FormData();
-    if (file !== undefined && file.length >= 1) {
-      formData.append('files', file[0]);
-      await apis.reviewImage(value, formData);
-      setFile([]);
-    }
-    queryClient.invalidateQueries(['reviewList']);
-    setImgSrc('');
-    resetField('content');
-  };
+  const { imgBtn, inputRef, onUploadImage, handledeleteImage, imgSrc, handleReviewUpload, register } = useReview('');
 
   return (
     <>
       <section className='w-full h-full flex flex-col justify-center items-center bg-[#FCFCFC]'>
-        <input type='file' accept='image/*' multiple className='hidden' onChange={onUploadIamge} ref={inputRef}></input>
+        <input type='file' accept='image/*' multiple className='hidden' onChange={onUploadImage} ref={inputRef}></input>
         <p
           className='w-full mb-[34px] pl-[20px] text-[#38393C] font-medium leading-[21px] text-[14px]
         font-Noto bg-[#FCFCFC]'
@@ -69,7 +27,7 @@ const Review = (props: JoinDataProps) => {
               maxLength={100}
               placeholder='댓글은 100글자 미만으로 작성 해주세요.'
               {...register('content')}
-            ></textarea>
+            />
             {imgSrc !== '' ? (
               <>
                 <div className='absolute left-16'>
@@ -93,7 +51,9 @@ const Review = (props: JoinDataProps) => {
                 className='flex justify-center items-center border w-[52px] h-[27px] rounded-[4px] bg-[#14308B] text-[#FFF] p-0.25 text-[14px] leading-[0.07rem] tracking-[-0.04rem]
           font-Noto
           '
-                onClick={handleReviewUpload}
+                onClick={() => {
+                  handleReviewUpload(review.postId);
+                }}
               >
                 <p className='font-Noto'>입력</p>
               </button>
