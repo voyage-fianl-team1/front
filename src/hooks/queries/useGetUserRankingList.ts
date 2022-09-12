@@ -4,6 +4,7 @@ import { UserRanking } from '../../typings';
 import { AxiosResponse } from 'axios';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../redux/store';
+import { queryKeys } from '../../shared/constant/queryKeys';
 
 interface PagingResponse {
   content: UserRanking[];
@@ -12,7 +13,7 @@ interface PagingResponse {
 function useGetRecentMatchList() {
   const { subject: selectSubject } = useSelector((state: RootState) => state.search);
 
-  return useQuery(['allUserRankingList', selectSubject], () => apis.getAllUserRankingList(selectSubject), {
+  return useQuery([queryKeys.RANKING_LIST, selectSubject], () => apis.getAllUserRankingList(selectSubject), {
     select: (res: AxiosResponse<PagingResponse>) => res.data.content,
   });
 }

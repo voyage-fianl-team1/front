@@ -1,7 +1,6 @@
 import React, { useCallback } from 'react';
 import { IoMdClose } from 'react-icons/io';
-import { closeSideMenu, toggleSideMenuShow } from '../../redux/features/commonSlice';
-import { useNavigate } from 'react-router-dom';
+import { toggleSideMenuShow } from '../../redux/features/commonSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../redux/store';
 import useLogOut from '../../hooks/auth/useLogOut';
