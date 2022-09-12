@@ -12,6 +12,7 @@ import { categories } from '../../shared/constant/subjectTable';
 import { sortCategories } from '../../shared/constant/sortTables';
 import { Helmet } from 'react-helmet';
 import LoadingSpinner from '../../components/Common/loadingSpinner';
+import { queryKeys } from '../../shared/constant/queryKeys';
 
 const SearchMatch: FC = () => {
   const navigate = useNavigate();
@@ -33,7 +34,7 @@ const SearchMatch: FC = () => {
     data: postList,
     fetchNextPage,
     isFetchingNextPage,
-  } = useInfiniteQuery(['postData', sort, subject], ({ pageParam = 0 }) => fetchPostList(pageParam), {
+  } = useInfiniteQuery([queryKeys.SEARCH, sort, subject], ({ pageParam = 0 }) => fetchPostList(pageParam), {
     getNextPageParam: (lastPage) => (!lastPage.last ? lastPage.nextPage : undefined),
   });
 

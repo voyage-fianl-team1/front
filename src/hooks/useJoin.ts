@@ -7,6 +7,7 @@ import { useDispatch } from 'react-redux';
 import { addressAction } from '../redux/features/addressSlice';
 import { subjectAction } from '../redux/features/subjectSlice';
 import { calendarAction } from '../redux/features/calendarSlice';
+import { queryKeys } from '../shared/constant/queryKeys';
 
 export function useJoin<T>(defaultValue: T) {
   const navigate = useNavigate();
@@ -15,8 +16,8 @@ export function useJoin<T>(defaultValue: T) {
   const handleStatusChange = async (postId: number) => {
     try {
       await apis.updateMatchStatus(postId);
-      queryClient.invalidateQueries(['postList']);
-      queryClient.invalidateQueries(['acceptlist']);
+      queryClient.invalidateQueries([queryKeys.POSTLIST]);
+      queryClient.invalidateQueries([queryKeys.ACCEPTLIST]);
     } catch (err) {
       if (err && err instanceof AxiosError) {
         alert(err.response?.data);
@@ -26,8 +27,8 @@ export function useJoin<T>(defaultValue: T) {
 
   const handleScoreChange = async (requestId: string, value: string) => {
     await apis.updateTotalStatus(requestId, { status: value });
-    queryClient.invalidateQueries(['acceptlist']);
-    queryClient.invalidateQueries(['joinList']);
+    queryClient.invalidateQueries([queryKeys.JOINLIST]);
+    queryClient.invalidateQueries([queryKeys.ACCEPTLIST]);
   };
 
   const handleJoinTheGame = async (postId: number) => {
@@ -35,8 +36,8 @@ export function useJoin<T>(defaultValue: T) {
       if (window.confirm('참가 신청 하시겠습니까?')) {
         await apis.postJoinGame(postId);
         alert('참가 신청이 완료되었습니다.');
-        queryClient.invalidateQueries(['postList']);
-        queryClient.invalidateQueries(['joinList']);
+        queryClient.invalidateQueries([queryKeys.POSTLIST]);
+        queryClient.invalidateQueries([queryKeys.JOINLIST]);
       }
     } catch (err) {
       alert('참가 신청은 중복으로 할 수 없습니다.');
@@ -47,7 +48,7 @@ export function useJoin<T>(defaultValue: T) {
       if (window.confirm('게시글을 삭제하시겠습니까?')) {
         await apis.deletePost(postId);
         alert('게시글이 삭제되었습니다.');
-        queryClient.removeQueries(['postData']);
+        queryClient.removeQueries([queryKeys.SEARCH]);
         navigate(-1);
       }
     } catch (err) {

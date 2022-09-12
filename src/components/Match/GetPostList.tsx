@@ -7,6 +7,7 @@ import { Helmet } from 'react-helmet';
 import { useScroll } from '../../hooks/match/useScroll';
 import { useUtil } from '../../hooks/post/useUtil';
 import { changeDataFormat } from '../../util/converDate';
+import { queryKeys } from '../../shared/constant/queryKeys';
 import CopyToClipboard from 'react-copy-to-clipboard';
 import LoadingSpinner from '../Common/loadingSpinner';
 import GetJoinData from './GetJoinData';
@@ -18,7 +19,7 @@ import HandleJoinEdit from './HandleJoinEdit';
 const GetPostList = () => {
   const { matchRef, detailRef, locationRef, reviewRef, handleMoveScroll } = useScroll('');
   const { postId, url } = useUtil('');
-  const { data: res, isLoading } = useQuery(['postList', postId], () => apis.getPostList(postId));
+  const { data: res, isLoading } = useQuery([queryKeys.POSTLIST, postId], () => apis.getPostList(postId));
   const queryClient = useQueryClient();
   const postData: PostDataProps = res?.data;
   const drill: JoinDataProps = {

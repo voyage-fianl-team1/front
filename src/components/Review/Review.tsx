@@ -1,13 +1,11 @@
 import React, { useMemo } from 'react';
-import { useForm } from 'react-hook-form';
 import { useReview } from '../../hooks/review/useReview';
 import { JoinDataProps } from '../../typings';
 import { IoMdCloseCircleOutline } from 'react-icons/io';
 
 const Review = (props: JoinDataProps) => {
   const review = useMemo(() => props.data, [props.data]);
-  const { register, getValues, resetField } = useForm({});
-  const { imgBtn, inputRef, onUploadImage, handledeleteImage, imgSrc, handleReviewUpload } = useReview('');
+  const { imgBtn, inputRef, onUploadImage, handledeleteImage, imgSrc, handleReviewUpload, register } = useReview('');
 
   return (
     <>
@@ -54,8 +52,7 @@ const Review = (props: JoinDataProps) => {
           font-Noto
           '
                 onClick={() => {
-                  handleReviewUpload(review.postId, getValues().content);
-                  resetField('content');
+                  handleReviewUpload(review.postId);
                 }}
               >
                 <p className='font-Noto'>입력</p>

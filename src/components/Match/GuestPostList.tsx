@@ -7,6 +7,7 @@ import { Helmet } from 'react-helmet';
 import { useScroll } from '../../hooks/match/useScroll';
 import { changeDataFormat } from '../../util/converDate';
 import { useUtil } from '../../hooks/post/useUtil';
+import { queryKeys } from '../../shared/constant/queryKeys';
 import CopyToClipboard from 'react-copy-to-clipboard';
 import GetJoinData from './GetJoinData';
 import ReviewDetail from '../Review/ReviewDetail';
@@ -17,7 +18,10 @@ const GuestPostList = () => {
   const { matchRef, detailRef, locationRef, reviewRef, handleMoveScroll } = useScroll('');
   const { postId, url, navigate } = useUtil('');
   const queryClient = useQueryClient();
-  const { data: res, isLoading } = useQuery(['guestList', postId], async () => await apis.getforGuestPostList(postId));
+  const { data: res, isLoading } = useQuery(
+    [queryKeys.GUESTLIST, postId],
+    async () => await apis.getforGuestPostList(postId)
+  );
   const guestData: PostDataProps = res?.data;
   const drill: JoinDataProps = {
     data: {
@@ -41,7 +45,7 @@ const GuestPostList = () => {
   };
 
   useEffect(() => {
-    queryClient.invalidateQueries(['guestList']);
+    queryClient.invalidateQueries([queryKeys.GUESTLIST]);
   }, []);
 
   if (isLoading) {

@@ -5,18 +5,25 @@ import { apis } from '../../apis';
 import { scoreStatus } from '../../shared/constant/scoreTable';
 import { useJoin } from '../../hooks/useJoin';
 import { useUtil } from '../../hooks/post/useUtil';
+import { queryKeys } from '../../shared/constant/queryKeys';
 import LoadingSpinner from '../Common/loadingSpinner';
 
 const GetJoinData = (props: JoinDataProps) => {
   const { handleStatusChange, handleScoreChange } = useJoin('');
   const { nowDate } = useUtil('');
-  const join = useQuery(['joinList'], async () => await apis.getJoinList(props.data.postId));
-  const { data: acceptList } = useQuery(['acceptlist'], async () => await apis.getAcceptList(props.data.postId));
-  const joinData: JoinData = join?.data?.data;
+  const { data: joinList, isLoading } = useQuery(
+    [queryKeys.JOINLIST],
+    async () => await apis.getJoinList(props.data.postId)
+  );
+  const { data: acceptList } = useQuery(
+    [queryKeys.ACCEPTLIST],
+    async () => await apis.getAcceptList(props.data.postId)
+  );
+  const joinData: JoinData = joinList?.data;
   const acceptData = acceptList?.data;
   const postData = props?.data;
 
-  if (join.isLoading) {
+  if (isLoading) {
     return <LoadingSpinner />;
   }
   if (joinData.userList.length < 1) {

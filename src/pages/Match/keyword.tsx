@@ -7,6 +7,7 @@ import { RootState } from '../../redux/store';
 import { useSelector } from 'react-redux';
 import LoadingSpinner from '../../components/Common/loadingSpinner';
 import { Helmet } from 'react-helmet';
+import { queryKeys } from '../../shared/constant/queryKeys';
 
 const Keyword: FC = () => {
   const navigate = useNavigate();
@@ -25,7 +26,7 @@ const Keyword: FC = () => {
     data: searchList,
     fetchNextPage,
     isFetchingNextPage,
-  } = useInfiniteQuery(['searchData', keyword], ({ pageParam = 0 }) => fetchsearchList(pageParam), {
+  } = useInfiniteQuery([queryKeys.KEYWORD, keyword], ({ pageParam = 0 }) => fetchsearchList(pageParam), {
     getNextPageParam: (lastPage) => (!lastPage.last ? lastPage.nextPage : undefined),
   });
 

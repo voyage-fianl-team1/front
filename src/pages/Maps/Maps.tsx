@@ -8,6 +8,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../redux/store';
 import { Helmet } from 'react-helmet';
 import { MarkerObj } from '../../shared/constant/makerTable';
+import { queryKeys } from '../../shared/constant/queryKeys';
 import LoadingSpinner from '../../components/Common/loadingSpinner';
 
 const Maps = () => {
@@ -18,7 +19,10 @@ const Maps = () => {
   const [level, setLevel] = useState<number>(3);
   const overlay = useSelector((state: RootState) => state.overlay);
   const nowPosition = useSelector((state: RootState) => state.persistReducered.position);
-  const res = useQuery(['matchList'], async () => await apis.getAroundGame(nowPosition.lat, nowPosition.lng));
+  const { data: res, isLoading } = useQuery(
+    [queryKeys.MAPLIST],
+    async () => await apis.getAroundGame(nowPosition.lat, nowPosition.lng)
+  );
   const [isOpen, setIsOpen] = useState(false);
   const matchData = res?.data?.data;
   // /api/posts/gps?NWlat=&Nwlng=&SElat=&SElng
@@ -29,7 +33,7 @@ const Maps = () => {
     };
   }, []);
 
-  if (res.isLoading) {
+  if (isLoading) {
     return <LoadingSpinner />;
   }
   return (
