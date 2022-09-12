@@ -61,9 +61,9 @@ export const apis = {
   getChatRooms: () => instance.get(`/api/users/rooms`).then((res) => res.data),
   getChatHistory: (roomId: number | string, firstChat?: number | undefined) => {
     if (!firstChat) {
-      return instance.get(`/api/rooms/${roomId}/chats?limit=20`).then((res) => res.data);
+      return instance.get(`/api/rooms/${roomId}/chats?limit=20`);
     }
-    return instance.get(`/api/rooms/${roomId}/chats?lastChat=${firstChat}&limit=20`).then((res) => res.data);
+    return instance.get(`/api/rooms/${roomId}/chats?lastChat=${firstChat}&limit=20`);
   },
   getMatchItem: () => instance.get('/api/posts?page=0&size=10&subject=ALL&sort=default'),
   getSearchList: (pageParam: number, keyword: string) =>

@@ -12,4 +12,6 @@ export const queryKeys = {
   MAPLIST: 'mapList',
   KEYWORD: 'keywordList',
   SEARCH: 'searchList',
+  CHAT_ROOMS: 'chat-rooms',
+  CHAT_HISTORY: 'chat-history',
 };
