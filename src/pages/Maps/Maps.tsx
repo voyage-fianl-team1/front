@@ -1,27 +1,21 @@
 import React, { useState, useEffect } from 'react';
 import { Map, ZoomControl, MapMarker, MarkerClusterer } from 'react-kakao-maps-sdk';
-import { useQuery } from '@tanstack/react-query';
-import { apis } from '../../apis';
 import { useNavigate } from 'react-router-dom';
 import { overlayAction, overlayClear, OverlayState } from '../../redux/features/overlaySlice';
 import { useDispatch } from 'react-redux';
 import { Helmet } from 'react-helmet';
 import { MarkerObj } from '../../shared/constant/makerTable';
-import { queryKeys } from '../../shared/constant/queryKeys';
 import { useMaps } from '../../hooks/map/useMaps';
+import { useMapList } from '../../hooks/queries/useMapList';
 import LoadingSpinner from '../../components/Common/loadingSpinner';
 
 const Maps = () => {
   const { mapRef, nowPosition, overlay } = useMaps('');
+  const { matchData, isLoading } = useMapList(nowPosition.lat, nowPosition.lng);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [state, setState] = useState({});
   const [isOpen, setIsOpen] = useState(false);
-  const { data: res, isLoading } = useQuery(
-    [queryKeys.MAPLIST],
-    async () => await apis.getAroundGame(nowPosition.lat, nowPosition.lng)
-  );
-  const matchData = res?.data;
   // /api/posts/gps?NWlat=&Nwlng=&SElat=&SElng
 
   useEffect(() => {
