@@ -1,10 +1,5 @@
-import React, { FC, useCallback } from 'react';
-import { useInput } from '../../hooks/util/useInput';
-import { apis } from '../../apis';
-import { login } from '../../redux/features/userSlice';
-import { AxiosError } from 'axios';
-import { useDispatch, useSelector } from 'react-redux';
-import { RootState } from '../../redux/store';
+import React, { FC } from 'react';
+
 import useUpdateNickName from '../../hooks/auth/useUpdateNickName';
 
 interface Props {

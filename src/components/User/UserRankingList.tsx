@@ -1,10 +1,5 @@
 import React from 'react';
 import UserRankingCard from './UserRankingCard';
-import { useQuery } from '@tanstack/react-query';
-import { apis } from '../../apis';
-import { useSelector } from 'react-redux';
-import { RootState } from '../../redux/store';
-import { UserRanking } from '../../typings';
 import LoadingSpinner from '../Common/loadingSpinner';
 import useGetRecentMatchList from '../../hooks/queries/useGetUserRankingList';
 
