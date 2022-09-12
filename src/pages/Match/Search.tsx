@@ -8,8 +8,8 @@ import { RootState } from '../../redux/store';
 import { toggleSortShow, toggleSelectShow, toggleClear } from '../../redux/features/toggleSlice';
 import { subjectSearchShowClear, sortSearchShowClear } from '../../redux/features/searchSlice';
 import { RiArrowDownSLine } from 'react-icons/ri';
-import { categories } from '../../util/constant/subjectTable';
-import { sortCategories } from '../../util/constant/sortTables';
+import { categories } from '../../shared/constant/subjectTable';
+import { sortCategories } from '../../shared/constant/sortTables';
 import { Helmet } from 'react-helmet';
 import LoadingSpinner from '../../components/Common/loadingSpinner';
 

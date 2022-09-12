@@ -1,14 +1,15 @@
 import React from 'react';
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { UserPostType } from '../../typings';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { apis } from '../../apis';
 import LoadingSpinner from '../Common/loadingSpinner';
 import { Link } from 'react-router-dom';
 import dayjs from 'dayjs';
-import { categories } from '../../util/constant/subjectTable';
+import { categories } from '../../shared/constant/subjectTable';
+import useUserOwnPosts from '../../hooks/queries/useUserOwnPosts';
+import { queryKeys } from '../../shared/constant/queryKeys';
 
 const UserPost = () => {
-  const { data } = useQuery<UserPostType[]>(['user-posts'], apis.getUserPosts);
+  const { data: userOwnPosts, isLoading } = useUserOwnPosts();
   const queryClient = useQueryClient();
   const mutation = useMutation(
     (postId: number) => {
@@ -16,7 +17,7 @@ const UserPost = () => {
     },
     {
       onSuccess: () => {
-        queryClient.invalidateQueries(['user-posts']);
+        queryClient.invalidateQueries([queryKeys.USER_OWN_POSTS]);
       },
     }
   );
@@ -26,17 +27,17 @@ const UserPost = () => {
     }
   };
 
-  if (!data) {
+  if (isLoading) {
     return <LoadingSpinner />;
   }
 
-  if (data.length === 0) {
+  if (userOwnPosts?.length === 0) {
     return <div className='text-sm text-black/30 my-10'>작성한 게시글이 없습니다</div>;
   }
 
   return (
     <ul className='flex flex-col gap-2 justify-start w-[100%] mt-5'>
-      {data.map((d) => (
+      {userOwnPosts?.map((d) => (
         <li key={d.id} className='flex justify-between pb-5 pt-3 rounded border-b-[#F4F5F5] border-b-2'>
           <div className='flex'>
             <img

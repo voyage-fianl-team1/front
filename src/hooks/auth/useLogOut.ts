@@ -3,6 +3,7 @@ import { logout } from '../../redux/features/userSlice';
 import { toggleSideMenuShow } from '../../redux/features/commonSlice';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
+import { removeItemFromLS } from '../../util/handleLocalStorage';
 
 function useLogOut() {
   const navigate = useNavigate();
@@ -17,8 +18,8 @@ function useLogOut() {
   }, []);
 
   const removeTokens = useCallback(() => {
-    window.localStorage.removeItem('accessToken');
-    window.localStorage.removeItem('refreshToken');
+    removeItemFromLS('accessToken');
+    removeItemFromLS('refreshToken');
   }, []);
 
   return { handleLogOut };

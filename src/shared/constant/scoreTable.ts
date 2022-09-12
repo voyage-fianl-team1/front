@@ -1,4 +1,4 @@
-import { ImageType } from '../typings';
+import { ImageType } from '../../typings';
 
 export const scoreStatus: ImageType = {
   WIN: '승리',

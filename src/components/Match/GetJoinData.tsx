@@ -2,7 +2,7 @@ import React from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { JoinDataProps, JoinData, ImageType } from '../../typings';
 import { apis } from '../../apis';
-import { scoreStatus } from '../../util/scoreTables';
+import { scoreStatus } from '../../shared/constant/scoreTable';
 import { useJoin } from '../../hooks/useJoin';
 import dayjs from 'dayjs';
 import LoadingSpinner from '../Common/loadingSpinner';

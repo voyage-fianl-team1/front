@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import useKakoAuth from '../../hooks/auth/useKakoAuth';
 
 const Splash = () => {
-  const { handleKakaoLogin } = useKakoAuth();
+  const { handleRouteKakaoLoginPage } = useKakoAuth();
 
   return (
     <div className='min-h-[90vh]'>
@@ -22,7 +22,7 @@ const Splash = () => {
         </Link>
         <button
           className='flex w-[100%] relative border-[1px] border-[#ECD500] py-2 rounded-md bg-[#FAE100]'
-          onClick={handleKakaoLogin}
+          onClick={handleRouteKakaoLoginPage}
         >
           <img src='/assets/images/kakao-icon.svg' alt='kakao-icon' className='absolute left-2' />
           <span className='flex-1'>카카오톡으로 시작하기</span>

@@ -34,7 +34,6 @@ const App = () => {
   } = useCurrentUser();
 
   useEffect(() => {
-    // 페이지 최초 접속시 자동 로그인 처리
     fetchUserInfo().then((res) => console.log(res.msg));
   }, []);
 
