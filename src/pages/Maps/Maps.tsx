@@ -1,30 +1,27 @@
-import React, { useRef, useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Map, ZoomControl, MapMarker, MarkerClusterer } from 'react-kakao-maps-sdk';
 import { useQuery } from '@tanstack/react-query';
 import { apis } from '../../apis';
 import { useNavigate } from 'react-router-dom';
 import { overlayAction, overlayClear, OverlayState } from '../../redux/features/overlaySlice';
-import { useDispatch, useSelector } from 'react-redux';
-import { RootState } from '../../redux/store';
+import { useDispatch } from 'react-redux';
 import { Helmet } from 'react-helmet';
 import { MarkerObj } from '../../shared/constant/makerTable';
 import { queryKeys } from '../../shared/constant/queryKeys';
+import { useMaps } from '../../hooks/map/useMaps';
 import LoadingSpinner from '../../components/Common/loadingSpinner';
 
 const Maps = () => {
-  const mapRef = useRef<any>(3);
+  const { mapRef, nowPosition, overlay } = useMaps('');
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [state, setState] = useState({});
-  const [level, setLevel] = useState<number>(3);
-  const overlay = useSelector((state: RootState) => state.overlay);
-  const nowPosition = useSelector((state: RootState) => state.persistReducered.position);
+  const [isOpen, setIsOpen] = useState(false);
   const { data: res, isLoading } = useQuery(
     [queryKeys.MAPLIST],
     async () => await apis.getAroundGame(nowPosition.lat, nowPosition.lng)
   );
-  const [isOpen, setIsOpen] = useState(false);
-  const matchData = res?.data?.data;
+  const matchData = res?.data;
   // /api/posts/gps?NWlat=&Nwlng=&SElat=&SElng
 
   useEffect(() => {
@@ -44,8 +41,7 @@ const Maps = () => {
       <Map
         center={{ lat: nowPosition.lat, lng: nowPosition.lng }}
         className='w-full h-screen'
-        level={level}
-        onZoomChanged={(map) => setLevel(map.getLevel())}
+        level={3}
         ref={mapRef}
         onBoundsChanged={(map) =>
           setState({

@@ -1,5 +1,5 @@
-import React, { useEffect } from 'react';
-import { useQuery, useQueryClient } from '@tanstack/react-query';
+import React from 'react';
+import { useQuery } from '@tanstack/react-query';
 import { apis } from '../../apis';
 import { PostDataProps, JoinDataProps } from '../../typings';
 import { StaticMap } from 'react-kakao-maps-sdk';
@@ -20,7 +20,6 @@ const GetPostList = () => {
   const { matchRef, detailRef, locationRef, reviewRef, handleMoveScroll } = useScroll('');
   const { postId, url } = useUtil('');
   const { data: res, isLoading } = useQuery([queryKeys.POSTLIST, postId], () => apis.getPostList(postId));
-  const queryClient = useQueryClient();
   const postData: PostDataProps = res?.data;
   const drill: JoinDataProps = {
     data: {
@@ -42,10 +41,6 @@ const GetPostList = () => {
       content: postData?.content,
     },
   };
-
-  useEffect(() => {
-    queryClient.invalidateQueries(['postData']);
-  }, []);
 
   if (isLoading) {
     return <LoadingSpinner />;

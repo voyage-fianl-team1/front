@@ -1,13 +1,11 @@
-import React, { useEffect } from 'react';
-import { useQuery, useQueryClient } from '@tanstack/react-query';
-import { apis } from '../../apis';
-import { PostDataProps, JoinDataProps } from '../../typings';
+import React from 'react';
+import { JoinDataProps } from '../../typings';
 import { StaticMap } from 'react-kakao-maps-sdk';
 import { Helmet } from 'react-helmet';
 import { useScroll } from '../../hooks/match/useScroll';
 import { changeDataFormat } from '../../util/converDate';
 import { useUtil } from '../../hooks/post/useUtil';
-import { queryKeys } from '../../shared/constant/queryKeys';
+import { useGetPostList } from '../../hooks/queries/useGuestPostList';
 import CopyToClipboard from 'react-copy-to-clipboard';
 import GetJoinData from './GetJoinData';
 import ReviewDetail from '../Review/ReviewDetail';
@@ -17,12 +15,8 @@ import LoadingSpinner from '../Common/loadingSpinner';
 const GuestPostList = () => {
   const { matchRef, detailRef, locationRef, reviewRef, handleMoveScroll } = useScroll('');
   const { postId, url, navigate } = useUtil('');
-  const queryClient = useQueryClient();
-  const { data: res, isLoading } = useQuery(
-    [queryKeys.GUESTLIST, postId],
-    async () => await apis.getforGuestPostList(postId)
-  );
-  const guestData: PostDataProps = res?.data;
+  const { guestData, isLoading } = useGetPostList(postId);
+
   const drill: JoinDataProps = {
     data: {
       owner: guestData?.owner,
@@ -43,10 +37,6 @@ const GuestPostList = () => {
       content: guestData?.content,
     },
   };
-
-  useEffect(() => {
-    queryClient.invalidateQueries([queryKeys.GUESTLIST]);
-  }, []);
 
   if (isLoading) {
     return <LoadingSpinner />;

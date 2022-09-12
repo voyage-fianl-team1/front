@@ -1,26 +1,15 @@
 import React from 'react';
-import { useQuery } from '@tanstack/react-query';
-import { JoinDataProps, JoinData, ImageType } from '../../typings';
-import { apis } from '../../apis';
+import { JoinDataProps, ImageType } from '../../typings';
 import { scoreStatus } from '../../shared/constant/scoreTable';
 import { useJoin } from '../../hooks/useJoin';
 import { useUtil } from '../../hooks/post/useUtil';
-import { queryKeys } from '../../shared/constant/queryKeys';
+import { useGetJoinData } from '../../hooks/queries/useGetJoinData';
 import LoadingSpinner from '../Common/loadingSpinner';
 
 const GetJoinData = (props: JoinDataProps) => {
   const { handleStatusChange, handleScoreChange } = useJoin('');
   const { nowDate } = useUtil('');
-  const { data: joinList, isLoading } = useQuery(
-    [queryKeys.JOINLIST],
-    async () => await apis.getJoinList(props.data.postId)
-  );
-  const { data: acceptList } = useQuery(
-    [queryKeys.ACCEPTLIST],
-    async () => await apis.getAcceptList(props.data.postId)
-  );
-  const joinData: JoinData = joinList?.data;
-  const acceptData = acceptList?.data;
+  const { joinData, acceptData, isLoading } = useGetJoinData(props.data.postId);
   const postData = props?.data;
 
   if (isLoading) {

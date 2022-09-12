@@ -1,19 +1,12 @@
+import { useQuery } from '@tanstack/react-query';
+import { queryKeys } from '../../shared/constant/queryKeys';
+import { apis } from '../../apis';
 
-// import { useQuery } from '@tanstack/react-query';
-// import { apis } from '../../apis';
-// import { JoinDataProps } from '../../typings';
-// import { AxiosResponse } from 'axios';
+export function useReviewDetail<T>(postId: number) {
+  const { data: res, isLoading } = useQuery([queryKeys.REVIEWLIST], async () => await apis.getReviewList(postId));
+  const reviewList = res?.data.reviewList;
 
-// interface PagingResponse {
-//   reviewList: JoinDataProps;
-// }
-
-// function useReviewDetail(postId: number) {
-//   return useQuery(['reviewList'], apis.getReviewList(postId), {
-//     select: (res: AxiosResponse<PagingResponse>) => res.data.reviewList,
-//   });
-// }
-
-// export default useReviewDetail;
+  return { reviewList, isLoading };
+}
 
 export {};

@@ -6,7 +6,7 @@ import { UserRequest } from '../../typings';
 import dayjs from 'dayjs';
 import { Link } from 'react-router-dom';
 import { categories } from '../../shared/constant/subjectTable';
-import { sortCategories } from '../../shared/constant/sortTables';
+import { sortCategories } from '../../shared/constant/sortTable';
 import useUserRequests from '../../hooks/queries/useUserRequests';
 import { userRequestStatusTable } from '../../shared/constant/matchResultTable';
 

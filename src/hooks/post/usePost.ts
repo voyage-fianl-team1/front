@@ -10,6 +10,7 @@ import { addressClear } from '../../redux/features/addressSlice';
 import { calendarClear } from '../../redux/features/calendarSlice';
 import { subjectClear } from '../../redux/features/subjectSlice';
 import { useQueryClient } from '@tanstack/react-query';
+import { queryKeys } from '../../shared/constant/queryKeys';
 
 export function usePost<T>(defaultValue: T) {
   const location = useLocation();
@@ -77,7 +78,7 @@ export function usePost<T>(defaultValue: T) {
         }
         await apis.uploadImage(value, formData);
       }
-      queryClient.removeQueries(['postData']);
+      queryClient.removeQueries([queryKeys.SEARCH]);
       navigate('/search');
     }
   };
@@ -128,7 +129,7 @@ export function usePost<T>(defaultValue: T) {
         }
         await apis.uploadImage(data.postId, formData);
       }
-      queryClient.removeQueries(['postData']);
+      queryClient.removeQueries([queryKeys.SEARCH]);
       navigate('/search');
     }
   };

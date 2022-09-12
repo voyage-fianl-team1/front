@@ -1,18 +1,12 @@
 import React, { useMemo } from 'react';
-import { apis } from '../../apis';
-import { useQuery } from '@tanstack/react-query';
 import { JoinDataProps, ImageType } from '../../typings';
 import { changeDataFormat } from '../../util/converDate';
-import { queryKeys } from '../../shared/constant/queryKeys';
+import { useReviewDetail } from '../../hooks/queries/useReviewDetail';
 import LoadingSpinner from '../Common/loadingSpinner';
 
 const ReviewDetail = (props: JoinDataProps) => {
   const reviewDatail = useMemo(() => props.data, [props.data]);
-  const { data: res, isLoading } = useQuery(
-    [queryKeys.REVIEWLIST],
-    async () => await apis.getReviewList(reviewDatail.postId)
-  );
-  const reviewList = res?.data.reviewList;
+  const { reviewList, isLoading } = useReviewDetail(reviewDatail.postId);
 
   if (isLoading) {
     return <LoadingSpinner />;

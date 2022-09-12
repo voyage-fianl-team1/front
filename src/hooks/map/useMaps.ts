@@ -4,10 +4,11 @@ import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../redux/store';
 import { toggleModalShow } from '../../redux/features/toggleSlice';
 
-export function useMap<T>(defaultValue: T) {
+export function useMaps<T>(defaultValue: T) {
   const mapRef = useRef(null);
   const dispatch = useDispatch();
   const nowPosition = useSelector((state: RootState) => state.persistReducered.position);
+  const overlay = useSelector((state: RootState) => state.overlay);
   const [position, setPosition] = useState({ lat: 0, lng: 0 });
   const [address, setAddress] = useState<string>();
 
@@ -51,5 +52,6 @@ export function useMap<T>(defaultValue: T) {
     address,
     setAddress,
     mousePosition,
+    overlay,
   };
 }

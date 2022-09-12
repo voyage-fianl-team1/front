@@ -1,12 +1,13 @@
 import React from 'react';
 import { Map, ZoomControl, MapMarker } from 'react-kakao-maps-sdk';
 import { useCalendar } from '../../hooks/modal/useCalendar';
-import { useMap } from '../../hooks/map/useMap';
+import { useMaps } from '../../hooks/map/useMaps';
 import Modal from './Modal';
 
 const MapContainer = () => {
   const { handleToggleModal } = useCalendar('');
-  const { mapRef, nowPosition, position, address, handleSendAddress, loadAddress, mousePosition } = useMap('');
+  const { mapRef, nowPosition, position, address, handleSendAddress, loadAddress, mousePosition } = useMaps('');
+
   loadAddress();
 
   return (
