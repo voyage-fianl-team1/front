@@ -1,10 +1,10 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import usePush from '../../hooks/usePush';
 import useFocus from '../../hooks/util/useFocus';
 
 const SearchBar = () => {
-  const navigate = useNavigate();
-  const { isFocus, handleFocus, handleFocusOut } = useFocus(() => navigate('/searching'));
+  const { push } = usePush();
+  const { isFocus, handleFocus, handleFocusOut } = useFocus(() => push('/searching'));
 
   return (
     <div

@@ -5,6 +5,7 @@ import { useScroll } from '../../hooks/match/useScroll';
 import { changeDataFormat } from '../../util/converDate';
 import { useUtil } from '../../hooks/post/useUtil';
 import { useGetPostList } from '../../hooks/queries/useGuestPostList';
+import usePush from '../../hooks/usePush';
 import CopyToClipboard from 'react-copy-to-clipboard';
 import GetJoinData from './GetJoinData';
 import ReviewDetail from '../Review/ReviewDetail';
@@ -13,7 +14,8 @@ import LoadingSpinner from '../Common/loadingSpinner';
 
 const GuestPostList = () => {
   const { matchRef, detailRef, locationRef, reviewRef, handleMoveScroll } = useScroll('');
-  const { postId, url, navigate } = useUtil('');
+  const { postId, url } = useUtil('');
+  const { push } = usePush();
   const { guestData, isLoading, drill } = useGetPostList(postId);
 
   if (isLoading) {
@@ -143,7 +145,7 @@ const GuestPostList = () => {
           className='joinBtn'
           onClick={() => {
             alert('참가 신청은 로그인 후 가능합니다.');
-            navigate('/splash');
+            push('/splash');
           }}
         >
           참가 신청하기
