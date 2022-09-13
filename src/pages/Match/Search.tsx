@@ -4,6 +4,7 @@ import { RiArrowDownSLine } from 'react-icons/ri';
 import { Helmet } from 'react-helmet';
 import { useSearch } from '../../hooks/match/useSearch';
 import { useSearchList } from '../../hooks/queries/useSearchList';
+import WriteFloatingButton from '../../components/Common/WriteFloatingButton';
 import LoadingSpinner from '../../components/Common/loadingSpinner';
 import usePush from '../../hooks/usePush';
 
@@ -21,6 +22,7 @@ const SearchMatch: FC = () => {
 
   return (
     <>
+      <WriteFloatingButton />
       <Helmet>
         <title>매치기 | 경기목록</title>
       </Helmet>

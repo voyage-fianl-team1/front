@@ -34,7 +34,7 @@ export function useJoin<T>(defaultValue: T) {
     try {
       if (window.confirm('참가 신청 하시겠습니까?')) {
         await apis.postJoinGame(postId);
-        alert('참가 신청이 완료되었습니다. 채팅방에서 대화를 나눠보세요!');
+        alert('참가 신청이 완료되었습니다. 승인 시 채팅방에 초대 됩니다.');
         queryClient.invalidateQueries([queryKeys.POSTLIST]);
         queryClient.invalidateQueries([queryKeys.JOINLIST]);
       }
