@@ -77,6 +77,7 @@ export const apis = {
     instance.get(`/api/posts?page=${pageParam}&size=20&subject=${subject}&sort=${sort}`),
   getJoinList: (postId: number) => instance.get(`/api/posts/${postId}/request`),
   postJoinGame: (postId: number) => instance.post(`/api/posts/${postId}/request`),
+  postExitGame: (postId: number) => instance.delete(`/api/posts/${postId}/request`),
   deletePost: (postId: number) => instance.delete(`/api/posts/${postId}`),
   deleteImage: (imgPath: string) => instance.delete(`/api/images/posts/${imgPath}`),
   updateMatchStatus: (postId: number) => instance.put(`/api/posts/matchstatus/${postId}`),
@@ -90,7 +91,8 @@ export const apis = {
       return res.data.postId;
     }),
   uploadImage: (postId: number, data: FormData) => instance.post(`/api/images/posts/${postId}`, data),
-  getAroundGame: (lat: number, lng: number) => instance.get(`/api/posts/gps?lat=${lat}&lng=${lng}`),
+  getAroundGame: (neLat: string, neLng: string, swLat: string, swLng: string) =>
+    instance.get(`/api/posts/gps/point?NElat=${neLat}&NElng=${neLng}&SWlat=${swLat}&SWlng=${swLng}`),
   getNotifications: () => instance.get('/api/users/notifications'),
   postNotificationRead: (notificationId: number) => instance.put(`/api/notifications/${notificationId}`),
   reviewUpload: (postId: number, data: ReviewData) =>

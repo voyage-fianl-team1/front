@@ -23,6 +23,7 @@
     "@types/styled-components": "^5.1.25",
     "@types/uuid": "^8.3.4",
     "axios": "^0.27.2",
+    "compressorjs": "^1.1.1",
     "cypress": "^10.7.0",
     "dayjs": "^1.11.5",
     "lodash": "^4.17.21",

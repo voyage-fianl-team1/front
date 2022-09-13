@@ -5,7 +5,7 @@ import { useJoin } from '../../hooks/useJoin';
 import { useUtil } from '../../hooks/post/useUtil';
 
 const HandleJoinEdit = (props: JoinDataProps) => {
-  const { handleJoinTheGame, handleDispatchData, handleDeletePost } = useJoin('');
+  const { handleJoinTheGame, handleDispatchData, handleDeletePost, handleExitTheGame } = useJoin('');
   const { nowDate } = useUtil('');
   const postData = useMemo(() => props.data, [props.data]);
   const postId = postData?.postId;
@@ -54,7 +54,11 @@ const HandleJoinEdit = (props: JoinDataProps) => {
       </button>
     );
   } else if (postData.owner === -1 && postData.player === 1 && nowDate > postData.matchDeadline === false) {
-    return <></>;
+    return (
+      <button className='joinBtn' onClick={() => handleExitTheGame(postId)}>
+        참가 취소하기
+      </button>
+    );
   } else if (postData.owner === -1 && postData.player === -1 && nowDate >= postData.matchDeadline === true) {
     return <></>;
   } else if (postData.owner === 1 && postData.matchStatus === 'MATCHEND') {
