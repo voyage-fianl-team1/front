@@ -1,11 +1,11 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-export interface AddressState {
+interface mapState {
   sw: string;
   ne: string;
 }
 
-const initialState: AddressState = {
+const initialState: mapState = {
   sw: '',
   ne: '',
 };
@@ -14,7 +14,7 @@ const mapSlice = createSlice({
   name: 'map',
   initialState,
   reducers: {
-    mapAction: (state, action: PayloadAction<AddressState>) => {
+    mapAction: (state, action: PayloadAction<mapState>) => {
       state.sw = action.payload.sw;
       state.ne = action.payload.ne;
     },

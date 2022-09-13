@@ -1,11 +1,13 @@
-import { useQuery, useQueryClient } from '@tanstack/react-query';
+import { useQuery } from '@tanstack/react-query';
 import { queryKeys } from '../../shared/constant/queryKeys';
 import { apis } from '../../apis';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { mapAction } from '../../redux/features/mapSlice';
 import { RootState } from '../../redux/store';
 import { useEffect } from 'react';
 
 export function useMapList() {
+  const dispatch = useDispatch();
   const position = useSelector((state: RootState) => state.persistReducered.map);
   const neLat = position['ne']?.replace(/\(|\)/g, '')?.split(',')[0];
   const ne = position['ne']?.replace(/\(|\)/g, '')?.split(',')[1];
@@ -18,13 +20,17 @@ export function useMapList() {
     refetch,
   } = useQuery([queryKeys.MAPLIST], async () => await apis.getAroundGame(neLat, neLng, swLat, swLng));
   const matchData = res?.data;
-  const queryClient = useQueryClient();
   const swLng = sw?.replace(/ /g, '');
+
+  const positionAround = (map: any) => {
+    dispatch(
+      mapAction({ sw: map.getBounds().getSouthWest().toString(), ne: map.getBounds().getNorthEast().toString() })
+    );
+  };
 
   useEffect(() => {
     refetch();
-    queryClient.invalidateQueries([queryKeys.MAPLIST]);
   }, [position]);
 
-  return { matchData, isLoading };
+  return { matchData, isLoading, positionAround, refetch };
 }

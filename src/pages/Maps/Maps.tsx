@@ -6,13 +6,12 @@ import { Helmet } from 'react-helmet';
 import { MarkerObj } from '../../shared/constant/makerTable';
 import { useMaps } from '../../hooks/map/useMaps';
 import { useMapList } from '../../hooks/queries/useMapList';
-import { mapAction } from '../../redux/features/mapSlice';
 import LoadingSpinner from '../../components/Common/loadingSpinner';
 import usePush from '../../hooks/usePush';
 
 const Maps = () => {
   const { mapRef, nowPosition, overlay } = useMaps('');
-  const { matchData, isLoading } = useMapList();
+  const { matchData, isLoading, positionAround } = useMapList();
   const { push } = usePush();
   const dispatch = useDispatch();
   const [isOpen, setIsOpen] = useState(false);
@@ -36,11 +35,7 @@ const Maps = () => {
         className='w-full h-screen'
         level={3}
         ref={mapRef}
-        onBoundsChanged={(map) =>
-          dispatch(
-            mapAction({ sw: map.getBounds().getSouthWest().toString(), ne: map.getBounds().getNorthEast().toString() })
-          )
-        }
+        onBoundsChanged={(map) => positionAround(map)}
       >
         <ZoomControl position={window.kakao.maps.ControlPosition.TOPRRIGHT} />
         <MarkerClusterer averageCenter={true} minLevel={10}>

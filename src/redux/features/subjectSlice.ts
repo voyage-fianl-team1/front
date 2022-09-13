@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-export interface SubjectState {
+interface SubjectState {
   subject: string;
   value: string;
 }
