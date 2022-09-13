@@ -13,10 +13,13 @@ import MatchItemList from '../../components/Match/MatchItemList';
 import useSideMenu from '../../hooks/useSideMenu';
 import { useDispatch } from 'react-redux';
 import { toggleClear } from '../../redux/features/toggleSlice';
+import { useStomp } from '../../hooks/socket/useStomp';
 
 const Home: FC = () => {
   const { sideMenuShow } = useSideMenu();
   const dispatch = useDispatch();
+
+  const { connect } = useStomp();
 
   useEffect(() => {
     return () => {
