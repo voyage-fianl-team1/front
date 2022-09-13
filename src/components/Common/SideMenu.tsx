@@ -1,51 +1,35 @@
 import React, { useCallback } from 'react';
 import { IoMdClose } from 'react-icons/io';
 import { toggleSideMenuShow } from '../../redux/features/commonSlice';
-import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../redux/store';
-import { logout } from '../../redux/features/userSlice';
+import useLogOut from '../../hooks/auth/useLogOut';
+import useCurrentUser from '../../hooks/auth/useCurrentUser';
+import usePush from '../../hooks/usePush';
 
 const SideMenu = () => {
-  const navigate = useNavigate();
   const dispatch = useDispatch();
   const sideMenuShow = useSelector((state: RootState) => state.common.sideMenuShow);
-  const { isLogin } = useSelector((state: RootState) => state.user);
-
-  const handleRoute = useCallback((path: string) => {
-    dispatch(toggleSideMenuShow());
-    navigate(path);
-  }, []);
+  const {
+    user: { isLogin },
+  } = useCurrentUser();
+  const { handleLogOut } = useLogOut();
+  const { push } = usePush();
 
   const handleToggleSideMenu = useCallback(() => {
     dispatch(toggleSideMenuShow());
   }, []);
 
-  const handleLogOut = useCallback(() => {
-    window.localStorage.removeItem('accessToken');
-    window.localStorage.removeItem('refreshToken');
-    //TODO: 리덕스 데이터도 지우고, 로그아웃처리하기
-    dispatch(logout());
-    dispatch(toggleSideMenuShow());
-    alert('로그아웃 되었습니다');
-    navigate('/');
-  }, []);
-
   const handleSignOut = useCallback(() => {
-    if (window.confirm('탈퇴하시겠습니까?')) {
-      //TODO: 탈퇴시키기
-      alert('정상적으로 탈퇴되었습니다 감사합니다');
-    }
+    alert('준비중입니다');
   }, []);
 
   const handleRouteToLogin = useCallback(() => {
-    navigate('/splash');
-    dispatch(toggleSideMenuShow());
+    push('/splash');
   }, []);
 
   const handleRouteSignUp = useCallback(() => {
-    navigate('/signup');
-    dispatch(toggleSideMenuShow());
+    push('/signup');
   }, []);
 
   return (
@@ -61,21 +45,21 @@ const SideMenu = () => {
         </button>
       </div>
       <ul className='mt-5 divide-y-[1px] divide-black/5'>
-        <li className='menu-item' onClick={() => handleRoute('/map')}>
+        <li className='menu-item' onClick={() => push('/map')}>
           <div className='menu-item-inner'>
             <img src='/assets/images/menu/map.svg' alt='marker-icon' />
             <span>지도</span>
           </div>
           <img src='/assets/images/menu/arrow.svg' alt='arrow-icon' />
         </li>
-        <li className='menu-item' onClick={() => handleRoute('/chatList')}>
+        <li className='menu-item' onClick={() => push('/chatList')}>
           <div className='menu-item-inner'>
             <img src='/assets/images/menu/message.svg' alt='message-icon' />
             <span>채팅목록</span>
           </div>
           <img src='/assets/images/menu/arrow.svg' alt='arrow-icon' />
         </li>
-        <li className='menu-item ' onClick={() => handleRoute('/profile')}>
+        <li className='menu-item ' onClick={() => push('/profile')}>
           <div className='menu-item-inner'>
             <img src='/assets/images/menu/user.svg' alt='user-icon' />
             <span>마이페이지</span>

@@ -1,51 +1,30 @@
 import React, { useCallback } from 'react';
 import { IoMdClose } from 'react-icons/io';
-import { toggleSideMenuShow } from '../../redux/features/commonSlice';
-import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../redux/store';
-import { logout } from '../../redux/features/userSlice';
 import { toggleNotificationShow } from '../../redux/features/toggleSlice';
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { apis } from '../../apis';
-import { Notification } from '../../typings';
-import { useNotification } from '../../hooks/useNotification';
 import dayjs from 'dayjs';
-import { setNotifications } from '../../redux/features/notificationSlice';
+import useCurrentUser from '../../hooks/auth/useCurrentUser';
+import usePush from '../../hooks/usePush';
+import useReadNotification from '../../hooks/mutations/useReadNotification';
 
 const NotificationSideMenu = () => {
-  const { id, isLogin } = useSelector((state: RootState) => state.user);
-  const navigate = useNavigate();
   const dispatch = useDispatch();
-  const queryClient = useQueryClient();
-  const notificationSideMenuShow = useSelector((state: RootState) => state.toggle.notificationSideMenuShow);
-  useNotification(id);
-  const notifications = useSelector((state: RootState) => state.notification.notifications);
-  const { refetch } = useQuery(['notifications'], apis.getNotifications, {
-    onSuccess: (data: Notification[]) => {
-      dispatch(setNotifications(data));
-    },
-    enabled: false,
-  });
-  const mutation = useMutation((id: number) => apis.postNotificationRead(id), {
-    onSuccess: () => {
-      queryClient.invalidateQueries(['notifications']);
-    },
-  });
+  const { push } = usePush();
 
-  const handleRoute = useCallback((path: string) => {
-    dispatch(toggleNotificationShow());
-    navigate(path);
-  }, []);
+  const { mutate: readNotificationMutate } = useReadNotification();
+
+  const notificationSideMenuShow = useSelector((state: RootState) => state.toggle.notificationSideMenuShow);
+  const notifications = useSelector((state: RootState) => state.notification.notifications);
 
   const handleToggleSideMenu = useCallback(() => {
     dispatch(toggleNotificationShow());
   }, []);
 
   const handleClick = useCallback((id: number, postId: number) => {
-    mutation.mutate(id);
+    readNotificationMutate(id);
     // 게시글로 라우팅
-    navigate(`match/${postId}`);
+    push(`match/${postId}`);
     dispatch(toggleNotificationShow());
   }, []);
 

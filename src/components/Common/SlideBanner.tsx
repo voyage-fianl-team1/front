@@ -1,6 +1,6 @@
-import React, { useCallback } from 'react';
+import React from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { useNavigate } from 'react-router-dom';
+import usePush from '../../hooks/usePush';
 
 import 'swiper/css';
 import 'swiper/css/autoplay';
@@ -9,11 +9,11 @@ import { Autoplay } from 'swiper';
 const GOOGLE_FORM_LINK = 'https://forms.gle/beTEFQw1Qottddon6';
 
 const SlideBanner = () => {
-  const navigate = useNavigate();
+  const { push } = usePush();
   return (
     <div className='mt-[20px] mb-[32px]'>
       <Swiper spaceBetween={50} slidesPerView={1} modules={[Autoplay]} autoplay={{ delay: 3000 }}>
-        <SwiperSlide onClick={() => navigate('/map')} className='cursor-pointer'>
+        <SwiperSlide onClick={() => push('/map')} className='cursor-pointer'>
           <img src='/assets/images/banner/banner1.svg' alt='banner-01' className='w-[100%] h-[100%]' />
         </SwiperSlide>
         <SwiperSlide>

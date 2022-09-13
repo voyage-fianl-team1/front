@@ -1,27 +1,9 @@
-import React, { useCallback, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { subjectSearchShow } from '../../redux/features/searchSlice';
-import { toggleSelectShow } from '../../redux/features/toggleSlice';
-import { RootState } from '../../redux/store';
+import React from 'react';
 import { IoMdClose } from 'react-icons/io';
+import useSelectSubject from '../../hooks/useSelectSubject';
 
 const SelectSubject = () => {
-  const dispatch = useDispatch();
-  const selectShow = useSelector((state: RootState) => state.toggle.selectShow);
-  const [subject, setSubject] = useState<string>('ALL');
-  const handleToggleSelect = useCallback(() => {
-    dispatch(toggleSelectShow());
-  }, []);
-
-  const handleSelectData = (e: React.MouseEvent<HTMLButtonElement>) => {
-    e.currentTarget.focus();
-    setSubject(e.currentTarget.value);
-  };
-
-  const handleSendData = () => {
-    dispatch(subjectSearchShow({ subject: subject }));
-    dispatch(toggleSelectShow());
-  };
+  const { selectShow, handleSelectData, handleSendData, handleToggleSelect } = useSelectSubject();
 
   return (
     <section

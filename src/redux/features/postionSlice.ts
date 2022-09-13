@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-export interface PositionState {
+interface PositionState {
   lat: number;
   lng: number;
   isLoading: boolean;

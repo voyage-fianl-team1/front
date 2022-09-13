@@ -1,26 +1,20 @@
-import React, { useRef, useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Map, ZoomControl, MapMarker, MarkerClusterer } from 'react-kakao-maps-sdk';
-import { useQuery } from '@tanstack/react-query';
-import { apis } from '../../apis';
-import { useNavigate } from 'react-router-dom';
 import { overlayAction, overlayClear, OverlayState } from '../../redux/features/overlaySlice';
-import { useDispatch, useSelector } from 'react-redux';
-import { RootState } from '../../redux/store';
-import { ImageType } from '../../typings';
+import { useDispatch } from 'react-redux';
 import { Helmet } from 'react-helmet';
+import { MarkerObj } from '../../shared/constant/makerTable';
+import { useMaps } from '../../hooks/map/useMaps';
+import { useMapList } from '../../hooks/queries/useMapList';
+import LoadingSpinner from '../../components/Common/loadingSpinner';
+import usePush from '../../hooks/usePush';
 
 const Maps = () => {
-  const mapRef = useRef<any>(3);
+  const { mapRef, nowPosition, overlay } = useMaps('');
+  const { matchData, isLoading, positionAround } = useMapList();
+  const { push } = usePush();
   const dispatch = useDispatch();
-  const navigate = useNavigate();
-  const [state, setState] = useState({});
-  const [level, setLevel] = useState<number>(3);
-  const overlay = useSelector((state: RootState) => state.overlay);
-  const nowPosition = useSelector((state: RootState) => state.persistReducered.position);
-  const res = useQuery(['matchList'], async () => await apis.getAroundGame(nowPosition.lat, nowPosition.lng));
   const [isOpen, setIsOpen] = useState(false);
-  const matchData = res?.data?.data;
-  // /api/posts/gps?NWlat=&Nwlng=&SElat=&SElng
 
   useEffect(() => {
     return () => {
@@ -28,18 +22,8 @@ const Maps = () => {
     };
   }, []);
 
-  const MarkerObj: ImageType = {
-    축구: '/assets/images/map/soccer.svg',
-    농구: '/assets/images/map/basketball.svg',
-    기타: '/assets/images/map/etc.svg',
-    볼링: '/assets/images/map/bowling.svg',
-    배드민턴: '/assets/images/map/badminton.svg',
-    테니스: '/assets/images/map/tennis.svg',
-    당구: '/assets/images/map/bil.svg',
-  };
-
-  if (res.isLoading) {
-    return <></>;
+  if (isLoading) {
+    return <LoadingSpinner />;
   }
   return (
     <>
@@ -49,15 +33,9 @@ const Maps = () => {
       <Map
         center={{ lat: nowPosition.lat, lng: nowPosition.lng }}
         className='w-full h-screen'
-        level={level}
-        onZoomChanged={(map) => setLevel(map.getLevel())}
+        level={3}
         ref={mapRef}
-        onBoundsChanged={(map) =>
-          setState({
-            sw: map.getBounds().getSouthWest().toString(),
-            ne: map.getBounds().getNorthEast().toString(),
-          })
-        }
+        onBoundsChanged={(map) => positionAround(map)}
       >
         <ZoomControl position={window.kakao.maps.ControlPosition.TOPRRIGHT} />
         <MarkerClusterer averageCenter={true} minLevel={10}>
@@ -98,7 +76,7 @@ const Maps = () => {
           <div className='flex flex-row items-center justify-center'>
             <div
               className='fixed bottom-[56px] w-11/12 max-w-[900px] h-[136px] bg-[#FFF] z-10 rounded-[10px]
-          border border-[#DCDDE0] shadow-[0_4px_20px_rgba(0,0,0,0.08)]'
+                border border-[#DCDDE0] shadow-[0_4px_20px_rgba(0,0,0,0.08)]'
             >
               <div className='flex flex-row my-[24px]'>
                 <div className='flex flex-row justify-center items-center ml-[20px]'>
@@ -117,7 +95,7 @@ const Maps = () => {
                   >
                     {overlay.subject}
                   </div>
-                  <button onClick={() => navigate(`/match/${overlay.postId}`)}>
+                  <button onClick={() => push(`/match/${overlay.postId}`)}>
                     <img src='/assets/images/post/right.svg' className='absolute w-[24px] h-[24px] right-3 top-14' />
                   </button>
                 </div>

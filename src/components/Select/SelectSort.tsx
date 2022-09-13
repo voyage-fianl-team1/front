@@ -1,29 +1,10 @@
-import React, { useCallback, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { sortSearchShow } from '../../redux/features/searchSlice';
-import { toggleSortShow } from '../../redux/features/toggleSlice';
-import { RootState } from '../../redux/store';
+import React from 'react';
 import { IoMdClose } from 'react-icons/io';
 import { BsCheckLg } from 'react-icons/bs';
+import useSelectSort from '../../hooks/useSelectSort';
 
 const SelectSort = () => {
-  const dispatch = useDispatch();
-  const [sort, setSort] = useState<string>('createAt');
-  const sortShow = useSelector((state: RootState) => state.toggle.sortShow);
-
-  const handleToggleSort = useCallback(() => {
-    dispatch(toggleSortShow());
-  }, []);
-
-  const handleSelectData = (e: React.MouseEvent<HTMLButtonElement>) => {
-    e.currentTarget.focus();
-    setSort(e.currentTarget.value);
-  };
-
-  const handleSendData = () => {
-    dispatch(sortSearchShow({ sort: sort }));
-    dispatch(toggleSortShow());
-  };
+  const { sortShow, handleToggleSort, handleSelectData, handleSendData } = useSelectSort();
 
   return (
     <section

@@ -1,12 +1,14 @@
 import React, { Suspense, useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { Route, Routes } from 'react-router-dom';
-import { RootState } from '../redux/store';
 import Layout from './Layout';
-import { apis } from '../apis';
-import { login } from '../redux/features/userSlice';
 import { positionAction } from '../redux/features/postionSlice';
 import LoadingSpinner from '../components/Common/loadingSpinner';
+import useCurrentUser from '../hooks/auth/useCurrentUser';
+import useLogin from '../hooks/auth/useLogin';
+import { useStomp } from '../hooks/socket/useStomp';
+import { SERVER_STOMP_URL } from '../apis';
+import { useNotificationStomp } from '../hooks/socket/useNotificationStomp';
 
 const Home = React.lazy(() => import('../pages/Home/Home'));
 const Splash = React.lazy(() => import('../pages/Auth/Splash'));
@@ -21,28 +23,24 @@ const Profile = React.lazy(() => import('../pages/Profile/Profile'));
 const UserMatchMore = React.lazy(() => import('../pages/Profile/UserMatchMore'));
 const ProfileEdit = React.lazy(() => import('../pages/Profile/ProfileEdit'));
 const Maps = React.lazy(() => import('../pages/Maps/Maps'));
-const Match = React.lazy(() => import('../pages/Match/Match'));
+const GetPostList = React.lazy(() => import('../components/Match/GetPostList'));
+const GuestPostList = React.lazy(() => import('../components/Match/GuestPostList'));
 const New = React.lazy(() => import('../pages/New/New'));
 const Keyword = React.lazy(() => import('../pages/Match/keyword'));
 const MatchHistory = React.lazy(() => import('../pages/Profile/MatchHistory'));
 const Searching = React.lazy(() => import('../pages/Match/Searching'));
 
 const App = () => {
-  const user = useSelector((state: RootState) => state.user);
   const dispatch = useDispatch();
+  const { fetchUserInfo } = useLogin();
+  const {
+    user: { isLogin, id: userId },
+  } = useCurrentUser();
+  useStomp(SERVER_STOMP_URL);
+  useNotificationStomp();
 
   useEffect(() => {
-    const autoLogin = async () => {
-      try {
-        const userInfo = await apis.getUser().then((res) => res.data);
-        const { id, draw, lose, win, nickname, profileImgUrl } = userInfo;
-        dispatch(login({ isLogin: true, id, draw, lose, win, nickname, profileImgUrl }));
-        console.log('자동로그인 되었습니다');
-      } catch (e) {
-        console.error('자동로그인 실패');
-      }
-    };
-    autoLogin();
+    fetchUserInfo().then((res) => console.log(res.msg));
   }, []);
 
   useEffect(() => {
@@ -58,13 +56,9 @@ const App = () => {
         }
       );
     }
-    // else {
-    //   dispatch(positionAction({ lat: 37.33116, lng: 126.58111, isLoading: false }));
-    //   alert('현재 위치를 받아올 수 없습니다.');
-    // }
   }, []);
 
-  if (user.isLogin) {
+  if (isLogin) {
     return (
       <Suspense fallback={<LoadingSpinner />}>
         <Layout>
@@ -77,7 +71,7 @@ const App = () => {
             <Route path='/profile/userMatchMore' element={<UserMatchMore />} />
             <Route path='/profile/edit' element={<ProfileEdit />} />
             <Route path='/map' element={<Maps />} />
-            <Route path='/match/:id' element={<Match />} />
+            <Route path='/match/:id' element={<GetPostList />} />
             <Route path='/new' element={<New />} />
             <Route path='/new/:id/edit' element={<New />} />
             <Route path='/keword' element={<Keyword />} />
@@ -97,7 +91,7 @@ const App = () => {
           <Route path='/splash' element={<Splash />} />
           <Route path='/login' element={<Login />} />
           <Route path='/signup' element={<SignUp />} />
-          <Route path='/match/:id' element={<Match />} />
+          <Route path='/match/:id' element={<GuestPostList />} />
           <Route path='/search' element={<Search />} />
           <Route path='/keword' element={<Keyword />} />
           <Route path='/searching' element={<Searching />} />

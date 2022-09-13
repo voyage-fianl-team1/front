@@ -1,69 +1,28 @@
-import React, { FC, useEffect, useCallback, useMemo } from 'react';
+import React, { FC, useEffect } from 'react';
 import { useInView } from 'react-intersection-observer';
-import { useInfiniteQuery, useQueryClient } from '@tanstack/react-query';
-import { useNavigate } from 'react-router-dom';
-import { apis } from '../../apis';
-import { useDispatch, useSelector } from 'react-redux';
-import { RootState } from '../../redux/store';
-import { toggleSortShow, toggleSelectShow, toggleClear } from '../../redux/features/toggleSlice';
-import { subjectSearchShowClear, sortSearchShowClear } from '../../redux/features/searchSlice';
 import { RiArrowDownSLine } from 'react-icons/ri';
-import { categories } from '../../util/subjectTable';
-import { sortCategories } from '../../util/sortTables';
 import { Helmet } from 'react-helmet';
+import { useSearch } from '../../hooks/match/useSearch';
+import { useSearchList } from '../../hooks/queries/useSearchList';
+import WriteFloatingButton from '../../components/Common/WriteFloatingButton';
 import LoadingSpinner from '../../components/Common/loadingSpinner';
+import usePush from '../../hooks/usePush';
 
 const SearchMatch: FC = () => {
-  const navigate = useNavigate();
-  const dispatch = useDispatch();
-  const queryClient = useQueryClient();
+  const { push } = usePush();
   const { ref, inView } = useInView();
-  const sort = useSelector((state: RootState) => state.search.sort);
-  const subject = useSelector((state: RootState) => state.search.subject);
-  const categoryName = useMemo(() => categories.find((c) => c.value === subject), [subject]);
-  const sortName = useMemo(() => sortCategories.find((c) => c.value === sort), [sort]);
-  const fetchPostList = async (pageParam: number) => {
-    const res = await apis.getMainPostList(pageParam, subject, sort);
-    const data = res.data.content;
-    const last = res.data.last;
-    return { data, last, nextPage: pageParam + 1 };
-  };
-
-  const {
-    data: postList,
-    fetchNextPage,
-    isFetchingNextPage,
-    refetch,
-  } = useInfiniteQuery(['postData', sort, subject], ({ pageParam = 0 }) => fetchPostList(pageParam), {
-    getNextPageParam: (lastPage) => (!lastPage.last ? lastPage.nextPage : undefined),
-  });
-
-  // useEffect(() => {
-  //   queryClient.removeQueries();
-  // }, []);
+  const { categoryName, sortName, handleToggleSelect, handleToggleSort, clearAll } = useSearch('');
+  const { fetchNextPage, isFetchingNextPage, postList } = useSearchList('');
 
   useEffect(() => {
     if (inView) fetchNextPage();
   }, [inView]);
 
-  const handleToggleSelect = useCallback(() => {
-    dispatch(toggleSelectShow());
-  }, []);
-
-  const handleToggleSort = useCallback(() => {
-    dispatch(toggleSortShow());
-  }, []);
-
-  useEffect(() => {
-    return () => {
-      dispatch(toggleClear());
-      dispatch(sortSearchShowClear());
-      dispatch(subjectSearchShowClear());
-    };
-  }, []);
+  clearAll();
 
   return (
     <>
+      <WriteFloatingButton />
       <Helmet>
         <title>매치기 | 경기목록</title>
       </Helmet>
@@ -90,7 +49,7 @@ const SearchMatch: FC = () => {
                   <div
                     className='w-full h-20 bg-[#FCFCFC] p-2 cursor-pointer'
                     key={post.postId}
-                    onClick={() => navigate(`/match/${post.postId}`)}
+                    onClick={() => push(`/match/${post.postId}`)}
                     ref={ref}
                   >
                     <div className='flex flex-row mb-[28px] items-center'>

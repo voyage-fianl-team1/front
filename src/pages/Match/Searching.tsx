@@ -1,32 +1,8 @@
-import React, { useRef } from 'react';
-import { useForm } from 'react-hook-form';
-import { useDispatch } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
-import { keywordAction } from '../../redux/features/keywordSlice';
+import React from 'react';
+import { useSearching } from '../../hooks/match/useSearching';
 
 const SearchMiddle = () => {
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
-  const { register, getValues } = useForm({});
-  const searchingRef = useRef(null);
-
-  const handleSearchingOut = (e: React.MouseEvent) => {
-    if (e.target === searchingRef.current) {
-      navigate('/');
-    }
-  };
-
-  const handleKeyword = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === 'Enter') {
-      dispatch(keywordAction({ keyword: getValues().keyword }));
-      navigate(`/keword`);
-    }
-  };
-
-  const handleButton = () => {
-    dispatch(keywordAction({ keyword: getValues().keyword }));
-    navigate(`/keword`);
-  };
+  const { handleSearchingOut, handleKeyword, handleButton, searchingRef, register, push } = useSearching('');
 
   return (
     <>
@@ -35,12 +11,7 @@ const SearchMiddle = () => {
       </nav>
       <div className='flex flex-row items-center justify-center'>
         <div className='w-[32px] h-[32px]'>
-          <img
-            src='/assets/images/back.svg'
-            alt='back-button'
-            onClick={() => navigate('/')}
-            className='cursor-pointer'
-          />
+          <img src='/assets/images/back.svg' alt='back-button' onClick={() => push('/')} className='cursor-pointer' />
         </div>
         <div
           className={`flex border-[1px] bg-[#FCFCFC] border-matchgi-gray rounded-full w-full h-[44px] items-center 

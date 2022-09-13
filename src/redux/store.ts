@@ -12,15 +12,17 @@ import positionSlice from './features/postionSlice';
 import calendarSlice from './features/calendarSlice';
 import subjectSlice from './features/subjectSlice';
 import notificationSlice from './features/notificationSlice';
+import mapSlice from './features/mapSlice';
 
 const persistConfig = {
   key: 'root',
   storage,
-  whiteList: ['postion', 'join'],
+  whiteList: ['position', 'join'],
 };
 
 const reducers = combineReducers({
   position: positionSlice.reducer,
+  map: mapSlice.reducer,
 });
 
 const persistReducered = persistReducer(persistConfig, reducers);

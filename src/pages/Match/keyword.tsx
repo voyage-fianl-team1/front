@@ -1,33 +1,15 @@
 import React, { FC, useEffect } from 'react';
 import { useInView } from 'react-intersection-observer';
-import { useInfiniteQuery } from '@tanstack/react-query';
-import { useNavigate } from 'react-router-dom';
-import { apis } from '../../apis';
-import { RootState } from '../../redux/store';
-import { useSelector } from 'react-redux';
-import LoadingSpinner from '../../components/Common/loadingSpinner';
 import { Helmet } from 'react-helmet';
+import { useKeword } from '../../hooks/queries/useKewordList';
+import LoadingSpinner from '../../components/Common/loadingSpinner';
+import usePush from '../../hooks/usePush';
+import WriteFloatingButton from '../../components/Common/WriteFloatingButton';
 
 const Keyword: FC = () => {
-  const navigate = useNavigate();
+  const { push } = usePush();
   const { ref, inView } = useInView();
-  const keyword_ = useSelector((state: RootState) => state.keyword);
-  const keyword = keyword_['keyword'];
-
-  const fetchsearchList = async (pageParam: number) => {
-    const res = await apis.getSearchList(pageParam, keyword);
-    const data = res.data.content;
-    const last = res.data.last;
-    return { data, last, nextPage: pageParam + 1 };
-  };
-
-  const {
-    data: searchList,
-    fetchNextPage,
-    isFetchingNextPage,
-  } = useInfiniteQuery(['searchData', keyword], ({ pageParam = 0 }) => fetchsearchList(pageParam), {
-    getNextPageParam: (lastPage) => (!lastPage.last ? lastPage.nextPage : undefined),
-  });
+  const { searchList, fetchNextPage, isFetchingNextPage } = useKeword('');
 
   useEffect(() => {
     if (inView) fetchNextPage();
@@ -44,6 +26,7 @@ const Keyword: FC = () => {
       <Helmet>
         <title>매치기 | 검색</title>
       </Helmet>
+      <WriteFloatingButton />
       <div>
         {searchList &&
           searchList.pages.map((page, index) => (
@@ -52,7 +35,7 @@ const Keyword: FC = () => {
                 <div
                   className='w-full h-20 bg-[#FCFCFC] p-2'
                   key={post.postId}
-                  onClick={() => navigate(`/match/${post.postId}`)}
+                  onClick={() => push(`/match/${post.postId}`)}
                   ref={ref}
                 >
                   <div className='flex flex-row mb-[28px] items-center'>
@@ -73,7 +56,7 @@ const Keyword: FC = () => {
                     )}
                     <span className='flex flex-col justify-center ml-4 gap-[1px]'>
                       <div className='text-[16px] font-normal leading-normal text-matchgi-black'>{post.title}</div>
-                      <div className='text-xs text-matchgi-gray leading-normal'>주소</div>
+                      <div className='text-xs text-matchgi-gray leading-normal'>{post.address}</div>
                       <div className='flex text-[10px] item-start rounded-lg w-[50px] h-[18px] bg-matchgi-lightgray justify-center p-[0.1rem]'>
                         {post.subject}
                       </div>

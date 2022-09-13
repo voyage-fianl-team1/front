@@ -1,42 +1,35 @@
-import React from 'react';
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { UserPostType } from '../../typings';
-import { apis } from '../../apis';
+import React, { useCallback } from 'react';
 import LoadingSpinner from '../Common/loadingSpinner';
 import { Link } from 'react-router-dom';
 import dayjs from 'dayjs';
-import { categories } from '../../util/subjectTable';
+import { categories } from '../../shared/constant/subjectTable';
+import useUserOwnPosts from '../../hooks/queries/useUserOwnPosts';
+import useRemovePost from '../../hooks/mutations/useRemovePost';
 
 const UserPost = () => {
-  const { data } = useQuery<UserPostType[]>(['user-posts'], apis.getUserPosts);
-  const queryClient = useQueryClient();
-  const mutation = useMutation(
-    (postId: number) => {
-      return apis.deletePost(postId);
-    },
-    {
-      onSuccess: () => {
-        queryClient.invalidateQueries(['user-posts']);
-      },
-    }
-  );
-  const handleDelete = (postId: number) => {
-    if (window.confirm('정말 삭제하시겠습니까?')) {
-      mutation.mutate(postId);
-    }
-  };
+  const { data: userOwnPosts, isLoading } = useUserOwnPosts();
+  const { mutate } = useRemovePost();
 
-  if (!data) {
+  const handleDelete = useCallback(
+    (postId: number) => {
+      if (window.confirm('정말 삭제하시겠습니까?')) {
+        mutate(postId);
+      }
+    },
+    [mutate]
+  );
+
+  if (isLoading) {
     return <LoadingSpinner />;
   }
 
-  if (data.length === 0) {
+  if (userOwnPosts?.length === 0) {
     return <div className='text-sm text-black/30 my-10'>작성한 게시글이 없습니다</div>;
   }
 
   return (
     <ul className='flex flex-col gap-2 justify-start w-[100%] mt-5'>
-      {data.map((d) => (
+      {userOwnPosts?.map((d) => (
         <li key={d.id} className='flex justify-between pb-5 pt-3 rounded border-b-[#F4F5F5] border-b-2'>
           <div className='flex'>
             <img
