@@ -9,9 +9,8 @@ interface ObjectType {
 let socketClient: WebSocket;
 let stompClient: CompatClient;
 const subscriptions: { [key: string]: StompSubscription } = {};
-
+let isConnected = false;
 export function useStomp(url: string, callback?: any) {
-  const [isConnected, setIsConnected] = useState(false);
   const connect = useCallback(() => {
     if (!socketClient) {
       socketClient = new SockJS(url);
@@ -26,7 +25,7 @@ export function useStomp(url: string, callback?: any) {
 
     if (socketClient && stompClient) {
       stompClient.connect({}, (receipt: any) => {
-        setIsConnected(true);
+        isConnected = true;
         callback && callback();
       });
     }
@@ -42,6 +41,8 @@ export function useStomp(url: string, callback?: any) {
 
   const subscribe = useCallback(<T>(path: string, callback: (msg: T) => void) => {
     if (!stompClient) return;
+
+    if (subscriptions[path]) return;
 
     const subscription = stompClient.subscribe(path, (message) => {
       const body: T = JSON.parse(message.body);
@@ -64,7 +65,6 @@ export function useStomp(url: string, callback?: any) {
   }, []);
 
   return {
-    connect,
     disconnect,
     subscribe,
     unsubscribe,

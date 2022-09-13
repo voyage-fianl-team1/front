@@ -2,9 +2,10 @@ import React, { FC, useCallback, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ChatRoom } from '../../typings';
 import { getFromNow } from '../../util/converDate';
-import { useChatSocket } from '../../hooks/socket/useChatSocket';
+import { useChatSocket } from '../../lagacy/useChatSocket';
 import { apis } from '../../apis';
 import { useQuery } from '@tanstack/react-query';
+import { useChatStomp } from '../../hooks/socket/useChatStomp';
 
 interface Props {
   id: number;
@@ -16,8 +17,8 @@ const ChatRoomItem: FC<Props> = ({ id, data }) => {
   const handleRoute = useCallback(() => {
     navigate(`/chat/${id}?title=${data.title}`);
   }, []);
-  const { chats } = useChatSocket(id);
   const { data: userList } = useQuery(['userList', data.roomId], () => apis.getRoomUserList(data.roomId));
+  const { chats } = useChatStomp(id);
 
   const lastMessage = useMemo(() => {
     if (chats.length > 0) {
