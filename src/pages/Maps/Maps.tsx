@@ -11,12 +11,10 @@ import usePush from '../../hooks/usePush';
 
 const Maps = () => {
   const { mapRef, nowPosition, overlay } = useMaps('');
-  const { matchData, isLoading } = useMapList(nowPosition.lat, nowPosition.lng);
+  const { matchData, isLoading, positionAround } = useMapList();
   const { push } = usePush();
   const dispatch = useDispatch();
-  const [state, setState] = useState({});
   const [isOpen, setIsOpen] = useState(false);
-  // /api/posts/gps?NWlat=&Nwlng=&SElat=&SElng
 
   useEffect(() => {
     return () => {
@@ -37,12 +35,7 @@ const Maps = () => {
         className='w-full h-screen'
         level={3}
         ref={mapRef}
-        onBoundsChanged={(map) =>
-          setState({
-            sw: map.getBounds().getSouthWest().toString(),
-            ne: map.getBounds().getNorthEast().toString(),
-          })
-        }
+        onBoundsChanged={(map) => positionAround(map)}
       >
         <ZoomControl position={window.kakao.maps.ControlPosition.TOPRRIGHT} />
         <MarkerClusterer averageCenter={true} minLevel={10}>
@@ -83,7 +76,7 @@ const Maps = () => {
           <div className='flex flex-row items-center justify-center'>
             <div
               className='fixed bottom-[56px] w-11/12 max-w-[900px] h-[136px] bg-[#FFF] z-10 rounded-[10px]
-          border border-[#DCDDE0] shadow-[0_4px_20px_rgba(0,0,0,0.08)]'
+                border border-[#DCDDE0] shadow-[0_4px_20px_rgba(0,0,0,0.08)]'
             >
               <div className='flex flex-row my-[24px]'>
                 <div className='flex flex-row justify-center items-center ml-[20px]'>

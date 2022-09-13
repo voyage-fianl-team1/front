@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-export interface AddressState {
+interface AddressState {
   address?: string;
   lat: number;
   lng: number;

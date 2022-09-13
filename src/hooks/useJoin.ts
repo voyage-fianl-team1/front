@@ -34,12 +34,24 @@ export function useJoin<T>(defaultValue: T) {
     try {
       if (window.confirm('참가 신청 하시겠습니까?')) {
         await apis.postJoinGame(postId);
-        alert('참가 신청이 완료되었습니다.');
+        alert('참가 신청이 완료되었습니다. 채팅방에서 대화를 나눠보세요!');
         queryClient.invalidateQueries([queryKeys.POSTLIST]);
         queryClient.invalidateQueries([queryKeys.JOINLIST]);
       }
     } catch (err) {
       alert('참가 신청은 중복으로 할 수 없습니다.');
+    }
+  };
+  const handleExitTheGame = async (postId: number) => {
+    try {
+      if (window.confirm('참가 취소 하시겠습니까?')) {
+        await apis.postExitGame(postId);
+        alert('참가 취소되었습니다.');
+        queryClient.invalidateQueries([queryKeys.POSTLIST]);
+        queryClient.invalidateQueries([queryKeys.JOINLIST]);
+      }
+    } catch (err) {
+      alert('참가 취소는 중복으로 할 수 없습니다.');
     }
   };
   const handleDeletePost = async (postId: number) => {
@@ -68,5 +80,12 @@ export function useJoin<T>(defaultValue: T) {
     dispatch(calendarAction({ date: matchDeadline }));
   };
 
-  return { handleStatusChange, handleScoreChange, handleJoinTheGame, handleDispatchData, handleDeletePost };
+  return {
+    handleStatusChange,
+    handleScoreChange,
+    handleJoinTheGame,
+    handleDispatchData,
+    handleDeletePost,
+    handleExitTheGame,
+  };
 }
