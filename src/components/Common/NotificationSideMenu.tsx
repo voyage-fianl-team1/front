@@ -3,19 +3,14 @@ import { IoMdClose } from 'react-icons/io';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../redux/store';
 import { toggleNotificationShow } from '../../redux/features/toggleSlice';
-import { useNotificationSocket } from '../../hooks/socket/useNotificationSocket';
 import dayjs from 'dayjs';
 import useCurrentUser from '../../hooks/auth/useCurrentUser';
 import usePush from '../../hooks/usePush';
 import useReadNotification from '../../hooks/mutations/useReadNotification';
 
 const NotificationSideMenu = () => {
-  const {
-    user: { id },
-  } = useCurrentUser();
   const dispatch = useDispatch();
   const { push } = usePush();
-  useNotificationSocket(id);
 
   const { mutate: readNotificationMutate } = useReadNotification();
 

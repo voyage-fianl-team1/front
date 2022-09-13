@@ -1,8 +1,7 @@
 import React from 'react';
-import { ImSpinner8 } from 'react-icons/im';
 
 const LoadingSpinner = () => {
-  return <ImSpinner8 className='loader !w-[24px]' />;
+  return <img src='/assets/images/loading.gif' alt='loading' className='w-[24px] m-auto' />;
 };
 
 export default LoadingSpinner;

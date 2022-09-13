@@ -1,10 +1,10 @@
-import { useChatSocket } from './socket/useChatSocket';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import useChatHistory from './queries/useChatHistory';
 import { apis } from '../apis';
+import { useChatStomp } from './socket/useChatStomp';
 
 function useChat(roomId: number) {
-  const { chats, setChats, send, firstChatRef, setFirstChatRef } = useChatSocket(roomId, () => {
+  const { chats, setChats, sendMessage, firstChatRef, setFirstChatRef } = useChatStomp(roomId, () => {
     scrollToBottom();
   });
 
@@ -30,7 +30,7 @@ function useChat(roomId: number) {
 
   const handleSendMessage = useCallback((message: string) => {
     if (!message.length) return;
-    send(message);
+    sendMessage(message);
   }, []);
 
   const scrollNavigation = useCallback(

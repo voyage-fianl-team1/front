@@ -1,6 +1,7 @@
 import React from 'react';
 import useNotification from '../../hooks/useNotification';
 import useSideMenu from '../../hooks/useSideMenu';
+import { useStomp } from '../../hooks/socket/useStomp';
 
 const alertPath = '/assets/images/alert.svg';
 const alertBasePath = '/assets/images/alert_base.svg';
