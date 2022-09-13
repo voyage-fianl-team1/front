@@ -1,19 +1,13 @@
 import React, { useCallback } from 'react';
 import { IoMdClose } from 'react-icons/io';
-import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../redux/store';
 import { toggleNotificationShow } from '../../redux/features/toggleSlice';
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { apis } from '../../apis';
-import { Notification } from '../../typings';
 import { useNotificationSocket } from '../../hooks/socket/useNotificationSocket';
 import dayjs from 'dayjs';
-import { setNotifications } from '../../redux/features/notificationSlice';
 import useCurrentUser from '../../hooks/auth/useCurrentUser';
-import useGetNotifications from '../../hooks/queries/useGetNotifications';
-import useReadNotification from '../../hooks/mutations/useReadNotification';
 import usePush from '../../hooks/usePush';
+import useReadNotification from '../../hooks/mutations/useReadNotification';
 
 const NotificationSideMenu = () => {
   const {
@@ -22,7 +16,7 @@ const NotificationSideMenu = () => {
   const dispatch = useDispatch();
   const { push } = usePush();
   useNotificationSocket(id);
-  useGetNotifications();
+
   const { mutate: readNotificationMutate } = useReadNotification();
 
   const notificationSideMenuShow = useSelector((state: RootState) => state.toggle.notificationSideMenuShow);

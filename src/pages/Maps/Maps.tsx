@@ -12,8 +12,8 @@ import usePush from '../../hooks/usePush';
 const Maps = () => {
   const { mapRef, nowPosition, overlay } = useMaps('');
   const { matchData, isLoading } = useMapList(nowPosition.lat, nowPosition.lng);
-  const dispatch = useDispatch();
   const { push } = usePush();
+  const dispatch = useDispatch();
   const [state, setState] = useState({});
   const [isOpen, setIsOpen] = useState(false);
   // /api/posts/gps?NWlat=&Nwlng=&SElat=&SElng
