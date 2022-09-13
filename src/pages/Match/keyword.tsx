@@ -4,6 +4,7 @@ import { Helmet } from 'react-helmet';
 import { useKeword } from '../../hooks/queries/useKewordList';
 import LoadingSpinner from '../../components/Common/loadingSpinner';
 import usePush from '../../hooks/usePush';
+import WriteFloatingButton from '../../components/Common/WriteFloatingButton';
 
 const Keyword: FC = () => {
   const { push } = usePush();
@@ -25,6 +26,7 @@ const Keyword: FC = () => {
       <Helmet>
         <title>매치기 | 검색</title>
       </Helmet>
+      <WriteFloatingButton />
       <div>
         {searchList &&
           searchList.pages.map((page, index) => (
