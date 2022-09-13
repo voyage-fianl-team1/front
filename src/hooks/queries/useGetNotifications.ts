@@ -21,6 +21,7 @@ function useGetNotifications() {
         dispatch(setNotifications(data));
       },
       enabled: isLogin,
+      staleTime: Infinity,
     }
   );
 }

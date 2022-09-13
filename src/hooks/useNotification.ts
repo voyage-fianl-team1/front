@@ -7,21 +7,14 @@ import { setNotifications } from '../redux/features/notificationSlice';
 import useCurrentUser from './auth/useCurrentUser';
 import { useCallback, useMemo } from 'react';
 import { toggleNotificationShow } from '../redux/features/toggleSlice';
+import useGetNotifications from './queries/useGetNotifications';
 
 function useNotification() {
-  const {
-    user: { isLogin },
-  } = useCurrentUser();
   const dispatch = useDispatch();
   const queryClient = useQueryClient();
   const notifications = useSelector((state: RootState) => state.notification.notifications);
+  useGetNotifications();
 
-  const { refetch } = useQuery(['notifications'], apis.getNotifications, {
-    onSuccess: (data: Notification[]) => {
-      dispatch(setNotifications(data));
-    },
-    enabled: isLogin,
-  });
   const mutation = useMutation((id: number) => apis.postNotificationRead(id), {
     onSuccess: () => {
       queryClient.invalidateQueries(['notifications']);
@@ -40,7 +33,7 @@ function useNotification() {
     return false;
   }, [notifications]);
 
-  return { notifications, refetch, mutate: mutation.mutate, toggleNotificationMenu, isNotificationExist };
+  return { notifications, mutate: mutation.mutate, toggleNotificationMenu, isNotificationExist };
 }
 
 export default useNotification;
