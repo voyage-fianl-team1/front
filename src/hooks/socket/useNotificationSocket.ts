@@ -1,8 +1,7 @@
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef } from 'react';
 import SockJS from 'sockjs-client';
 import { CompatClient, Stomp } from '@stomp/stompjs';
 import { StompSubscription } from '@stomp/stompjs/src/stomp-subscription';
-import { Chat, Notification } from '../../typings';
 import { SERVER_STOMP_URL } from '../../apis';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../redux/store';

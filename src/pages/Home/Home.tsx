@@ -14,21 +14,11 @@ import useSideMenu from '../../hooks/useSideMenu';
 import { useDispatch } from 'react-redux';
 import { toggleClear } from '../../redux/features/toggleSlice';
 import { useStomp } from '../../hooks/socket/useStomp';
-import { Chat } from '../../typings';
+import { SERVER_STOMP_URL } from '../../apis';
 
 const Home: FC = () => {
   const { sideMenuShow } = useSideMenu();
   const dispatch = useDispatch();
-
-  const { connect, subscribe, subscriptions, unsubscribe } = useStomp(() => {
-    subscribe<Chat>('/room/81', (message) => {
-      unsubscribe('/room/81');
-    });
-    subscribe<Chat>('/room/165', (message) => {
-      unsubscribe('/room/165');
-    });
-  });
-  connect();
 
   useEffect(() => {
     return () => {

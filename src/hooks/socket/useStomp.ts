@@ -1,16 +1,20 @@
 import { CompatClient, Stomp, StompSubscription } from '@stomp/stompjs';
-import { useEffect } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import SockJS from 'sockjs-client';
-import { SERVER_STOMP_URL } from '../../apis';
+
+interface ObjectType {
+  [key: string]: any;
+}
 
 let socketClient: WebSocket;
 let stompClient: CompatClient;
 const subscriptions: { [key: string]: StompSubscription } = {};
 
-export function useStomp(callback: any) {
-  const connect = () => {
+export function useStomp(url: string, callback?: any) {
+  const [isConnected, setIsConnected] = useState(false);
+  const connect = useCallback(() => {
     if (!socketClient) {
-      socketClient = new SockJS(SERVER_STOMP_URL);
+      socketClient = new SockJS(url);
     }
 
     if (!stompClient) {
@@ -22,34 +26,50 @@ export function useStomp(callback: any) {
 
     if (socketClient && stompClient) {
       stompClient.connect({}, (receipt: any) => {
+        setIsConnected(true);
         callback && callback();
       });
     }
-  };
+  }, []);
+
+  const send = useCallback((path: string, body: ObjectType, headers: ObjectType) => {
+    stompClient.publish({
+      destination: path,
+      headers,
+      body: JSON.stringify(body),
+    });
+  }, []);
+
+  const subscribe = useCallback(<T>(path: string, callback: (msg: T) => void) => {
+    if (!stompClient) return;
+
+    const subscription = stompClient.subscribe(path, (message) => {
+      const body: T = JSON.parse(message.body);
+      callback(body);
+    });
+    subscriptions[path] = subscription;
+  }, []);
+
+  const unsubscribe = useCallback((path: string) => {
+    subscriptions[path].unsubscribe();
+    delete subscriptions[path];
+  }, []);
+
+  const disconnect = useCallback(() => {
+    stompClient.disconnect();
+  }, []);
 
   useEffect(() => {
     connect();
   }, []);
 
-  const subscribe = <T>(path: string, callback: (msg: T) => void) => {
-    if (!stompClient) return;
-
-    const subscription = stompClient.subscribe(path, (message) => {
-      const body: T = JSON.parse(message.body).body;
-      callback(body);
-    });
-    subscriptions[path] = subscription;
-  };
-
-  const unsubscribe = (path: string) => {
-    subscriptions[path].unsubscribe();
-    delete subscriptions[path];
-  };
-
   return {
     connect,
+    disconnect,
     subscribe,
     unsubscribe,
     subscriptions,
+    send,
+    isConnected,
   };
 }

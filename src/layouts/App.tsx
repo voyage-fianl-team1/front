@@ -6,6 +6,9 @@ import { positionAction } from '../redux/features/postionSlice';
 import LoadingSpinner from '../components/Common/loadingSpinner';
 import useCurrentUser from '../hooks/auth/useCurrentUser';
 import useLogin from '../hooks/auth/useLogin';
+import { useStomp } from '../hooks/socket/useStomp';
+import { SERVER_STOMP_URL } from '../apis';
+import { useNotificationStomp } from '../hooks/socket/useNotificationStomp';
 
 const Home = React.lazy(() => import('../pages/Home/Home'));
 const Splash = React.lazy(() => import('../pages/Auth/Splash'));
@@ -31,8 +34,10 @@ const App = () => {
   const dispatch = useDispatch();
   const { fetchUserInfo } = useLogin();
   const {
-    user: { isLogin },
+    user: { isLogin, id: userId },
   } = useCurrentUser();
+  useStomp(SERVER_STOMP_URL);
+  useNotificationStomp();
 
   useEffect(() => {
     fetchUserInfo().then((res) => console.log(res.msg));
