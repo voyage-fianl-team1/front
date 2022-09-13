@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { Map, ZoomControl, MapMarker, MarkerClusterer } from 'react-kakao-maps-sdk';
-import { useNavigate } from 'react-router-dom';
 import { overlayAction, overlayClear, OverlayState } from '../../redux/features/overlaySlice';
 import { useDispatch } from 'react-redux';
 import { Helmet } from 'react-helmet';
@@ -8,12 +7,13 @@ import { MarkerObj } from '../../shared/constant/makerTable';
 import { useMaps } from '../../hooks/map/useMaps';
 import { useMapList } from '../../hooks/queries/useMapList';
 import LoadingSpinner from '../../components/Common/loadingSpinner';
+import usePush from '../../hooks/usePush';
 
 const Maps = () => {
   const { mapRef, nowPosition, overlay } = useMaps('');
   const { matchData, isLoading } = useMapList(nowPosition.lat, nowPosition.lng);
+  const { push } = usePush();
   const dispatch = useDispatch();
-  const navigate = useNavigate();
   const [state, setState] = useState({});
   const [isOpen, setIsOpen] = useState(false);
   // /api/posts/gps?NWlat=&Nwlng=&SElat=&SElng
@@ -102,7 +102,7 @@ const Maps = () => {
                   >
                     {overlay.subject}
                   </div>
-                  <button onClick={() => navigate(`/match/${overlay.postId}`)}>
+                  <button onClick={() => push(`/match/${overlay.postId}`)}>
                     <img src='/assets/images/post/right.svg' className='absolute w-[24px] h-[24px] right-3 top-14' />
                   </button>
                 </div>

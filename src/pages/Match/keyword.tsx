@@ -1,12 +1,12 @@
 import React, { FC, useEffect } from 'react';
 import { useInView } from 'react-intersection-observer';
-import { useNavigate } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
 import { useKeword } from '../../hooks/queries/useKewordList';
 import LoadingSpinner from '../../components/Common/loadingSpinner';
+import usePush from '../../hooks/usePush';
 
 const Keyword: FC = () => {
-  const navigate = useNavigate();
+  const { push } = usePush();
   const { ref, inView } = useInView();
   const { searchList, fetchNextPage, isFetchingNextPage } = useKeword('');
 
@@ -33,7 +33,7 @@ const Keyword: FC = () => {
                 <div
                   className='w-full h-20 bg-[#FCFCFC] p-2'
                   key={post.postId}
-                  onClick={() => navigate(`/match/${post.postId}`)}
+                  onClick={() => push(`/match/${post.postId}`)}
                   ref={ref}
                 >
                   <div className='flex flex-row mb-[28px] items-center'>

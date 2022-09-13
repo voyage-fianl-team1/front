@@ -1,16 +1,15 @@
-import React from 'react';
 import { apis } from '../apis';
 import { useQueryClient } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
-import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { addressAction } from '../redux/features/addressSlice';
 import { subjectAction } from '../redux/features/subjectSlice';
 import { calendarAction } from '../redux/features/calendarSlice';
 import { queryKeys } from '../shared/constant/queryKeys';
+import usePush from './usePush';
 
 export function useJoin<T>(defaultValue: T) {
-  const navigate = useNavigate();
+  const { push } = usePush();
   const dispatch = useDispatch();
   const queryClient = useQueryClient();
   const handleStatusChange = async (postId: number) => {
@@ -49,7 +48,7 @@ export function useJoin<T>(defaultValue: T) {
         await apis.deletePost(postId);
         alert('게시글이 삭제되었습니다.');
         queryClient.removeQueries([queryKeys.SEARCH]);
-        navigate(-1);
+        push('/search');
       }
     } catch (err) {
       alert('게시글 삭제에 실패했습니다.');
