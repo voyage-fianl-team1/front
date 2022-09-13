@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React, { FC, useEffect } from 'react';
 import SearchBar from '../../components/Match/SearchBar';
 import SlideBanner from '../../components/Common/SlideBanner';
 import SubTitle from '../../components/Common/SubTitle';
@@ -11,9 +11,19 @@ import WriteFloatingButton from '../../components/Common/WriteFloatingButton';
 import { Helmet } from 'react-helmet';
 import MatchItemList from '../../components/Match/MatchItemList';
 import useSideMenu from '../../hooks/useSideMenu';
+import { useDispatch } from 'react-redux';
+import { toggleClear } from '../../redux/features/toggleSlice';
 
 const Home: FC = () => {
   const { sideMenuShow } = useSideMenu();
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    return () => {
+      dispatch(toggleClear());
+    };
+  }, []);
+
   return (
     <>
       <Helmet>
