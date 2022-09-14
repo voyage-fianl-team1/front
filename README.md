@@ -4,19 +4,8 @@
 
 ## 📚 주요 기술 스택
 
-![image 354](https://user-images.githubusercontent.com/103014298/190169187-b1e1ef76-96ff-4c74-a20d-78742e63e0ef.png) ![Rectangle 2629](https://user-images.githubusercontent.com/103014298/190169205-37f958fd-1bed-47a4-8480-048f92d7a611.png) ![image 352](https://user-images.githubusercontent.com/103014298/190169219-d368ff68-f111-4908-b4ae-de84a6e29c48.png) ![Group 816](https://user-images.githubusercontent.com/103014298/190169233-dc65b578-2adf-471b-b700-484c771d8806.png) ![image 353](https://user-images.githubusercontent.com/103014298/190169252-2d94b520-d8cc-4746-adad-7a9ed3a2777e.png) ![2](https://user-images.githubusercontent.com/103014298/190169878-d761f281-3617-42f5-9ed3-f6d45b1bf6fc.png) ![image 346](https://user-images.githubusercontent.com/103014298/190169086-7d392d49-55e8-49cc-9066-fd3ac7fb36d0.png) ![image 348](https://user-images.githubusercontent.com/103014298/190169098-66208f80-2f2a-400f-b8d5-beda304bd84d.png) ![Group 814](https://user-images.githubusercontent.com/103014298/190169143-6bd8fc20-4f0c-4233-9a99-c8a76e5bab6f.png) ![1](https://user-images.githubusercontent.com/103014298/190170008-cb50eb21-4cb5-4e09-adbb-a408510b1f22.png) ![Group 815](https://user-images.githubusercontent.com/103014298/190169169-8cfe35b4-19fb-4eb4-ae2a-9969a7192a4c.png) ![image 350](https://user-images.githubusercontent.com/103014298/190169270-ba981c89-37a7-4748-8584-c60f9a57fbd5.png)
+![image 354](https://user-images.githubusercontent.com/103014298/190169187-b1e1ef76-96ff-4c74-a20d-78742e63e0ef.png) ![Rectangle 2629](https://user-images.githubusercontent.com/103014298/190169205-37f958fd-1bed-47a4-8480-048f92d7a611.png) ![image 352](https://user-images.githubusercontent.com/103014298/190169219-d368ff68-f111-4908-b4ae-de84a6e29c48.png) ![Group 816](https://user-images.githubusercontent.com/103014298/190169233-dc65b578-2adf-471b-b700-484c771d8806.png) ![image 353](https://user-images.githubusercontent.com/103014298/190169252-2d94b520-d8cc-4746-adad-7a9ed3a2777e.png) ![Group 819](https://user-images.githubusercontent.com/103014298/190170160-63607d48-d6a3-47f9-af43-58d8dbedd87d.png) ![image 346](https://user-images.githubusercontent.com/103014298/190169086-7d392d49-55e8-49cc-9066-fd3ac7fb36d0.png) ![image 348](https://user-images.githubusercontent.com/103014298/190169098-66208f80-2f2a-400f-b8d5-beda304bd84d.png) ![Group 814](https://user-images.githubusercontent.com/103014298/190169143-6bd8fc20-4f0c-4233-9a99-c8a76e5bab6f.png) ![1](https://user-images.githubusercontent.com/103014298/190170008-cb50eb21-4cb5-4e09-adbb-a408510b1f22.png) ![Group 815](https://user-images.githubusercontent.com/103014298/190169169-8cfe35b4-19fb-4eb4-ae2a-9969a7192a4c.png) ![image 350](https://user-images.githubusercontent.com/103014298/190169270-ba981c89-37a7-4748-8584-c60f9a57fbd5.png)
 
-
-![react](https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)
-![typescript](https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white)
-
-![redux](https://img.shields.io/badge/Redux-593D88?style=for-the-badge&logo=redux&logoColor=white)
-![redux](https://img.shields.io/badge/ReactQuery-FF4154?style=for-the-badge&logo=react-query&logoColor=white)
-
-![tailwind](https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white) 
-
-![socket](https://img.shields.io/badge/SockJS-010101?&style=for-the-badge&logo=Socket.io&logoColor=white)
-![socket](https://img.shields.io/badge/StompJS-43B02A?&style=for-the-badge&logo=Sogou&logoColor=white)
 
 ## 💻 Code Reusability
 
