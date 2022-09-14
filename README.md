@@ -4,23 +4,7 @@
 
 ## 📚 주요 기술 스택
 
-![image 354](https://user-images.githubusercontent.com/103014298/190169187-b1e1ef76-96ff-4c74-a20d-78742e63e0ef.png)
-![Rectangle 2629](https://user-images.githubusercontent.com/103014298/190169205-37f958fd-1bed-47a4-8480-048f92d7a611.png)
-![image 352](https://user-images.githubusercontent.com/103014298/190169219-d368ff68-f111-4908-b4ae-de84a6e29c48.png)
-![Group 816](https://user-images.githubusercontent.com/103014298/190169233-dc65b578-2adf-471b-b700-484c771d8806.png)
-
-![image 353](https://user-images.githubusercontent.com/103014298/190169252-2d94b520-d8cc-4746-adad-7a9ed3a2777e.png)
-
-![image 349](https://user-images.githubusercontent.com/103014298/190169080-152a17b7-fa8f-4043-8ee7-d17f9b0f156a.png)
-![image 346](https://user-images.githubusercontent.com/103014298/190169086-7d392d49-55e8-49cc-9066-fd3ac7fb36d0.png)
-![image 348](https://user-images.githubusercontent.com/103014298/190169098-66208f80-2f2a-400f-b8d5-beda304bd84d.png)
-
-
-![Group 814](https://user-images.githubusercontent.com/103014298/190169143-6bd8fc20-4f0c-4233-9a99-c8a76e5bab6f.png)
-![image 340](https://user-images.githubusercontent.com/103014298/190169156-2839160b-c643-4a61-8a14-3dc3099b434c.png)
-![Group 815](https://user-images.githubusercontent.com/103014298/190169169-8cfe35b4-19fb-4eb4-ae2a-9969a7192a4c.png)
-![image 350](https://user-images.githubusercontent.com/103014298/190169270-ba981c89-37a7-4748-8584-c60f9a57fbd5.png)
-
+![image 354](https://user-images.githubusercontent.com/103014298/190169187-b1e1ef76-96ff-4c74-a20d-78742e63e0ef.png) ![Rectangle 2629](https://user-images.githubusercontent.com/103014298/190169205-37f958fd-1bed-47a4-8480-048f92d7a611.png) ![image 352](https://user-images.githubusercontent.com/103014298/190169219-d368ff68-f111-4908-b4ae-de84a6e29c48.png) ![Group 816](https://user-images.githubusercontent.com/103014298/190169233-dc65b578-2adf-471b-b700-484c771d8806.png) ![image 353](https://user-images.githubusercontent.com/103014298/190169252-2d94b520-d8cc-4746-adad-7a9ed3a2777e.png) ![image 349](https://user-images.githubusercontent.com/103014298/190169080-152a17b7-fa8f-4043-8ee7-d17f9b0f156a.png) ![image 346](https://user-images.githubusercontent.com/103014298/190169086-7d392d49-55e8-49cc-9066-fd3ac7fb36d0.png) ![image 348](https://user-images.githubusercontent.com/103014298/190169098-66208f80-2f2a-400f-b8d5-beda304bd84d.png) ![Group 814](https://user-images.githubusercontent.com/103014298/190169143-6bd8fc20-4f0c-4233-9a99-c8a76e5bab6f.png) ![image 340](https://user-images.githubusercontent.com/103014298/190169156-2839160b-c643-4a61-8a14-3dc3099b434c.png) ![Group 815](https://user-images.githubusercontent.com/103014298/190169169-8cfe35b4-19fb-4eb4-ae2a-9969a7192a4c.png) ![image 350](https://user-images.githubusercontent.com/103014298/190169270-ba981c89-37a7-4748-8584-c60f9a57fbd5.png)
 
 
 
