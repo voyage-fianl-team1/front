@@ -16,6 +16,7 @@ export interface UserInfo {
 
 export interface PostDataProps {
   title: string;
+  imgurl:[];
   imgurls: [];
   imgpaths: [];
   address: string;
@@ -161,6 +162,7 @@ export interface JoinDataProps {
     address: string;
     lat: number;
     lng: number;
+    imgurl: [];
     imgurls: [];
     imgpaths: [];
     subjectValue: string;

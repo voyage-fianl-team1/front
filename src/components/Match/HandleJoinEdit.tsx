@@ -24,7 +24,7 @@ const HandleJoinEdit = (props: JoinDataProps) => {
           state={{
             postId: postData.postId,
             title: postData.title,
-            imgurls: postData.imgurls,
+            imgurl: postData.imgurl,
             imgpaths: postData.imgpaths,
             content: postData.content,
           }}
