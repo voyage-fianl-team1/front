@@ -2,8 +2,6 @@
 
 ## 주요 기술 스택
 
----
-
 ![react](https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)
 ![typescript](https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white)
 
@@ -17,14 +15,10 @@
 
 ## Code Reusability
 
----
-
 - 컴포넌트에서 모든 비즈니스로직을 분리하여 custom hook 으로 구현한 [hooks pattern](https://blog.bitsrc.io/new-react-design-pattern-return-component-from-hooks-79215c3eac00) 을 따르고 있습니다.(서비스에서 사용된 모든 로직은 내부 구현사항에 상관없이 재사용가능합니다.)
 
 
 ## 역할
-
----
 
 ### 태민
 
