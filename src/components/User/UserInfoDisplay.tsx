@@ -1,13 +1,20 @@
-import React, { useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { MdChangeCircle } from 'react-icons/md';
 import useCurrentUser from '../../hooks/auth/useCurrentUser';
 import useUpdateProfileImage from '../../hooks/auth/useUpdateProfileImage';
+import useLogin from '../../hooks/auth/useLogin';
 
 const UserInfoDisplay = () => {
   const {
     user: { nickname, profileImgUrl, win, lose, draw, id },
   } = useCurrentUser();
+
+  const { fetchUserInfo } = useLogin();
+  useEffect(() => {
+    fetchUserInfo();
+  }, []);
+
   const { handleUpdateUserImage } = useUpdateProfileImage();
   const imageRef = useRef<HTMLInputElement>(null);
   const handleClickImage = () => {
