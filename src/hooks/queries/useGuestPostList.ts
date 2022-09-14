@@ -21,6 +21,7 @@ export function useGetPostList(postId: number) {
       address: guestData?.address,
       imgpaths: guestData?.imgpaths,
       imgurls: guestData?.imgurls,
+      imgurl: guestData?.imgurl,
       subjectValue: guestData?.subjectValue,
       subject: guestData?.subject,
       title: guestData?.title,

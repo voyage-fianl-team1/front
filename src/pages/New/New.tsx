@@ -32,7 +32,7 @@ const Newpost: FC = () => {
   } = usePost('');
 
   clearAll();
-
+  console.log(data);
   return (
     <section className='flex flex-col w-[100%] h-full'>
       <div className='flex flex-col items-center'>
