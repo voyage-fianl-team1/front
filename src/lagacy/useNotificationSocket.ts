@@ -11,7 +11,6 @@ export function useNotificationSocket(userId: number | string | undefined, callb
   const socketRef = useRef<WebSocket | null>(null);
   const stompClientRef = useRef<CompatClient | null>(null);
   const subscriptionRef = useRef<StompSubscription | null | undefined>(null);
-  const accessToken = window.localStorage.getItem('accessToken');
   const dispatch = useDispatch();
   const { isLogin } = useSelector((state: RootState) => state.user);
   const notifications = useSelector((state: RootState) => state.notification.notifications);
