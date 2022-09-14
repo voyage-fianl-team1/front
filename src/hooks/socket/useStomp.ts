@@ -1,5 +1,5 @@
 import { CompatClient, Stomp, StompSubscription } from '@stomp/stompjs';
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect } from 'react';
 import SockJS from 'sockjs-client';
 
 interface ObjectType {
@@ -8,9 +8,10 @@ interface ObjectType {
 
 let socketClient: WebSocket;
 let stompClient: CompatClient;
-const subscriptions: { [key: string]: StompSubscription } = {};
 let isConnected = false;
-export function useStomp(url: string, callback?: any) {
+const subscriptions: { [key: string]: StompSubscription } = {};
+
+export function useStomp(url: string, callback?: () => void) {
   const connect = useCallback(() => {
     if (!socketClient) {
       socketClient = new SockJS(url);
