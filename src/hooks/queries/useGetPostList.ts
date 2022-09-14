@@ -6,7 +6,6 @@ import { apis } from '../../apis';
 export function useGetPostList(postId: number) {
   const { data: res, isLoading } = useQuery([queryKeys.POSTLIST, postId], () => apis.getPostList(postId));
   const postData: PostDataProps = res?.data;
-
   const drill: JoinDataProps = {
     data: {
       owner: postData?.owner,
@@ -20,6 +19,7 @@ export function useGetPostList(postId: number) {
       lng: postData?.lng,
       address: postData?.address,
       imgpaths: postData?.imgpaths,
+      imgurl: postData?.imgurl,
       imgurls: postData?.imgurls,
       subjectValue: postData?.subjectValue,
       subject: postData?.subject,
