@@ -11,6 +11,7 @@ import { calendarClear } from '../../redux/features/calendarSlice';
 import { subjectClear } from '../../redux/features/subjectSlice';
 import { useQueryClient } from '@tanstack/react-query';
 import { queryKeys } from '../../shared/constant/queryKeys';
+import Compressor from 'compressorjs';
 
 export function usePost<T>(defaultValue: T) {
   const location = useLocation();
@@ -47,6 +48,11 @@ export function usePost<T>(defaultValue: T) {
     }
   };
 
+  const handleImage = async (value: number, formData: FormData) => {
+    await apis.uploadImage(value, formData);
+    queryClient.invalidateQueries([queryKeys.SEARCH]);
+  };
+
   const handleDataUpload = async () => {
     if (getValues().title.length < 1) {
       return alert('제목을 입력해주세요.');
@@ -74,9 +80,16 @@ export function usePost<T>(defaultValue: T) {
       if (uploadImage.length > 0) {
         const formData = new FormData();
         for (let i = 0; i < uploadImage.length; i++) {
-          formData.append('files', uploadImage[i]);
+          if (uploadImage[i] !== null) {
+            new Compressor(uploadImage[i], {
+              quality: 0.6,
+              success(result) {
+                formData.append('files', result);
+                handleImage(value, formData);
+              },
+            });
+          }
         }
-        await apis.uploadImage(value, formData);
       }
       queryClient.removeQueries([queryKeys.SEARCH]);
       navigate('/search');
@@ -86,7 +99,7 @@ export function usePost<T>(defaultValue: T) {
     useEffect(() => {
       dispatch(toggleClear());
       if (data) {
-        setImageUrl(data.imgurls);
+        setImageUrl(data.imgurl);
       }
       return () => {
         dispatch(addressClear());
@@ -124,10 +137,15 @@ export function usePost<T>(defaultValue: T) {
         const formData = new FormData();
         for (let i = 0; i < uploadImage.length; i++) {
           if (uploadImage[i] !== null) {
-            formData.append('files', uploadImage[i]);
+            new Compressor(uploadImage[i], {
+              quality: 0.6,
+              success(result) {
+                formData.append('files', result);
+                handleImage(data.postId, formData);
+              },
+            });
           }
         }
-        await apis.uploadImage(data.postId, formData);
       }
       queryClient.removeQueries([queryKeys.SEARCH]);
       navigate('/search');
@@ -145,7 +163,7 @@ export function usePost<T>(defaultValue: T) {
       if (imgpaths !== undefined) {
         await apis.deleteImage(imgpaths['path']);
       }
-      if (data.imgurls.length > 0) {
+      if (data.imgurl.length > 0) {
         setImageUrl(imgUrl.filter((_, index) => index !== id));
       }
     }
